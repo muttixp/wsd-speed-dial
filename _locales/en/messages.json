@@ -1,0 +1,911 @@
+{
+  "extName": {
+    "message": "WSD Speed Dial"
+  },
+  "extDesc": {
+    "message": "A fast-access page that shows your bookmarks as visual tiles."
+  },
+  "actionTitle": {
+    "message": "Add to WSD Speed Dial"
+  },
+  "anaSayfa": {
+    "message": "Home"
+  },
+  "kartEkle": {
+    "message": "Add Tile"
+  },
+  "grupEkle": {
+    "message": "New Group"
+  },
+  "ayarlar": {
+    "message": "Settings"
+  },
+  "ara": {
+    "message": "Search"
+  },
+  "GenisEkran": {
+    "message": "16:9 — widescreen"
+  },
+  "aciklik": {
+    "message": "Brightness"
+  },
+  "aktifGrupRengi": {
+    "message": "Active Group Color"
+  },
+  "aktifGrupSaydamligi": {
+    "message": "Active Group Opacity"
+  },
+  "anaSayfaGrubunuGoster": {
+    "message": "Show Home Group"
+  },
+  "ayarlariAcKapat": {
+    "message": "open / close settings"
+  },
+  "ayarlariSifirla": {
+    "message": "Reset settings"
+  },
+  "ayniSekme": {
+    "message": "Same Tab"
+  },
+  "basaKaydir": {
+    "message": "Scroll to start"
+  },
+  "baslik": {
+    "message": "Title"
+  },
+  "baslikYaziBoyutu": {
+    "message": "Title Font Size"
+  },
+  "bekleyenYakalamalariIptalEt": {
+    "message": "Cancel pending captures"
+  },
+  "bicim": {
+    "message": "Format"
+  },
+  "buKartlaIlgiliNotunuz": {
+    "message": "Your note about this tile..."
+  },
+  "caprazVe": {
+    "message": "Diagonal 2 and 3"
+  },
+  "copKutusu": {
+    "message": "Trash"
+  },
+  "degistirmekIcinTiklayin": {
+    "message": "Click to change"
+  },
+  "duvarKagidi": {
+    "message": "Wallpaper"
+  },
+  "duzenle": {
+    "message": "Edit"
+  },
+  "duzenlemekIcinKartaSagTiklayinSiralamak": {
+    "message": "Right-click a tile to edit it; drag and drop to reorder"
+  },
+  "eklemeKarti": {
+    "message": "\"+\" Add Tile"
+  },
+  "ekranGoruntusuBoyutu": {
+    "message": "Screenshot Size"
+  },
+  "ekranGoruntusuOnerilen": {
+    "message": "Screenshot (recommended)"
+  },
+  "enCokZiyaretEdilen": {
+    "message": "Most visited"
+  },
+  "enFazlaSutun": {
+    "message": "Max Columns"
+  },
+  "enOnceEklenen": {
+    "message": "Oldest first"
+  },
+  "genelAyar": {
+    "message": "Use global setting"
+  },
+  "gerekirsePencereyiOneAl": {
+    "message": "Bring Window to Front if Needed"
+  },
+  "gizliHataAyiklamaCubuguCikar": {
+    "message": "Hidden (shows debug bar)"
+  },
+  "gizliSekmedeAc": {
+    "message": "Open in Private Tab"
+  },
+  "golgeRengi": {
+    "message": "Shadow Color"
+  },
+  "goruntuDosyasi": {
+    "message": "Image File"
+  },
+  "goruntuUrlSi": {
+    "message": "Image URL"
+  },
+  "gosterim": {
+    "message": "Display"
+  },
+  "grubuDuzenle": {
+    "message": "Edit Group"
+  },
+  "grubunGorselleriniYenile": {
+    "message": "Refresh group images"
+  },
+  "grup": {
+    "message": "Group"
+  },
+  "grupOlustur": {
+    "message": "Create Group"
+  },
+  "gruplariYonet": {
+    "message": "manage groups"
+  },
+  "hazirBoyutlar": {
+    "message": "Presets"
+  },
+  "hedefGrup": {
+    "message": "Target Group"
+  },
+  "hepsiniAc": {
+    "message": "Open all"
+  },
+  "herSeyiGizle": {
+    "message": "Hide everything"
+  },
+  "herSeyiGizleGoster": {
+    "message": "hide / show everything"
+  },
+  "htmlSayfasiOlarakDisaAktar": {
+    "message": "Export as HTML page"
+  },
+  "iceAktar": {
+    "message": "Import"
+  },
+  "ikon": {
+    "message": "Icon"
+  },
+  "ikonRengi": {
+    "message": "Icon Color"
+  },
+  "ikonYazi": {
+    "message": "Icon+Text"
+  },
+  "ilkSonGrup": {
+    "message": "first / last group"
+  },
+  "iptal": {
+    "message": "Cancel"
+  },
+  "isikRengi": {
+    "message": "Light Color"
+  },
+  "kaldir": {
+    "message": "Remove"
+  },
+  "kartAcilisSekli": {
+    "message": "Tile Opens In"
+  },
+  "kartBasliklari": {
+    "message": "Tile Titles"
+  },
+  "kartBoyutu": {
+    "message": "Tile Size"
+  },
+  "kartCerceveRengi": {
+    "message": "Border Color"
+  },
+  "kartCerceveRengiUzerineGelince": {
+    "message": "Border Color (Hover)"
+  },
+  "kartCercevesi": {
+    "message": "Tile Border"
+  },
+  "kartKoseYuvarlakligi": {
+    "message": "Tile Corner Radius"
+  },
+  "kartOrani": {
+    "message": "Tile Ratio"
+  },
+  "kartSayisi": {
+    "message": "Tile count"
+  },
+  "kartUstuButonlar": {
+    "message": "Tile Hover Buttons"
+  },
+  "kartZeminRengi": {
+    "message": "Tile Background"
+  },
+  "kartiDuzenle": {
+    "message": "Edit Tile"
+  },
+  "kartiTasi": {
+    "message": "Move Tile"
+  },
+  "kartlarArasiBoslukDikey": {
+    "message": "Tile Gap (Vertical)"
+  },
+  "kartlarArasiBoslukYatay": {
+    "message": "Tile Gap (Horizontal)"
+  },
+  "kartlariSirala": {
+    "message": "Sort Tiles"
+  },
+  "kaydirmaPx": {
+    "message": "Scroll"
+  },
+  "kisayollarBirMetinAlanindaykenCalismaz": {
+    "message": "Shortcuts do not work while typing in a field."
+  },
+  "kullanilmayanVerileriTemizle": {
+    "message": "Clean unused data"
+  },
+  "notuSil": {
+    "message": "Delete Note"
+  },
+  "oSiradakiGrubaGec": {
+    "message": "switch to that group"
+  },
+  "onceSayfaGorseliYoksaEkran": {
+    "message": "Page image first, then screenshot"
+  },
+  "oncekiSonrakiGrup": {
+    "message": "previous / next group"
+  },
+  "otomatikYedekGunde": {
+    "message": "Auto Backup (daily)"
+  },
+  "ozelEmoji": {
+    "message": "Custom emoji"
+  },
+  "pencereKisaSureGorunur": {
+    "message": "Window (briefly visible)"
+  },
+  "pencereyiAramayiKapat": {
+    "message": "close dialog / search"
+  },
+  "renkEtiketi": {
+    "message": "Color Label"
+  },
+  "renkTonu": {
+    "message": "Hue"
+  },
+  "renklendirmeSiddeti": {
+    "message": "Tint Strength"
+  },
+  "renklendirmeYontemi": {
+    "message": "Tinting Method"
+  },
+  "resmiIndir": {
+    "message": "Download Image"
+  },
+  "sekmeKoseYuvarlakligi": {
+    "message": "Tab Corner Radius"
+  },
+  "sekmeZeminSaydamligi": {
+    "message": "Tab Background Opacity"
+  },
+  "sekmedeAc": {
+    "message": "Open in tab"
+  },
+  "sil": {
+    "message": "Delete"
+  },
+  "siraBirKezUygulanirSonrasindaSurukleyerek": {
+    "message": "The order is applied once; afterwards you can rearrange by dragging."
+  },
+  "siralamakIcinTutamactanSurukleyin": {
+    "message": "Drag the handle to reorder."
+  },
+  "sonGrubuHatirla": {
+    "message": "Remember Last Group"
+  },
+  "sonaKaydir": {
+    "message": "Scroll to end"
+  },
+  "tasi": {
+    "message": "Move"
+  },
+  "tumVerileriSil": {
+    "message": "Delete all data"
+  },
+  "tumunuSil": {
+    "message": "Delete All"
+  },
+  "tumunuYeniSekmeGrubundaAc": {
+    "message": "Open all in a new window"
+  },
+  "varsayilan": {
+    "message": "Default"
+  },
+  "varsayilanRenklereDon": {
+    "message": "Reset to default colors"
+  },
+  "varsayilanaDon": {
+    "message": "Reset to default"
+  },
+  "vazgec": {
+    "message": "Cancel"
+  },
+  "yalnizcaIkon": {
+    "message": "Icon only"
+  },
+  "yalnizcaYazi": {
+    "message": "Text only"
+  },
+  "yanAracPaneli": {
+    "message": "Side Toolbar"
+  },
+  "yazi": {
+    "message": "Text"
+  },
+  "yedekYukleniyor": {
+    "message": "Loading backup"
+  },
+  "yedektenYukle": {
+    "message": "Import backup"
+  },
+  "yeniGrup": {
+    "message": "New Group"
+  },
+  "yeniKart": {
+    "message": "new tile"
+  },
+  "yeniSekme": {
+    "message": "New Tab"
+  },
+  "yeniSekmeArkaPlan": {
+    "message": "New Tab (Background)"
+  },
+  "yeniSekmedeAc": {
+    "message": "Open in new tab"
+  },
+  "yontem": {
+    "message": "Method"
+  },
+  "kullanilanAlan": {
+    "message": "Total usage"
+  },
+  "kullanilmayan": {
+    "message": "Unused"
+  },
+  "birDahaSorma": {
+    "message": "Don't ask again"
+  },
+  "gorseller": {
+    "message": "Images"
+  },
+  "digerVeriler": {
+    "message": "Other data"
+  },
+  "yedekAl": {
+    "message": "Export backup"
+  },
+  "simdiYedekAl": {
+    "message": "Back up now"
+  },
+  "onaySorulariniGeriGetir": {
+    "message": "Restore confirmation prompts"
+  },
+  "adresiKopyala": {
+    "message": "Copy address"
+  },
+  "arkaPlan": {
+    "message": "Arka Plan"
+  },
+  "yedekAlinamadi": {
+    "message": "Could not create backup"
+  },
+  "htmlHazirlaniyor": {
+    "message": "Preparing HTML..."
+  },
+  "htmlOlusturulamadi": {
+    "message": "Could not create HTML"
+  },
+  "yedekYuklenemedi": {
+    "message": "Could not import backup:"
+  },
+  "bekleyenYakalamalarIptalEdiliyor": {
+    "message": "Cancelling pending captures"
+  },
+  "ayarlarSifirlandi": {
+    "message": "Settings reset"
+  },
+  "sifirlanamadi": {
+    "message": "Could not reset"
+  },
+  "iptalEdildi": {
+    "message": "Cancelled"
+  },
+  "silinemedi": {
+    "message": "Could not delete"
+  },
+  "temizlikAtlandi": {
+    "message": "Cleanup skipped"
+  },
+  "temizlenecekVeriYok": {
+    "message": "Nothing to clean"
+  },
+  "yedektenYukleBd": {
+    "message": "Import Backup"
+  },
+  "mevcutGruplarSilinsinMiHayirDerseniz": {
+    "message": "Replace existing groups? Choose \"Add\" to merge the backup with what you have."
+  },
+  "silVeYukle": {
+    "message": "Replace and import"
+  },
+  "ekle": {
+    "message": "Add"
+  },
+  "ayarlariSifirlaBd": {
+    "message": "Reset Settings"
+  },
+  "tumGorunumVeDavranisAyarlariVarsayilana": {
+    "message": "All appearance and behaviour settings will return to defaults. Your tiles, groups and images are untouched."
+  },
+  "sifirla": {
+    "message": "Reset"
+  },
+  "tumVerileriSilBd": {
+    "message": "Delete All Data"
+  },
+  "butunGruplarKartlarGorsellerNotlarVe": {
+    "message": "All groups, tiles, images, notes and settings will be permanently deleted. They do not go to the trash and cannot be recovered."
+  },
+  "devam": {
+    "message": "Continue"
+  },
+  "eminMisiniz": {
+    "message": "Are you sure?"
+  },
+  "onaylamakIcinSilYazin": {
+    "message": "Type DELETE to confirm:"
+  },
+  "copKutusuZatenBos": {
+    "message": "Trash is already empty"
+  },
+  "copKutusuBosaltildi": {
+    "message": "Trash emptied"
+  },
+  "kartGeriAlindi": {
+    "message": "Tile restored"
+  },
+  "geriAlinamadi": {
+    "message": "Could not undo"
+  },
+  "kaliciOlarakSilindi": {
+    "message": "Permanently deleted"
+  },
+  "copKutusunuBosalt": {
+    "message": "Empty Trash"
+  },
+  "kaliciSil": {
+    "message": "Delete Permanently"
+  },
+  "gruplarGuncellendi": {
+    "message": "Groups updated"
+  },
+  "grupOlusturuldu": {
+    "message": "Group created"
+  },
+  "grupOlusturulamadi": {
+    "message": "Could not create group"
+  },
+  "kaydedilemedi": {
+    "message": "Could not save"
+  },
+  "siralanacakYeterliKartYok": {
+    "message": "Not enough tiles to sort"
+  },
+  "kartlarZatenBuSirada": {
+    "message": "Tiles are already in this order"
+  },
+  "eskiSiraGeriAlindi": {
+    "message": "Previous order restored"
+  },
+  "siralanamadi": {
+    "message": "Could not sort"
+  },
+  "notKaydedildi": {
+    "message": "Note saved"
+  },
+  "notSilindi": {
+    "message": "Note deleted"
+  },
+  "baskaGrupYok": {
+    "message": "No other group"
+  },
+  "kartTasindi": {
+    "message": "Tile moved"
+  },
+  "tasinamadi": {
+    "message": "Could not move"
+  },
+  "dosyaOkunamadi": {
+    "message": "Could not read file"
+  },
+  "goruntuAlinamadi": {
+    "message": "Could not fetch image"
+  },
+  "indirilecekGorselYok": {
+    "message": "No image to download"
+  },
+  "kartSilindi": {
+    "message": "Tile deleted"
+  },
+  "gizliPencereAcilamadi": {
+    "message": "Could not open private window"
+  },
+  "adresKopyalandi": {
+    "message": "Address copied"
+  },
+  "kopyalanamadi": {
+    "message": "Could not copy"
+  },
+  "buGrupBos": {
+    "message": "This group is empty"
+  },
+  "pencereAcilamadi": {
+    "message": "Could not open window"
+  },
+  "grupGuncellendi": {
+    "message": "Group updated"
+  },
+  "yenidenAdlandirilamadi": {
+    "message": "Could not rename"
+  },
+  "grupSilinemedi": {
+    "message": "Grup silinemedi: "
+  },
+  "acilacakKartYok": {
+    "message": "No tiles to open"
+  },
+  "yenilenecekKartYok": {
+    "message": "No tiles to refresh"
+  },
+  "gorselYenilendi": {
+    "message": "Image refreshed"
+  },
+  "gorselAlinamadi": {
+    "message": "Could not get image"
+  },
+  "sirala": {
+    "message": "Sort"
+  },
+  "geriAl": {
+    "message": "Undo"
+  },
+  "gorselAdresiniYapistirin": {
+    "message": "Paste the image address:"
+  },
+  "kartiSil": {
+    "message": "Delete Tile"
+  },
+  "hepsiniAcBd": {
+    "message": "Open All"
+  },
+  "ac": {
+    "message": "Open"
+  },
+  "gorselleriYenile": {
+    "message": "Refresh Images"
+  },
+  "baslat": {
+    "message": "Start"
+  },
+  "grubuSil": {
+    "message": "Delete Group"
+  },
+  "grupVeIcindekiTumKartlarCop": {
+    "message": "The group and all its tiles will be moved to the trash."
+  },
+  "hepsiniYenile": {
+    "message": "Refresh All"
+  },
+  "e8eaed": {
+    "message": "#e8eaed"
+  },
+  "gorselKaydedilemedi": {
+    "message": "Could not save image"
+  },
+  "depolamaAlaniDoluYedekAliniyor": {
+    "message": "Storage is full — creating a backup"
+  },
+  "bakim": {
+    "message": "Maintenance"
+  },
+  "temizlik": {
+    "message": "temizlik"
+  },
+  "gorsellerBd": {
+    "message": "gorseller"
+  },
+  "kartlar": {
+    "message": "kartlar"
+  },
+  "bitti": {
+    "message": "bitti"
+  },
+  "depoDoluYedekIndirildi": {
+    "message": "Storage is full. Backup downloaded — clean up from Maintenance."
+  },
+  "depoDoluTemizlikYapin": {
+    "message": "Storage is full — clean up from Maintenance"
+  },
+  "nKartKuyrugaAlindi": {
+    "message": "$1 tiles queued"
+  },
+  "nKartSiralandi": {
+    "message": "$1 tiles sorted"
+  },
+  "nKartGorseliYenilenecek": {
+    "message": "Images for $1 tiles will be captured again. This may take a few minutes."
+  },
+  "nKartSirasiDegisecek": {
+    "message": "The order of $1 tiles will change. Your manual arrangement will be lost."
+  },
+  "nSekmeAcilacak": {
+    "message": "$1 tabs will open. Continue?"
+  },
+  "grupSilindiNKart": {
+    "message": "Group deleted ($1 tiles)"
+  },
+  "nKayitKaliciSilinecek": {
+    "message": "$1 entries will be permanently deleted."
+  },
+  "nGrupNKartSilindi": {
+    "message": "$1 groups, $2 tiles deleted"
+  },
+  "nGrupNKartYedeklendi": {
+    "message": "$1 groups, $2 tiles backed up — $3"
+  },
+  "nGrupNKartYuklendi": {
+    "message": "$1 groups, $2 tiles imported"
+  },
+  "yedekAlindiDosya": {
+    "message": "Backup saved — $1"
+  },
+  "geriAlindiAd": {
+    "message": "\"$1\" restored"
+  },
+  "tutarlilikKontrolu": {
+    "message": "Consistency Check"
+  },
+  "kapat": {
+    "message": "Close"
+  },
+  "yinelenenKartlar": {
+    "message": "Duplicate Tiles"
+  },
+  "yinelenenKartYok": {
+    "message": "No duplicate tiles"
+  },
+  "sinirsiz": {
+    "message": "unlimited"
+  },
+  "gorsellerYaziliyor": {
+    "message": "Writing images"
+  },
+  "gorsellerVeAyarlarSiliniyor": {
+    "message": "Deleting images and settings"
+  },
+  "tamamlandi": {
+    "message": "Done"
+  },
+  "sayilamadi": {
+    "message": "could not count"
+  },
+  "silOnayKelimesi": {
+    "message": "DELETE"
+  },
+  "copKutusuBos": {
+    "message": "Trash is empty"
+  },
+  "iceriginiGor": {
+    "message": "view contents"
+  },
+  "kartiNereyeAlalim": {
+    "message": "Where should the tile go?"
+  },
+  "iceriginiGoster": {
+    "message": "Show content"
+  },
+  "henuzAcilmadi": {
+    "message": "Not opened yet"
+  },
+  "gorselDegil": {
+    "message": "not an image"
+  },
+  "gorselYuklenemedi": {
+    "message": "could not load image"
+  },
+  "azOnce": {
+    "message": "just now"
+  },
+  "dun": {
+    "message": "yesterday"
+  },
+  "kartGorseli": {
+    "message": "tile image"
+  },
+  "yedegiYukle": {
+    "message": "Import Backup"
+  },
+  "gecersizYedekDosyasi": {
+    "message": "Invalid backup file"
+  },
+  "onceEnAzBirGrupOlusturun": {
+    "message": "onceEnAzBirGrupOlusturun"
+  },
+  "simgeRenkleriSifirlandi": {
+    "message": "simgeRenkleriSifirlandi"
+  },
+  "kopyalandi": {
+    "message": "kopyalandi"
+  },
+  "kopyalanamadiElleSecin": {
+    "message": "kopyalanamadiElleSecin"
+  },
+  "kapatilmisOnaySorusuYok": {
+    "message": "kapatilmisOnaySorusuYok"
+  },
+  "notuDuzenle": {
+    "message": "notuDuzenle"
+  },
+  "tamam": {
+    "message": "tamam"
+  },
+  "denetimYapilamadi": {
+    "message": "Check failed"
+  },
+  "nKartCizilmemis": {
+    "message": "$1 tiles were not drawn"
+  },
+  "sayfayiYenileyipDeneyin": {
+    "message": "Reload the page and try again."
+  },
+  "nKartinGorseliYok": {
+    "message": "$1 tiles have no image"
+  },
+  "grupMenusundenYenilenebilir": {
+    "message": "Capture them with \"Refresh group images\" from the group menu."
+  },
+  "buKartlarPaylasir": {
+    "message": "These tiles share their image, note and colour."
+  },
+  "yinelenenKartlariAc": {
+    "message": "Open Duplicate Tiles"
+  },
+  "nBosGrup": {
+    "message": "$1 empty groups"
+  },
+  "cizimKontroluAtlandi": {
+    "message": "Drawing check skipped"
+  },
+  "ozelEkranAcikNormaleDonun": {
+    "message": "Search, trash or duplicates view is open. Return to the normal view and run again."
+  },
+  "sorunBulunamadi": {
+    "message": "No problems found"
+  },
+  "nKezAcildi": {
+    "message": "opened $1 times"
+  },
+  "nSekmeAcilacakDevam": {
+    "message": "$1 tabs will open. Continue?"
+  },
+  "nKartKuyrugaAlindi2": {
+    "message": "$1 tiles queued"
+  },
+  "nDakikaOnce": {
+    "message": "$1 minutes ago"
+  },
+  "nSaatOnce": {
+    "message": "$1 hours ago"
+  },
+  "nGunOnce": {
+    "message": "$1 days ago"
+  },
+  "nAyOnce": {
+    "message": "$1 months ago"
+  },
+  "nYilOnce": {
+    "message": "$1 years ago"
+  },
+  "sizSilmediyseniz": {
+    "message": "If you did not delete them, you can restore from a backup."
+  },
+  "depoDolduYedekAlipTemizleyin": {
+    "message": "Storage is full — back up and clean up"
+  },
+  "anaSayfaGizlendiNKart": {
+    "message": "Home hidden — $1 tiles are no longer in the bar"
+  },
+  "nGorsel": {
+    "message": "$1 images"
+  },
+  "ayrilanAlanDoldu": {
+    "message": "Storage is full. New images cannot be saved. Back up first, then clean unused data or delete tiles you no longer need."
+  },
+  "yedekAlipTemizlemenizOnerilir": {
+    "message": "We recommend making a backup and cleaning unused data."
+  },
+  "kartlarinizaDokunulmaz": {
+    "message": "Your tiles, groups and images are untouched."
+  },
+  "kaliciSilinecekCopeGitmez": {
+    "message": "will be permanently deleted. They do not go to the trash and cannot be recovered."
+  },
+  "bos": {
+    "message": "empty"
+  },
+  "nKayit": {
+    "message": "$1 entries"
+  },
+  "nKartSilinmisGrup": {
+    "message": "$1 tiles · deleted group"
+  },
+  "goruntuUrlsi": {
+    "message": "Image URL"
+  },
+  "oncekiSimdiKayip": {
+    "message": "There were $1 $2, now $3. "
+  },
+  "nGorselTemizlendi": {
+    "message": "$1 images cleaned"
+  },
+  "giris": {
+    "message": "Input"
+  },
+  "kaydir": {
+    "message": "Shift"
+  },
+  "ayarlarBaslangicAnaSayfa": {
+    "message": "Settings → On startup → Home page"
+  },
+  "gorunum": {
+    "message": "Appearance"
+  },
+  "kartlarBolum": {
+    "message": "Tiles"
+  },
+  "grupSeridi": {
+    "message": "Group Bar"
+  },
+  "goruntuYakalama": {
+    "message": "Screenshot"
+  },
+  "yedeklemeBolum": {
+    "message": "Backup"
+  },
+  "bakimBolum": {
+    "message": "Maintenance"
+  },
+  "anasayfaKurulumu": {
+    "message": "Homepage Setup"
+  },
+  "kisayollarBolum": {
+    "message": "Shortcuts"
+  },
+  "uzantiSimgesi": {
+    "message": "Extension Icon"
+  },
+  "baslamakIcin": {
+    "message": "Get started with"
+  },
+  "tonKaydir": {
+    "message": "Hue Shift"
+  },
+  "ikiRenk": {
+    "message": "Two Colours"
+  },
+  "ipucuGrup": {
+    "message": "Organise tiles into groups; use + in the bar to add one"
+  },
+  "ipucuKartEkle": {
+    "message": "Right-click any page and choose \"Add to WSD Speed Dial\" — the tile appears here"
+  },
+  "nKartYenidenYakalanacak": {
+    "message": "Images for $1 tiles will be captured again. This may take a few minutes."
+  }
+}

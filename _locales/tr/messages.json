@@ -1,0 +1,911 @@
+{
+  "extName": {
+    "message": "WSD Speed Dial"
+  },
+  "extDesc": {
+    "message": "Yer imlerinizi görsel kartlar hâlinde gösteren hızlı erişim sayfası."
+  },
+  "actionTitle": {
+    "message": "WSD Speed Dial'e ekle"
+  },
+  "anaSayfa": {
+    "message": "Ana Sayfa"
+  },
+  "kartEkle": {
+    "message": "Kart Ekle"
+  },
+  "grupEkle": {
+    "message": "Yeni Grup"
+  },
+  "ayarlar": {
+    "message": "Ayarlar"
+  },
+  "ara": {
+    "message": "Ara"
+  },
+  "GenisEkran": {
+    "message": "16:9 — geniş ekran"
+  },
+  "aciklik": {
+    "message": "Açıklık"
+  },
+  "aktifGrupRengi": {
+    "message": "Aktif Grup Rengi"
+  },
+  "aktifGrupSaydamligi": {
+    "message": "Aktif Grup Saydamlığı"
+  },
+  "anaSayfaGrubunuGoster": {
+    "message": "Ana Sayfa Grubunu Göster"
+  },
+  "ayarlariAcKapat": {
+    "message": "ayarları aç / kapat"
+  },
+  "ayarlariSifirla": {
+    "message": "Ayarları sıfırla"
+  },
+  "ayniSekme": {
+    "message": "Aynı Sekme"
+  },
+  "basaKaydir": {
+    "message": "Başa kaydır"
+  },
+  "baslik": {
+    "message": "Başlık"
+  },
+  "baslikYaziBoyutu": {
+    "message": "Başlık Yazı Boyutu"
+  },
+  "bekleyenYakalamalariIptalEt": {
+    "message": "Bekleyen yakalamaları iptal et"
+  },
+  "bicim": {
+    "message": "Biçim"
+  },
+  "buKartlaIlgiliNotunuz": {
+    "message": "Bu kartla ilgili notunuz..."
+  },
+  "caprazVe": {
+    "message": "Çapraz 2 ve 3"
+  },
+  "copKutusu": {
+    "message": "Çöp Kutusu"
+  },
+  "degistirmekIcinTiklayin": {
+    "message": "Değiştirmek için tıklayın"
+  },
+  "duvarKagidi": {
+    "message": "Duvar Kâğıdı"
+  },
+  "duzenle": {
+    "message": "Düzenle"
+  },
+  "duzenlemekIcinKartaSagTiklayinSiralamak": {
+    "message": "Düzenlemek için karta sağ tıklayın, sıralamak için sürükleyip bırakın"
+  },
+  "eklemeKarti": {
+    "message": "\"+\" Ekleme Kartı"
+  },
+  "ekranGoruntusuBoyutu": {
+    "message": "Ekran Görüntüsü Boyutu"
+  },
+  "ekranGoruntusuOnerilen": {
+    "message": "Ekran görüntüsü (önerilen)"
+  },
+  "enCokZiyaretEdilen": {
+    "message": "En çok ziyaret edilen"
+  },
+  "enFazlaSutun": {
+    "message": "En Fazla Sütun"
+  },
+  "enOnceEklenen": {
+    "message": "En önce eklenen"
+  },
+  "genelAyar": {
+    "message": "Genel ayar"
+  },
+  "gerekirsePencereyiOneAl": {
+    "message": "Gerekirse Pencereyi Öne Al"
+  },
+  "gizliHataAyiklamaCubuguCikar": {
+    "message": "Gizli (hata ayıklama çubuğu çıkar)"
+  },
+  "gizliSekmedeAc": {
+    "message": "Gizli Sekmede aç"
+  },
+  "golgeRengi": {
+    "message": "Gölge Rengi"
+  },
+  "goruntuDosyasi": {
+    "message": "Görüntü Dosyası"
+  },
+  "goruntuUrlSi": {
+    "message": "Görüntü URL'si"
+  },
+  "gosterim": {
+    "message": "Gösterim"
+  },
+  "grubuDuzenle": {
+    "message": "Grubu Düzenle"
+  },
+  "grubunGorselleriniYenile": {
+    "message": "Grubun görsellerini yenile"
+  },
+  "grup": {
+    "message": "Grup"
+  },
+  "grupOlustur": {
+    "message": "Grup Oluştur"
+  },
+  "gruplariYonet": {
+    "message": "Grupları Yönet"
+  },
+  "hazirBoyutlar": {
+    "message": "Hazır Boyutlar"
+  },
+  "hedefGrup": {
+    "message": "Hedef grup"
+  },
+  "hepsiniAc": {
+    "message": "Hepsini aç"
+  },
+  "herSeyiGizle": {
+    "message": "Her şeyi gizle"
+  },
+  "herSeyiGizleGoster": {
+    "message": "her şeyi gizle / göster"
+  },
+  "htmlSayfasiOlarakDisaAktar": {
+    "message": "HTML sayfası olarak dışa aktar"
+  },
+  "iceAktar": {
+    "message": "İçe Aktar"
+  },
+  "ikon": {
+    "message": "İkon"
+  },
+  "ikonRengi": {
+    "message": "İkon rengi"
+  },
+  "ikonYazi": {
+    "message": "İkon + yazı"
+  },
+  "ilkSonGrup": {
+    "message": "ilk / son grup"
+  },
+  "iptal": {
+    "message": "İptal"
+  },
+  "isikRengi": {
+    "message": "Işık Rengi"
+  },
+  "kaldir": {
+    "message": "Kaldır"
+  },
+  "kartAcilisSekli": {
+    "message": "Kart Açılış Şekli"
+  },
+  "kartBasliklari": {
+    "message": "Kart Başlıkları"
+  },
+  "kartBoyutu": {
+    "message": "Kart Boyutu"
+  },
+  "kartCerceveRengi": {
+    "message": "Kart Çerçeve Rengi"
+  },
+  "kartCerceveRengiUzerineGelince": {
+    "message": "Kart Çerçeve Rengi (Üzerine Gelince)"
+  },
+  "kartCercevesi": {
+    "message": "Kart Çerçevesi"
+  },
+  "kartKoseYuvarlakligi": {
+    "message": "Kart Köşe Yuvarlaklığı"
+  },
+  "kartOrani": {
+    "message": "Kart Oranı"
+  },
+  "kartSayisi": {
+    "message": "Kart sayısı"
+  },
+  "kartUstuButonlar": {
+    "message": "Kart Üstü Butonlar"
+  },
+  "kartZeminRengi": {
+    "message": "Kart Zemin Rengi"
+  },
+  "kartiDuzenle": {
+    "message": "Kartı Düzenle"
+  },
+  "kartiTasi": {
+    "message": "Kartı Taşı"
+  },
+  "kartlarArasiBoslukDikey": {
+    "message": "Kartlar Arası Boşluk (Dikey)"
+  },
+  "kartlarArasiBoslukYatay": {
+    "message": "Kartlar Arası Boşluk (Yatay)"
+  },
+  "kartlariSirala": {
+    "message": "Kartları Sırala"
+  },
+  "kaydirmaPx": {
+    "message": "Kaydırma"
+  },
+  "kisayollarBirMetinAlanindaykenCalismaz": {
+    "message": "Kısayollar bir metin alanındayken çalışmaz."
+  },
+  "kullanilmayanVerileriTemizle": {
+    "message": "Kullanılmayan verileri temizle"
+  },
+  "notuSil": {
+    "message": "Notu Sil"
+  },
+  "oSiradakiGrubaGec": {
+    "message": "o sıradaki gruba geç"
+  },
+  "onceSayfaGorseliYoksaEkran": {
+    "message": "Önce sayfa görseli, yoksa ekran"
+  },
+  "oncekiSonrakiGrup": {
+    "message": "önceki / sonraki grup"
+  },
+  "otomatikYedekGunde": {
+    "message": "Otomatik Yedek (Günde 1)"
+  },
+  "ozelEmoji": {
+    "message": "Özel emoji"
+  },
+  "pencereKisaSureGorunur": {
+    "message": "Pencere (kısa süre görünür)"
+  },
+  "pencereyiAramayiKapat": {
+    "message": "pencereyi / aramayı kapat"
+  },
+  "renkEtiketi": {
+    "message": "Renk Etiketi"
+  },
+  "renkTonu": {
+    "message": "Renk Tonu"
+  },
+  "renklendirmeSiddeti": {
+    "message": "Renklendirme Şiddeti"
+  },
+  "renklendirmeYontemi": {
+    "message": "Renklendirme Yöntemi"
+  },
+  "resmiIndir": {
+    "message": "Resmi İndir"
+  },
+  "sekmeKoseYuvarlakligi": {
+    "message": "Sekme Köşe Yuvarlaklığı"
+  },
+  "sekmeZeminSaydamligi": {
+    "message": "Sekme Zemin Saydamlığı"
+  },
+  "sekmedeAc": {
+    "message": "Sekmede aç"
+  },
+  "sil": {
+    "message": "Sil"
+  },
+  "siraBirKezUygulanirSonrasindaSurukleyerek": {
+    "message": "Sıra bir kez uygulanır; sonrasında sürükleyerek\n               istediğiniz gibi değiştirebilirsiniz."
+  },
+  "siralamakIcinTutamactanSurukleyin": {
+    "message": "Sıralamak için tutamaçtan sürükleyin."
+  },
+  "sonGrubuHatirla": {
+    "message": "Son Grubu Hatırla"
+  },
+  "sonaKaydir": {
+    "message": "Sona kaydır"
+  },
+  "tasi": {
+    "message": "Taşı"
+  },
+  "tumVerileriSil": {
+    "message": "Tüm verileri sil"
+  },
+  "tumunuSil": {
+    "message": "Tümünü Sil"
+  },
+  "tumunuYeniSekmeGrubundaAc": {
+    "message": "Tümünü yeni sekme grubunda aç"
+  },
+  "varsayilan": {
+    "message": "Varsayılan"
+  },
+  "varsayilanRenklereDon": {
+    "message": "Varsayılan renklere dön"
+  },
+  "varsayilanaDon": {
+    "message": "Varsayılana dön"
+  },
+  "vazgec": {
+    "message": "Vazgeç"
+  },
+  "yalnizcaIkon": {
+    "message": "Yalnızca ikon"
+  },
+  "yalnizcaYazi": {
+    "message": "Yalnızca yazı"
+  },
+  "yanAracPaneli": {
+    "message": "Yan Araç Paneli"
+  },
+  "yazi": {
+    "message": "Yazı"
+  },
+  "yedekYukleniyor": {
+    "message": "Yedek Yükleniyor"
+  },
+  "yedektenYukle": {
+    "message": "Yedekten yükle"
+  },
+  "yeniGrup": {
+    "message": "Yeni Grup"
+  },
+  "yeniKart": {
+    "message": "yeni kart"
+  },
+  "yeniSekme": {
+    "message": "Yeni Sekme"
+  },
+  "yeniSekmeArkaPlan": {
+    "message": "Yeni Sekme (Arka Plan)"
+  },
+  "yeniSekmedeAc": {
+    "message": "Yeni Sekmede aç"
+  },
+  "yontem": {
+    "message": "Yöntem"
+  },
+  "kullanilanAlan": {
+    "message": "Toplam kullanım"
+  },
+  "kullanilmayan": {
+    "message": "Kullanılmayan"
+  },
+  "birDahaSorma": {
+    "message": "Bir daha sorma"
+  },
+  "gorseller": {
+    "message": "Görseller"
+  },
+  "digerVeriler": {
+    "message": "Diğer veriler"
+  },
+  "yedekAl": {
+    "message": "Yedek al"
+  },
+  "simdiYedekAl": {
+    "message": "Şimdi yedek al"
+  },
+  "onaySorulariniGeriGetir": {
+    "message": "Onay sorularını geri getir"
+  },
+  "adresiKopyala": {
+    "message": "Adresi Kopyala"
+  },
+  "arkaPlan": {
+    "message": "Arka Plan"
+  },
+  "yedekAlinamadi": {
+    "message": "Yedek alınamadı"
+  },
+  "htmlHazirlaniyor": {
+    "message": "HTML hazırlanıyor..."
+  },
+  "htmlOlusturulamadi": {
+    "message": "HTML oluşturulamadı"
+  },
+  "yedekYuklenemedi": {
+    "message": "Yedek yüklenemedi: "
+  },
+  "bekleyenYakalamalarIptalEdiliyor": {
+    "message": "Bekleyen yakalamalar iptal ediliyor"
+  },
+  "ayarlarSifirlandi": {
+    "message": "Ayarlar sıfırlandı"
+  },
+  "sifirlanamadi": {
+    "message": "Sıfırlanamadı"
+  },
+  "iptalEdildi": {
+    "message": "İptal edildi"
+  },
+  "silinemedi": {
+    "message": "Silinemedi"
+  },
+  "temizlikAtlandi": {
+    "message": "Temizlik atlandı"
+  },
+  "temizlenecekVeriYok": {
+    "message": "Temizlenecek veri yok"
+  },
+  "yedektenYukleBd": {
+    "message": "Yedekten Yükle"
+  },
+  "mevcutGruplarSilinsinMiHayirDerseniz": {
+    "message": "Mevcut gruplar SİLİNSİN mi? Hayır derseniz yedek mevcutlara EKLENİR."
+  },
+  "silVeYukle": {
+    "message": "Sil ve yükle"
+  },
+  "ekle": {
+    "message": "Ekle"
+  },
+  "ayarlariSifirlaBd": {
+    "message": "Ayarları Sıfırla"
+  },
+  "tumGorunumVeDavranisAyarlariVarsayilana": {
+    "message": "Tüm görünüm ve davranış ayarları varsayılana dönecek. "
+  },
+  "sifirla": {
+    "message": "Sıfırla"
+  },
+  "tumVerileriSilBd": {
+    "message": "Tüm Verileri Sil"
+  },
+  "butunGruplarKartlarGorsellerNotlarVe": {
+    "message": "Bütün gruplar, kartlar, görseller, notlar ve ayarlar "
+  },
+  "devam": {
+    "message": "Devam"
+  },
+  "eminMisiniz": {
+    "message": "Emin misiniz?"
+  },
+  "onaylamakIcinSilYazin": {
+    "message": "Onaylamak için SİL yazın:"
+  },
+  "copKutusuZatenBos": {
+    "message": "Çöp kutusu zaten boş"
+  },
+  "copKutusuBosaltildi": {
+    "message": "Çöp kutusu boşaltıldı"
+  },
+  "kartGeriAlindi": {
+    "message": "Kart geri alındı"
+  },
+  "geriAlinamadi": {
+    "message": "Geri alınamadı"
+  },
+  "kaliciOlarakSilindi": {
+    "message": "Kalıcı olarak silindi"
+  },
+  "copKutusunuBosalt": {
+    "message": "Çöp Kutusunu Boşalt"
+  },
+  "kaliciSil": {
+    "message": "Kalıcı Sil"
+  },
+  "gruplarGuncellendi": {
+    "message": "Gruplar güncellendi"
+  },
+  "grupOlusturuldu": {
+    "message": "Grup oluşturuldu"
+  },
+  "grupOlusturulamadi": {
+    "message": "Grup oluşturulamadı"
+  },
+  "kaydedilemedi": {
+    "message": "Kaydedilemedi"
+  },
+  "siralanacakYeterliKartYok": {
+    "message": "Sıralanacak yeterli kart yok"
+  },
+  "kartlarZatenBuSirada": {
+    "message": "Kartlar zaten bu sırada"
+  },
+  "eskiSiraGeriAlindi": {
+    "message": "Eski sıra geri alındı"
+  },
+  "siralanamadi": {
+    "message": "Sıralanamadı"
+  },
+  "notKaydedildi": {
+    "message": "Not kaydedildi"
+  },
+  "notSilindi": {
+    "message": "Not silindi"
+  },
+  "baskaGrupYok": {
+    "message": "Başka grup yok"
+  },
+  "kartTasindi": {
+    "message": "Kart taşındı"
+  },
+  "tasinamadi": {
+    "message": "Taşınamadı"
+  },
+  "dosyaOkunamadi": {
+    "message": "Dosya okunamadı"
+  },
+  "goruntuAlinamadi": {
+    "message": "Görüntü alınamadı"
+  },
+  "indirilecekGorselYok": {
+    "message": "İndirilecek görsel yok"
+  },
+  "kartSilindi": {
+    "message": "Kart silindi"
+  },
+  "gizliPencereAcilamadi": {
+    "message": "Gizli pencere açılamadı"
+  },
+  "adresKopyalandi": {
+    "message": "Adres kopyalandı"
+  },
+  "kopyalanamadi": {
+    "message": "Kopyalanamadı"
+  },
+  "buGrupBos": {
+    "message": "Bu grup boş"
+  },
+  "pencereAcilamadi": {
+    "message": "Pencere açılamadı"
+  },
+  "grupGuncellendi": {
+    "message": "Grup güncellendi"
+  },
+  "yenidenAdlandirilamadi": {
+    "message": "Yeniden adlandırılamadı"
+  },
+  "grupSilinemedi": {
+    "message": "Grup silinemedi: "
+  },
+  "acilacakKartYok": {
+    "message": "Açılacak kart yok"
+  },
+  "yenilenecekKartYok": {
+    "message": "Yenilenecek kart yok"
+  },
+  "gorselYenilendi": {
+    "message": "Görsel yenilendi"
+  },
+  "gorselAlinamadi": {
+    "message": "Görsel alınamadı"
+  },
+  "sirala": {
+    "message": "Sırala"
+  },
+  "geriAl": {
+    "message": "Geri Al"
+  },
+  "gorselAdresiniYapistirin": {
+    "message": "Görsel adresini yapıştırın:"
+  },
+  "kartiSil": {
+    "message": "Kartı Sil"
+  },
+  "hepsiniAcBd": {
+    "message": "Hepsini Aç"
+  },
+  "ac": {
+    "message": "Aç"
+  },
+  "gorselleriYenile": {
+    "message": "Görselleri Yenile"
+  },
+  "baslat": {
+    "message": "Başlat"
+  },
+  "grubuSil": {
+    "message": "Grubu Sil"
+  },
+  "grupVeIcindekiTumKartlarCop": {
+    "message": "Grup ve içindeki tüm kartlar çöp kutusuna taşınacak."
+  },
+  "hepsiniYenile": {
+    "message": "Hepsini Yenile"
+  },
+  "e8eaed": {
+    "message": "#e8eaed"
+  },
+  "gorselKaydedilemedi": {
+    "message": "Görsel kaydedilemedi"
+  },
+  "depolamaAlaniDoluYedekAliniyor": {
+    "message": "Depolama alanı dolu — yedek alınıyor"
+  },
+  "bakim": {
+    "message": "Bakım"
+  },
+  "temizlik": {
+    "message": "temizlik"
+  },
+  "gorsellerBd": {
+    "message": "gorseller"
+  },
+  "kartlar": {
+    "message": "kartlar"
+  },
+  "bitti": {
+    "message": "bitti"
+  },
+  "depoDoluYedekIndirildi": {
+    "message": "Depolama alanı doldu. Yedek indirildi — Bakım bölümünden temizlik yapın."
+  },
+  "depoDoluTemizlikYapin": {
+    "message": "Depolama alanı doldu — Bakım bölümünden temizlik yapın"
+  },
+  "nKartKuyrugaAlindi": {
+    "message": "$1 kart kuyruğa alındı"
+  },
+  "nKartSiralandi": {
+    "message": "$1 kart sıralandı"
+  },
+  "nKartGorseliYenilenecek": {
+    "message": "$1 kartın görseli yeniden yakalanacak. Bu işlem birkaç dakika sürebilir."
+  },
+  "nKartSirasiDegisecek": {
+    "message": "$1 kartın sırası değişecek. Elle verdiğiniz düzen kaybolur."
+  },
+  "nSekmeAcilacak": {
+    "message": "$1 sekme açılacak. Devam edilsin mi?"
+  },
+  "grupSilindiNKart": {
+    "message": "Grup silindi ($1 kart)"
+  },
+  "nKayitKaliciSilinecek": {
+    "message": "$1 kayıt kalıcı olarak silinecek."
+  },
+  "nGrupNKartSilindi": {
+    "message": "$1 grup, $2 kart silindi"
+  },
+  "nGrupNKartYedeklendi": {
+    "message": "$1 grup, $2 kart yedeklendi — $3"
+  },
+  "nGrupNKartYuklendi": {
+    "message": "$1 grup, $2 kart yüklendi"
+  },
+  "yedekAlindiDosya": {
+    "message": "Yedek alındı — $1"
+  },
+  "geriAlindiAd": {
+    "message": "\"$1\" geri alındı"
+  },
+  "tutarlilikKontrolu": {
+    "message": "Tutarlılık Kontrolü"
+  },
+  "kapat": {
+    "message": "Kapat"
+  },
+  "yinelenenKartlar": {
+    "message": "Yinelenen Kartlar"
+  },
+  "yinelenenKartYok": {
+    "message": "Yinelenen kart yok"
+  },
+  "sinirsiz": {
+    "message": "sınırsız"
+  },
+  "gorsellerYaziliyor": {
+    "message": "Görseller yazılıyor"
+  },
+  "gorsellerVeAyarlarSiliniyor": {
+    "message": "Görseller ve ayarlar siliniyor"
+  },
+  "tamamlandi": {
+    "message": "Tamamlandı"
+  },
+  "sayilamadi": {
+    "message": "sayılamadı"
+  },
+  "silOnayKelimesi": {
+    "message": "SİL"
+  },
+  "copKutusuBos": {
+    "message": "Çöp kutusu boş"
+  },
+  "iceriginiGor": {
+    "message": "içeriği gör"
+  },
+  "kartiNereyeAlalim": {
+    "message": "Kartı Nereye Alalım?"
+  },
+  "iceriginiGoster": {
+    "message": "İçeriği göster"
+  },
+  "henuzAcilmadi": {
+    "message": "Henüz açılmadı"
+  },
+  "gorselDegil": {
+    "message": "görsel değil"
+  },
+  "gorselYuklenemedi": {
+    "message": "görsel yüklenemedi"
+  },
+  "azOnce": {
+    "message": "az önce"
+  },
+  "dun": {
+    "message": "dün"
+  },
+  "kartGorseli": {
+    "message": "kart görseli"
+  },
+  "yedegiYukle": {
+    "message": "Yedeği Yükle"
+  },
+  "gecersizYedekDosyasi": {
+    "message": "Geçersiz yedek dosyası"
+  },
+  "onceEnAzBirGrupOlusturun": {
+    "message": "Önce en az bir grup oluşturun"
+  },
+  "simgeRenkleriSifirlandi": {
+    "message": "Simge renkleri sıfırlandı"
+  },
+  "kopyalandi": {
+    "message": "Kopyalandı"
+  },
+  "kopyalanamadiElleSecin": {
+    "message": "Kopyalanamadı — adresi elle seçin"
+  },
+  "kapatilmisOnaySorusuYok": {
+    "message": "Kapatılmış onay sorusu yok"
+  },
+  "notuDuzenle": {
+    "message": "Notu Düzenle"
+  },
+  "tamam": {
+    "message": "Tamam"
+  },
+  "denetimYapilamadi": {
+    "message": "Denetim yapılamadı"
+  },
+  "nKartCizilmemis": {
+    "message": "$1 kart ekranda çizilmemiş"
+  },
+  "sayfayiYenileyipDeneyin": {
+    "message": "Sayfayı yenileyip tekrar deneyin."
+  },
+  "nKartinGorseliYok": {
+    "message": "$1 kartın görseli yok"
+  },
+  "grupMenusundenYenilenebilir": {
+    "message": "Grup menüsünden \"Grubun görsellerini yenile\" ile yakalanabilir."
+  },
+  "buKartlarPaylasir": {
+    "message": "Bu kartlar görseli, notu ve rengi paylaşır."
+  },
+  "yinelenenKartlariAc": {
+    "message": "Yinelenen Kartları Aç"
+  },
+  "nBosGrup": {
+    "message": "$1 boş grup"
+  },
+  "cizimKontroluAtlandi": {
+    "message": "Çizim kontrolü atlandı"
+  },
+  "ozelEkranAcikNormaleDonun": {
+    "message": "Arama, çöp kutusu ya da yinelenen kartlar ekranı açık. Normal görünüme dönüp tekrar çalıştırın."
+  },
+  "sorunBulunamadi": {
+    "message": "Sorun bulunamadı"
+  },
+  "nKezAcildi": {
+    "message": "$1 kez açıldı"
+  },
+  "nSekmeAcilacakDevam": {
+    "message": "$1 sekme açılacak. Devam edilsin mi?"
+  },
+  "nKartKuyrugaAlindi2": {
+    "message": "$1 kart kuyruğa alındı"
+  },
+  "nDakikaOnce": {
+    "message": "$1 dakika önce"
+  },
+  "nSaatOnce": {
+    "message": "$1 saat önce"
+  },
+  "nGunOnce": {
+    "message": "$1 gün önce"
+  },
+  "nAyOnce": {
+    "message": "$1 ay önce"
+  },
+  "nYilOnce": {
+    "message": "$1 yıl önce"
+  },
+  "sizSilmediyseniz": {
+    "message": "Siz silmediyseniz yedekten geri yükleyebilirsiniz."
+  },
+  "depoDolduYedekAlipTemizleyin": {
+    "message": "Depolama alanı doldu — yedek alıp temizlik yapın"
+  },
+  "anaSayfaGizlendiNKart": {
+    "message": "Ana Sayfa gizlendi — $1 kart artık şeritte görünmüyor"
+  },
+  "nGorsel": {
+    "message": "$1 görsel"
+  },
+  "ayrilanAlanDoldu": {
+    "message": "Ayrılan alan doldu. Yeni görseller kaydedilemiyor. Önce yedek alın, sonra kullanılmayan verileri temizleyin ya da gerekmeyen kartları silin."
+  },
+  "yedekAlipTemizlemenizOnerilir": {
+    "message": "Bir yedek alıp kullanılmayan verileri temizlemeniz önerilir."
+  },
+  "kartlarinizaDokunulmaz": {
+    "message": "Kartlarınıza, gruplarınıza ve görsellerinize dokunulmaz."
+  },
+  "kaliciSilinecekCopeGitmez": {
+    "message": "kalıcı olarak silinecek. Çöp kutusuna gitmez, geri alınamaz."
+  },
+  "bos": {
+    "message": "boş"
+  },
+  "nKayit": {
+    "message": "$1 kayıt"
+  },
+  "nKartSilinmisGrup": {
+    "message": "$1 kart · silinmiş grup"
+  },
+  "goruntuUrlsi": {
+    "message": "Görüntü URL'si"
+  },
+  "oncekiSimdiKayip": {
+    "message": "$1 $2 vardı, şimdi $3. "
+  },
+  "nGorselTemizlendi": {
+    "message": "$1 görsel temizlendi"
+  },
+  "giris": {
+    "message": "Giriş"
+  },
+  "kaydir": {
+    "message": "Kaydır"
+  },
+  "ayarlarBaslangicAnaSayfa": {
+    "message": "Ayarlar → Başlangıç → Ana Sayfa"
+  },
+  "gorunum": {
+    "message": "Görünüm"
+  },
+  "kartlarBolum": {
+    "message": "Kartlar"
+  },
+  "grupSeridi": {
+    "message": "Grup Şeridi"
+  },
+  "goruntuYakalama": {
+    "message": "Görüntü Yakalama"
+  },
+  "yedeklemeBolum": {
+    "message": "Yedekleme"
+  },
+  "bakimBolum": {
+    "message": "Bakım"
+  },
+  "anasayfaKurulumu": {
+    "message": "Anasayfa Kurulumu"
+  },
+  "kisayollarBolum": {
+    "message": "Kısayollar"
+  },
+  "uzantiSimgesi": {
+    "message": "Uzantı Simgesi"
+  },
+  "baslamakIcin": {
+    "message": "Başlamak için"
+  },
+  "tonKaydir": {
+    "message": "Ton Kaydır"
+  },
+  "ikiRenk": {
+    "message": "İki Renk"
+  },
+  "ipucuGrup": {
+    "message": "Kartlarınızı gruplara ayırın, şeritteki + ile yeni grup açın"
+  },
+  "ipucuKartEkle": {
+    "message": "Bir sayfada sağ tıklayıp \"WSD Speed Dial'e ekle\" deyin, kart burada belirsin"
+  },
+  "nKartYenidenYakalanacak": {
+    "message": "$1 kartın görseli yeniden yakalanacak. Bu işlem birkaç dakika sürebilir."
+  }
+}

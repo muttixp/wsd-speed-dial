@@ -1,0 +1,2149 @@
+/* ============================================================
+   WSD Speed Dial - tasarim sistemi
+   Kutuphane yok: her yeni sekmede yuklenen bir sayfada 200 KB'lik
+   CSS cercevesi tasimak anlamsiz. Bunun yerine tutarli bir olcek.
+   ============================================================ */
+
+:root {
+    /* Renkler - tek kaynak */
+    --zemin:        #14161a;
+    --yuzey:        #1c1f26;
+    --yuzey-2:      #22262e;
+    --metin:        #e8eaed;
+    --metin-sonuk:  rgba(232, 234, 237, 0.62);
+    --cerceve:      rgba(255, 255, 255, 0.09);
+    --cerceve-guclu:rgba(255, 255, 255, 0.16);
+    --vurgu:        #4d7ea8;
+    --vurgu-parlak: #5d93c2;
+    --tehlike:      #d9534f;
+
+    /* Bosluk olcegi - 4'un katlari */
+    --b1: 4px;  --b2: 8px;  --b3: 12px;
+    --b4: 16px; --b5: 24px; --b6: 32px;
+
+    /* Kose yaricapi */
+    --k1: 6px;  --k2: 9px;  --k3: 14px;
+
+    /* Yukselti */
+    --golge-1: 0 1px 2px rgba(0,0,0,.3);
+    --golge-2: 0 6px 18px rgba(0,0,0,.35);
+    --golge-3: 0 18px 48px rgba(0,0,0,.5);
+
+    /* Gecis - tek sure, tutarli his */
+    --gecis: 160ms cubic-bezier(.4, 0, .2, 1);
+
+    /* Kart olculeri (ayarlardan degisebilir) */
+    --baslik-boyut: 13px;
+    --kart-en: 250px;
+    --kart-gorsel-boy: 156px;      /* en * oran carpani - JS hesapliyor */
+    --kart-kose: 7px;
+    --kart-bosluk-yatay: 3px;
+    --kart-bosluk-dikey: 12px;
+    --kart-cerceve: 1px;
+    --kart-cerceve-rengi: #6a6a6a;
+    --kart-cerceve-hover: #576a80;
+    --kart-zemin: #22262e;
+    --grup-kose: 9px;
+    --grup-olcek: 1;
+    --grup-zemin: rgba(255,255,255,.06);
+    --izgara-en: none;
+}
+
+* { box-sizing: border-box; }
+
+/* Zemin rengi HTML'de: body opak olursa z-index:-1 olan duvar kagidi
+   katmani onun arkasinda kalip hic gorunmuyor. */
+html { background: var(--zemin); }
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: transparent;
+    color: var(--metin);
+    font: 400 14px/1.5 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* --- Kaydirma cubugu: ince, sayfa temasina uygun --- */
+* { scrollbar-width: thin; scrollbar-color: var(--cerceve-guclu) transparent; }
+*::-webkit-scrollbar { width: 10px; height: 10px; }
+*::-webkit-scrollbar-track { background: transparent; }
+*::-webkit-scrollbar-thumb {
+    background: var(--cerceve-guclu);
+    border-radius: 99px;
+    border: 3px solid transparent;
+    background-clip: content-box;
+}
+*::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,.3); background-clip: content-box; }
+
+/* ============ Zemin ============ */
+/* isolation: katman ici karisim modlari sayfaya tasmasin */
+#zeminKatmani {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    isolation: isolate;
+}
+#zeminGorsel {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: var(--zemin-filtre, none);
+}
+
+/* Iki renk boya katmanlari - goruntunun uzerine biniyor */
+#boyaGolge, #boyaIsik {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity var(--gecis);
+}
+#boyaGolge { mix-blend-mode: multiply; }
+#boyaIsik  { mix-blend-mode: screen; }
+
+/* ============ Ust serit ============ */
+/* Grup seridi SABIT: sayfa kaydirilinca yerinde kalir.
+   `position: sticky` degil `fixed` - sticky, kart alani kisa oldugunda
+   ust bosluk birakip zipliyor. */
+#ustSerit {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    gap: var(--b4);
+    padding: 8px var(--b4) 8px var(--b3);
+    background: linear-gradient(to bottom,
+        rgba(20, 22, 26, .82), rgba(20, 22, 26, 0));
+    z-index: 44;
+}
+
+/* Kart alani ust boslugu asagida (#kartAlani kuralinda) veriliyor -
+   burada tekrar tanimlamak sonraki kural tarafindan eziliyordu. */
+
+#grupSeridi {
+    display: flex;
+    gap: var(--b1);
+    flex: 1;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+#grupSeridi::-webkit-scrollbar { display: none; }
+
+.grupSekme {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--b2);
+    /* Olcek tek degiskenden: `transform: scale` kullanmiyoruz cunku
+       o metni bulaniklastirip tiklama alanini kaydiriyor. */
+    padding: calc(5px * var(--grup-olcek)) calc(10px * var(--grup-olcek));
+    font-size: calc(14px * var(--grup-olcek));
+    border: 1px solid transparent;
+    border-radius: var(--grup-kose);
+    background: transparent;
+    color: var(--metin-sonuk);
+    font: inherit;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background var(--gecis), color var(--gecis), border-color var(--gecis);
+}
+.grupSekme        { background: var(--grup-zemin); }
+.grupSekme:hover  { filter: brightness(1.5); color: var(--metin); }
+.grupSekme.aktif  {
+    background: var(--grup-aktif-rengi);
+    border-color: var(--cerceve);
+    color: var(--metin);
+    filter: none;
+}
+
+.grupSayi {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 1px 6px;
+    border-radius: 99px;
+    background: rgba(255,255,255,.10);
+    opacity: .75;
+}
+
+.araclarBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 36px;
+    height: 36px;
+    border: 0;
+    border-radius: var(--k2);
+    background: transparent;
+    color: var(--metin-sonuk);
+    font-size: 16px;
+    cursor: pointer;
+    transition: background var(--gecis), color var(--gecis);
+}
+.araclarBtn:hover { background: rgba(255,255,255,.08); color: var(--metin); }
+
+/* ============ Kart izgarasi ============ */
+/* Ust bosluk sabit seridin yuksekligi kadar */
+#kartAlani { padding: 52px var(--b5) var(--b6); }
+
+.kartIzgara {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, var(--kart-en));
+    /* Yatay ve dikey bosluk AYRI ayarlanabiliyor */
+    column-gap: var(--kart-bosluk-yatay);
+    row-gap: var(--kart-bosluk-dikey);
+    justify-content: center;
+    /* Sutun siniri toplam genislikten geliyor; dar ekranda kendiliginden
+       daha az sutun olusuyor. */
+    max-width: var(--izgara-en);
+    margin: 0 auto;
+}
+
+/* Yukseklik SABIT degil: gorsel kutusu orandan geliyor, baslik ayrica
+   yer kapliyor. Boylece oran degisince kart kendiliginden uyum sagliyor. */
+.kart {
+    display: block;
+    position: relative;
+    border-radius: var(--kart-kose);
+    text-decoration: none;
+    color: inherit;
+}
+
+.kartGovde { display: flex; flex-direction: column; height: 100%; border-radius: inherit; }
+
+.kartBaslik {
+    padding: 0 var(--b3) var(--b1);
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: var(--baslik-boyut);
+    color: var(--metin-sonuk);
+    transition: color var(--gecis);
+}
+.kart:hover .kartBaslik { color: var(--metin); }
+
+.kartGorsel {
+    position: relative;
+    height: var(--kart-gorsel-boy);
+    border-radius: inherit;
+    background-color: var(--kart-zemin);
+    background-size: cover;
+    background-position: 50% 0;
+    background-repeat: no-repeat;
+    /* Cerceve icin `border` degil inset golge: kutu olcusunu buyutmuyor,
+       dolayisiyla kalinlik degisince izgara kaymiyor. */
+    box-shadow: inset 0 0 0 var(--kart-cerceve) var(--kart-cerceve-rengi), var(--golge-1);
+    transition: box-shadow var(--gecis);
+}
+.kart:hover .kartGorsel {
+    box-shadow: inset 0 0 0 var(--kart-cerceve) var(--kart-cerceve-hover), var(--golge-2);
+}
+
+.kartRenk {
+    position: absolute;
+    left: var(--b3); right: var(--b3); bottom: 0;
+    height: 3px;
+    border-radius: 3px 3px 0 0;
+}
+
+/* "+" karti normal kart yapisini kullaniyor (bkz. cizim.js):
+   baslik satiri yer kapliyor, cerceve yalnizca gorsel kutusunda. */
+.ekleKart {
+    border: 0;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+    font: inherit;
+}
+
+.ekleKutu {
+    height: var(--kart-gorsel-boy);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px dashed var(--cerceve-guclu);
+    border-radius: var(--kart-kose);
+    color: var(--metin-sonuk);
+    font-size: 26px;
+    font-weight: 300;
+    line-height: 1;
+    transition: background var(--gecis), color var(--gecis), border-color var(--gecis);
+}
+.ekleKart:hover .ekleKutu {
+    background: rgba(255,255,255,.04);
+    color: var(--metin);
+    border-color: var(--vurgu);
+}
+
+/* Sag tiklanan kart */
+.kart.menuHedef .kartGorsel { box-shadow: inset 0 0 0 100vmax rgba(0,0,0,.6); }
+
+/* Gorseli yenilenen kart */
+.kart.yenileniyor .kartGorsel::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: rgba(255,255,255,.92) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='34' viewBox='0 0 34 34'%3E%3Ccircle cx='17' cy='17' r='13' fill='none' stroke='%234d7ea8' stroke-width='3' stroke-dasharray='60 20'%3E%3CanimateTransform attributeName='transform' type='rotate' from='0 17 17' to='360 17 17' dur='.9s' repeatCount='indefinite'/%3E%3C/circle%3E%3C/svg%3E") center/34px no-repeat;
+}
+
+/* ============ Perde ============ */
+#perde {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.45);
+    z-index: 50;
+}
+
+/* ============ Pencereler ============ */
+/* Pencerenin KENDI arka plani YOK: karartmayi #perde yapiyor.
+   Sebep katman baglami - `.pencere` kendi arka planiyla z-index alinca
+   icindeki hicbir sey disaridaki bir elemani (isaretli kart) gecemiyordu.
+   Simdi sira duz: #perde (70) < isaretli kart (71) < .pencere (72). */
+.pencere {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    pointer-events: none;      /* bosluga tiklama perdeye gecsin */
+    z-index: 72;
+    animation: belir 140ms ease;
+}
+.pencere > * { pointer-events: auto; }
+.pencere[hidden] { display: none; }
+
+@keyframes belir { from { opacity: 0 } to { opacity: 1 } }
+@keyframes yukari { from { opacity: 0; transform: translateY(10px) scale(.98) } to { opacity: 1; transform: none } }
+
+.pencereIc {
+    background: var(--yuzey);
+    border: 1px solid var(--cerceve);
+    border-radius: var(--k3);
+    box-shadow: var(--golge-3);
+    padding: var(--b5);
+    width: min(440px, 94vw);
+    max-height: 92vh;
+    overflow-y: auto;
+    animation: yukari 180ms cubic-bezier(.2, .8, .3, 1);
+}
+.pencereIc h2 {
+    margin: 0 0 var(--b4);
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -.01em;
+}
+
+/* --- Form alanlari --- */
+.alan { display: block; margin-bottom: var(--b4); }
+/* `display: block` [hidden] ozelligini eziyordu: onay penceresinde
+   gizlenmesi gereken giris alani gorunur kaliyordu. */
+.alan[hidden] { display: none; }
+.alan > span {
+    display: block;
+    margin-bottom: var(--b2);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--metin-sonuk);
+}
+
+.alan input,
+.alan select {
+    width: 100%;
+    background: rgba(255,255,255,.05);
+    border: 1px solid var(--cerceve);
+    border-radius: var(--k2);
+    padding: 9px 12px;
+    color: var(--metin);
+    font: inherit;
+    transition: border-color var(--gecis), background var(--gecis);
+}
+.alan input:hover, .alan select:hover { background: rgba(255,255,255,.07); }
+.alan input:focus, .alan select:focus {
+    outline: none;
+    border-color: var(--vurgu);
+    background: rgba(255,255,255,.08);
+}
+
+/* --- Dugmeler --- */
+.dugme {
+    border: 1px solid transparent;
+    border-radius: var(--k2);
+    padding: 9px 18px;
+    background: rgba(255,255,255,.08);
+    color: var(--metin);
+    font: inherit;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background var(--gecis), transform var(--gecis);
+}
+.dugme:hover  { background: rgba(255,255,255,.14); }
+.dugme:active { transform: translateY(1px); }
+.dugme.birincil { background: var(--vurgu); }
+.dugme.birincil:hover { background: var(--vurgu-parlak); }
+.dugme.tehlikeli { background: var(--tehlike); }
+.dugme.tehlikeli:hover { background: #e2635f; }
+
+.pencereAlt {
+    display: flex;
+    gap: var(--b3);
+    margin-top: var(--b5);
+}
+.pencereAlt .dugme { flex: 1; }
+
+/* --- Renk etiketi --- */
+.renkSirasi { display: flex; gap: var(--b3); flex-wrap: wrap; }
+
+.renkNokta {
+    width: 30px; height: 30px;
+    border: 0; padding: 0;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform var(--gecis);
+}
+.renkNokta:hover { transform: scale(1.14); }
+/* outline kullaniyoruz: border nokta olcusunu degistirip sirayi kaydirir */
+.renkNokta.secili { outline: 2px solid rgba(255,255,255,.85); outline-offset: 3px; }
+.renkNokta.bos {
+    background: var(--yuzey-2);
+    border: 1px solid var(--cerceve-guclu);
+    color: var(--metin-sonuk);
+    font-size: 14px;
+    line-height: 1;
+}
+
+/* --- Karusel --- */
+.karusel { display: flex; align-items: center; gap: var(--b2); margin: var(--b5) 0 var(--b3); }
+
+.karuselOk {
+    border: 0;
+    background: transparent;
+    color: var(--metin);
+    font-size: 20px;
+    line-height: 1;
+    padding: var(--b2) var(--b1);
+    cursor: pointer;
+    opacity: .45;
+    flex-shrink: 0;
+    transition: opacity var(--gecis);
+}
+.karuselOk:hover:not(:disabled) { opacity: 1; }
+.karuselOk:disabled { opacity: .12; cursor: default; }
+
+.karuselOnizleme {
+    flex: 1;
+    aspect-ratio: 16 / 10;
+    border-radius: var(--k2);
+    background: #fff center/contain no-repeat;
+    box-shadow: var(--golge-2);
+}
+
+.karuselNoktalar {
+    display: flex;
+    justify-content: center;
+    gap: var(--b2);
+    margin-bottom: var(--b4);
+    min-height: 8px;
+}
+.karuselNokta {
+    width: 7px; height: 7px;
+    border: 0; padding: 0;
+    border-radius: 50%;
+    background: rgba(255,255,255,.2);
+    cursor: pointer;
+    transition: background var(--gecis), transform var(--gecis);
+}
+.karuselNokta:hover { transform: scale(1.3); }
+.karuselNokta.secili { background: var(--vurgu-parlak); }
+
+/* --- Gorsel araclari --- */
+.gorselAraclari {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--b2);
+    margin-bottom: var(--b4);
+}
+
+.gorselDugme {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--b2);
+    padding: var(--b3) var(--b1);
+    border: 1px solid var(--cerceve);
+    border-radius: var(--k2);
+    background: rgba(255,255,255,.03);
+    color: var(--metin-sonuk);
+    font-size: 11px;
+    line-height: 1.3;
+    text-align: center;
+    cursor: pointer;
+    transition: background var(--gecis), color var(--gecis), border-color var(--gecis);
+}
+.gorselDugme:hover {
+    background: rgba(255,255,255,.08);
+    color: var(--metin);
+    border-color: var(--cerceve-guclu);
+}
+.gdSimge { font-size: 17px; }
+
+/* ============ Menuler ============ */
+.menu {
+    position: fixed;
+    margin: 0;
+    padding: var(--b1);
+    list-style: none;
+    background: var(--yuzey-2);
+    border: 1px solid var(--cerceve);
+    border-radius: var(--k2);
+    box-shadow: var(--golge-3);
+    min-width: 196px;
+    z-index: 80;
+    animation: belir 100ms ease;
+}
+.menu[hidden] { display: none; }
+.menu li {
+    padding: 8px var(--b3);
+    border-radius: var(--k1);
+    cursor: pointer;
+    font-size: 13px;
+    transition: background var(--gecis);
+}
+.menu li:hover { background: rgba(255,255,255,.09); }
+.menu li.yikici { color: #e2706c; }
+.menu li.yikici:hover { background: rgba(217,83,79,.16); }
+
+/* ============ Ayar paneli ============ */
+/* Panel HER ZAMAN DOM'da duruyor; `hidden` ile degil `transform` ile
+   gizleniyor. `display:none` gecis animasyonunu iptal ettigi icin
+   kapanis efekti gorunmuyordu.
+   `visibility` gecikmeli kapaniyor ki panel disari kayarken gorunur kalsin. */
+/* Panel acikken SAYFA kaydirmasi kilitleniyor: iki kaydirma cubugu
+   yan yana cikip birbirine karisiyordu. `overflow: hidden` cubugu
+   tumden kaldirdigi icin icerik saga kayiyor - `scrollbar-gutter`
+   o yeri surekli ayirtip kaymayi onluyor. */
+html { scrollbar-gutter: stable; }
+body.ayarAcik,
+body.pencereAcik { overflow: hidden; }
+
+#ayarPanel {
+    position: fixed;
+    top: 0; right: 0; bottom: 0;
+    width: min(400px, 94vw);
+    background: var(--yuzey);
+    border-left: 1px solid var(--cerceve);
+    box-shadow: var(--golge-3);
+    padding: var(--b4) var(--b5) var(--b6);
+    overflow-y: auto;
+    z-index: 60;
+
+    transform: translateX(100%);
+    visibility: hidden;
+    transition: transform 260ms cubic-bezier(.2, .8, .3, 1),
+                visibility 0s linear 260ms;
+}
+
+#ayarPanel.acik {
+    transform: none;
+    visibility: visible;
+    transition: transform 260ms cubic-bezier(.2, .8, .3, 1),
+                visibility 0s;
+}
+
+/* Perde de birlikte solsun */
+#perde {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 220ms ease, visibility 0s linear 220ms;
+}
+#perde.acik {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 220ms ease, visibility 0s;
+}
+
+.ayarBaslik {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--b2);
+}
+/* Baslik ve kapatma dugmesi AYNI hizada: h2'nin satir yuksekligi
+   dugmeden farkli oldugu icin dugme asagi kayiyordu. */
+.ayarBaslik h2 {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 36px;
+}
+#ayarKapat {
+    width: 36px;
+    height: 36px;
+    margin-right: -8px;
+    font-size: 18px;
+    line-height: 1;
+}
+
+.ayarBolum {
+    margin: var(--b5) 0 var(--b3);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--metin-sonuk);
+}
+
+.ayarSatir {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: var(--b3);
+    padding: var(--b3) 0;
+    border-bottom: 1px solid rgba(255,255,255,.045);
+    font-size: 13px;
+}
+.ayarSatir:last-child { border-bottom: 0; }
+
+/* Kaydiricili satir: etiket | cubuk | deger AYNI satirda.
+   Once cubuk tam genislik kapliyordu ve deger alt satira dusuyordu -
+   panelde gereksiz yer harciyordu. */
+.ayarSatir:has(input[type=range]) {
+    grid-template-columns: minmax(90px, auto) 1fr 34px;
+}
+.ayarSatir input[type=range] {
+    width: 100%;
+    min-width: 0;
+    accent-color: var(--vurgu);
+    height: 4px;
+}
+.ayarSatir output {
+    font-size: 12px;
+    color: var(--metin-sonuk);
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+
+.ayarSatir select,
+.ayarSatir input[type=number] {
+    background: rgba(255,255,255,.05);
+    color: var(--metin);
+    border: 1px solid var(--cerceve);
+    border-radius: var(--k1);
+    padding: 6px 9px;
+    font: inherit;
+    font-size: 13px;
+    max-width: 200px;
+    transition: border-color var(--gecis);
+}
+.ayarSatir select:focus,
+.ayarSatir input[type=number]:focus { outline: none; border-color: var(--vurgu); }
+
+/* ============ Bildirim ============ */
+#bildirim {
+    position: fixed;
+    left: 50%;
+    bottom: var(--b6);
+    transform: translateX(-50%) translateY(8px);
+    background: var(--yuzey-2);
+    border: 1px solid var(--cerceve);
+    box-shadow: var(--golge-2);
+    padding: 11px 20px;
+    border-radius: var(--k2);
+    font-size: 13px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--gecis), transform var(--gecis);
+    z-index: 90;
+}
+#bildirim.gorunur { opacity: 1; transform: translateX(-50%); }
+
+/* ============ Onay penceresi ============ */
+#onayPencere .pencereIc { width: min(380px, 92vw); }
+#onayMetin {
+    margin: 0;
+    color: var(--metin-sonuk);
+    font-size: 13.5px;
+    line-height: 1.6;
+}
+#onayGiris { margin-top: var(--b4); }
+
+/* --- Ikonlu menu --- */
+.menuIkonlu li {
+    display: flex;
+    align-items: center;
+    gap: var(--b3);
+    padding: 9px var(--b3);
+}
+.menuIkonlu svg {
+    width: 17px;
+    height: 17px;
+    flex-shrink: 0;
+    color: var(--menu-ikon-rengi, #6cc04a);
+}
+.menuIkonlu li.yikici svg { color: #e2706c; }
+
+/* --- Not penceresi --- */
+.alan textarea {
+    width: 100%;
+    background: rgba(255,255,255,.05);
+    border: 1px solid var(--cerceve);
+    border-radius: var(--k2);
+    padding: 10px 12px;
+    color: var(--metin);
+    font: inherit;
+    line-height: 1.55;
+    resize: vertical;
+    min-height: 90px;
+    transition: border-color var(--gecis), background var(--gecis);
+}
+.alan textarea:focus {
+    outline: none;
+    border-color: var(--vurgu);
+    background: rgba(255,255,255,.08);
+}
+
+/* Notu olan kartta kose isareti */
+.kart.notlu .kartGorsel::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 0; height: 0;
+    border-style: solid;
+    border-width: 0 18px 18px 0;
+    border-color: transparent #e8c53a transparent transparent;
+    border-top-right-radius: var(--kart-kose);
+    z-index: 1;
+}
+
+/* Devre disi menu ogesi - gizlemek yerine soluk: menu duzeni sabit kalsin */
+.menu li.pasif {
+    opacity: .32;
+    cursor: default;
+    pointer-events: none;
+}
+
+/* --- Kart uzeri arac seridi --- */
+.kartAraclari {
+    position: absolute;
+    top: -6px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-4px);
+    display: flex;
+    gap: 3px;
+    padding: 3px;
+    border-radius: var(--k2);
+    background: rgba(28, 31, 38, .96);
+    border: 1px solid var(--cerceve-guclu);
+    box-shadow: var(--golge-2);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--gecis), transform var(--gecis), visibility 0s linear var(--gecis);
+    z-index: 5;
+}
+
+.kart:hover .kartAraclari,
+.kartAraclari:hover {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+    transition: opacity var(--gecis), transform var(--gecis), visibility 0s;
+}
+
+/* Ayardan kapatilinca hic gorunmesin */
+body.araclarKapali .kartAraclari { display: none; }
+
+.kartArac {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border: 0;
+    border-radius: var(--k1);
+    background: transparent;
+    color: var(--metin-sonuk);
+    cursor: pointer;
+    transition: background var(--gecis), color var(--gecis);
+}
+.kartArac svg { width: 15px; height: 15px; }
+.kartArac:hover { background: rgba(255,255,255,.12); color: var(--metin); }
+.kartArac[data-arac="sil"]:hover { background: rgba(217,83,79,.22); color: #e2706c; }
+.kartArac.pasif { opacity: .3; pointer-events: none; }
+
+
+/* ============ Yan arac seridi ============ */
+#yanArac {
+    position: fixed;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: var(--b1);
+    padding: var(--b2) 6px;
+    background: rgba(28, 31, 38, .92);
+    border: 1px solid var(--cerceve);
+    border-right: 0;
+    border-radius: var(--k2) 0 0 var(--k2);
+    box-shadow: var(--golge-2);
+    z-index: 40;
+}
+
+.yanBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border: 0;
+    border-radius: var(--k1);
+    background: transparent;
+    color: var(--metin-sonuk);
+    cursor: pointer;
+    transition: background var(--gecis), color var(--gecis);
+}
+.yanBtn svg { width: 18px; height: 18px; }
+.yanBtn:hover { background: rgba(255,255,255,.10); color: var(--metin); }
+.yanBtn.kapali { color: rgba(232,234,237,.28); }
+
+/* ============ Ayar paneli - gorunum ogeleri ============ */
+
+/* Panel acikken yan serit ustte kalmasin */
+body.ayarAcik #yanArac { opacity: 0; pointer-events: none; }
+#yanArac { transition: opacity var(--gecis); }
+
+.ayarSatir.tekSutun { display: block; }
+
+/* --- Anahtar (toggle) --- */
+.anahtar {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 38px;
+    height: 21px;
+    border-radius: 99px;
+    background: rgba(255,255,255,.14);
+    position: relative;
+    cursor: pointer;
+    transition: background var(--gecis);
+    flex-shrink: 0;
+}
+.anahtar::after {
+    content: '';
+    position: absolute;
+    top: 3px; left: 3px;
+    width: 15px; height: 15px;
+    border-radius: 50%;
+    background: #fff;
+    transition: transform var(--gecis);
+}
+.anahtar:checked { background: var(--vurgu); }
+.anahtar:checked::after { transform: translateX(17px); }
+
+/* --- Renk kutusu --- */
+.renkKutu {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 46px;
+    height: 22px;
+    border: 1px solid var(--cerceve);
+    border-radius: 99px;
+    background: transparent;
+    padding: 2px;
+    cursor: pointer;
+}
+.renkKutu::-webkit-color-swatch-wrapper { padding: 0; }
+.renkKutu::-webkit-color-swatch { border: 0; border-radius: 99px; }
+
+/* --- Duvar kagidi onizleme --- */
+/* Onizleme: uzerine gelince karariyor ve yukleme simgesi beliriyor.
+   Simge ::after ile ciziliyor - ayri bir <img> tasimaya gerek yok. */
+.duvarOnizleme {
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: 1px solid var(--cerceve);
+    border-radius: var(--k2);
+    background: linear-gradient(135deg, #4aa3df, #2f6fd0) center/cover no-repeat;
+    cursor: pointer;
+    padding: 0;
+    overflow: hidden;
+    transition: border-color var(--gecis);
+}
+.duvarOnizleme:hover { border-color: var(--vurgu); }
+
+/* Karartma katmani */
+.duvarOnizleme::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, .45);
+    opacity: 0;
+    transition: opacity var(--gecis);
+}
+
+/* Yukleme simgesi */
+.duvarOnizleme::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: center/38px no-repeat
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23bfdcf5' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 16V4'/%3E%3Cpath d='m7 9 5-5 5 5'/%3E%3Cpath d='M4 20h16'/%3E%3C/svg%3E");
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity var(--gecis), transform var(--gecis);
+}
+
+.duvarOnizleme:hover::before { opacity: 1; }
+.duvarOnizleme:hover::after  { opacity: 1; transform: none; }
+
+.duvarAraclari { display: flex; gap: var(--b2); margin-top: var(--b2); }
+
+.miniDugme {
+    flex: 1;
+    border: 1px solid var(--cerceve);
+    border-radius: var(--k1);
+    background: rgba(255,255,255,.04);
+    color: var(--metin-sonuk);
+    font: inherit;
+    font-size: 12px;
+    padding: 6px 10px;
+    cursor: pointer;
+    transition: background var(--gecis), color var(--gecis);
+}
+.miniDugme:hover { background: rgba(255,255,255,.10); color: var(--metin); }
+
+/* Gizlenen ayar satirlari - .ayarSatir grid oldugu icin [hidden] eziliyordu */
+/* `.ayarSatir.tekSutun { display:block }` ile ayni ozgullukte oldugu icin
+   sira bagimliligi vardi; !important ile kesinlestiriyoruz. */
+.ayarSatir[hidden] { display: none !important; }
+
+/* --- Segment secici --- */
+.segment {
+    display: flex;
+    gap: 2px;
+    padding: 2px;
+    border: 1px solid var(--cerceve);
+    border-radius: var(--k2);
+    background: rgba(255,255,255,.04);
+}
+.segBtn {
+    border: 0;
+    border-radius: var(--k1);
+    background: transparent;
+    color: var(--metin-sonuk);
+    font: inherit;
+    font-size: 11.5px;
+    line-height: 1.25;
+    padding: 6px 12px;
+    cursor: pointer;
+    transition: background var(--gecis), color var(--gecis);
+}
+.segBtn:hover  { background: rgba(255,255,255,.07); color: var(--metin); }
+.segBtn.secili { background: rgba(255,255,255,.14); color: var(--metin); }
+
+#ayFiltreKutu[hidden], #ayTonKutu[hidden], #ayIkiKutu[hidden] { display: none; }
+
+/* ============ Katlanabilir ayar bolumleri ============ */
+.bolum { border-bottom: 1px solid rgba(255,255,255,.05); }
+.bolum:last-of-type { border-bottom: 0; }
+
+.bolumBaslik {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: var(--b4) 0;
+    border: 0;
+    background: transparent;
+    color: var(--metin-sonuk);
+    font: inherit;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: color var(--gecis);
+}
+.bolumBaslik:hover { color: var(--metin); }
+
+.bolumOk {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    transition: transform var(--gecis);
+}
+.bolum.acik .bolumOk { transform: rotate(180deg); }
+.bolum.acik .bolumBaslik { color: var(--metin); }
+
+/* Kapali bolumler yer kaplamiyor; acilirken yukseklik animasyonu icin
+   grid-template-rows kullaniyoruz - `height: auto` gecis yapmiyor. */
+.bolumIc {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 240ms cubic-bezier(.2,.8,.3,1);
+}
+.bolum.acik .bolumIc { grid-template-rows: 1fr; }
+
+.bolumIc > * { overflow: hidden; min-height: 0; }
+
+/* --- Alt bolum (bolum icinde gruplama) --- */
+.altBolum {
+    margin: var(--b3) 0 var(--b4);
+    padding: var(--b3) 0 0;
+    border-top: 1px solid rgba(255,255,255,.06);
+}
+.altBolum[hidden] { display: none; }
+
+.altBaslik {
+    margin-bottom: var(--b2);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    color: var(--metin-sonuk);
+    opacity: .8;
+}
+
+/* --- Bolum basliginda simge --- */
+.bolumAd { display: inline-flex; align-items: center; gap: var(--b2); }
+.bolumSimge { width: 15px; height: 15px; flex-shrink: 0; opacity: .8; }
+.bolum.acik .bolumSimge { opacity: 1; color: var(--vurgu-parlak); }
+
+.altBaslik { display: flex; align-items: center; gap: var(--b2); }
+.altBaslik svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+/* --- Satirlarda donusumlu zemin (tablo serisi) --- */
+.bolumGovde > .ayarSatir:nth-child(odd),
+.altBolum   > .ayarSatir:nth-child(odd),
+#ayTonKutu  > .ayarSatir:nth-child(odd),
+#ayIkiKutu  > .ayarSatir:nth-child(odd) {
+    background: rgba(255, 255, 255, .022);
+}
+
+/* Satirlar panel kenarina yaslanmiyor: iki yanda bosluk kaliyor ve
+   satir daha ince. Yuksekligi padding ile kisiyoruz. */
+.bolumGovde .ayarSatir,
+.altBolum .ayarSatir {
+    padding: 7px var(--b3);
+    border-radius: var(--k1);
+    border-bottom: 0;
+}
+
+/* Cizgi yerine bosluk: donusumlu zemin zaten ayirici */
+.bolumGovde .ayarSatir + .ayarSatir { margin-top: 2px; }
+
+/* ============ Grup penceresi ============ */
+.ikonIzgara {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(46px, 1fr));
+    gap: var(--b2);
+    max-height: 190px;
+    overflow-y: auto;
+    padding: 2px;
+}
+
+.ikonKutu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1;
+    border: 1px solid var(--cerceve);
+    border-radius: var(--k2);
+    background: rgba(255,255,255,.05);
+    color: var(--metin);
+    cursor: pointer;
+    padding: 0;
+    transition: background var(--gecis), border-color var(--gecis), transform var(--gecis);
+}
+.ikonKutu:hover { background: rgba(255,255,255,.12); transform: translateY(-1px); }
+.ikonKutu.secili { border-color: var(--vurgu-parlak); background: rgba(93,147,194,.22); }
+.ikonKutu svg { width: 21px; height: 21px; }
+
+.ikonEmoji { font-size: 19px; line-height: 1; }
+.grupSekme .ikonEmoji { font-size: calc(15px * var(--grup-olcek)); }
+.ikonFavicon { width: 20px; height: 20px; border-radius: 3px; }
+.grupSekme .ikonFavicon { width: calc(16px * var(--grup-olcek)); height: calc(16px * var(--grup-olcek)); }
+
+/* Etiket / giris / dugme ucusu */
+.alan.ikiSutun {
+    display: grid;
+    grid-template-columns: 86px 1fr auto;
+    align-items: center;
+    gap: var(--b2);
+}
+.alan.ikiSutun > span { margin-bottom: 0; }
+
+.kutuDugme {
+    width: 38px;
+    height: 34px;
+    border: 1px solid var(--cerceve);
+    border-radius: var(--k2);
+    background: rgba(255,255,255,.05);
+    color: var(--metin);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 17px;
+    line-height: 1;
+    transition: background var(--gecis), border-color var(--gecis);
+}
+.kutuDugme:hover { background: rgba(255,255,255,.12); }
+.kutuDugme.secili { border-color: var(--vurgu-parlak); background: rgba(93,147,194,.22); }
+
+.pencereAlt.dikey { flex-direction: column; gap: var(--b2); }
+
+/* Grup sekmesinde ikon */
+.grupSekme .grupIkon { display: inline-flex; align-items: center; }
+.grupSekme .grupIkon svg { width: calc(15px * var(--grup-olcek)); height: calc(15px * var(--grup-olcek)); }
+
+/* --- Grup seridi gorunum modlari --- */
+.grupSekme .grupIkon { color: var(--grup-ikon-rengi, #9db4cc); }
+
+
+/* Yalnizca ikon: metin gizli, sekme kare */
+body.grupModIkon .grupSekme .grupAd { display: none; }
+body.grupModIkon .grupSekme { padding: 7px 10px; }
+
+/* Yalnizca yazi */
+body.grupModYazi .grupSekme .grupIkon { display: none; }
+
+/* Kart sayisi rozeti kapatilabilir */
+body.grupSayiKapali .grupSayi { display: none; }
+
+/* --- Grup penceresi ek alanlar --- */
+.kucukBilgi {
+    margin: -8px 0 var(--b4);
+    font-size: 12px;
+    color: var(--metin-sonuk);
+}
+.kucukBilgi[hidden] { display: none; }
+.kucukBilgi b { color: var(--metin); }
+
+/* ikiSutun icinde tam genislik alan (select / renk) */
+.alan.ikiSutun .genisAlan { width: 100%; }
+
+.renkGenis {
+    appearance: none;
+    -webkit-appearance: none;
+    height: 32px;
+    border: 1px solid var(--cerceve);
+    border-radius: var(--k2);
+    background: transparent;
+    padding: 2px;
+    cursor: pointer;
+}
+.renkGenis::-webkit-color-swatch-wrapper { padding: 0; }
+.renkGenis::-webkit-color-swatch { border: 0; border-radius: var(--k1); }
+
+.metinDugme {
+    border: 0;
+    background: transparent;
+    color: var(--vurgu-parlak);
+    font: inherit;
+    font-size: 12px;
+    cursor: pointer;
+    padding: 0 2px;
+    white-space: nowrap;
+}
+.metinDugme:hover { text-decoration: underline; }
+
+/* Gruba OZEL gosterim modu - genel ayari eziyor */
+.grupSekme.grupOzel-ikon .grupAd,
+body.grupModYazi .grupSekme.grupOzel-ikon .grupAd { display: none; }
+.grupSekme.grupOzel-ikon .grupIkon,
+body.grupModYazi .grupSekme.grupOzel-ikon .grupIkon { display: inline-flex; }
+
+.grupSekme.grupOzel-yazi .grupIkon,
+body.grupModIkon .grupSekme.grupOzel-yazi .grupIkon { display: none; }
+.grupSekme.grupOzel-yazi .grupAd,
+body.grupModIkon .grupSekme.grupOzel-yazi .grupAd { display: inline; }
+
+.grupSekme.grupOzel-ikon_yazi .grupIkon,
+body.grupModYazi .grupSekme.grupOzel-ikon_yazi .grupIkon { display: inline-flex; }
+.grupSekme.grupOzel-ikon_yazi .grupAd,
+body.grupModIkon .grupSekme.grupOzel-ikon_yazi .grupAd { display: inline; }
+
+/* Acilir liste ogeleri: tarayici bunlari AYRI ciziyor, select'in rengini
+   miras almiyorlar. Beyaz zemin uzerinde acik metin okunmuyordu. */
+select option {
+    background: #22262e;
+    color: #e8eaed;
+}
+select option:checked,
+select option:hover {
+    background: var(--vurgu);
+    color: #fff;
+}
+
+/* ============ Gruplari yonet ============ */
+.yonetAraclar { display: flex; gap: var(--b2); margin-bottom: var(--b3); }
+
+.yonetListe {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-height: 46vh;
+    overflow-y: auto;
+}
+
+.yonetSatir {
+    display: flex;
+    align-items: center;
+    gap: var(--b2);
+    padding: 7px var(--b2);
+    border-radius: var(--k1);
+    background: rgba(255,255,255,.04);
+    margin-bottom: 4px;
+}
+.yonetSatir:hover { background: rgba(255,255,255,.08); }
+.yonetSatir.tasiniyor { opacity: .4; }
+
+.yonetTut {
+    cursor: grab;
+    opacity: .45;
+    flex-shrink: 0;
+    user-select: none;
+    padding: 0 2px;
+}
+.yonetTut:active { cursor: grabbing; }
+
+.yonetIkon { display: inline-flex; width: 20px; justify-content: center; flex-shrink: 0; }
+.yonetIkon svg { width: 15px; height: 15px; }
+
+.yonetAd {
+    flex: 1;
+    min-width: 0;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: var(--k1);
+    color: var(--metin);
+    font: inherit;
+    font-size: 13px;
+    padding: 3px 6px;
+}
+.yonetAd:hover { border-color: var(--cerceve); }
+.yonetAd:focus { border-color: var(--vurgu); outline: none; background: rgba(0,0,0,.25); }
+
+.yonetSayi {
+    font-size: 11px;
+    color: var(--metin-sonuk);
+    min-width: 26px;
+    text-align: right;
+    flex-shrink: 0;
+}
+
+.yonetSil {
+    border: 0;
+    background: transparent;
+    color: #e2706c;
+    cursor: pointer;
+    font-size: 15px;
+    line-height: 1;
+    padding: 2px 5px;
+    flex-shrink: 0;
+}
+.yonetSil:hover { color: #ff8b87; }
+
+/* --- Grup seridinde surukleme --- */
+.grupSekme.tasiniyor { opacity: .4; }
+
+/* Birakma isareti: sekmenin ilgili kenarinda ince cizgi */
+.grupSekme.birakSol,
+.grupSekme.birakSag { position: relative; }
+.grupSekme.birakSol::before,
+.grupSekme.birakSag::before {
+    content: '';
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    width: 2px;
+    border-radius: 2px;
+    background: var(--vurgu-parlak);
+}
+.grupSekme.birakSol::before { left: -4px; }
+.grupSekme.birakSag::before { right: -4px; }
+
+/* ============ Kart surukleme ============ */
+
+/* Kaynak kart YERINDE kalir - griye doner, hover butonlari gizlenir.
+   Boylece kullanici nereden aldigini goruyor. */
+.kart.surukKaynak .kartGorsel {
+    filter: grayscale(1) brightness(.5);
+    box-shadow: inset 0 0 0 1px var(--cerceve-guclu);
+}
+.kart.surukKaynak .kartBaslik { opacity: .35; }
+.kart.surukKaynak .kartAraclari { display: none !important; }
+
+/* Imleci takip eden hayalet */
+#surukHayaleti {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    opacity: .78;
+    z-index: 200;
+    transition: opacity var(--gecis);
+    will-change: transform;
+}
+/* Hedef uzerindeyken saydamlasiyor: altindaki isaret gorunsun */
+#surukHayaleti.hedefte { opacity: .28; }
+
+/* Araya girilecek kart - turuncu parilti + dolgu.
+   Ayni "tasima" dili grup sekmesinde de kullaniliyor. */
+.kartGorsel.surukHedef {
+    box-shadow:
+        0 1px 8px 2px rgba(255, 160, 71, .63),
+        inset 0 0 0 100vmax rgba(255, 152, 0, .25) !important;
+}
+
+/* Kartin birakilacagi grup sekmesi */
+.grupSekme.surukSekmeHedef {
+    background: rgba(255, 152, 0, .25);
+    box-shadow: 0 1px 8px 2px rgba(255, 160, 71, .63);
+}
+
+/* Pencere acikken islem yapilan kart: perdenin USTUNDE ama pencere
+   KUTUSUNUN ALTINDA kalir.
+   Katman sirasi: perde arka plani (70) < isaretli kart (71) < pencere
+   icerigi (72). Kart 71'de kalinca pencere kutusu onun altina dusuyordu. */
+.kart.pencereHedefi {
+    position: relative;
+    z-index: 71;
+}
+
+.kart.pencereHedefi .kartGorsel {
+    box-shadow:
+        inset 0 0 0 100vmax rgba(0, 0, 0, .55),
+        0 0 0 2px var(--vurgu-parlak),
+        0 8px 28px rgba(0, 0, 0, .5) !important;
+}
+.kart.pencereHedefi .kartBaslik { color: var(--metin); }
+.kart.pencereHedefi .kartAraclari { display: none !important; }
+
+/* Baslik gizlendiginde gorsel kutusu bosalan yeri ALMIYOR: kart yuksekligi
+   orandan geliyor, boylece izgara duzeni bozulmadan kalıyor. */
+body.basliklarKapali .kartBaslik { display: none; }
+
+/* ============ Her seyi gizle kipi ============ */
+body.icerikGizli #ustSerit,
+body.icerikGizli #kartAlani,
+body.icerikGizli #bildirim {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Yan serit gizli kipte de OLDUGU GIBI kalir: goz, arama ve ayarlar
+   erisilebilir olmali - kullanici gizli kipteyken de ayara girebilsin. */
+
+#ustSerit, #kartAlani {
+    transition: opacity 220ms ease, visibility 0s;
+}
+
+/* Goz butonundaki iki ikon - `hidden` ile degistiriliyor */
+.yanBtn svg[hidden] { display: none; }
+
+/* Gizli kipte YALNIZCA goz butonu solar - panel oldugu gibi kalir */
+body.icerikGizli #gozBtn {
+    opacity: .35;
+    transition: opacity var(--gecis);
+}
+body.icerikGizli #gozBtn:hover { opacity: 1; }
+
+/* ============ Arama ============ */
+#aramaKap {
+    position: fixed;
+    top: 14px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-14px);
+    display: flex;
+    align-items: center;
+    gap: var(--b2);
+    width: min(440px, 82vw);
+    height: 38px;
+    padding: 0 var(--b3);
+    background: var(--yuzey);
+    border: 1px solid var(--cerceve);
+    /* Kose yaricapi kartlarla ORTAK: ayardan gelen deger burada da
+       gecerli, arayuz tek dilde kaliyor. Cok kucuk degerlerde serit
+       fazla keskin durmasin diye alt sinir var. */
+    border-radius: max(var(--kart-kose), 4px);
+    box-shadow: var(--golge-2);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--gecis), transform var(--gecis), visibility 0s linear var(--gecis);
+    z-index: 45;
+}
+
+body.aramaAcik #aramaKap {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%);
+    transition: opacity var(--gecis), transform var(--gecis), visibility 0s;
+}
+
+#aramaSimge { width: 16px; height: 16px; flex-shrink: 0; color: var(--metin-sonuk); }
+
+#aramaAlan {
+    flex: 1;
+    min-width: 0;
+    border: 0;
+    background: transparent;
+    color: var(--metin);
+    font: inherit;
+    font-size: 14px;
+}
+#aramaAlan:focus { outline: none; }
+#aramaAlan::placeholder { color: var(--metin-sonuk); }
+
+#aramaKapat {
+    border: 0;
+    background: transparent;
+    color: var(--metin-sonuk);
+    font-size: 13px;
+    cursor: pointer;
+    padding: 4px 6px;
+    border-radius: var(--k1);
+    flex-shrink: 0;
+}
+#aramaKapat:hover { background: rgba(255,255,255,.10); color: var(--metin); }
+
+/* Arama sonucunda kartin hangi gruptan geldigi yaziyor */
+.kartGrupEtiketi {
+    display: block;
+    padding: 0 var(--b3);
+    margin-top: 3px;
+    font-size: 10.5px;
+    color: var(--metin-sonuk);
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#aramaBos {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: var(--b6) 0;
+    color: var(--metin-sonuk);
+    font-size: 13.5px;
+}
+
+/* Seridin sonundaki "+" - sekme gibi ama zeminsiz */
+.grupSekme.grupEkle {
+    background: transparent;
+    color: var(--metin-sonuk);
+    padding: calc(5px * var(--grup-olcek)) calc(8px * var(--grup-olcek));
+    flex-shrink: 0;
+}
+.grupSekme.grupEkle:hover {
+    background: var(--grup-zemin);
+    color: var(--metin);
+    filter: none;
+}
+.grupSekme.grupEkle svg {
+    width: calc(16px * var(--grup-olcek));
+    height: calc(16px * var(--grup-olcek));
+}
+
+/* Serit dolunca KAYDIRILABILIR olsun - sekmeler ezilmesin.
+   `flex-shrink: 0` sart: yoksa sekmeler daralip yazilar kirpiliyor. */
+.grupSekme { flex-shrink: 0; }
+
+#grupSeridi {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Serit kaydirma oklari - yalnizca tasma varken gorunur */
+.seritOk {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    flex-shrink: 0;
+    border: 0;
+    border-radius: var(--k1);
+    background: var(--grup-zemin);
+    color: var(--metin-sonuk);
+    cursor: pointer;
+    transition: background var(--gecis), color var(--gecis);
+}
+.seritOk[hidden] { display: none; }
+.seritOk:hover { background: rgba(255,255,255,.14); color: var(--metin); }
+.seritOk svg { width: 15px; height: 15px; }
+
+/* Arama acikken grup seridi gizlenir: arama TUM gruplarda calisiyor,
+   "bulundugun grup" kavrami o an gecersiz. Serit gorunur kalirsa
+   kullanici hangi grupta oldugunu sanip yaniliyor. */
+body.aramaAcik #ustSerit {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+/* Arama acik ama henuz yazilmadi - kart alani bos kalir */
+body.aramaBekliyor #kartAlani { visibility: hidden; }
+
+/* --- Anasayfa kurulumu --- */
+.kurulumMetin {
+    margin: 0 0 var(--b3);
+    font-size: 13px;
+    line-height: 1.65;
+    color: var(--metin-sonuk);
+}
+.kurulumMetin b { color: var(--metin); font-weight: 600; }
+
+.kurulumAdres {
+    display: block;
+    padding: 9px var(--b3);
+    margin-bottom: var(--b3);
+    background: rgba(255,255,255,.05);
+    border: 1px solid var(--cerceve);
+    border-radius: var(--k2);
+    font: 12px/1.5 ui-monospace, 'Cascadia Code', Consolas, monospace;
+    color: var(--metin);
+    word-break: break-all;
+    user-select: all;      /* tek tikla tamami secilsin */
+}
+
+.kurulumDugme { width: 100%; }
+
+/* --- Olcu girisi: en x boy tek satirda --- */
+.olcuKutusu {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.olcuKutusu input[type=number] {
+    width: 68px;
+    text-align: center;
+    background: rgba(255,255,255,.05);
+    color: var(--metin);
+    border: 1px solid var(--cerceve);
+    border-radius: var(--k1);
+    padding: 6px 4px;
+    font: inherit;
+    font-size: 13px;
+}
+.olcuKutusu input[type=number]:focus { outline: none; border-color: var(--vurgu); }
+.olcuCarpi { color: var(--metin-sonuk); font-size: 12px; }
+.olcuBirim { color: var(--metin-sonuk); font-size: 11px; }
+
+/* Hazir olcu dugmeleri - iki satirli etiket */
+.hazirOlculer .segBtn {
+    padding: 5px 9px;
+    font-size: 10.5px;
+    line-height: 1.3;
+    text-align: center;
+}
+
+/* Bildirimdeki eylem dugmesi (Geri Al) */
+#bildirim { display: inline-flex; align-items: center; gap: var(--b3); }
+
+.bildirimDugme {
+    border: 0;
+    background: transparent;
+    color: var(--vurgu-parlak);
+    font: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 2px 6px;
+    border-radius: var(--k1);
+    pointer-events: auto;
+}
+.bildirimDugme:hover { background: rgba(255,255,255,.10); }
+
+/* Bildirim normalde tiklanamaz; yalnizca dugmesi tiklanabilir olmali */
+#bildirim.gorunur { pointer-events: auto; }
+
+/* --- Cop kutusu --- */
+.copSatir {
+    display: flex;
+    align-items: center;
+    gap: var(--b2);
+    padding: 8px var(--b2);
+    border-radius: var(--k1);
+    background: rgba(255,255,255,.04);
+    margin-bottom: 4px;
+}
+.copSatir:hover { background: rgba(255,255,255,.08); }
+
+.copGorsel {
+    width: 44px;
+    height: 28px;
+    flex-shrink: 0;
+    border-radius: 4px;
+    background: var(--yuzey-2) center/cover no-repeat;
+}
+
+.copBilgi { flex: 1; min-width: 0; }
+.copAd {
+    font-size: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.copTarih { font-size: 11px; color: var(--metin-sonuk); }
+
+.copGeri {
+    border: 1px solid var(--cerceve);
+    border-radius: var(--k1);
+    background: transparent;
+    color: var(--vurgu-parlak);
+    font: inherit;
+    font-size: 12px;
+    padding: 4px 10px;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+.copGeri:hover { background: rgba(255,255,255,.10); }
+
+#copBos {
+    text-align: center;
+    padding: var(--b5) 0;
+    color: var(--metin-sonuk);
+    font-size: 13px;
+}
+
+/* ============ Cop kutusu seridi ============ */
+#copKap {
+    position: fixed;
+    top: 14px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-14px);
+    display: flex;
+    align-items: center;
+    gap: var(--b3);
+    padding: 0 var(--b3);
+    height: 38px;
+    background: var(--yuzey);
+    border: 1px solid var(--cerceve);
+    border-radius: max(var(--kart-kose), 4px);
+    box-shadow: var(--golge-2);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--gecis), transform var(--gecis), visibility 0s linear var(--gecis);
+    z-index: 45;
+    font-size: 13px;
+}
+body.copAcik #copKap {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%);
+    transition: opacity var(--gecis), transform var(--gecis), visibility 0s;
+}
+body.copAcik #ustSerit { opacity: 0; visibility: hidden; pointer-events: none; }
+
+#copSimge { width: 16px; height: 16px; flex-shrink: 0; color: var(--metin-sonuk); }
+#copBaslik { font-weight: 600; white-space: nowrap; }
+#copSayi { color: var(--metin-sonuk); font-size: 12px; white-space: nowrap; }
+
+.copSeritDugme {
+    border: 1px solid var(--cerceve);
+    border-radius: var(--k1);
+    background: transparent;
+    color: var(--metin-sonuk);
+    font: inherit;
+    font-size: 12px;
+    padding: 4px 10px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background var(--gecis), color var(--gecis);
+}
+.copSeritDugme:hover { background: rgba(255,255,255,.10); color: var(--metin); }
+.copSeritDugme.yikici { color: #e2706c; }
+.copSeritDugme.yikici:hover { background: rgba(217,83,79,.16); }
+
+/* Copteki kartlar - silik, ustlerinde iki dugme */
+.kart.copKart { cursor: default; }
+.kart.copKart .kartGorsel { filter: grayscale(.7) brightness(.75); }
+.kart.copKart:hover .kartGorsel { filter: none; }
+
+.copKartAraclari {
+    position: absolute;
+    top: -6px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-4px);
+    display: flex;
+    gap: 3px;
+    padding: 3px;
+    border-radius: var(--k2);
+    background: rgba(28, 31, 38, .96);
+    border: 1px solid var(--cerceve-guclu);
+    box-shadow: var(--golge-2);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--gecis), transform var(--gecis), visibility 0s linear var(--gecis);
+    z-index: 5;
+}
+.kart.copKart:hover .copKartAraclari,
+.copKartAraclari:hover {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+    transition: opacity var(--gecis), transform var(--gecis), visibility 0s;
+}
+
+.copKartDugme {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    border: 0;
+    border-radius: var(--k1);
+    background: transparent;
+    color: var(--metin-sonuk);
+    font: inherit;
+    font-size: 11.5px;
+    padding: 5px 9px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background var(--gecis), color var(--gecis);
+}
+.copKartDugme svg { width: 14px; height: 14px; }
+.copKartDugme:hover { background: rgba(255,255,255,.12); color: var(--metin); }
+.copKartDugme.yikici:hover { background: rgba(217,83,79,.22); color: #e2706c; }
+
+/* Silinme tarihi - grup etiketinin yerinde */
+.copTarihEtiketi {
+    display: block;
+    padding: 0 var(--b3);
+    margin-top: 3px;
+    font-size: 10.5px;
+    color: var(--metin-sonuk);
+    text-align: center;
+}
+
+/* --- Ice aktarma ilerlemesi --- */
+#ilerlemePencere .pencereIc { width: min(400px, 92vw); }
+
+.ilerlemeCubugu {
+    height: 6px;
+    background: rgba(255,255,255,.08);
+    border-radius: 99px;
+    overflow: hidden;
+    margin: var(--b4) 0 var(--b2);
+}
+
+#ilerlemeDolgu {
+    height: 100%;
+    width: 0;
+    background: var(--vurgu-parlak);
+    border-radius: 99px;
+    transition: width 200ms ease;
+}
+
+.ilerlemeSayi {
+    margin: 0;
+    text-align: right;
+    font-size: 12px;
+    color: var(--metin-sonuk);
+    font-variant-numeric: tabular-nums;
+}
+
+/* Form alani altindaki uyari */
+.alanUyari {
+    margin: -10px 0 var(--b4);
+    padding: 7px 11px;
+    background: rgba(217, 83, 79, .14);
+    border: 1px solid rgba(217, 83, 79, .3);
+    border-radius: var(--k1);
+    color: #e2706c;
+    font-size: 12.5px;
+}
+.alanUyari[hidden] { display: none; }
+
+/* ============ Karsilama ============ */
+#karsilama {
+    max-width: 480px;
+    margin: 6vh auto 0;
+    padding: 34px 34px 30px;
+    background: var(--yuzey);
+    border: 1px solid var(--cerceve);
+    border-radius: var(--k3);
+    box-shadow: var(--golge-3);
+    text-align: center;
+    animation: yukari 260ms cubic-bezier(.2, .8, .3, 1);
+}
+#karsilama[hidden] { display: none; }
+
+.karsilamaSimge {
+    width: 54px;
+    height: 54px;
+    color: var(--vurgu-parlak);
+    margin-bottom: var(--b4);
+}
+
+#karsilama h2 {
+    margin: 0 0 var(--b5);
+    font-size: 21px;
+    font-weight: 600;
+    line-height: 1.35;
+    letter-spacing: -.01em;
+}
+
+.karsilamaListe {
+    list-style: none;
+    margin: 0 0 var(--b5);
+    padding: 0;
+    text-align: left;
+}
+.karsilamaListe li {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--b3);
+    padding: var(--b3) 0;
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--metin-sonuk);
+}
+.karsilamaListe li b { color: var(--metin); font-weight: 600; }
+
+.karsilamaListe svg {
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
+    padding: 7px;
+    border-radius: var(--k2);
+    background: rgba(255,255,255,.06);
+    color: var(--vurgu-parlak);
+    box-sizing: border-box;
+}
+
+.karsilamaDugmeler { display: flex; gap: var(--b3); }
+.karsilamaDugmeler .dugme { flex: 1; }
+
+/* Karsilama gorunurken "+" karti gereksiz - ikinci bir ekleme yolu
+   kullaniciyi bolmesin */
+body.bosDurum #kartKabi { display: none; }
+
+/* Copteki grup kaydi - kartlardan ayirt edilsin */
+.copGrupKutu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    color: var(--metin-sonuk);
+    background: rgba(255,255,255,.04) !important;
+}
+.copGrupKutu svg { width: 38px; height: 38px; }
+.copGrupSayi { font-size: 12px; }
+.kart.copGrup .kartGorsel { filter: none; }
+.kart.copGrup:hover .copGrupKutu { color: var(--metin); }
+
+/* Copteki grup kutusu - ikon, sayi, "iceriği gör" */
+.copGrupIkon { display: inline-flex; color: var(--metin-sonuk); }
+.copGrupIkon svg { width: 38px; height: 38px; }
+.copGrupIkon .ikonEmoji { font-size: 34px; }
+.copGrupIkon .ikonFavicon { width: 34px; height: 34px; border-radius: 6px; }
+
+.copGrupAc {
+    font-size: 11px;
+    color: var(--vurgu-parlak);
+    opacity: 0;
+    transition: opacity var(--gecis);
+}
+.kart.copGrup:hover .copGrupAc { opacity: 1; }
+.kart.copGrup:hover .copGrupIkon { color: var(--metin); }
+
+/* --- Kisayol listesi --- */
+.kisayolListe { list-style: none; margin: 0 0 var(--b3); padding: 0; }
+.kisayolListe li {
+    display: flex;
+    align-items: center;
+    gap: var(--b2);
+    padding: 7px var(--b3);
+    border-radius: var(--k1);
+    font-size: 12.5px;
+}
+.kisayolListe li:nth-child(odd) { background: rgba(255,255,255,.022); }
+.kisayolListe li span {
+    margin-left: auto;
+    color: var(--metin-sonuk);
+    text-align: right;
+}
+
+kbd {
+    display: inline-block;
+    min-width: 20px;
+    padding: 2px 6px;
+    border: 1px solid var(--cerceve-guclu);
+    border-bottom-width: 2px;
+    border-radius: 5px;
+    background: rgba(255,255,255,.06);
+    font: 600 11px/1.4 ui-monospace, Consolas, monospace;
+    text-align: center;
+    color: var(--metin);
+}
+
+/* Gizlenebilir ogeler */
+body.ekleKartiKapali .ekleKart { display: none; }
+body.yanPanelKapali #yanArac { display: none; }
+
+/* --- Secenek listesi (siralama gibi) --- */
+.secenekListe { display: flex; flex-direction: column; gap: 5px; margin: var(--b4) 0; }
+
+.secenek {
+    text-align: left;
+    padding: 11px var(--b4);
+    border: 1px solid var(--cerceve);
+    border-radius: var(--k2);
+    background: rgba(255,255,255,.04);
+    color: var(--metin);
+    font: inherit;
+    font-size: 13.5px;
+    cursor: pointer;
+    transition: background var(--gecis), border-color var(--gecis);
+}
+.secenek:hover {
+    background: rgba(255,255,255,.10);
+    border-color: var(--vurgu);
+}
+
+/* --- Depolama durumu --- */
+.depoKutu {
+    padding: var(--b3);
+    margin-bottom: var(--b3);
+    border: 1px solid var(--cerceve);
+    border-radius: var(--k2);
+    background: rgba(255,255,255,.03);
+}
+
+.depoSatir {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 3px 0;
+    font-size: 12.5px;
+    color: var(--metin-sonuk);
+}
+.depoSatir b { color: var(--metin); font-variant-numeric: tabular-nums; }
+/* `display: flex` UA'nin [hidden] kuralini eziyor - acikca kapatiyoruz */
+.depoSatir[hidden] { display: none; }
+
+.depoCubuk {
+    height: 5px;
+    margin-top: var(--b2);
+    background: rgba(255,255,255,.08);
+    border-radius: 99px;
+    overflow: hidden;
+}
+#depoDolgu {
+    height: 100%;
+    width: 0;
+    background: var(--vurgu);
+    border-radius: 99px;
+    transition: width 300ms ease, background 300ms ease;
+}
+#depoDolgu.dolmak-uzere { background: #e8883a; }
+#depoDolgu.dolu { background: var(--tehlike); }
+
+.depoUyari {
+    margin: var(--b2) 0 0;
+    font-size: 12px;
+    line-height: 1.5;
+    color: #e8883a;
+}
+.depoUyari[hidden] { display: none; }
+
+.depoSonYedek {
+    margin: var(--b2) 0 0;
+    padding-top: var(--b2);
+    border-top: 1px solid rgba(255,255,255,.06);
+    font-size: 11.5px;
+    line-height: 1.5;
+    color: var(--metin-sonuk);
+    word-break: break-word;
+}
+.depoSonYedek[hidden] { display: none; }
+
+.depoUyari.kritik { color: #e2706c; }
+
+.depoYedekDugme {
+    width: 100%;
+    margin-top: var(--b3);
+    font-size: 13px;
+    padding: 8px 14px;
+}
+.depoYedekDugme[hidden] { display: none; }
+
+/* Kullanilmayan veri satiri - dikkat cekici ama alarm degil */
+#depoOksuzSatir.vurgulu b { color: #e8883a; }
+
+/* "Bir daha sorma" kutusu */
+.onayHatirla {
+    display: flex;
+    align-items: center;
+    gap: var(--b2);
+    margin-top: var(--b3);
+    font-size: 12.5px;
+    color: var(--metin-sonuk);
+    cursor: pointer;
+}
+.onayHatirla[hidden] { display: none; }
+.onayHatirla input { accent-color: var(--vurgu); cursor: pointer; }
+.onayHatirla:hover { color: var(--metin); }
+
+/* Simgeli dugmeler - Bakim/Yedekleme bolumleri */
+.dugmeSimge {
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+}
+.miniDugme, .dugme {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--b2);
+}
+
+/* Denetim raporu */
+.denetimRapor {
+    margin: var(--b4) 0 0;
+    padding: var(--b3);
+    max-height: 50vh;
+    overflow-y: auto;
+    background: rgba(0,0,0,.25);
+    border: 1px solid var(--cerceve);
+    border-radius: var(--k2);
+    font: 12px/1.7 ui-monospace, Consolas, monospace;
+    color: var(--metin-sonuk);
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+/* Ayni adres baska gruplarda da var - kac yerde oldugunu gosteren rozet */
+.kartKopya {
+    position: absolute;
+    top: calc(var(--baslik-boyut) + 10px);
+    right: 8px;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    border-radius: 99px;
+    background: rgba(28, 31, 38, .88);
+    border: 1px solid var(--cerceve-guclu);
+    color: var(--metin-sonuk);
+    font-size: 10.5px;
+    font-weight: 600;
+    line-height: 16px;
+    text-align: center;
+    z-index: 2;
+    pointer-events: auto;
+}
+.kart:hover .kartKopya { color: var(--metin); }
+
+/* ============ Yinelenen kartlar ============ */
+#kopyaKap {
+    position: fixed;
+    top: 14px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-14px);
+    display: flex;
+    align-items: center;
+    gap: var(--b3);
+    padding: 0 var(--b3);
+    height: 38px;
+    background: var(--yuzey);
+    border: 1px solid var(--cerceve);
+    border-radius: max(var(--kart-kose), 4px);
+    box-shadow: var(--golge-2);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--gecis), transform var(--gecis), visibility 0s linear var(--gecis);
+    z-index: 45;
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+body.kopyaAcik #kopyaKap {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%);
+    transition: opacity var(--gecis), transform var(--gecis), visibility 0s;
+}
+body.kopyaAcik #ustSerit { opacity: 0; visibility: hidden; pointer-events: none; }
+
+#kopyaKap svg { width: 16px; height: 16px; flex-shrink: 0; color: var(--metin-sonuk); }
+#kopyaSayi { color: var(--metin-sonuk); font-size: 12px; font-weight: 400; }
+
+/* Ayni adresi paylasan kartlar bir arada - aralarina ayirac */
+.kopyaKume {
+    grid-column: 1 / -1;
+    margin: var(--b3) 0 var(--b1);
+    padding-bottom: var(--b2);
+    border-bottom: 1px solid var(--cerceve);
+    font-size: 12.5px;
+    color: var(--metin-sonuk);
+}
+.kopyaKume b { color: var(--metin); font-weight: 600; }
+
+.kart.kopyaKart .kartGrupEtiketi { font-weight: 600; color: var(--vurgu-parlak); }
+
+/* ============ Denetim raporu ============ */
+.denetimRapor {
+    margin: var(--b4) 0 0;
+    padding: 0;
+    max-height: 52vh;
+    overflow-y: auto;
+    background: transparent;
+    border: 0;
+    font: inherit;
+    white-space: normal;
+}
+
+.dnKutu {
+    padding: var(--b3) var(--b4);
+    margin-bottom: var(--b2);
+    border-radius: var(--k2);
+    border-left: 3px solid var(--cerceve-guclu);
+    background: rgba(255,255,255,.04);
+}
+
+.dnBaslik { font-size: 13.5px; font-weight: 600; }
+.dnGovde { margin-top: 6px; font-size: 12.5px; color: var(--metin-sonuk); }
+
+.dnGovde ul { margin: 0 0 6px; padding-left: 18px; }
+.dnGovde li { line-height: 1.6; word-break: break-word; }
+.dnGovde .dnDaha { opacity: .6; list-style: none; margin-left: -12px; }
+.dnGovde em { display: block; margin-top: 4px; font-style: normal; opacity: .75; }
+
+/* Onem sirasi renkle */
+.dnOzet  { border-left-color: var(--vurgu); background: rgba(255,255,255,.06); }
+.dnOzet .dnBaslik { font-size: 14px; }
+
+.dnSorun { border-left-color: #d9534f; background: rgba(217,83,79,.12); }
+.dnSorun .dnBaslik { color: #e2706c; }
+
+.dnUyari { border-left-color: #e8883a; background: rgba(232,136,58,.10); }
+.dnUyari .dnBaslik { color: #e8a86a; }
+
+.dnBilgi { border-left-color: var(--cerceve-guclu); }
+
+.dnIyi   { border-left-color: #5cb85c; background: rgba(92,184,92,.10); }
+.dnIyi .dnBaslik { color: #7cc87c; }
+
+/* Rapor icindeki eylem dugmesi */
+.dnDugme {
+    margin-top: var(--b2);
+    padding: 6px 12px;
+    border: 1px solid var(--cerceve-guclu);
+    border-radius: var(--k1);
+    background: rgba(255,255,255,.06);
+    color: var(--metin);
+    font: inherit;
+    font-size: 12.5px;
+    cursor: pointer;
+    transition: background var(--gecis), border-color var(--gecis);
+}
+.dnDugme:hover { background: var(--vurgu); border-color: var(--vurgu); }

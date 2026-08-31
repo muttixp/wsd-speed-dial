@@ -1,0 +1,24 @@
+# Uzanti imza anahtari - ASLA depoya girmemeli.
+# Bu anahtar uzantinin kimligini belirliyor; sizarsa baskasi ayni
+# kimlikle paket yayimlayabilir.
+wsd-key.pem
+*.pem
+
+# Paketler
+*.zip
+*.crx
+
+# Isletim sistemi
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Duzenleyici
+.vscode/
+.idea/
+*.swp
+*~
+
+# Gecici
+node_modules/
+/tmp/
