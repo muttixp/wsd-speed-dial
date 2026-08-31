@@ -907,5 +907,125 @@
   },
   "nKartYenidenYakalanacak": {
     "message": "$1 kartın görseli yeniden yakalanacak. Bu işlem birkaç dakika sürebilir."
+  },
+  "yenile": {
+    "message": "Yenile"
+  },
+  "notEkle": {
+    "message": "Not ekle"
+  },
+  "urlYiKopyala": {
+    "message": "Url yi kopyala"
+  },
+  "zeminiRenklendir": {
+    "message": "Zemini Renklendir"
+  },
+  "colorizeTekTonaIndir": {
+    "message": "Colorize (tek tona indir)"
+  },
+  "doygunluk": {
+    "message": "Doygunluk"
+  },
+  "arkaPlanRengi": {
+    "message": "Arka Plan Rengi"
+  },
+  "metinRengi": {
+    "message": "Metin Rengi"
+  },
+  "kare": {
+    "message": "Kare"
+  },
+  "sekmeZeminRengi": {
+    "message": "Sekme Zemin Rengi"
+  },
+  "sekmeBoyutu": {
+    "message": "Sekme Boyutu"
+  },
+  "yakalamaKipi": {
+    "message": "Yakalama Kipi"
+  },
+  "bekleme": {
+    "message": "Bekleme"
+  },
+  "jpegKalitesi": {
+    "message": "JPEG kalitesi"
+  },
+  "arama": {
+    "message": "arama"
+  },
+  "adres": {
+    "message": "Adres"
+  },
+  "kaydet": {
+    "message": "Kaydet"
+  },
+  "ad": {
+    "message": "Ad"
+  },
+  "siteUrl": {
+    "message": "Site URL"
+  },
+  "enSonEklenen": {
+    "message": "En son eklenen"
+  },
+  "not": {
+    "message": "Not"
+  },
+  "onay": {
+    "message": "Onay"
+  },
+  "oranDengeli": {
+    "message": "16:10 — dengeli"
+  },
+  "veya": {
+    "message": "veya"
+  },
+  "zeminRenklendirme": {
+    "message": "Zemin Renklendirme"
+  },
+  "kurulumAciklama": {
+    "message": "Tarayıcının anasayfa (ev) butonuna basınca WSD açılsın istiyorsanız, aşağıdaki adresi kopyalayıp Ayarlar → Başlangıç → Ana Sayfa alanına yapıştırın."
+  },
+  "gruplar": {
+    "message": "Gruplar"
+  },
+  "araclar": {
+    "message": "Araçlar"
+  },
+  "kartlardaAra": {
+    "message": "Kartlarda ara..."
+  },
+  "onceki": {
+    "message": "Önceki"
+  },
+  "sonraki": {
+    "message": "Sonraki"
+  },
+  "nKart": {
+    "message": "$1 kart"
+  },
+  "buAdresSuGruplardaDaVar": {
+    "message": "Bu adres şu gruplarda da var: $1"
+  },
+  "silindiTarih": {
+    "message": "$1 silindi"
+  },
+  "sonYedekBilgisi": {
+    "message": "Son yedek: $1 · $2 · $3 kart · $4"
+  },
+  "nGrupNKart": {
+    "message": "$1 grup · $2 kart"
+  },
+  "nAdresNKart": {
+    "message": "$1 adres · $2 kart"
+  },
+  "grubaEklendi": {
+    "message": "\"$1\" grubuna eklendi"
+  },
+  "speedDialeEklendi": {
+    "message": "Speed Dial'e eklendi"
+  },
+  "sonAcilis": {
+    "message": "son: $1"
   }
 }

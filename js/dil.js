@@ -38,6 +38,13 @@ export function c(anahtar, ...yerler) {
  * gorunmesin diye dokunmuyoruz.
  */
 export function sayfayiCevir(kok = document) {
+    // Belgenin dili de arayuz diline uysun: ekran okuyucular ve
+    // tarayicinin ceviri onerisi buna bakiyor
+    if (kok === document) {
+        try { document.documentElement.lang = chrome.i18n.getUILanguage(); }
+        catch (e) { /* onemli degil */ }
+    }
+
     for (const el of kok.querySelectorAll('[data-c]')) {
         const m = chrome.i18n.getMessage(el.dataset.c);
         if (m) el.textContent = m;

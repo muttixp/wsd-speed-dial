@@ -106,7 +106,7 @@ export async function denetle() {
 export function raporHTML(r) {
     if (r.hata) return kutu('sorun', c('denetimYapilamadi'), kacis(r.hata));
 
-    let h = kutu('ozet', `${r.grup} grup · ${r.kart} kart`, '');
+    let h = kutu('ozet', c('nGrupNKart', r.grup, r.kart), '');
     let sorunVar = false;
 
     if (r.cizilmeyen.length) {

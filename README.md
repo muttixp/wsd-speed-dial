@@ -26,6 +26,19 @@ Küçük resimler, notlar ve ayarlar `chrome.storage.local`'da tutulur.
 
 ---
 
+## Ekran görüntüleri
+
+![Ana görünüm](docs/home.png)
+
+| | |
+|---|---|
+| ![Ayarlar](docs/ayarlar.png) | ![Kart düzenleme](docs/kart-duzenle.png) |
+| Ayarlar paneli | Kart düzenleme ve görsel seçimi |
+| ![Arama](docs/arama.png) | ![Çöp kutusu](docs/cop-kutusu.png) |
+| Tüm gruplarda arama | Çöp kutusu — 30 gün saklama |
+
+---
+
 ## Kurulum
 
 1. Paketi bir klasöre açın (ör. `C:\wsd`) — klasör kalıcı olsun, silmeyin
@@ -201,6 +214,13 @@ Yeni bileşen eklerken sabit değer yazmak yerine bunları kullanın.
 Çeviri katkısı özellikle değerli — şu an yalnızca Türkçe ve İngilizce var.
 
 Ayrıntılar için `CONTRIBUTING.md` dosyasına bakın.
+
+---
+
+## Gizlilik
+
+Hiçbir veri toplanmaz, iletilmez veya paylaşılmaz. Ayrıntılar için
+`PRIVACY.md` dosyasına bakın.
 
 ---
 

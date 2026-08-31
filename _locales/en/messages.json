@@ -390,7 +390,7 @@
     "message": "Copy address"
   },
   "arkaPlan": {
-    "message": "Arka Plan"
+    "message": "Background"
   },
   "yedekAlinamadi": {
     "message": "Could not create backup"
@@ -555,7 +555,7 @@
     "message": "Could not rename"
   },
   "grupSilinemedi": {
-    "message": "Grup silinemedi: "
+    "message": "Could not delete group: "
   },
   "acilacakKartYok": {
     "message": "No tiles to open"
@@ -615,16 +615,16 @@
     "message": "Maintenance"
   },
   "temizlik": {
-    "message": "temizlik"
+    "message": "cleanup"
   },
   "gorsellerBd": {
-    "message": "gorseller"
+    "message": "images"
   },
   "kartlar": {
-    "message": "kartlar"
+    "message": "tiles"
   },
   "bitti": {
-    "message": "bitti"
+    "message": "done"
   },
   "depoDoluYedekIndirildi": {
     "message": "Storage is full. Backup downloaded — clean up from Maintenance."
@@ -907,5 +907,125 @@
   },
   "nKartYenidenYakalanacak": {
     "message": "Images for $1 tiles will be captured again. This may take a few minutes."
+  },
+  "yenile": {
+    "message": "Refresh"
+  },
+  "notEkle": {
+    "message": "Add note"
+  },
+  "urlYiKopyala": {
+    "message": "Copy URL"
+  },
+  "zeminiRenklendir": {
+    "message": "Tint Background"
+  },
+  "colorizeTekTonaIndir": {
+    "message": "Colorize (single tone)"
+  },
+  "doygunluk": {
+    "message": "Saturation"
+  },
+  "arkaPlanRengi": {
+    "message": "Background Colour"
+  },
+  "metinRengi": {
+    "message": "Text Colour"
+  },
+  "kare": {
+    "message": "Square"
+  },
+  "sekmeZeminRengi": {
+    "message": "Tab Background"
+  },
+  "sekmeBoyutu": {
+    "message": "Tab Size"
+  },
+  "yakalamaKipi": {
+    "message": "Capture Mode"
+  },
+  "bekleme": {
+    "message": "Wait"
+  },
+  "jpegKalitesi": {
+    "message": "JPEG Quality"
+  },
+  "arama": {
+    "message": "search"
+  },
+  "adres": {
+    "message": "Address"
+  },
+  "kaydet": {
+    "message": "Save"
+  },
+  "ad": {
+    "message": "Name"
+  },
+  "siteUrl": {
+    "message": "Site URL"
+  },
+  "enSonEklenen": {
+    "message": "Most recent"
+  },
+  "not": {
+    "message": "Note"
+  },
+  "onay": {
+    "message": "Confirm"
+  },
+  "oranDengeli": {
+    "message": "16:10 — balanced"
+  },
+  "veya": {
+    "message": "or"
+  },
+  "zeminRenklendirme": {
+    "message": "Background Tinting"
+  },
+  "kurulumAciklama": {
+    "message": "To open WSD with the browser home button, copy the address below into Settings → On startup → Home page."
+  },
+  "gruplar": {
+    "message": "Groups"
+  },
+  "araclar": {
+    "message": "Tools"
+  },
+  "kartlardaAra": {
+    "message": "Search tiles..."
+  },
+  "onceki": {
+    "message": "Previous"
+  },
+  "sonraki": {
+    "message": "Next"
+  },
+  "nKart": {
+    "message": "$1 tiles"
+  },
+  "buAdresSuGruplardaDaVar": {
+    "message": "This address is also in: $1"
+  },
+  "silindiTarih": {
+    "message": "deleted $1"
+  },
+  "sonYedekBilgisi": {
+    "message": "Last backup: $1 · $2 · $3 tiles · $4"
+  },
+  "nGrupNKart": {
+    "message": "$1 groups · $2 tiles"
+  },
+  "nAdresNKart": {
+    "message": "$1 addresses · $2 tiles"
+  },
+  "grubaEklendi": {
+    "message": "Added to \"$1\""
+  },
+  "speedDialeEklendi": {
+    "message": "Added to Speed Dial"
+  },
+  "sonAcilis": {
+    "message": "last: $1"
   }
 }

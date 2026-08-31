@@ -88,7 +88,7 @@ function grupSeridiCiz(gruplar, sayilar, ikonlar = {}, gorunumler = {}) {
         // Kart sayisi SEKMEDE gosterilmiyor - yer kapliyor.
         // Yalnizca ipucunda veriliyor.
         const n = sayilar[g.id] || 0;
-        btn.title = n ? `${g.baslik} — ${n} kart` : `${g.baslik} — ${c('bos')}`;
+        btn.title = n ? `${g.baslik} — ${c('nKart', n)}` : `${g.baslik} — ${c('bos')}`;
 
         btn.addEventListener('click', () => grubuAc(g.id));
         serit.appendChild(btn);
@@ -106,7 +106,7 @@ function grupEkleDugmesi() {
     b.type = 'button';
     b.className = 'grupSekme grupEkle';
     b.id = 'seritGrupEkle';
-    b.title = 'Yeni Grup';
+    b.title = c('yeniGrup');
     b.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
         stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M12 5v14M5 12h14"/></svg>`;
@@ -334,7 +334,7 @@ async function kopyalariIsaretle(kartlar, buGrup) {
         const rozet = document.createElement('span');
         rozet.className = 'kartKopya';
         rozet.textContent = digerleri.length + 1;
-        rozet.title = `Bu adres şu gruplarda da var: ${digerleri.join(', ')}`;
+        rozet.title = c('buAdresSuGruplardaDaVar', digerleri.join(', '));
         a.appendChild(rozet);
     }
 }
@@ -376,7 +376,7 @@ function ekleKartiOlustur() {
     const b = document.createElement('button');
     b.className = 'kart ekleKart';
     b.type = 'button';
-    b.title = chrome.i18n.getMessage('kartEkle') || 'Kart Ekle';
+    b.title = c('kartEkle');
 
     const govde = document.createElement('span');
     govde.className = 'kartGovde';

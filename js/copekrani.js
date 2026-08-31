@@ -148,7 +148,7 @@ function copKartiOlustur(k) {
 
     const tarih = document.createElement('span');
     tarih.className = 'copTarihEtiketi';
-    tarih.textContent = tarihMetni(k.silinme) + ' silindi';
+    tarih.textContent = c('silindiTarih', tarihMetni(k.silinme));
     a.appendChild(tarih);
 
     return a;
@@ -228,7 +228,7 @@ function copGrubuOlustur(k) {
 
     const tarih = document.createElement('span');
     tarih.className = 'copTarihEtiketi';
-    tarih.textContent = tarihMetni(k.silinme) + ' silindi';
+    tarih.textContent = c('silindiTarih', tarihMetni(k.silinme));
     a.appendChild(tarih);
 
     return a;

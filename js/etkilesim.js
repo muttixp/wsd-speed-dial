@@ -262,7 +262,7 @@ async function kartPenceresiniAc(kart) {
         if (sy.adet) {
             const ne = tarihMetni(sy.son);
             sayacEl.innerHTML = c('nKezAcildi', sy.adet) +
-                (ne ? ` \u00B7 son: ${ne}` : '') +
+                (ne ? ` \u00B7 ${c('sonAcilis', ne)}` : '') +
                 ` \u00B7 <button type="button" class="metinDugme" id="kpSayacSifirla">sıfırla</button>`;
             el('kpSayac').hidden = false;
             setTimeout(() => {

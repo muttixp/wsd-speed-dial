@@ -540,8 +540,7 @@ async function depoDurumunuCiz() {
     if (el2) {
         if (y) {
             el2.hidden = false;
-            el2.textContent = `Son yedek: ${y.dosya} · ${tarihMetni(y.tarih)} · ` +
-                              `${y.kart} kart · ${mb(y.boyut)}`;
+            el2.textContent = c('sonYedekBilgisi', y.dosya, tarihMetni(y.tarih), y.kart, mb(y.boyut));
         } else {
             el2.hidden = true;
         }

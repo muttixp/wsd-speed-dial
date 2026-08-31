@@ -91,7 +91,7 @@ function satirOlustur(g, adet, ikonDeger) {
     const sil = document.createElement('button');
     sil.className = 'yonetSil';
     sil.type = 'button';
-    sil.title = 'Grubu sil';
+    sil.title = c('grubuSil');
     sil.textContent = '\u00D7';
     sil.addEventListener('click', async () => {
         const onay = await onaySor({

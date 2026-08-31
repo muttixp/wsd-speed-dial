@@ -75,7 +75,7 @@ async function ciz() {
     const kumeler = await kumeleriBul();
     const toplam = kumeler.reduce((t, k) => t + k.liste.length, 0);
     el('kopyaSayi').textContent = kumeler.length
-        ? `${kumeler.length} adres · ${toplam} kart`
+        ? c('nAdresNKart', kumeler.length, toplam)
         : '';
 
     if (!kumeler.length) {

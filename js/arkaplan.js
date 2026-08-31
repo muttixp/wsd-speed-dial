@@ -12,6 +12,7 @@
 // WSD Speed Dial - servis iscisi
 
 import { kokKlasoruAl, gruplariAl, gorunurGruplariAl, urlNormalle } from './yerimi.js';
+import { c } from './dil.js';
 import { yakalamayaEkle, kuyrugaDevamEt, kuyrugaTemizle } from './yakalama.js';
 import { simgeyiUygula } from './simge.js';
 import { guvenliYaz } from './depo.js';
@@ -270,7 +271,7 @@ chrome.contextMenus.onClicked.addListener(async (bilgi, sekme) => {
 
         // Ziyaret edilen sayfada geri bildirim
         const grupAdi = (await gruplariAl()).find(g => g.id === hedef)?.baslik || '';
-        sayfadaBildir(sekme, grupAdi ? `"${grupAdi}" grubuna eklendi` : 'Speed Dial\'e eklendi', true);
+        sayfadaBildir(sekme, grupAdi ? c('grubaEklendi', grupAdi) : c('speedDialeEklendi'), true);
     } catch (e) {
         console.log('[WSD] kart eklenemedi:', e);
         sayfadaBildir(sekme, 'Eklenemedi', false);
