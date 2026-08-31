@@ -81,6 +81,21 @@ başlangıç sayfası ayarına yapıştırın.
 - Gruba özel gösterim (yalnızca ikon / ikon+yazı / yalnızca yazı) ve ikon rengi
 - **Grupları Yönet** ile toplu sıralama, yeniden adlandırma, silme
 
+### Yerel dosyalar
+
+Kartlar yalnızca web sitesi olmak zorunda değil. `file:///` adresleriyle
+bilgisayarınızdaki klasörleri, PDF'leri, belgeleri ve resimleri de
+kataloglayabilirsiniz — ekran görüntüsü de yakalanır.
+
+Bunun için tarayıcıya izin vermeniz gerekir:
+
+**`chrome://extensions` → WSD Speed Dial → Ayrıntılar →
+"Dosya URL'lerine erişime izin ver"**
+
+İzin kapalıyken `file://` kartları açılmaz ve görselleri alınmaz.
+
+---
+
 ### Arama
 
 Büyüteç simgesi veya `/` tuşu. Tüm gruplarda arar, sonuçta kartın hangi

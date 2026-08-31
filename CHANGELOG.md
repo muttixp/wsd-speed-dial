@@ -35,6 +35,8 @@ kurallarına uyar.
 - Arayüz vurgu rengi aktif grup renginden türüyor
 
 ### Diğer
+- Yerel dosya ve klasörler de kart olabiliyor (`file:///`)
+- Sağ tık menüsü resim, video, ses ve seçili metinde de çıkıyor
 - Türkçe ve İngilizce arayüz
 - Klavye kısayolları
 - Tüm gruplarda arama

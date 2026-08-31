@@ -128,6 +128,14 @@ chrome.action.onClicked.addListener(() => sayfayiAc());
  * Her kurulumda SIFIRDAN kuruluyor: gruplar degismis olabiliyor ve
  * contextMenus.create ayni id ile ikinci kez cagrilirsa hata veriyor.
  */
+// Sag tik menusunun cikacagi baglamlar.
+//
+// `page` boslukta, `image`/`video`/`audio` ortam ogesinin UZERINDE,
+// `link` bagalantida, `selection` secili metinde cikiyor. Once yalnizca
+// page + link vardi; kullanici bir resmin uzerine sag tiklayinca menu
+// gorunmuyordu ve "calismiyor" gibi duruyordu.
+const BAGLAMLAR = ['page', 'link', 'image', 'video', 'audio', 'selection'];
+
 // Menu kurulumu SIRAYA ALINIYOR.
 // removeAll() + create() cifti atomik degil: iki kurulum ust uste
 // gelince biri digerinin ogelerini siliyor ya da eski liste tekrar
@@ -154,7 +162,7 @@ async function menuyuKur() {
             chrome.contextMenus.create({
                 id: 'wsdEkle',
                 title: chrome.i18n.getMessage('actionTitle') || "WSD Speed Dial'e ekle",
-                contexts: ['page', 'link']
+                contexts: BAGLAMLAR
             });
             return;
         }
@@ -163,14 +171,14 @@ async function menuyuKur() {
         chrome.contextMenus.create({
             id: 'wsdKok',
             title: chrome.i18n.getMessage('actionTitle') || "WSD Speed Dial'e ekle",
-            contexts: ['page', 'link']
+            contexts: BAGLAMLAR
         });
         for (const g of gruplar) {
             chrome.contextMenus.create({
                 id: 'wsdGrup:' + g.id,
                 parentId: 'wsdKok',
                 title: g.baslik,
-                contexts: ['page', 'link']
+                contexts: BAGLAMLAR
             });
         }
     } catch (e) {
@@ -235,6 +243,22 @@ chrome.runtime.onMessage.addListener((mesaj) => {
     }
 });
 
+/**
+ * Adresten okunabilir bir ad cikarir.
+ *
+ * Resim/dosya eklerken baslik olarak tum adresi yazmak kartlari
+ * okunmaz yapiyordu; son parcayi alip uzantiyi atiyoruz.
+ */
+function dosyaAdi(url) {
+    try {
+        const yol = decodeURIComponent(new URL(url).pathname);
+        const son = yol.split('/').filter(Boolean).pop() || url;
+        return son.replace(/\.[a-z0-9]{1,5}$/i, '') || son;
+    } catch (e) {
+        return url;
+    }
+}
+
 chrome.contextMenus.onClicked.addListener(async (bilgi, sekme) => {
     const id = String(bilgi.menuItemId);
     let hedef = null;
@@ -249,11 +273,15 @@ chrome.contextMenus.onClicked.addListener(async (bilgi, sekme) => {
         return;
     }
 
-    const url = bilgi.linkUrl || bilgi.pageUrl || (sekme && sekme.url);
+    // Adres onceligi: ORTAM OGESI > baglanti > sayfa.
+    // Resmin uzerine sag tiklandiysa kullanici o resmi kastediyor,
+    // sayfayi degil.
+    const url = bilgi.srcUrl || bilgi.linkUrl || bilgi.pageUrl || (sekme && sekme.url);
     if (!url) return;
 
-    const baslik = bilgi.linkUrl ? (bilgi.selectionText || bilgi.linkUrl)
-                                 : ((sekme && sekme.title) || url);
+    const baslik = bilgi.srcUrl ? dosyaAdi(bilgi.srcUrl)
+                 : bilgi.linkUrl ? (bilgi.selectionText || bilgi.linkUrl)
+                 : ((sekme && sekme.title) || url);
 
     try {
         const temiz = urlNormalle(url);
