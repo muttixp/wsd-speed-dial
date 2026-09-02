@@ -144,11 +144,31 @@ let menuKurulumu = Promise.resolve();
 let menuBekleyen = null;
 
 function menuyuTazele() {
-    // Kisa araliktaki cagrilari tek kuruluma indir
+    // Kisa araliktaki cagrilari tek kuruluma indir.
+    //
+    // Isci uyandiginda `onInstalled`, `onStartup` ve modul yuklemesi
+    // ucu birden tetikleyebiliyor; 120ms bazen yetmiyordu.
     clearTimeout(menuBekleyen);
     menuBekleyen = setTimeout(() => {
         menuKurulumu = menuKurulumu.then(menuyuKur).catch(() => {});
-    }, 120);
+    }, 250);
+}
+
+/**
+ * Menu ogesi olusturur ve TAMAMLANMASINI BEKLER.
+ *
+ * `contextMenus.create` callback'siz cagrilinca hemen donuyor; kurulum
+ * "bitti" sanilip bir sonraki kurulum basliyordu ve ayni id ikinci kez
+ * yazilmaya calisiliyordu ("Cannot create item with duplicate id").
+ */
+function menuOgesi(ayar) {
+    return new Promise(coz => {
+        chrome.contextMenus.create(ayar, () => {
+            // Hata olsa da zinciri kirmiyoruz - okumak lastError'i temizler
+            void chrome.runtime.lastError;
+            coz();
+        });
+    });
 }
 
 async function menuyuKur() {
@@ -159,7 +179,7 @@ async function menuyuKur() {
 
         // Tek grup varsa alt menu gereksiz - tek tiklamada eklensin
         if (gruplar.length <= 1) {
-            chrome.contextMenus.create({
+            await menuOgesi({
                 id: 'wsdEkle',
                 title: chrome.i18n.getMessage('actionTitle') || "WSD Speed Dial'e ekle",
                 contexts: BAGLAMLAR
@@ -168,13 +188,13 @@ async function menuyuKur() {
         }
 
         // Birden fazla grup varsa: ust oge + her grup icin alt oge
-        chrome.contextMenus.create({
+        await menuOgesi({
             id: 'wsdKok',
             title: chrome.i18n.getMessage('actionTitle') || "WSD Speed Dial'e ekle",
             contexts: BAGLAMLAR
         });
         for (const g of gruplar) {
-            chrome.contextMenus.create({
+            await menuOgesi({
                 id: 'wsdGrup:' + g.id,
                 parentId: 'wsdKok',
                 title: g.baslik,

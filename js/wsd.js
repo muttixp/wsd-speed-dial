@@ -53,8 +53,12 @@ function ekraniTazele() {
             // Surukleme sirasinda cizmek islemi bozar
             if (document.querySelector('.kart.surukKaynak')) return;
             // Arama ya da cop ekranindaysak dokunma
+            // OZEL EKRANLAR kendi listelerini ciziyor; buradan
+            // `arayuzuKur()` calisirsa normal izgara gelip onlarin
+            // yerini aliyor ve kullanici yerini kaybediyor
             if (document.body.classList.contains('aramaAcik')) return;
             if (document.body.classList.contains('copAcik')) return;
+            if (document.body.classList.contains('kopyaAcik')) return;
 
             await arayuzuKur();
         } catch (e) {

@@ -42,7 +42,7 @@ chrome.storage.onChanged.addListener((d, alan) => {
 });
 
 /**
- * Gruba OZEL gorunum: { gosterim: ''|'ikon'|'ikon_yazi'|'yazi', renk: '#rrggbb'|null }
+ * Gruba OZEL gorunum: { gosterim, renk, aciklama }
  * Bos deger = genel ayari kullan.
  */
 let gorunumOnbellek = null;
@@ -63,9 +63,10 @@ export async function gorunumYaz(grupId, gorunum) {
     const temiz = {};
     if (gorunum && gorunum.gosterim) temiz.gosterim = gorunum.gosterim;
     if (gorunum && gorunum.renk)     temiz.renk = gorunum.renk;
+    if (gorunum && gorunum.aciklama) temiz.aciklama = gorunum.aciklama;
 
     if (Object.keys(temiz).length) hepsi[grupId] = temiz;
-    else delete hepsi[grupId];        // hepsi genel ayarsa kayit tutma
+    else delete hepsi[grupId];        // hepsi varsayilansa kayit tutma
 
     gorunumOnbellek = hepsi;
     await chrome.storage.local.set({ [GORUNUM_ANAHTARI]: hepsi });

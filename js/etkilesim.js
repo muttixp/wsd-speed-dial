@@ -165,7 +165,7 @@ async function grupEklePenceresi() {
     try {
         const g = await grupEkle(sonuc.ad);
         await ikonYaz(g.id, sonuc.ikon);
-        await gorunumYaz(g.id, { gosterim: sonuc.gosterim, renk: sonuc.renk });
+        await gorunumYaz(g.id, { gosterim: sonuc.gosterim, renk: sonuc.renk, aciklama: sonuc.aciklama });
         await arayuzuKur();
         await grubuAc(g.id);
         menuTazele();
@@ -720,7 +720,45 @@ function blobOku(blob) {
     });
 }
 
+/**
+ * Ekrani tazeler - HANGI EKRANDAYSAK ONU.
+ *
+ * `grubuAc()` her zaman normal izgaraya donuyordu; yinelenen kartlar
+ * ya da cop ekranindayken bir kart silince o ekran kapanip gruba
+ * donuyordu ve kullanici yerini kaybediyordu.
+ */
+async function ekraniTazele() {
+    if (document.body.classList.contains('kopyaAcik')) {
+        const { kopyaEkraniniAc } = await import('./kopyalar.js');
+        return kopyaEkraniniAc();
+    }
+    if (document.body.classList.contains('copAcik')) {
+        return copPenceresiniAc();
+    }
+    if (document.body.classList.contains('aramaAcik')) {
+        const { aramayiTazele } = await import('./arama.js');
+        return aramayiTazele();
+    }
+    return grubuAc(aktifGrup());
+}
+
 /* ---------- Kart uzeri araclar ---------- */
+
+/**
+ * Kartin bulundugu grubu dondurur.
+ *
+ * Normal izgarada aktif gruptur, ama arama ve yinelenen kartlar
+ * ekranlarinda kartlar baska gruplardan geliyor - yer iminin kendi
+ * `parentId`'sine bakmak gerekiyor.
+ */
+async function kartinGrubu(kartId) {
+    try {
+        const [d] = await chrome.bookmarks.get(kartId);
+        return d.parentId || aktifGrup();
+    } catch (e) {
+        return aktifGrup();
+    }
+}
 
 async function kartAraciCalistir(arac, kart) {
     tazelemeyiBastir();
@@ -729,9 +767,13 @@ async function kartAraciCalistir(arac, kart) {
     const url    = kart.dataset.anahtar;
     const baslik = kart.querySelector('.kartBaslik')?.textContent || '';
 
+    // Kartin GERCEK grubu - arama ve yinelenen kartlar ekranlarinda
+    // aktif grup kartin bulundugu grup DEGIL
+    const grupId = await kartinGrubu(kartId);
+
     switch (arac) {
         case 'duzenle':
-            kartPenceresiniAc({ id: kartId, baslik, url, grupId: aktifGrup() });
+            kartPenceresiniAc({ id: kartId, baslik, url, grupId });
             break;
 
         case 'not':
@@ -760,7 +802,7 @@ async function kartAraciCalistir(arac, kart) {
                 const yedek = await kartiYedekle(kartId, url);
                 await copeAt(yedek);
                 await kartSil(kartId);
-                await grubuAc(aktifGrup());
+                await ekraniTazele();
                 bildir(c('kartSilindi'), {
                     etiket: c('geriAl'),
                     calistir: () => kartiGeriAl(yedek)
@@ -780,6 +822,15 @@ function menuleriKur() {
     kap?.addEventListener('contextmenu', async e => {
         const kart = e.target.closest('.kart:not(.ekleKart)');
         if (!kart) return;
+
+        // COP KUTUSUNDA menu YANILTICI: kartlar artik yer imi degil,
+        // "Düzenle" ya da "Taşı" hicbir sey yapamaz. Orada kartin
+        // uzerindeki Geri Al / Kalıcı Sil dugmeleri gecerli olan.
+        if (document.body.classList.contains('copAcik')) {
+            e.preventDefault();
+            return;
+        }
+
         e.preventDefault();
         menuKartId  = kart.dataset.kartId;
         menuKartUrl = kart.dataset.anahtar;
@@ -829,6 +880,13 @@ function menuleriKur() {
         if (e.target.closest('input, textarea, select')) return;
 
         e.preventDefault();
+
+        // COP ve YINELENEN KARTLAR ekranlarinda "Ekle" / "Yeni Grup"
+        // anlamsiz: kullanici o an bir listeyi inceliyor, kart eklemiyor.
+        // Tarayici menusu de cikmasin diye preventDefault ustte.
+        if (document.body.classList.contains('copAcik')) return;
+        if (document.body.classList.contains('kopyaAcik')) return;
+
         menuyuAc(el('bosMenu'), e.clientX, e.clientY);
     });
 
@@ -976,7 +1034,7 @@ async function kartMenuEylemi(e) {
                 const yedek = await kartiYedekle(menuKartId, url);
                 await copeAt(yedek);
                 await kartSil(menuKartId);
-                await grubuAc(aktifGrup());
+                await ekraniTazele();
                 bildir(c('kartSilindi'), {
                     etiket: c('geriAl'),
                     calistir: () => kartiGeriAl(yedek)
@@ -1064,7 +1122,7 @@ async function grupMenuEylemi(e) {
         try {
             await kartGuncelleBaslik(id, sonuc.ad);
             await ikonYaz(id, sonuc.ikon);
-            await gorunumYaz(id, { gosterim: sonuc.gosterim, renk: sonuc.renk });
+            await gorunumYaz(id, { gosterim: sonuc.gosterim, renk: sonuc.renk, aciklama: sonuc.aciklama });
             await arayuzuKur();
             menuTazele();
             bildir(c('grupGuncellendi'));

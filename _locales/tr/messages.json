@@ -1027,5 +1027,11 @@
   },
   "sonAcilis": {
     "message": "son: $1"
+  },
+  "grupNeIcin": {
+    "message": "Bu grup ne için?"
+  },
+  "aciklamaIstege": {
+    "message": "Açıklama (isteğe bağlı)"
   }
 }

@@ -1027,5 +1027,11 @@
   },
   "sonAcilis": {
     "message": "last: $1"
+  },
+  "grupNeIcin": {
+    "message": "What is this group for?"
+  },
+  "aciklamaIstege": {
+    "message": "Description (optional)"
   }
 }

@@ -142,6 +142,7 @@ export async function grupPenceresiniAc(grup = null) {
     const gorunumler = await gorunumleriAl();
     const g = (grup && gorunumler[grup.id]) || {};
     el('gpGosterim').value = g.gosterim || '';
+    el('gpAciklama').value = g.aciklama || '';
     if (g.renk) {
         el('gpIkonRengi').value = g.renk;
         delete el('gpIkonRengi').dataset.bos;
@@ -194,7 +195,8 @@ async function kaydet() {
         ad,
         ikon: secilenIkon,
         gosterim: el('gpGosterim').value || '',
-        renk: renkEl.dataset.bos ? null : renkEl.value
+        renk: renkEl.dataset.bos ? null : renkEl.value,
+        aciklama: el('gpAciklama').value.trim() || null
     });
 }
 

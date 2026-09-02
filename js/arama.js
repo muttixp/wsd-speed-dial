@@ -144,7 +144,24 @@ export function dizinBayatladi() {
     tumKartlar = null;
 }
 
+let sonTerim = '';
+let sonBaglam = null;
+
+/**
+ * Son aramayi yeniden calistirir.
+ *
+ * Bir kart silinince ekran `grubuAc()` ile normal izgaraya donuyordu;
+ * kullanici arama sonuclarindaysa yerini kaybediyordu.
+ */
+export async function aramayiTazele() {
+    if (!sonTerim) return;
+    dizinBayatladi();
+    await suz(sonTerim, sonBaglam);
+}
+
 async function suz(terim, baglam) {
+    sonTerim = terim;
+    sonBaglam = baglam || sonBaglam;
     const t = (terim || '').trim().toLocaleLowerCase('tr');
 
     if (!t) {

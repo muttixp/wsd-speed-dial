@@ -20,6 +20,7 @@
 // bakarak karar verebiliyorsun.
 
 import { gruplariAl, kartlariAl, kartSil, urlNormalle } from './yerimi.js';
+import { kartAraclariOlustur } from './cizim.js';
 import { gorselAl } from './gorsel.js';
 import { aktifGrup, grubuAc } from './cizim.js';
 import { bildir } from './arayuz.js';
@@ -99,11 +100,30 @@ async function ciz() {
             kap.appendChild(kartOlustur(kart, grup, kayitlar[kume.url]));
         }
     }
+
+    // Renk etiketi ve not isareti - normal izgaradaki gibi
+    try {
+        const { renkleriUygula, notlariUygula } = await import('./cizim.js');
+        const tumKartlar = kumeler.flatMap(x => x.liste.map(y => y.kart));
+        renkleriUygula(tumKartlar);
+        notlariUygula(tumKartlar);
+    } catch (e) { /* onemli degil */ }
 }
 
+/**
+ * Kart - NORMAL izgaradakiyle ayni yapida.
+ *
+ * Onceden yalnizca "Sil" dugmesi vardi; kullanici duzenlemek ya da
+ * tasimak isteyince buradan cikip grubu bulmak zorunda kaliyordu.
+ * Artik SANAL GRUP gibi davraniyor: ayni arac seridi, ayni sag tik
+ * menusu, tiklayinca aciliyor.
+ */
 function kartOlustur(k, grup, kayit) {
-    const a = document.createElement('div');
+    const a = document.createElement('a');
     a.className = 'kart kopyaKart';
+    a.href = k.url;
+    a.dataset.kartId = k.id;
+    a.dataset.anahtar = urlNormalle(k.url);
 
     const govde = document.createElement('span');
     govde.className = 'kartGovde';
@@ -119,43 +139,19 @@ function kartOlustur(k, grup, kayit) {
     govde.append(baslik, gorsel);
     a.appendChild(govde);
 
-    // Hangi grupta
+    // Renk seridi - normal kartlardaki gibi
+    const serit = document.createElement('span');
+    serit.className = 'kartRenk';
+    serit.hidden = true;
+    a.appendChild(serit);
+
+    // Hangi grupta - bu ekranin ayirt edici bilgisi
     const etiket = document.createElement('span');
     etiket.className = 'kartGrupEtiketi';
     etiket.textContent = grup.baslik;
     a.appendChild(etiket);
 
-    // Tek dugme: bu kopyayi sil
-    const araclar = document.createElement('span');
-    araclar.className = 'copKartAraclari';
-
-    const sil = document.createElement('button');
-    sil.type = 'button';
-    sil.className = 'copKartDugme yikici';
-    sil.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M3 6h18"/><path d="M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2"/>
-        <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>` + c('sil');
-    sil.addEventListener('click', async () => {
-        if (!await onaySor({
-            baslik: c('kartiSil'),
-            metin: `"${grup.baslik}" grubundaki kopya çöp kutusuna taşınacak.`,
-            evet: c('sil'), tehlikeli: true, hatirla: 'kopyaSil'
-        })) return;
-
-        // Cope at - digerleri ayni adresi kullandigi icin gorseli
-        // SILMIYORUZ, oksuz temizligi de dokunmayacak
-        try {
-            await kartSil(k.id);
-            await ciz();
-            bildir(c('kartSilindi'));
-        } catch (e) {
-            bildir(c('silinemedi'));
-        }
-    });
-
-    araclar.appendChild(sil);
-    a.appendChild(araclar);
+    a.appendChild(kartAraclariOlustur());
     return a;
 }
 

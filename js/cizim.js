@@ -85,10 +85,14 @@ function grupSeridiCiz(gruplar, sayilar, ikonlar = {}, gorunumler = {}) {
         ad.textContent = g.baslik;
         btn.appendChild(ad);
 
-        // Kart sayisi SEKMEDE gosterilmiyor - yer kapliyor.
-        // Yalnizca ipucunda veriliyor.
+        // Kart sayisi SEKMEDE gosterilmiyor - yer kapliyor, ipucunda veriliyor.
+        // ACIKLAMA varsa ipucuna ekleniyor: kisa ad/ikon kullanan grubun
+        // ne icin oldugunu ustune gelince gormek icin.
         const n = sayilar[g.id] || 0;
-        btn.title = n ? `${g.baslik} — ${c('nKart', n)}` : `${g.baslik} — ${c('bos')}`;
+        const sayiMetni = n ? c('nKart', n) : c('bos');
+        btn.title = gorunum.aciklama
+            ? `${g.baslik} — ${sayiMetni}\n${gorunum.aciklama}`
+            : `${g.baslik} — ${sayiMetni}`;
 
         btn.addEventListener('click', () => grubuAc(g.id));
         serit.appendChild(btn);
@@ -340,7 +344,7 @@ async function kopyalariIsaretle(kartlar, buGrup) {
 }
 
 /** Notu olan kartlara kose isareti koyar. */
-async function notlariUygula(kartlar) {
+export async function notlariUygula(kartlar) {
     const notlar = await notlariAl();
     for (const k of kartlar) {
         const a = document.querySelector(`[data-kart-id="${k.id}"]`);
@@ -352,7 +356,7 @@ async function notlariUygula(kartlar) {
 }
 
 /** Kart renk etiketlerini basar. */
-async function renkleriUygula(kartlar) {
+export async function renkleriUygula(kartlar) {
     const renkler = await renkleriAl();
     for (const k of kartlar) {
         const renk = renkler[urlNormalle(k.url)];

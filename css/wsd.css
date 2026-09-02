@@ -2147,3 +2147,15 @@ body.kopyaAcik #ustSerit { opacity: 0; visibility: hidden; pointer-events: none;
     transition: background var(--gecis), border-color var(--gecis);
 }
 .dnDugme:hover { background: var(--vurgu); border-color: var(--vurgu); }
+
+/* Yinelenen kartlar - normal kart gibi davraniyor */
+.kart.kopyaKart { cursor: pointer; }
+.kart.kopyaKart .kartGrupEtiketi {
+    display: block;
+    padding: 0 var(--b3);
+    margin-top: 3px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--vurgu-parlak);
+    text-align: center;
+}
