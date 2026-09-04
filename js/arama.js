@@ -24,6 +24,7 @@ import { gorselAl } from './gorsel.js';
 import { kartAraclariOlustur } from './cizim.js';
 import { renkleriAl } from './renk.js';
 import { notlariAl } from './not.js';
+import { c } from './dil.js';
 
 // Arama seridinin kartlarla ortusmesini olcup ust bosluk veriyoruz.
 // Sabit bir deger yetmiyor: serit yuksekligi ve sayfa duzeni degisebiliyor.
@@ -189,7 +190,7 @@ async function ciz(kartlar, terim) {
     if (!kartlar.length) {
         const bos = document.createElement('p');
         bos.id = 'aramaBos';
-        bos.textContent = `"${terim}" için sonuç bulunamadı`;
+        bos.textContent = c('sonucBulunamadi', terim);
         kap.appendChild(bos);
         return;
     }

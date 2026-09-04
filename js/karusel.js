@@ -92,6 +92,11 @@ function ciz() {
     onizleme.style.backgroundImage = su ? `url('${su}')` : 'none';
     onizleme.style.backgroundColor = zemin || '#ffffff';
 
+    // Renk secici mevcut zemini gostersin - onceki karttan kalan
+    // deger yaniltmasin
+    const secici = el('kpZeminSecici');
+    if (secici && zemin && /^#[0-9a-f]{6}$/i.test(zemin)) secici.value = zemin;
+
     // Oklar tek aday varken anlamsiz
     const tek = adaylar.length < 2;
     el('kpOnceki').disabled = tek;

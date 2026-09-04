@@ -96,7 +96,7 @@ function satirOlustur(g, adet, ikonDeger) {
     sil.addEventListener('click', async () => {
         const onay = await onaySor({
             baslik: c('grubuSil'),
-            metin: `"${adAlan.value}" ve içindeki ${adet} kart silinecek.`,
+            metin: c('grupVeKartSilinecek', adAlan.value, adet),
             evet: c('sil'), tehlikeli: true
         });
         if (!onay) return;

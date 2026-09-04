@@ -132,7 +132,7 @@ function copKartiOlustur(k) {
     sil.type = 'button';
     sil.className = 'copKartDugme yikici';
     sil.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${COP_SVG.sil}</svg>Kalıcı Sil`;
+        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${COP_SVG.sil}</svg>${c('kaliciSil')}`;
     sil.addEventListener('click', async () => {
         if (!await onaySor({
             baslik: c('kaliciSil'),
@@ -209,11 +209,11 @@ function copGrubuOlustur(k) {
     sil.type = 'button';
     sil.className = 'copKartDugme yikici';
     sil.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${COP_SVG.sil}</svg>Kalıcı Sil`;
+        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${COP_SVG.sil}</svg>${c('kaliciSil')}`;
     sil.addEventListener('click', async () => {
         if (!await onaySor({
             baslik: c('kaliciSil'),
-            metin: `"${k.baslik}" grubu ve ${k.kartlar.length} kartı tamamen silinecek.`,
+            metin: c('grupKaliciSilMetin', k.baslik, k.kartlar.length),
             evet: c('sil'), tehlikeli: true
         })) return;
         await coptenCikar(k.copId);
@@ -301,7 +301,7 @@ async function copGrubunuAc(g) {
         sil.type = 'button';
         sil.className = 'copKartDugme yikici';
         sil.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${COP_SVG.sil}</svg>Kalıcı Sil`;
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${COP_SVG.sil}</svg>${c('kaliciSil')}`;
         sil.addEventListener('click', async () => {
             if (!await onaySor({
                 baslik: c('kaliciSil'),

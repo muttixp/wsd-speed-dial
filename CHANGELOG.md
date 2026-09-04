@@ -3,6 +3,29 @@
 Sürüm numaraları [Semantic Versioning](https://semver.org/lang/tr/)
 kurallarına uyar.
 
+## [1.2.0] — 2026-09-03
+
+### Yeni
+- Sahne Yakala: kart düzenlerken sayfayı açıp videonun istediğiniz
+  karesini seçerek yakalama. Video öğesine kırpılır, arayüz girmez
+- Yerel dosya ve klasörler kart olabiliyor (`file:///`)
+- Görsel Yerleşimi ayarı: Kırp / Sığdır
+- YouTube kartları bantsız kapakla geliyor (maxresdefault/mqdefault)
+- Grup açıklaması — sekme ipucunda görünüyor
+
+### İyileştirmeler
+- Görsel seçimi akıllandı: kart oranına en yakın, en yüksek çözünürlüklü
+  aday öne geliyor; placeholder ve logo'lar eleniyor
+- `<picture>`/`srcset` görselleri de taranıyor
+- Kart Düzenle penceresi daha derli toplu
+- Kart arka plan rengi hem uygulanıyor hem palette doğru gösteriliyor
+
+### Düzeltmeler
+- Ayar açılırken çift kaydırma çubuğu
+- Açılır menüler modal içinde perdeyi kapatmıyor
+- Grup şeridinde seçili sekmeye kaydırma
+- select ayarları anında uygulanıyor
+
 ## [1.1.0] — 2026-09-01
 
 ### Yeni

@@ -227,7 +227,7 @@ function sablon({ menu, sayfalar, grupSayisi, tarih, toplamKart, kartEn, kose, z
 </header>
 <nav class="menu">
 ${menu}</nav>
-${sayfalar}<footer>WSD Speed Dial ile oluşturuldu</footer>
+${sayfalar}<footer>${kacis(c('htmlAltBilgi'))}</footer>
 <script>
 // Sekme gecisi. Dinleyici KAP uzerinde: sekme sayisi degisken,
 // her dugmeye ayri baglamak gereksiz.

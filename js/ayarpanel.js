@@ -64,6 +64,7 @@ const ALANLAR = [
     ['simgeRenkB',       'aySimgeB',         el => el.value],
     ['anaSayfaGoster',   'ayAnaSayfa',       el => el.checked],
     ['kartOrani',        'ayKartOrani',        el => el.value],
+    ['gorselYerlesim',   'ayGorselYerlesim',   el => el.value],
     ['maxSutun',         'ayMaxSutun',         el => +el.value],
     ['kartZeminRengi',   'ayKartZemin',        el => el.value],
     ['kartEn',           'ayKartEn',           el => +el.value],
@@ -127,7 +128,10 @@ export async function ayarPaneliniKur() {
     for (const [anahtar, id, oku] of ALANLAR) {
         const el = document.getElementById(id);
         if (!el) continue;
-        el.addEventListener('input', async () => {
+        // <select> 'input' yerine 'change' tetikler (bazi tarayicilarda
+        // 'input' hic gelmiyor). Ikisini de dinliyoruz.
+        const olay = el.tagName === 'SELECT' ? 'change' : 'input';
+        el.addEventListener(olay, async () => {
             ciktiTazele(id);
             const yeni = await ayarYaz({ [anahtar]: oku(el) });
             gorunumuUygula(yeni);
@@ -225,6 +229,10 @@ function gorunumuUygula(ayar) {
     kok.setProperty('--kart-en', en + 'px');
     // Yukseklik ORANDAN: gorsel kutusu en * carpan, baslik ayrica yer kapliyor
     kok.setProperty('--kart-gorsel-boy', Math.round(en * carpan) + 'px');
+    // Karusel onizleme ve baska yerler ayni orani kullansin - w/h
+    const oranCss = { o1610: '16 / 10', o169: '16 / 9', o43: '4 / 3', okare: '1 / 1' };
+    kok.setProperty('--kart-oran', oranCss[ayar.kartOrani] || '16 / 10');
+    kok.setProperty('--gorsel-yerlesim', ayar.gorselYerlesim === 'contain' ? 'contain' : 'cover');
     kok.setProperty('--kart-kose', (ayar.kartKose ?? 7) + 'px');
     kok.setProperty('--kart-bosluk-yatay', (ayar.kartBoslukYatay ?? 3) + 'px');
     kok.setProperty('--kart-bosluk-dikey', (ayar.kartBoslukDikey ?? 12) + 'px');
@@ -517,7 +525,7 @@ async function depoDurumunuCiz() {
         } else if (d.oran >= UYARI_ESIGI) {
             uyari.hidden = false;
             uyari.classList.remove('kritik');
-            uyari.textContent = `Ayrılan alanın %${yuzde}'i dolu. ` +
+            uyari.textContent = c('depoDoluUyari', yuzde) +
                 c('yedekAlipTemizlemenizOnerilir');
             if (yedekBtn) yedekBtn.hidden = false;
         } else {

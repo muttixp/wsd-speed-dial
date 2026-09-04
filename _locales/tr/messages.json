@@ -1033,5 +1033,89 @@
   },
   "aciklamaIstege": {
     "message": "Açıklama (isteğe bağlı)"
+  },
+  "gorselYerlesim": {
+    "message": "Görsel Yerleşimi"
+  },
+  "yerlesimKirp": {
+    "message": "Kırp (kartı doldur)"
+  },
+  "yerlesimSigdir": {
+    "message": "Sığdır (tamamını göster)"
+  },
+  "elleSahneSec": {
+    "message": "Elle — sahneyi seç (deneysel)"
+  },
+  "sahneYakala": {
+    "message": "Sahne Yakala"
+  },
+  "onceAdresGirin": {
+    "message": "Önce adres girin"
+  },
+  "sahneEklendi": {
+    "message": "Sahne eklendi"
+  },
+  "yakalanamadi": {
+    "message": "Yakalanamadı"
+  },
+  "grupKaliciSilMetin": {
+    "message": "\"$1\" grubu ve $2 kartı tamamen silinecek."
+  },
+  "sifirlaKucuk": {
+    "message": "sıfırla"
+  },
+  "copeTasinacak": {
+    "message": "\"$1\" çöp kutusuna taşınacak."
+  },
+  "sonucBulunamadi": {
+    "message": "\"$1\" için sonuç bulunamadı"
+  },
+  "depoDoluUyari": {
+    "message": "Ayrılan alanın %$1'i dolu. "
+  },
+  "depoDoluBildirim": {
+    "message": "Depolama alanının %$1'i dolu — yedek almanız önerilir"
+  },
+  "grupVeKartSilinecek": {
+    "message": "\"$1\" ve içindeki $2 kart silinecek."
+  },
+  "grupAdiZatenVar": {
+    "message": "\"$1\" adında bir grup zaten var"
+  },
+  "htmlAltBilgi": {
+    "message": "WSD Speed Dial ile oluşturuldu"
+  },
+  "elleSahne": {
+    "message": "Sahneyi ayarlayın, sonra:"
+  },
+  "cek": {
+    "message": "Çek"
+  },
+  "sayfaZatenEkli": {
+    "message": "Bu sayfa zaten ekli"
+  },
+  "sayfaZatenEkliMetin": {
+    "message": "$1 grubunda bu adres mevcut. Yine de eklensin mi?"
+  },
+  "yineDeEkle": {
+    "message": "Yine de ekle"
+  },
+  "alanSec": {
+    "message": "Alan Seç"
+  },
+  "uzunCekim": {
+    "message": "Uzun Çekim"
+  },
+  "logoYakala": {
+    "message": "Logo Yakala"
+  },
+  "logoEklendi": {
+    "message": "Logo eklendi"
+  },
+  "logoBulunamadi": {
+    "message": "Site logosu bulunamadı"
+  },
+  "logoSecin": {
+    "message": "Eklemek istediğiniz logoya tıklayın:"
   }
 }

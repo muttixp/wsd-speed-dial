@@ -184,7 +184,7 @@ async function kaydet() {
     );
 
     if (cakisan) {
-        uyarGoster(`"${cakisan.baslik}" adında bir grup zaten var`);
+        uyarGoster(c('grupAdiZatenVar', cakisan.baslik));
         el('gpAd').focus();
         el('gpAd').select();
         return;

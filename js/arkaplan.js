@@ -54,9 +54,10 @@ function wsdBildirimGoster(metin, basarili) {
     }, 2200);
 }
 
-function wsdOnayPenceresi(grupAdi) {
+function wsdOnayPenceresi(grupAdi, m) {
     return new Promise(resolve => {
         const temizAd = String(grupAdi).replace(/[<>&"]/g, '');
+        const k = s => String(s).replace(/[<>&]/g, '');
         const kap = document.createElement('div');
         kap.style.cssText = 'position:fixed;inset:0;z-index:2147483647;';
         const golge = kap.attachShadow({ mode: 'open' });
@@ -79,11 +80,11 @@ function wsdOnayPenceresi(grupAdi) {
             'button:hover{filter:brightness(1.14)}' +
             '</style>' +
             '<div class="perde"><div class="kutu">' +
-            '<h3>Bu sayfa zaten ekli</h3>' +
-            '<p><b>' + temizAd + '</b> grubunda bu adres mevcut. Yine de eklensin mi?</p>' +
+            '<h3>' + k(m.baslik) + '</h3>' +
+            '<p>' + k(m.metin).replace('$1', '<b>' + temizAd + '</b>') + '</p>' +
             '<div class="dugmeler">' +
-            '<button class="iptal">Vazgeç</button>' +
-            '<button class="tamam">Yine de ekle</button>' +
+            '<button class="iptal">' + k(m.iptal) + '</button>' +
+            '<button class="tamam">' + k(m.tamam) + '</button>' +
             '</div></div></div>';
 
         const bitir = d => {
@@ -350,7 +351,7 @@ async function sayfadaOnaySor(sekme, grupAdi) {
         const [sonuc] = await chrome.scripting.executeScript({
             target: { tabId: sekme.id },
             func: wsdOnayPenceresi,
-            args: [grupAdi]
+            args: [grupAdi, { baslik: c('sayfaZatenEkli'), metin: c('sayfaZatenEkliMetin', '$1'), iptal: c('vazgec'), tamam: c('yineDeEkle') }]
         });
         return sonuc?.result === true;
     } catch (e) {

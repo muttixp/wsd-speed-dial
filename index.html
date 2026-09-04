@@ -303,6 +303,14 @@
                         <option value="okare" data-c="kare">Kare</option>
                     </select>
                 </label>
+
+                <label class="ayarSatir">
+                    <span data-c="gorselYerlesim">Görsel Yerleşimi</span>
+                    <select id="ayGorselYerlesim">
+                        <option value="cover" data-c="yerlesimKirp">Kırp (kartı doldur)</option>
+                        <option value="contain" data-c="yerlesimSigdir">Sığdır (tamamını göster)</option>
+                    </select>
+                </label>
                 <label class="ayarSatir">
                     <span data-c="kartZeminRengi">Kart Zemin Rengi</span>
                     <input type="color" id="ayKartZemin" class="renkKutu">
@@ -677,9 +685,20 @@
                 </button>
                 <button id="kpZemin" class="gorselDugme" type="button">
                     <span class="gdSimge">&#9639;</span><span data-c="arkaPlan">Arka Plan</span></button>
+                <button id="kpSahne" class="gorselDugme" type="button">
+                    <span class="gdSimge">&#128247;</span><span data-c="sahneYakala">Sahne Yakala</span>
+                </button>
+                <button id="kpLogo" class="gorselDugme" type="button">
+                    <span class="gdSimge">&#127991;</span><span data-c="logoYakala">Logo Yakala</span>
+                </button>
                 <button id="kpIndir" class="gorselDugme" type="button">
                     <span class="gdSimge">&#8615;</span><span data-c="resmiIndir">Resmi İndir</span>
                 </button>
+            </div>
+
+            <div id="kpLogoIzgara" class="logoIzgara" hidden>
+                <p class="kucukBilgi" data-c="logoSecin">Eklemek istediğiniz logoya tıklayın:</p>
+                <div id="kpLogoListe" class="logoListe"></div>
             </div>
 
             <input type="file" id="kpDosyaSecici" accept="image/*" hidden>

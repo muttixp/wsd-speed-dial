@@ -47,6 +47,7 @@ export const VARSAYILAN = {
     baslikBoyut: 13,
     // Kartlar
     kartOrani: 'o1610',         // 'o43' | 'o1610' | 'o169'
+    gorselYerlesim: 'cover',    // 'cover' (kırp) | 'contain' (sığdır)
     maxSutun: 0,                // 0 = sinir yok, ekrana sigan kadar
     kartZeminRengi: '#22262e',
     kartEn: 250,

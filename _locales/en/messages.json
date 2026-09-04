@@ -1033,5 +1033,89 @@
   },
   "aciklamaIstege": {
     "message": "Description (optional)"
+  },
+  "gorselYerlesim": {
+    "message": "Image Fit"
+  },
+  "yerlesimKirp": {
+    "message": "Crop (fill tile)"
+  },
+  "yerlesimSigdir": {
+    "message": "Fit (show all)"
+  },
+  "elleSahneSec": {
+    "message": "Manual — pick the scene (experimental)"
+  },
+  "sahneYakala": {
+    "message": "Capture Scene"
+  },
+  "onceAdresGirin": {
+    "message": "Enter an address first"
+  },
+  "sahneEklendi": {
+    "message": "Scene added"
+  },
+  "yakalanamadi": {
+    "message": "Could not capture"
+  },
+  "grupKaliciSilMetin": {
+    "message": "Group \"$1\" and its $2 cards will be deleted permanently."
+  },
+  "sifirlaKucuk": {
+    "message": "reset"
+  },
+  "copeTasinacak": {
+    "message": "\"$1\" will be moved to the trash."
+  },
+  "sonucBulunamadi": {
+    "message": "No results for \"$1\""
+  },
+  "depoDoluUyari": {
+    "message": "$1% of the allotted space is in use. "
+  },
+  "depoDoluBildirim": {
+    "message": "Storage is $1% full — a backup is recommended"
+  },
+  "grupVeKartSilinecek": {
+    "message": "\"$1\" and the $2 cards inside it will be deleted."
+  },
+  "grupAdiZatenVar": {
+    "message": "A group named \"$1\" already exists"
+  },
+  "htmlAltBilgi": {
+    "message": "Created with WSD Speed Dial"
+  },
+  "elleSahne": {
+    "message": "Set up the scene, then:"
+  },
+  "cek": {
+    "message": "Capture"
+  },
+  "sayfaZatenEkli": {
+    "message": "This page is already added"
+  },
+  "sayfaZatenEkliMetin": {
+    "message": "This address already exists in group $1. Add it anyway?"
+  },
+  "yineDeEkle": {
+    "message": "Add anyway"
+  },
+  "alanSec": {
+    "message": "Select Area"
+  },
+  "uzunCekim": {
+    "message": "Long Capture"
+  },
+  "logoYakala": {
+    "message": "Capture Logo"
+  },
+  "logoEklendi": {
+    "message": "Logo added"
+  },
+  "logoBulunamadi": {
+    "message": "No site logo found"
+  },
+  "logoSecin": {
+    "message": "Click the logo you want to add:"
   }
 }

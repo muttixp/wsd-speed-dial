@@ -231,8 +231,10 @@ body {
     height: var(--kart-gorsel-boy);
     border-radius: inherit;
     background-color: var(--kart-zemin);
-    background-size: cover;
-    background-position: 50% 0;
+    /* cover = kirp, contain = sigdir (ayardan). contain'de ortala,
+       cover'da usttten hizala (baslik/logo genelde ustte) */
+    background-size: var(--gorsel-yerlesim, cover);
+    background-position: 50% 50%;
     background-repeat: no-repeat;
     /* Cerceve icin `border` degil inset golge: kutu olcusunu buyutmuyor,
        dolayisiyla kalinlik degisince izgara kaymiyor. */
@@ -437,9 +439,11 @@ body {
 
 .karuselOnizleme {
     flex: 1;
-    aspect-ratio: 16 / 10;
+    aspect-ratio: var(--kart-oran, 16 / 10);
     border-radius: var(--k2);
-    background: #fff center/contain no-repeat;
+    /* Onizlemede `contain`: gorselin TAMAMI gorunsun, kirpma olmasin -
+       kullanici adayin gercek oranini gorup dogru karar versin */
+    background: var(--kart-zemin, #22262e) center/contain no-repeat;
     box-shadow: var(--golge-2);
 }
 
@@ -2022,27 +2026,6 @@ body.yanPanelKapali #yanArac { display: none; }
     word-break: break-word;
 }
 
-/* Ayni adres baska gruplarda da var - kac yerde oldugunu gosteren rozet */
-.kartKopya {
-    position: absolute;
-    top: calc(var(--baslik-boyut) + 10px);
-    right: 8px;
-    min-width: 18px;
-    height: 18px;
-    padding: 0 5px;
-    border-radius: 99px;
-    background: rgba(28, 31, 38, .88);
-    border: 1px solid var(--cerceve-guclu);
-    color: var(--metin-sonuk);
-    font-size: 10.5px;
-    font-weight: 600;
-    line-height: 16px;
-    text-align: center;
-    z-index: 2;
-    pointer-events: auto;
-}
-.kart:hover .kartKopya { color: var(--metin); }
-
 /* ============ Yinelenen kartlar ============ */
 #kopyaKap {
     position: fixed;
@@ -2159,3 +2142,52 @@ body.kopyaAcik #ustSerit { opacity: 0; visibility: hidden; pointer-events: none;
     color: var(--vurgu-parlak);
     text-align: center;
 }
+
+/* ============ Kart Duzenle - siki duzen ============ */
+/* Yalnizca kart penceresi; onay/grup/not pencereleri etkilenmez */
+#kartPencere .pencereIc { padding: var(--b4); }
+#kartPencere .pencereIc h2 { margin-bottom: var(--b3); }
+
+/* Alanlar arasi bosluk azaldi */
+#kartPencere .alan { margin-bottom: var(--b3); }
+#kartPencere .alan > span { margin-bottom: 4px; font-size: 11.5px; }
+#kartPencere .alan input,
+#kartPencere .alan select { padding: 7px 11px; }
+
+/* Ust bilgi satiri (kez acildi / son) daha sikisik */
+#kartPencere #kpSayac { margin: -2px 0 var(--b3); }
+
+/* Renk etiketi seridi */
+#kartPencere .renkSirasi { margin-bottom: var(--b3); gap: 6px; }
+
+/* Karusel ve noktalar */
+#kartPencere .karuselNoktalar { margin-bottom: var(--b3); }
+
+/* Gorsel araclari - daha kompakt dugmeler */
+#kartPencere .gorselAraclari { gap: 6px; margin-bottom: var(--b3); }
+#kartPencere .gorselDugme { padding: 8px var(--b1); font-size: 10.5px; gap: 4px; }
+#kartPencere .gdSimge { font-size: 15px; }
+
+/* Alt dugmeler (Iptal/Kaydet) */
+#kartPencere .pencereAlt { margin-top: var(--b3); }
+
+/* ============ Logo aday izgarasi (Kart Duzenle) ============ */
+.logoIzgara { margin-bottom: var(--b3); }
+.logoIzgara .kucukBilgi { margin: 0 0 var(--b2); }
+.logoListe {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--b2);
+}
+.logoAday {
+    padding: 0;
+    border: 1px solid var(--cerceve);
+    border-radius: var(--k1);
+    background: transparent;
+    cursor: pointer;
+    overflow: hidden;
+    line-height: 0;
+    transition: border-color var(--gecis), transform var(--gecis);
+}
+.logoAday img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; display: block; }
+.logoAday:hover { border-color: var(--vurgu-parlak); transform: translateY(-1px); }

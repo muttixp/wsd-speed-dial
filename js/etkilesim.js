@@ -247,6 +247,39 @@ function kartPenceresiniKur() {
     }
 }
 
+/**
+ * Bulunan logolari kucuk izgarada gosterir; tiklanan karusele girer.
+ * Kart penceresi acilip kapanirken temizleniyor - yoksa onceki kartin
+ * adaylari yeni kartta duruyordu.
+ */
+function logoAdaylariniGoster(kartlar) {
+    const liste = el('kpLogoListe');
+    if (!liste) return;
+    liste.textContent = '';
+    for (const veri of kartlar) {
+        const dugme = document.createElement('button');
+        dugme.type = 'button';
+        dugme.className = 'logoAday';
+        const gorsel = document.createElement('img');
+        gorsel.src = veri;
+        dugme.appendChild(gorsel);
+        dugme.addEventListener('click', () => {
+            adayEkle(veri);                       // SADECE tiklanan eklenir
+            logoAdaylariniGizle();
+            bildir(c('logoEklendi'));
+        });
+        liste.appendChild(dugme);
+    }
+    el('kpLogoIzgara').hidden = false;
+}
+
+function logoAdaylariniGizle() {
+    const izgara = el('kpLogoIzgara');
+    if (!izgara) return;
+    izgara.hidden = true;
+    el('kpLogoListe').textContent = '';
+}
+
 async function kartPenceresiniAc(kart) {
     duzenlenenKartId = kart ? kart.id : null;
     duzenlenenUrl    = kart ? kart.url : null;
@@ -263,7 +296,7 @@ async function kartPenceresiniAc(kart) {
             const ne = tarihMetni(sy.son);
             sayacEl.innerHTML = c('nKezAcildi', sy.adet) +
                 (ne ? ` \u00B7 ${c('sonAcilis', ne)}` : '') +
-                ` \u00B7 <button type="button" class="metinDugme" id="kpSayacSifirla">sıfırla</button>`;
+                ` \u00B7 <button type="button" class="metinDugme" id="kpSayacSifirla">${c('sifirlaKucuk')}</button>`;
             el('kpSayac').hidden = false;
             setTimeout(() => {
                 document.getElementById('kpSayacSifirla')?.addEventListener('click', async () => {
@@ -286,6 +319,7 @@ async function kartPenceresiniAc(kart) {
     renkSeciminiGoster();
 
     await karuseliYukle(kart ? kart.url : null);
+    logoAdaylariniGizle();          // onceki kartin logo adaylari duruyordu
 
     pencereAc('kartPencere', kart ? kart.url : null);
     el('kpUrl').focus();
@@ -293,6 +327,7 @@ async function kartPenceresiniAc(kart) {
 
 function kartPenceresiniKapat() {
     pencereKapat('kartPencere');
+    logoAdaylariniGizle();
     duzenlenenKartId = null;
 }
 
@@ -633,6 +668,55 @@ function gorselAraclariniKur() {
     el('kpZemin')?.addEventListener('click', () => el('kpZeminSecici').click());
     el('kpZeminSecici')?.addEventListener('input', e => zeminAyarla(e.target.value));
 
+    // Sahne Yakala: sayfayi acar, kullanici sahneyi secip ceker,
+    // cekilen kare karusele aday olarak eklenir. Video sitelerinde
+    // poster/placeholder yerine gercek bir sahne yakalamak icin.
+    el('kpSahne')?.addEventListener('click', async () => {
+        const url = el('kpUrl').value.trim();
+        if (!url) return bildir(c('onceAdresGirin'));
+
+        const btn = el('kpSahne');
+        btn.disabled = true;
+        try {
+            const { elleYakala } = await import('./yakalama.js');
+            const veri = await elleYakala(url);
+            if (veri) {
+                adayEkle(veri);       // karusele ekle + secili yap
+                bildir(c('sahneEklendi'));
+            }
+        } catch (e) {
+            console.log('[WSD] sahne yakalanamadi:', e);
+            bildir(c('yakalanamadi'));
+        } finally {
+            btn.disabled = false;
+        }
+    });
+
+    // Logo Yakala: sitenin kendi logosunu duz zemine ortalayip aday ekler.
+    // Ekran goruntusu ile ayni akis, farkli kaynak.
+    el('kpLogo')?.addEventListener('click', async () => {
+        const url = el('kpUrl').value.trim();
+        if (!url) return bildir(c('onceAdresGirin'));
+
+        const btn = el('kpLogo');
+        btn.disabled = true;
+        try {
+            const { logoYakala } = await import('./yakalama.js');
+            const kartlar = await logoYakala(url);
+            if (kartlar.length) {
+                logoAdaylariniGoster(kartlar);        // karusele DEGIL, secime sunuluyor
+            } else {
+                logoAdaylariniGizle();
+                bildir(c('logoBulunamadi'));
+            }
+        } catch (e) {
+            console.log('[WSD] logo yakalanamadi:', e);
+            bildir(c('yakalanamadi'));
+        } finally {
+            btn.disabled = false;
+        }
+    });
+
     // 4) Gosterilen gorseli indir
     el('kpIndir')?.addEventListener('click', async () => {
         const { gorsel } = secimDurumu();
@@ -794,7 +878,7 @@ async function kartAraciCalistir(arac, kart) {
         case 'sil':
             if (!await onaySor({
                 baslik: c('kartiSil'),
-                metin: `"${baslik}" çöp kutusuna taşınacak.`,
+                metin: c('copeTasinacak', baslik),
                 evet: c('sil'), tehlikeli: true,
                 hatirla: 'kartSil'
             })) return;
@@ -1026,7 +1110,7 @@ async function kartMenuEylemi(e) {
         case 'sil':
             if (!await onaySor({
                 baslik: c('kartiSil'),
-                metin: `"${baslik}" çöp kutusuna taşınacak.`,
+                metin: c('copeTasinacak', baslik),
                 evet: c('sil'), tehlikeli: true,
                 hatirla: 'kartSil'
             })) return;

@@ -225,7 +225,6 @@ export async function grubuAc(grupId) {
     gorselleriUygula(kartlar);
     renkleriUygula(kartlar);
     notlariUygula(kartlar);
-    kopyalariIsaretle(kartlar, grupId);
 }
 
 function kartlariCiz(kartlar) {
@@ -306,42 +305,6 @@ export function kartAraclariOlustur() {
     return kap;
 }
 
-/**
- * Ayni adres baska gruplarda da varsa karta rozet koyar.
- *
- * Onemli cunku gorsel, not, renk ve sayac ADRESE bagli: bir kopyada
- * degistirdigin sey digerlerinde de degisiyor. Kullanici bunu
- * bilmeden "notum neden burada da cikti" diye sasiriyordu.
- */
-async function kopyalariIsaretle(kartlar, buGrup) {
-    const gruplar = await gruplariAl();
-    const nerede = new Map();          // url -> [grup adi]
-
-    for (const g of gruplar) {
-        if (g.id === buGrup) continue;
-        for (const k of await kartlariAl(g.id)) {
-            const a = urlNormalle(k.url);
-            if (nerede.has(a)) nerede.get(a).push(g.baslik);
-            else nerede.set(a, [g.baslik]);
-        }
-    }
-
-    for (const k of kartlar) {
-        const digerleri = nerede.get(urlNormalle(k.url));
-        const a = document.querySelector(`[data-kart-id="${k.id}"]`);
-        if (!a) continue;
-
-        const eski = a.querySelector('.kartKopya');
-        if (eski) eski.remove();
-        if (!digerleri || !digerleri.length) continue;
-
-        const rozet = document.createElement('span');
-        rozet.className = 'kartKopya';
-        rozet.textContent = digerleri.length + 1;
-        rozet.title = c('buAdresSuGruplardaDaVar', digerleri.join(', '));
-        a.appendChild(rozet);
-    }
-}
 
 /** Notu olan kartlara kose isareti koyar. */
 export async function notlariUygula(kartlar) {
@@ -417,6 +380,11 @@ async function gorselleriUygula(kartlar) {
         const veri = kayitlar[anahtar];
 
         if (!veri || !veri.gorsel) {
+            // Gorsel yok ama zemin rengi secilmisse onu goster
+            if (veri && veri.zemin) {
+                const bos = document.querySelector(`[data-kart-id="${k.id}"] .kartGorsel`);
+                if (bos) bos.style.backgroundColor = veri.zemin;
+            }
             if (kuyrukta.includes(anahtar)) {
                 document.querySelector(`[data-kart-id="${k.id}"]`)
                     ?.classList.add('yenileniyor');
@@ -425,7 +393,12 @@ async function gorselleriUygula(kartlar) {
         }
 
         const el = document.querySelector(`[data-kart-id="${k.id}"] .kartGorsel`);
-        if (el) el.style.backgroundImage = `url('${veri.gorsel}')`;
+        if (el) {
+            el.style.backgroundImage = `url('${veri.gorsel}')`;
+            // Zemin rengi: saydam gorsellerde arkada gorunur, ayrica
+            // "sigdir" modunda kenar bosluklarini doldurur
+            if (veri.zemin) el.style.backgroundColor = veri.zemin;
+        }
 
         // Arka plan gorseli HAM yaziyor (servis iscisinde DOM yok).
         // Kart goruntulendiginde burada kucultup geri yaziyoruz.

@@ -11,7 +11,7 @@
 
 // WSD Speed Dial - giris noktasi
 import { arayuzuKur } from './cizim.js';
-import { sayfayiCevir } from './dil.js';
+import { sayfayiCevir, c } from './dil.js';
 import { ayarPaneliniKur } from './ayarpanel.js';
 import { etkilesimiKur, gorselHazir, kartEklePenceresi, grupEklePenceresiDis,
          gruplariYonetDis } from './etkilesim.js';
@@ -234,7 +234,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 bildir(
                     yuzde >= 100
                         ? c('depoDolduYedekAlipTemizleyin')
-                        : `Depolama alanının %${yuzde}'i dolu — yedek almanız önerilir`,
+                        : c('depoDoluBildirim', yuzde),
                     {
                         // Dogrudan indirmek yerine BAKIM bolumunu aciyoruz:
                         // kullanici orada durumu goruyor, yedegi aliyor ve
