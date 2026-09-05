@@ -25,7 +25,7 @@
  * "sifira al" deyince orijinal goruntuye donuyor.
  */
 export function filtreZinciri(ayar) {
-    if (!ayar || !ayar.filtreAcik) return 'none';
+    if (!ayar) return 'none';
 
     const ton       = ayar.ton || 0;
     const doygunluk = ayar.doygunluk || 0;
@@ -53,7 +53,7 @@ export function filtreZinciri(ayar) {
 
 /** Iki renk kipinde boya katmanlarinin durumu. */
 export function ikiRenkKatmanlari(ayar) {
-    if (!ayar || !ayar.filtreAcik || ayar.filtreYontemi !== 'iki') {
+    if (!ayar || ayar.filtreYontemi !== 'iki') {
         return { acik: false };
     }
     const siddet = (ayar.siddet ?? 100) / 100;

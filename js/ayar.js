@@ -33,8 +33,8 @@ export const VARSAYILAN = {
     duvarGorsel: null,          // data URI - yoksa varsayilan gradyan
     zeminRengi: '#14161a',      // duvar kagidi kapaliyken kullanilan renk
 
-    // Zemin renklendirme
-    filtreAcik: false,
+    // Zemin renklendirme (ayri acma/kapama anahtari YOK; notr degerler
+    // - ton 0, doygunluk 0, aciklik 0 - zaten "kapali" demek)
     filtreYontemi: 'ton',       // 'ton' | 'iki'
     colorize: false,            // tek tona indir (grayscale -> sepia -> ton)
     ton: 0,                     // -180..180 derece
@@ -92,6 +92,21 @@ export async function ayarlariAl() {
         // 'etiket' secenegi kaldirildi; eski kayitlar varsayilana dussun
         if (!['ekran', 'oto'].includes(onbellek.yakalamaYontemi)) {
             onbellek.yakalamaYontemi = VARSAYILAN.yakalamaYontemi;
+        }
+        // "Zemini Renklendir" anahtari kaldirildi. Anahtari KAPALI olan
+        // eski kayitlarda ton/renk degerleri saklidir; anahtar gidince
+        // bunlar birden uygulanip zemin degisirdi. Bir kereye mahsus
+        // notrleyip bayragi siliyoruz.
+        if (onbellek.filtreAcik === false) {
+            onbellek.filtreYontemi = 'ton';
+            onbellek.colorize = false;
+            onbellek.ton = 0;
+            onbellek.doygunluk = 0;
+            onbellek.aciklik = 0;
+            delete onbellek.filtreAcik;
+            chrome.storage.local.set({ ayarlar: onbellek }).catch(() => {});
+        } else if ('filtreAcik' in onbellek) {
+            delete onbellek.filtreAcik;
         }
     } catch (e) {
         onbellek = { ...VARSAYILAN };

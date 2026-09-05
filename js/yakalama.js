@@ -133,6 +133,49 @@ export async function kuyrugaDevamEt(bitince) {
     }
 }
 
+/**
+ * chrome:// edge:// about: gibi adresler yakalanamiyor: eklenti o
+ * sayfalara ne enjekte edebiliyor ne de ekran goruntusu alabiliyor.
+ * Bos kart yerine adresin kendisini yazan duz bir kart uretiyoruz.
+ */
+const YAKALANAMAZ_SEMA = /^(chrome|edge|brave|vivaldi|opera|about|chrome-extension|chrome-search|devtools|view-source):/i;
+
+function semaKarti(url) {
+    let sema = 'chrome', yol = url;
+    try {
+        const u = new URL(url);
+        sema = u.protocol.replace(':', '');
+        yol = (u.hostname || '') + (u.pathname === '/' ? '' : u.pathname);
+    } catch (e) { /* cozulemedi - ham metin */ }
+
+    const EN = 800, BOY = 500;
+    const tuval = new OffscreenCanvas(EN, BOY);
+    const ctx = tuval.getContext('2d');
+
+    ctx.fillStyle = '#20242b';
+    ctx.fillRect(0, 0, EN, BOY);
+
+    // Ince cerceve - kart kenari belirsin
+    ctx.strokeStyle = 'rgba(255,255,255,.10)';
+    ctx.lineWidth = 6;
+    ctx.strokeRect(3, 3, EN - 6, BOY - 6);
+
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+
+    // Sema adi buyuk, yol kucuk
+    ctx.fillStyle = '#5d93c2';
+    ctx.font = 'bold 92px system-ui, sans-serif';
+    ctx.fillText(sema + '://', EN / 2, BOY / 2 - 34);
+
+    ctx.fillStyle = '#9aa3ad';
+    ctx.font = '44px system-ui, sans-serif';
+    const kisa = yol.length > 24 ? yol.slice(0, 23) + '…' : yol;
+    ctx.fillText(kisa, EN / 2, BOY / 2 + 52);
+
+    return tuval.convertToBlob({ type: 'image/png' }).then(blobDanDataUri);
+}
+
 async function kuyruguIsle() {
     calisiyor = true;
     while (kuyruk.length) {
@@ -160,7 +203,7 @@ async function kuyruguIsle() {
             // Ayar okunmuyordu ve secim ne olursa olsun sayfa gorselleri
             // her zaman aliniyordu.
             let sayfadan = [];
-            if (ayar.yakalamaYontemi === 'oto') {
+            if (ayar.yakalamaYontemi === 'oto' && !YAKALANAMAZ_SEMA.test(is.url)) {
                 sayfadan = await sayfaGorselleriniAl(is.url);
 
                 // KART ORANINA EN YAKIN goruntu basa alinir. Film siteleri hem
@@ -169,9 +212,13 @@ async function kuyruguIsle() {
                 sayfadan = await oranaGoreSirala(sayfadan, ayar);
             }
 
-            const ekran = ayar.yakalamaKipi === 'gizli'
-                ? await gizliYakala(is.url, ayar)
-                : await ekranGoruntusuAl(is.url, ayar);
+            // Yakalanamayan semalarda sekme acip goruntu alinamiyor -
+            // adresi yazan duz bir kart uretiyoruz
+            const ekran = YAKALANAMAZ_SEMA.test(is.url)
+                ? await semaKarti(is.url)
+                : (ayar.yakalamaKipi === 'gizli'
+                    ? await gizliYakala(is.url, ayar)
+                    : await ekranGoruntusuAl(is.url, ayar));
 
             adaylar = sayfadan.slice();
             if (ekran) adaylar.push(ekran);
@@ -384,6 +431,14 @@ function blobDanDataUri(blob) {
  * Pencere 1x1 olusturulup ekran disina tasiniyor: gorunur olmadan render
  * ediliyor. Yakalama icin gecici olarak buyutuluyor.
  */
+/**
+ * Yakalama sirasinda okunan sayfa basliklari. Kart ilk eklendiginde
+ * baslik o anki sekmeden aliniyor; site o an 404 verdiyse kartta
+ * "Sayfa bulunamadi" kaliyor ve tazeleme bunu duzeltmiyordu.
+ * Kuyruk bitince eski/bozuk basliklari bununla yeniliyoruz.
+ */
+export const sonBasliklar = new Map();
+
 async function ekranGoruntusuAl(url, ayar) {
     let pencere = null;
     // Kullanicinin AKTIF penceresini hatirliyoruz: yakalama sirasinda
@@ -415,6 +470,12 @@ async function ekranGoruntusuAl(url, ayar) {
         });
 
         await sayfaStabilOlsun(sekmeId);
+
+        // Sayfa yuklendikten SONRA baslik dogru olanidir
+        try {
+            const s = await chrome.tabs.get(sekmeId);
+            if (s && s.title) sonBasliklar.set(url, s.title);
+        } catch (e) { /* sekme kapanmis */ }
         await bekle(ayar.yakalamaBekleme);
 
         // Kaydirma: ust kisimda cerez bandi / sabit baslik olan sitelerde
@@ -494,21 +555,54 @@ export function elleYakala(url) {
             sekme = await chrome.tabs.create({ url, active: true });
             await sayfaStabilOlsun(sekme.id);
 
-            await chrome.scripting.executeScript({
+            const cubukMetni = [c('elleSahne'), c('cek'), c('alanSec'), c('uzunCekim'), c('vazgec')];
+            const cubuguBas = () => chrome.scripting.executeScript({
                 target: { tabId: sekme.id },
                 func: elleCubukEnjekte,
-                args: [c('elleSahne'), c('cek'), c('alanSec'), c('uzunCekim'), c('vazgec')]
-            });
+                args: cubukMetni
+            }).catch(() => { /* sayfa henuz hazir degil */ });
+
+            await cubuguBas();
 
             const mesajKarari = await new Promise(kararCoz => {
+                let bitti = false;
+                const temizle = () => {
+                    if (bitti) return;
+                    bitti = true;
+                    chrome.runtime.onMessage.removeListener(dinle);
+                    chrome.tabs.onRemoved.removeListener(kapandi);
+                    chrome.tabs.onUpdated.removeListener(guncellendi);
+                    clearTimeout(sayac);
+                };
                 const dinle = (mesaj, gonderen) => {
                     if (gonderen.tab && gonderen.tab.id === sekme.id &&
                         mesaj && mesaj.tur === 'elleKarar') {
-                        chrome.runtime.onMessage.removeListener(dinle);
+                        temizle();
                         kararCoz(mesaj);
                     }
                 };
+                // SEKME KAPATILDI: kullanici Vazgec'e basmadan kapatinca
+                // karar mesaji hic gelmiyordu; dinleyici ve soz asili
+                // kaliyor, dugme bir daha calismiyordu.
+                const kapandi = id => {
+                    if (id !== sekme.id) return;
+                    sekme = null;                       // finally tekrar kapatmasin
+                    temizle();
+                    kararCoz({ karar: 'vazgec' });
+                };
+                // YONLENDIRME/YENIDEN YUKLEME: belge degisince cubuk
+                // siliniyor - yeni belgeye tekrar basiyoruz.
+                const guncellendi = (id, bilgi) => {
+                    if (id === sekme?.id && bilgi.status === 'complete') cubuguBas();
+                };
+                const sayac = setTimeout(() => {        // unutulmus sekme
+                    temizle();
+                    kararCoz({ karar: 'vazgec' });
+                }, 5 * 60 * 1000);
+
                 chrome.runtime.onMessage.addListener(dinle);
+                chrome.tabs.onRemoved.addListener(kapandi);
+                chrome.tabs.onUpdated.addListener(guncellendi);
             });
             const karar = mesajKarari.karar;
 
@@ -555,7 +649,8 @@ export function elleYakala(url) {
                 veri = kutu ? await kareyiKirp(tamKare, kutu) : tamKare;
             }
 
-            try { await chrome.tabs.remove(sekme.id); } catch (e) { /* kapanmis */ }
+            // sekme null olabilir: kullanici kendisi kapatmis olabilir
+            if (sekme) { try { await chrome.tabs.remove(sekme.id); } catch (e) { /* kapanmis */ } }
 
             // WSD sekmesine geri don
             if (wsdSekme) {

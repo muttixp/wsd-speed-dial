@@ -3,6 +3,30 @@
 Sürüm numaraları [Semantic Versioning](https://semver.org/lang/tr/)
 kurallarına uyar.
 
+## [1.3.0] — 2026-09-04
+
+### Yeni
+- Alan Seç: Sahne Yakala çubuğundan sürükleyerek istediğiniz bölgeyi
+  kırpma (Shift ile 16:10 kilidi, ESC iptal)
+- Uzun Çekim: sayfayı kaydırarak birden fazla kareyi tek görselde
+  birleştirme; sabit/yapışkan öğeler çekim boyunca gizleniyor
+- Logo Yakala: sitenin logosunu bulup 16:10 karta yerleştirme.
+  Adaylar ızgarada gösteriliyor, tıkladığınız karusele giriyor
+- Logosu saydam olan sitelerde bir de marka renginde varyant üretiliyor
+
+### İyileştirmeler
+- Logo araması canlı sayfa üzerinde yapılıyor (inline SVG, `srcset`,
+  CSS arka planı, ikon bildirimleri); "basında biz" şeritleri eleniyor
+- Çek yalnızca video/iframe oynatıcıya kırpıyor; sayfadaki rastgele
+  görsele yapışan `<img>` taraması kaldırıldı
+
+### Düzeltmeler
+- Görüntü yakalama **Yöntem** ayarı çalışmıyordu; "Ekran görüntüsü"
+  seçilse bile sayfa görselleri alınıyordu
+- Logo adayları kart penceresi değişince temizlenmiyordu
+- Geniş ve alçak yazı logoları (ör. 160×27) ölçü kontrolüne takılıp
+  eleniyordu
+
 ## [1.2.0] — 2026-09-03
 
 ### Yeni

@@ -13,7 +13,7 @@
 
 import { kokKlasoruAl, gruplariAl, gorunurGruplariAl, urlNormalle } from './yerimi.js';
 import { c } from './dil.js';
-import { yakalamayaEkle, kuyrugaDevamEt, kuyrugaTemizle } from './yakalama.js';
+import { yakalamayaEkle, kuyrugaDevamEt, kuyrugaTemizle, sonBasliklar } from './yakalama.js';
 import { simgeyiUygula } from './simge.js';
 import { guvenliYaz } from './depo.js';
 
@@ -377,7 +377,33 @@ function sayfadaBildir(sekme, metin, basarili) {
  * yapilabilir ama on yuz zaten kucultuyor; cift is olmasin diye ham yaziyoruz
  * ve on yuz gorunce sikistiriyor.
  */
+/**
+ * Kart basligi ilk eklemede o anki sekmeden aliniyor. Site o an hata
+ * sayfasi verdiyse baslik "404 - Sayfa bulunamadi" olarak kaliyor ve
+ * tazeleme yalnizca gorseli yeniliyordu. Yakalamada okunan YENI baslik
+ * ile degistiriyoruz - ama yalnizca eskisi bariz bozuksa; kullanicinin
+ * elle yazdigi baslige DOKUNMUYORUZ.
+ */
+const BOZUK_BASLIK = /^\s*(\d{3}\s*[-–—:|]?\s*)?(404|403|500|502|503)\b|not found|bulunamad|sayfa yok|error|hata|forbidden|unavailable|erisilemiyor|problem loading|yuklenemedi|^\s*$/i;
+
+async function basligiTazele(url) {
+    const yeni = sonBasliklar.get(url);
+    sonBasliklar.delete(url);
+    if (!yeni) return;
+    try {
+        const dugumler = await chrome.bookmarks.search({ url });
+        for (const d of dugumler) {
+            const eski = d.title || '';
+            // Eski baslik bozuksa ya da adresin kendisiyse guncelle
+            if (!BOZUK_BASLIK.test(eski) && eski !== url) continue;
+            if (BOZUK_BASLIK.test(yeni)) continue;      // yenisi de hataliysa birak
+            await chrome.bookmarks.update(d.id, { title: yeni });
+        }
+    } catch (e) { /* yer imi bulunamadi */ }
+}
+
 async function gorseliKaydet(url, adaylar) {
+    await basligiTazele(url);
     const liste = Array.isArray(adaylar) ? adaylar : (adaylar ? [adaylar] : []);
     let depoHatasi = null;
 

@@ -60,6 +60,27 @@ export function etkilesimiKur() {
     // "+" karti ve arac seridi - kap uzerinden dinliyoruz cunku kartlar
     // her grup degisiminde yeniden ciziliyor; kart basina dinleyici baglamak
     // hem israf hem sizinti kaynagi olurdu.
+    // ORTA TIK: tarayici chrome:// adreslerini bagalanti olarak acmiyor,
+    // orta tikta da sessizce hicbir sey olmuyor. Ozel semalarda olayi
+    // devralip arka planda sekme aciyoruz. Normal adreslerde tarayicinin
+    // kendi davranisina KARISMIYORUZ.
+    el('kartKabi')?.addEventListener('auxclick', e => {
+        if (e.button !== 1) return;
+        const kart = e.target.closest('.kart:not(.ekleKart)');
+        if (!kart || e.target.closest('.kartArac')) return;
+        if (!OZEL_SEMA.test(kart.href)) return;
+        e.preventDefault();
+        sayacArtir(kart.dataset.anahtar).catch(() => {});
+        ozelSemaAc(kart.href, 'arkaplan');
+    });
+
+    // Orta tikin otomatik kaydirma imlecini ve varsayilan gezinmeyi engelle
+    el('kartKabi')?.addEventListener('mousedown', e => {
+        if (e.button !== 1) return;
+        const kart = e.target.closest('.kart:not(.ekleKart)');
+        if (kart && OZEL_SEMA.test(kart.href)) e.preventDefault();
+    });
+
     el('kartKabi')?.addEventListener('click', async e => {
         if (e.target.closest('.ekleKart')) return kartPenceresiniAc(null);
 
@@ -72,6 +93,13 @@ export function etkilesimiKur() {
             // ona KARISMIYORUZ, yoksa iki sekme aciliyor.
             const ozelTik = e.ctrlKey || e.metaKey || e.shiftKey || e.button === 1;
             const kip = document.body.dataset.kartAcilis || 'ayni';
+
+            // chrome:// vb. adresler bagalanti olarak acilamiyor
+            if (OZEL_SEMA.test(acilanKart.href)) {
+                e.preventDefault();
+                ozelSemaAc(acilanKart.href, ozelTik ? 'yeni' : kip);
+                return;
+            }
 
             if (!ozelTik && kip !== 'ayni') {
                 e.preventDefault();
@@ -278,6 +306,21 @@ function logoAdaylariniGizle() {
     if (!izgara) return;
     izgara.hidden = true;
     el('kpLogoListe').textContent = '';
+}
+
+/**
+ * chrome:// edge:// about: gibi adresler BAGLANTI TIKLAMASIYLA
+ * acilamiyor - tarayici engelliyor, sessizce hicbir sey olmuyor.
+ * Bunlari yalnizca eklenti API'siyle acabiliyoruz.
+ */
+const OZEL_SEMA = /^(chrome|edge|brave|vivaldi|opera|about|chrome-extension|chrome-search|devtools|view-source|file):/i;
+
+function ozelSemaAc(url, kip) {
+    if (kip === 'ayni') {
+        chrome.tabs.update({ url }).catch(() => {});
+    } else {
+        chrome.tabs.create({ url, active: kip !== 'arkaplan' }).catch(() => {});
+    }
 }
 
 async function kartPenceresiniAc(kart) {
@@ -1072,10 +1115,12 @@ async function kartMenuEylemi(e) {
 
     switch (eylem) {
         case 'ac':
-            location.href = url;
+            if (OZEL_SEMA.test(url)) ozelSemaAc(url, 'ayni');
+            else location.href = url;
             break;
         case 'yeniSekme':
-            window.open(url, '_blank');
+            if (OZEL_SEMA.test(url)) ozelSemaAc(url, 'yeni');
+            else window.open(url, '_blank');
             break;
         case 'gizliSekme':
             // Gizli pencere acmak icin arka plan gerekiyor: on yuzden

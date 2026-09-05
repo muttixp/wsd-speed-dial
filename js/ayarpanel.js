@@ -44,7 +44,6 @@ const ALANLAR = [
     ['metinRengi',       'ayMetinRengi',   el => el.value],
     ['zeminRengi',       'ayZeminRengi',   el => el.value],
     ['baslikBoyut',      'ayBaslikBoyut',  el => +el.value],
-    ['filtreAcik',       'ayFiltreAcik',   el => el.checked],
     ['colorize',         'ayColorize',     el => el.checked],
     ['ton',              'ayTon',          el => +el.value],
     ['doygunluk',        'ayDoygunluk',    el => +el.value],
@@ -352,8 +351,6 @@ function gorunumuUygula(ayar) {
     }
 
     // Yontem kutulari
-    const filtreKutu = document.getElementById('ayFiltreKutu');
-    if (filtreKutu) filtreKutu.hidden = !ayar.filtreAcik;
     const tonKutu = document.getElementById('ayTonKutu');
     const ikiKutu = document.getElementById('ayIkiKutu');
     if (tonKutu) tonKutu.hidden = ayar.filtreYontemi !== 'ton';

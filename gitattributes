@@ -1,0 +1,13 @@
+# Metin dosyalari depoda LF ile tutulur; CRLF uyarilari boylece susar.
+* text=auto eol=lf
+
+# Ikili dosyalara satir sonu donusumu uygulanmaz
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.gif  binary
+*.ico  binary
+*.webp binary
+*.zip  binary
+*.woff  binary
+*.woff2 binary

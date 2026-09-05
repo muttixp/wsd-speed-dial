@@ -546,7 +546,6 @@ function ayarlariCevir(a, duvar) {
     }
     if (a.bgFilterMode) {
         c.filtreYontemi = a.bgFilterMode === 'duotone' ? 'iki' : 'ton';
-        c.filtreAcik = true;
     }
     if (a.linkTarget) {
         c.kartAcilis = a.linkTarget === '_blank' ? 'yeni' : 'ayni';
