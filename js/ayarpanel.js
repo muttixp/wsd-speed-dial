@@ -172,6 +172,10 @@ export async function ayarPaneliniKur() {
         panel.classList.add('acik');
         perde.classList.add('acik');
         document.body.classList.add('ayarAcik');
+        // Depo tablosu yalnizca sayfa acilisinda hesaplaniyordu; arada
+        // kart silinince "kullanilmayan" sayisi eski kaliyor ve ancak
+        // sayfa yenilenince dogruyu gosteriyordu.
+        depoDurumunuCiz();
     };
     const kap = () => {
         panel.classList.remove('acik');
@@ -188,6 +192,15 @@ export async function ayarPaneliniKur() {
     kurulumBolumunuKur();
     simgeAraclariniKur();
     hazirOlculeriKur();
+
+    // Panel acikken yer imi degisirse (kart silme, ekleme, cop kutusu)
+    // tablo aninda guncellensin
+    const yerimiDegisti = () => {
+        if (panel.classList.contains('acik')) depoDurumunuCiz();
+    };
+    chrome.bookmarks.onRemoved.addListener(yerimiDegisti);
+    chrome.bookmarks.onCreated.addListener(yerimiDegisti);
+    chrome.bookmarks.onChanged.addListener(yerimiDegisti);
 
     if (acBtn) acBtn.addEventListener('click', ac);
     if (kapat) kapat.addEventListener('click', kap);
@@ -360,12 +373,27 @@ function gorunumuUygula(ayar) {
         b.classList.toggle('secili', b.dataset.deger === ayar.filtreYontemi);
     }
 
-    // Panel onizlemesi
+    // Panel onizlemesi - filtre ve iki renk boyasi burada da uygulaniyor
     const onizleme = document.getElementById('ayDuvarOnizleme');
     if (onizleme) {
-        onizleme.style.backgroundImage = ayar.duvarGorsel
-            ? `url('${ayar.duvarGorsel}')`
-            : VARSAYILAN_DUVAR;
+        const arka = ayar.duvarGorsel ? `url('${ayar.duvarGorsel}')` : VARSAYILAN_DUVAR;
+        onizleme.style.backgroundImage = arka;
+        const oGorsel = document.getElementById('ayOnizlemeGorsel');
+        if (oGorsel) oGorsel.style.backgroundImage = arka;
+
+        const oGolge = document.getElementById('ayOnizlemeGolge');
+        const oIsik  = document.getElementById('ayOnizlemeIsik');
+        if (oGolge && oIsik) {
+            if (iki.acik) {
+                oGolge.style.backgroundColor = iki.golge;
+                oIsik.style.backgroundColor  = iki.isik;
+                oGolge.style.opacity = iki.opaklik;
+                oIsik.style.opacity  = iki.opaklik * 0.85;
+            } else {
+                oGolge.style.opacity = 0;
+                oIsik.style.opacity  = 0;
+            }
+        }
     }
 }
 
@@ -731,6 +759,9 @@ function yedekAraclariniKur() {
     document.getElementById('ayTemizle')?.addEventListener('click', async () => {
         const s = await oksuzleriTemizle();
         if (s.iptal) return bildir(c('temizlikAtlandi'));
+        // Tablo yeniden cizilmezse silinen veri ekranda durmaya devam
+        // ediyor ve ancak sayfa yenilenince guncelleniyordu.
+        await depoDurumunuCiz();
         if (!s.gorsel && !s.kayit) return bildir(c('temizlenecekVeriYok'));
         const kazanc = s.bayt / 1048576;
         bildir(c('nGorselTemizlendi', s.gorsel) +

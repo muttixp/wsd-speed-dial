@@ -881,6 +881,26 @@ body.ayarAcik #yanArac { opacity: 0; pointer-events: none; }
 }
 .duvarOnizleme:hover { border-color: var(--vurgu); }
 
+/* Onizleme katmanlari: ayni filtre ve boya sayfa zemininde ne yapiyorsa
+   burada da aynisini yapiyor - ayari degistirirken sonucu goruyorsun. */
+.onizlemeGorsel {
+    position: absolute;
+    inset: 0;
+    background: inherit;
+    background-size: cover;
+    background-position: center;
+    filter: var(--zemin-filtre, none);
+}
+.onizlemeBoya {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--gecis);
+}
+#ayOnizlemeGolge { mix-blend-mode: multiply; }
+#ayOnizlemeIsik  { mix-blend-mode: screen; }
+
 /* Karartma katmani */
 .duvarOnizleme::before {
     content: '';
