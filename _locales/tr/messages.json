@@ -14,9 +14,6 @@
   "kartEkle": {
     "message": "Kart Ekle"
   },
-  "grupEkle": {
-    "message": "Yeni Grup"
-  },
   "ayarlar": {
     "message": "Ayarlar"
   },
@@ -857,12 +854,6 @@
   "giris": {
     "message": "Giriş"
   },
-  "kaydir": {
-    "message": "Kaydır"
-  },
-  "ayarlarBaslangicAnaSayfa": {
-    "message": "Ayarlar → Başlangıç → Ana Sayfa"
-  },
   "gorunum": {
     "message": "Görünüm"
   },
@@ -916,9 +907,6 @@
   },
   "urlYiKopyala": {
     "message": "Url yi kopyala"
-  },
-  "zeminiRenklendir": {
-    "message": "Zemini Renklendir"
   },
   "colorizeTekTonaIndir": {
     "message": "Colorize (tek tona indir)"
@@ -1004,9 +992,6 @@
   "nKart": {
     "message": "$1 kart"
   },
-  "buAdresSuGruplardaDaVar": {
-    "message": "Bu adres şu gruplarda da var: $1"
-  },
   "silindiTarih": {
     "message": "$1 silindi"
   },
@@ -1042,9 +1027,6 @@
   },
   "yerlesimSigdir": {
     "message": "Sığdır (tamamını göster)"
-  },
-  "elleSahneSec": {
-    "message": "Elle — sahneyi seç (deneysel)"
   },
   "sahneYakala": {
     "message": "Sahne Yakala"
@@ -1117,5 +1099,8 @@
   },
   "logoSecin": {
     "message": "Eklemek istediğiniz logoya tıklayın:"
+  },
+  "grubaGit": {
+    "message": "Bu gruba git"
   }
 }

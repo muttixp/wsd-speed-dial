@@ -20,8 +20,7 @@
 // yaklasimi sirayi ve surukleme durumunu bozuyor.
 
 import { gruplariAl, kartlariAl, urlNormalle } from './yerimi.js';
-import { gorselAl } from './gorsel.js';
-import { kartAraclariOlustur } from './cizim.js';
+import { kartAraclariOlustur, gorselleriGozle } from './cizim.js';
 import { renkleriAl } from './renk.js';
 import { notlariAl } from './not.js';
 import { c } from './dil.js';
@@ -83,6 +82,23 @@ async function ac() {
 
     // Kart dizinini bir kez topla
     if (!tumKartlar) tumKartlar = await dizinOlustur();
+}
+
+/**
+ * Arama sonucundaki grup etiketine tiklayinca o grubu aciyoruz.
+ * Aramayi kapatiyor, kart izgarasini o grupla yeniden ciziyor.
+ */
+async function grubaGit(grupId, baglam) {
+    const ac = baglam?.grubuAc || sonBaglam?.grubuAc;
+    if (!ac) return;
+
+    acik = false;
+    document.body.classList.remove('aramaAcik', 'aramaBekliyor');
+    const alan = el('aramaAlan');
+    if (alan) { alan.value = ''; alan.blur(); }
+    bosluguAyarla();
+
+    await ac(grupId);
 }
 
 function kapat(baglam) {
@@ -180,10 +196,10 @@ async function suz(terim, baglam) {
         k.url.toLocaleLowerCase('tr').includes(t)
     );
 
-    ciz(eslesen, t);
+    ciz(eslesen, sonBaglam, t);
 }
 
-async function ciz(kartlar, terim) {
+async function ciz(kartlar, baglam, terim) {
     const kap = el('kartKabi');
     kap.textContent = '';
 
@@ -195,7 +211,6 @@ async function ciz(kartlar, terim) {
         return;
     }
 
-    const kayitlar = await gorselAl(kartlar.map(k => k.url));
     const renkler = await renkleriAl();
     const notlar = await notlariAl();
 
@@ -215,8 +230,7 @@ async function ciz(kartlar, terim) {
 
         const gorsel = document.createElement('span');
         gorsel.className = 'kartGorsel';
-        const veri = kayitlar[k.url];
-        if (veri && veri.gorsel) gorsel.style.backgroundImage = `url('${veri.gorsel}')`;
+        // Gorsel tembel yukleniyor - dongu sonunda gozetlemeye aliniyor
 
         govde.append(baslik, gorsel);
         a.appendChild(govde);
@@ -241,12 +255,25 @@ async function ciz(kartlar, terim) {
         // butonlar cikmiyordu.
         a.appendChild(kartAraclariOlustur());
 
-        // Hangi gruptan geldigi
-        const etiket = document.createElement('span');
-        etiket.className = 'kartGrupEtiketi';
+        // Hangi gruptan geldigi - TIKLANINCA O GRUBA GIDIYOR.
+        // Boylece arama ayni zamanda grup bulmaya da yariyor.
+        const etiket = document.createElement('button');
+        etiket.type = 'button';
+        etiket.className = 'kartGrupEtiketi kartGrupGit';
         etiket.textContent = k.grupAdi;
+        etiket.title = c('grubaGit');
+        etiket.dataset.grupId = k.grupId;
+        etiket.addEventListener('click', e => {
+            e.preventDefault();          // kartin baglantisini tetikleme
+            e.stopPropagation();
+            grubaGit(k.grupId, baglam);
+        });
         a.appendChild(etiket);
 
         kap.appendChild(a);
     }
+
+    // TEMBEL YUKLEME: eskiden eslesen tum kartlarin gorseli tek seferde
+    // okunuyordu; genis aramalarda yuzlerce data URI bellege giriyordu.
+    gorselleriGozle(kap.querySelectorAll('.kart[data-anahtar]'));
 }

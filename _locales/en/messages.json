@@ -14,9 +14,6 @@
   "kartEkle": {
     "message": "Add Tile"
   },
-  "grupEkle": {
-    "message": "New Group"
-  },
   "ayarlar": {
     "message": "Settings"
   },
@@ -857,12 +854,6 @@
   "giris": {
     "message": "Input"
   },
-  "kaydir": {
-    "message": "Shift"
-  },
-  "ayarlarBaslangicAnaSayfa": {
-    "message": "Settings → On startup → Home page"
-  },
   "gorunum": {
     "message": "Appearance"
   },
@@ -916,9 +907,6 @@
   },
   "urlYiKopyala": {
     "message": "Copy URL"
-  },
-  "zeminiRenklendir": {
-    "message": "Tint Background"
   },
   "colorizeTekTonaIndir": {
     "message": "Colorize (single tone)"
@@ -1004,9 +992,6 @@
   "nKart": {
     "message": "$1 tiles"
   },
-  "buAdresSuGruplardaDaVar": {
-    "message": "This address is also in: $1"
-  },
   "silindiTarih": {
     "message": "deleted $1"
   },
@@ -1042,9 +1027,6 @@
   },
   "yerlesimSigdir": {
     "message": "Fit (show all)"
-  },
-  "elleSahneSec": {
-    "message": "Manual — pick the scene (experimental)"
   },
   "sahneYakala": {
     "message": "Capture Scene"
@@ -1117,5 +1099,8 @@
   },
   "logoSecin": {
     "message": "Click the logo you want to add:"
+  },
+  "grubaGit": {
+    "message": "Go to this group"
   }
 }

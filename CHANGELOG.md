@@ -3,6 +3,37 @@
 Sürüm numaraları [Semantic Versioning](https://semver.org/lang/tr/)
 kurallarına uyar.
 
+## [1.4.0] — 2026-09-11
+
+### Yeni
+- Arama sonuçlarında grup rozeti: karta gelince beliriyor, tıklayınca
+  o gruba gidiyor — grup araması da bu şekilde yapılabiliyor
+- Grupları Yönet satırlarına "gruba git" ve "grubu düzenle" düğmeleri
+- `chrome://`, `edge://`, `about:` gibi adresler artık kartlardan
+  açılabiliyor (tıklama ve orta tık) ve bu adresler için adresi yazan
+  düz bir kart üretiliyor
+- Duvar kağıdı önizlemesi renklendirme ayarlarını anlık gösteriyor
+
+### Düzeltmeler
+- **Büyük depolarda çökme**: açılışta çalışan depo ölçümü tüm görselleri
+  belleğe alıyordu; artık anahtar listesi ve `getBytesInUse` kullanılıyor.
+  Öksüz temizliği, "her şeyi sil" ve yedek geri yükleme de değer okumuyor
+- **Yedek alınamıyor**: yedek tek dev JSON dizesi olarak üretiliyordu ve
+  dize sınırına takılıyordu. Artık parça parça yazılıyor; aday görseller
+  yedeğe girmediği için dosya da küçüldü
+- Kart görselleri yalnızca ekranda görünenler için yükleniyor; uzaklaşan
+  kartın görseli bırakılıyor (kart ızgarası, arama, yinelenenler)
+- Sahne Yakala bazen çalışmıyordu: sekme kapatılınca ya da sayfa
+  yönlendirme yapınca süreç asılı kalıyordu
+- Bakımda temizlik sonrası ve kart silindikten sonra depo tablosu
+  güncellenmiyordu
+- Kart başlığı 404 sayfasından kalmışsa yakalamada düzeltiliyor
+
+### Değişiklikler
+- "Zemini Renklendir" anahtarı kaldırıldı; nötr değerler zaten kapalı
+  anlamına geliyor. Yanındaki işaretleme hatası da düzeltildi
+- Kullanılmayan 6 dil anahtarı silindi
+
 ## [1.3.0] — 2026-09-04
 
 ### Yeni

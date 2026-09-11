@@ -88,6 +88,42 @@ function satirOlustur(g, adet, ikonDeger) {
     sayiEl.className = 'yonetSayi';
     sayiEl.textContent = adet;
 
+    // DUZENLE: ikon, renk, gorunum ve aciklama icin grup penceresi.
+    // Buradaki ad kutusu yalnizca adi degistiriyor.
+    const duzenle = document.createElement('button');
+    duzenle.className = 'yonetDuzenle';
+    duzenle.type = 'button';
+    duzenle.title = c('grubuDuzenle');
+    // Kalem - metin karakteri yerine SVG: yazi tipine gore bozuluyordu
+    duzenle.innerHTML = '<svg viewBox="0 0 16 16" width="14" height="14" fill="none" ' +
+        'stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">' +
+        '<path d="M11.2 2.3a1.6 1.6 0 0 1 2.3 2.3L5.6 12.5l-3 .9.9-3z"/></svg>';
+    duzenle.addEventListener('click', async () => {
+        const { grupPenceresiniAc } = await import('./gruppencere.js');
+        // Bekleyen ad degisikligi varsa once onu yaziyoruz ki pencere
+        // eski adi gostermesin
+        const yeniAd = adAlan.value.trim();
+        kapat(true);
+        await grupPenceresiniAc({ id: g.id, baslik: yeniAd || g.baslik });
+    });
+
+    // GIT: yonet penceresini kapatip o grubu aciyor
+    const git = document.createElement('button');
+    git.className = 'yonetGit';
+    git.type = 'button';
+    git.title = c('grubaGit');
+    // Kutudan disari ok: "bu gruba git". Duz ok, kalem dugmesini
+    // isaret ediyormus gibi duruyordu.
+    git.innerHTML = '<svg viewBox="0 0 16 16" width="14" height="14" fill="none" ' +
+        'stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">' +
+        '<path d="M9.5 2.5h4v4"/><path d="M13.5 2.5 8 8"/>' +
+        '<path d="M12.5 9.8v2.9a1.3 1.3 0 0 1-1.3 1.3H3.8a1.3 1.3 0 0 1-1.3-1.3V5.3A1.3 1.3 0 0 1 3.8 4h2.9"/></svg>';
+    git.addEventListener('click', async () => {
+        const { grubuAc } = await import('./cizim.js');
+        kapat(true);
+        await grubuAc(g.id);
+    });
+
     const sil = document.createElement('button');
     sil.className = 'yonetSil';
     sil.type = 'button';
@@ -106,7 +142,7 @@ function satirOlustur(g, adet, ikonDeger) {
         li.remove();
     });
 
-    li.append(tut, ikon, adAlan, sayiEl, sil);
+    li.append(tut, ikon, adAlan, sayiEl, git, duzenle, sil);
     return li;
 }
 

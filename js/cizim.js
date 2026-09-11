@@ -307,10 +307,20 @@ export function kartAraclariOlustur() {
 
 
 /** Notu olan kartlara kose isareti koyar. */
+/** Kart id -> element haritasi. Kart basina belge taramasi yapmamak icin. */
+function kartHaritasi() {
+    const harita = new Map();
+    for (const a of kartKabi().querySelectorAll('.kart[data-kart-id]')) {
+        harita.set(a.dataset.kartId, a);
+    }
+    return harita;
+}
+
 export async function notlariUygula(kartlar) {
     const notlar = await notlariAl();
+    const harita = kartHaritasi();
     for (const k of kartlar) {
-        const a = document.querySelector(`[data-kart-id="${k.id}"]`);
+        const a = harita.get(String(k.id));
         if (!a) continue;
         // Yalnizca kose isareti - not METNI ipucunda GOSTERILMIYOR:
         // uzun notlar ekrani kapliyor ve baslik ipucunun yerini aliyordu.
@@ -321,9 +331,10 @@ export async function notlariUygula(kartlar) {
 /** Kart renk etiketlerini basar. */
 export async function renkleriUygula(kartlar) {
     const renkler = await renkleriAl();
+    const harita = kartHaritasi();
     for (const k of kartlar) {
         const renk = renkler[urlNormalle(k.url)];
-        const serit = document.querySelector(`[data-kart-id="${k.id}"] .kartRenk`);
+        const serit = harita.get(String(k.id))?.querySelector('.kartRenk');
         if (!serit) continue;
         if (renk) {
             serit.style.backgroundColor = renk;
@@ -362,55 +373,142 @@ function ekleKartiOlustur() {
 }
 
 /** Depodaki gorselleri kartlara basar. Tek okuma ile toplu. */
-async function gorselleriUygula(kartlar) {
-    const anahtarlar = kartlar.map(k => urlNormalle(k.url));
-    if (!anahtarlar.length) return;
+// --- GORSEL TEMBEL YUKLEME ---
+//
+// Eskiden grubun TUM gorselleri tek seferde depodan okunup DOM'a
+// basiliyordu. Her gorsel data URI olarak duruyor; 1000+ kartli
+// gruplarda bu yuz MB'lari buluyor ve sekme "Render process gone"
+// ile cokuyordu.
+//
+// Artik yalnizca GORUNEN (ve yakinindaki) kartlarin gorseli
+// okunuyor, ekrandan uzaklasan kartin gorseli birakiliyor.
+const ONYUKLEME_PAYI = '800px';     // bu kadar yaklasinca yukle
+const BIRAKMA_PAYI   = '2400px';    // bu kadar uzaklasinca birak
 
-    const kayitlar = await gorselAl(anahtarlar);
+let yukleGozcu = null;
+let birakGozcu = null;
+let kuyruktakiler = [];             // yakalama kuyrugundaki anahtarlar
+const bekleyenAnahtarlar = new Map();   // anahtar -> [element, ...]
+let toplayiciSayac = null;
 
-    // Yakalama kuyrugunda bekleyen kartlar donence gostersin - sayfa
-    // yenilendiginde de durum korunuyor
-    let kuyrukta = [];
+function gozculeriKur() {
+    if (yukleGozcu) { yukleGozcu.disconnect(); birakGozcu.disconnect(); return; }
+
+    yukleGozcu = new IntersectionObserver(girisler => {
+        for (const g of girisler) {
+            if (!g.isIntersecting) continue;
+            const kart = g.target;
+            if (kart.dataset.gorselYuklendi === '1') continue;
+            kart.dataset.gorselYuklendi = '1';           // tekrar sıraya girmesin
+            const anahtar = kart.dataset.anahtar;
+            if (!anahtar) continue;
+            if (!bekleyenAnahtarlar.has(anahtar)) bekleyenAnahtarlar.set(anahtar, []);
+            bekleyenAnahtarlar.get(anahtar).push(kart);
+        }
+        if (bekleyenAnahtarlar.size && !toplayiciSayac) {
+            // Ayni karede onlarca kart girebiliyor - tek depo okumasinda topluyoruz
+            toplayiciSayac = setTimeout(bekleyenleriYukle, 40);
+        }
+    }, { rootMargin: ONYUKLEME_PAYI });
+
+    birakGozcu = new IntersectionObserver(girisler => {
+        for (const g of girisler) {
+            if (g.isIntersecting) continue;
+            const kart = g.target;
+            if (kart.dataset.gorselYuklendi !== '1') continue;
+            const el = kart.querySelector('.kartGorsel');
+            if (el) el.style.backgroundImage = '';       // cozulmus bitmap serbest kalsin
+            kart.dataset.gorselYuklendi = '';
+        }
+    }, { rootMargin: BIRAKMA_PAYI });
+}
+
+async function bekleyenleriYukle() {
+    toplayiciSayac = null;
+    if (!bekleyenAnahtarlar.size) return;
+
+    const parti = new Map(bekleyenAnahtarlar);
+    bekleyenAnahtarlar.clear();
+
+    let kayitlar = {};
     try {
-        const d = await chrome.storage.local.get('yakalamaKuyrugu');
-        if (Array.isArray(d.yakalamaKuyrugu)) kuyrukta = d.yakalamaKuyrugu;
-    } catch (e) { /* onemli degil */ }
-    for (const k of kartlar) {
-        const anahtar = urlNormalle(k.url);
+        kayitlar = await gorselAl([...parti.keys()]);
+    } catch (e) {
+        console.log('[WSD] gorsel okunamadi:', e);
+        return;
+    }
+
+    for (const [anahtar, kartlar] of parti) {
         const veri = kayitlar[anahtar];
 
-        if (!veri || !veri.gorsel) {
-            // Gorsel yok ama zemin rengi secilmisse onu goster
-            if (veri && veri.zemin) {
-                const bos = document.querySelector(`[data-kart-id="${k.id}"] .kartGorsel`);
-                if (bos) bos.style.backgroundColor = veri.zemin;
-            }
-            if (kuyrukta.includes(anahtar)) {
-                document.querySelector(`[data-kart-id="${k.id}"]`)
-                    ?.classList.add('yenileniyor');
-            }
-            continue;
-        }
+        for (const kart of kartlar) {
+            if (!kart.isConnected) continue;             // grup degismis
+            const el = kart.querySelector('.kartGorsel');
+            if (!el) continue;
 
-        const el = document.querySelector(`[data-kart-id="${k.id}"] .kartGorsel`);
-        if (el) {
+            if (!veri || !veri.gorsel) {
+                // Gorsel yok ama zemin rengi secilmisse onu goster
+                if (veri && veri.zemin) el.style.backgroundColor = veri.zemin;
+                if (kuyruktakiler.includes(anahtar)) kart.classList.add('yenileniyor');
+                continue;
+            }
+
             el.style.backgroundImage = `url('${veri.gorsel}')`;
             // Zemin rengi: saydam gorsellerde arkada gorunur, ayrica
             // "sigdir" modunda kenar bosluklarini doldurur
             if (veri.zemin) el.style.backgroundColor = veri.zemin;
         }
 
+        if (!veri || !veri.gorsel) continue;
+
         // Arka plan gorseli HAM yaziyor (servis iscisinde DOM yok).
         // Kart goruntulendiginde burada kucultup geri yaziyoruz.
         //
-        // ADAYLAR da kontrol ediliyor: yakalama artik birden fazla aday
+        // ADAYLAR da kontrol ediliyor: yakalama birden fazla aday
         // donduruyor ve yalnizca gosterileni kucultunce digerleri ham
         // JPEG olarak kaliyordu - tek aday 1.8 MB'a ulasmisti.
         const siskinMi = veri.gorsel.length >= SISKIN_ESIK ||
             (Array.isArray(veri.adaylar) &&
              veri.adaylar.some(a => typeof a === 'string' && a.length >= SISKIN_ESIK));
+        if (siskinMi) sikistirmayaEkle(anahtar, veri);
+    }
+}
 
-        if (siskinMi) sikistirmayaEkle(urlNormalle(k.url), veri);
+/**
+ * Verilen kart elemanlarini tembel yukleyiciye baglar. Arama ve
+ * yinelenenler ekrani da kendi kartlarini bununla besliyor - onlar da
+ * eslesen TUM kartlarin gorselini tek seferde okuyordu.
+ * Elemanlarda `data-anahtar` bulunmali.
+ */
+export function gorselleriGozle(elemanlar) {
+    gozculeriKur();
+    for (const kart of elemanlar) {
+        if (!kart.dataset.anahtar) continue;
+        kart.dataset.gorselYuklendi = '';
+        yukleGozcu.observe(kart);
+        birakGozcu.observe(kart);
+    }
+}
+
+async function gorselleriUygula(kartlar) {
+    if (!kartlar.length) return;
+
+    gozculeriKur();                      // onceki gruptan kalan gozlemleri birak
+    bekleyenAnahtarlar.clear();
+
+    // Yakalama kuyrugunda bekleyen kartlar donence gostersin - sayfa
+    // yenilendiginde de durum korunuyor. TEK kucuk okuma, kart sayisindan
+    // bagimsiz.
+    kuyruktakiler = [];
+    try {
+        const d = await chrome.storage.local.get('yakalamaKuyrugu');
+        if (Array.isArray(d.yakalamaKuyrugu)) kuyruktakiler = d.yakalamaKuyrugu;
+    } catch (e) { /* onemli degil */ }
+
+    for (const kart of kartKabi().querySelectorAll('.kart[data-anahtar]')) {
+        kart.dataset.gorselYuklendi = '';
+        yukleGozcu.observe(kart);
+        birakGozcu.observe(kart);
     }
 }
 
@@ -424,6 +522,7 @@ export async function kartGorseliniTazele(anahtar) {
         if (a.dataset.anahtar !== anahtar) continue;
         const el = a.querySelector('.kartGorsel');
         if (el) el.style.backgroundImage = `url('${veri.gorsel}')`;
+        a.dataset.gorselYuklendi = '1';        // gozcu bir daha okumasin
     }
     const siskin = veri.gorsel.length >= SISKIN_ESIK ||
         (Array.isArray(veri.adaylar) &&

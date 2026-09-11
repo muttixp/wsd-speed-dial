@@ -27,59 +27,78 @@ export async function depoDurumu() {
         kullanilan: null, ayrilan: null, oran: null
     };
 
+    // DEGERLERI OKUMADAN olcum yapiyoruz.
+    //
+    // Eskiden `storage.local.get(null)` ile TUM kayitlar bellege
+    // aliniyor, ustune her degere JSON.stringify uygulanip ikinci bir
+    // kopya cikariliyordu. 1000+ kartli depoda bu yuzlerce MB demek ve
+    // sekme "Render process gone" ile cokuyordu. Bu islev acilista
+    // (kayipDenetle + otomatikYedekDene) iki kez cagriliyor.
+    //
+    // Yerine: anahtar listesi + getBytesInUse. Ikisi de degerleri
+    // getirmiyor.
+    const GORSEL_ANAHTARI = /^(https?|file|chrome|chrome-extension|edge|vivaldi):/i;
+
+    let anahtarlar = [];
     try {
-        const hepsi = await chrome.storage.local.get(null);
-        for (const [a, v] of Object.entries(hepsi)) {
-            let b = 0;
-            try { b = JSON.stringify(v).length; } catch (e) { /* atla */ }
-            sonuc.toplamBayt += b;
-            if (/^(https?|file|chrome|chrome-extension|edge|vivaldi):/i.test(a)) {
-                sonuc.gorselBayt += b;
-                sonuc.gorselAdet++;
-            } else {
-                sonuc.digerBayt += b;
-            }
+        if (chrome.storage.local.getKeys) {
+            anahtarlar = await chrome.storage.local.getKeys();      // Chrome 130+
+        } else {
+            // Eski surum: baska yol yok, degerleri okuyup hemen birakiyoruz
+            const hepsi = await chrome.storage.local.get(null);
+            anahtarlar = Object.keys(hepsi);
         }
     } catch (e) {
-        console.log('[WSD] depo okunamadi:', e);
+        console.log('[WSD] depo anahtarlari okunamadi:', e);
     }
+
+    const gorselAnahtarlari = anahtarlar.filter(a => GORSEL_ANAHTARI.test(a));
+    sonuc.gorselAdet = gorselAnahtarlari.length;
+
+    const baytOl = async liste => {
+        if (!liste.length) return 0;
+        try {
+            if (!chrome.storage.local.getBytesInUse) return 0;
+            // Cok uzun listeyi parcalara bolerek soruyoruz
+            let toplam = 0;
+            for (let i = 0; i < liste.length; i += 500) {
+                toplam += await chrome.storage.local.getBytesInUse(liste.slice(i, i + 500));
+            }
+            return toplam;
+        } catch (e) {
+            return 0;
+        }
+    };
+
+    sonuc.gorselBayt = await baytOl(gorselAnahtarlari);
+    try {
+        if (chrome.storage.local.getBytesInUse) {
+            sonuc.toplamBayt = await chrome.storage.local.getBytesInUse(null);
+        }
+    } catch (e) { /* eski surum */ }
+    sonuc.digerBayt = Math.max(0, sonuc.toplamBayt - sonuc.gorselBayt);
 
     // OKSUZ kayitlar: yer imi karsiligi kalmamis gorseller.
     // Bunlari ayri saymak onemli - panelde "1109 kart" yaziyordu ama
-    // gercek kart sayisi 934'tu, aradaki fark siliniş kartlarin
+    // gercek kart sayisi 934'tu, aradaki fark silinen kartlarin
     // depoda kalan gorselleriydi.
     try {
-        // YALNIZCA WSD AGACI.
-        //
-        // Once tum yer imlerine bakiyordum; baska klasorlerdeki ayni
-        // adresler gorselleri "yasiyor" gosteriyordu. Depomuzda yalnizca
-        // WSD kartlarinin gorselinin durmasi gerekiyor - kart WSD'den
-        // cikarilmissa gorseli de gereksiz.
+        // YALNIZCA WSD AGACI. Baska klasorlerdeki ayni adresler
+        // gorselleri "yasiyor" gosteriyordu; depomuzda yalnizca WSD
+        // kartlarinin gorselinin durmasi gerekiyor.
         const yasayan = await wsdUrlleri();
 
         // Emniyet: agac okunamadiysa hepsini oksuz sayma
         if (yasayan.size) {
-            const hepsi = await chrome.storage.local.get(null);
-            for (const [a, v] of Object.entries(hepsi)) {
-                if (!/^(https?|file|chrome|chrome-extension|edge|vivaldi):/i.test(a)) continue;
-                if (yasayan.has(a)) continue;
-                sonuc.oksuzAdet++;
-                try { sonuc.oksuzBayt += JSON.stringify(v).length; } catch (e) { /* atla */ }
-            }
+            const oksuzler = gorselAnahtarlari.filter(a => !yasayan.has(a));
+            sonuc.oksuzAdet = oksuzler.length;
+            sonuc.oksuzBayt = await baytOl(oksuzler);
         }
         sonuc.oksuzSayildi = true;
     } catch (e) {
         console.log('[WSD] oksuz sayimi yapilamadi:', e);
         sonuc.oksuzSayildi = false;
     }
-
-    // Gercek kullanimi TARAYICIDAN sor - JSON uzunlugu yaklasik deger
-    try {
-        if (chrome.storage.local.getBytesInUse) {
-            const b = await chrome.storage.local.getBytesInUse(null);
-            if (b > 0) sonuc.toplamBayt = b;
-        }
-    } catch (e) { /* eski surum - kendi hesabimiz kalsin */ }
 
     // Ust sinir icin `navigator.storage.estimate()`.
     //

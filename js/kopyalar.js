@@ -21,7 +21,6 @@
 
 import { gruplariAl, kartlariAl, kartSil, urlNormalle } from './yerimi.js';
 import { kartAraclariOlustur } from './cizim.js';
-import { gorselAl } from './gorsel.js';
 import { aktifGrup, grubuAc } from './cizim.js';
 import { bildir } from './arayuz.js';
 import { onaySor } from './onay.js';
@@ -87,7 +86,6 @@ async function ciz() {
         return;
     }
 
-    const kayitlar = await gorselAl(kumeler.map(k => k.url));
 
     for (const kume of kumeler) {
         // Kume basligi - hangi adres
@@ -97,9 +95,16 @@ async function ciz() {
         kap.appendChild(bas);
 
         for (const { kart, grup } of kume.liste) {
-            kap.appendChild(kartOlustur(kart, grup, kayitlar[kume.url]));
+            kap.appendChild(kartOlustur(kart, grup));
         }
     }
+
+    // TEMBEL YUKLEME: eskiden yinelenen TUM kartlarin gorseli tek
+    // seferde okunuyordu.
+    try {
+        const { gorselleriGozle } = await import('./cizim.js');
+        gorselleriGozle(kap.querySelectorAll('.kart[data-anahtar]'));
+    } catch (e) { /* onemli degil */ }
 
     // Renk etiketi ve not isareti - normal izgaradaki gibi
     try {
@@ -118,7 +123,7 @@ async function ciz() {
  * Artik SANAL GRUP gibi davraniyor: ayni arac seridi, ayni sag tik
  * menusu, tiklayinca aciliyor.
  */
-function kartOlustur(k, grup, kayit) {
+function kartOlustur(k, grup) {
     const a = document.createElement('a');
     a.className = 'kart kopyaKart';
     a.href = k.url;
@@ -134,7 +139,7 @@ function kartOlustur(k, grup, kayit) {
 
     const gorsel = document.createElement('span');
     gorsel.className = 'kartGorsel';
-    if (kayit && kayit.gorsel) gorsel.style.backgroundImage = `url('${kayit.gorsel}')`;
+    // Gorsel tembel yukleniyor - ciz() sonunda gozetlemeye aliniyor
 
     govde.append(baslik, gorsel);
     a.appendChild(govde);

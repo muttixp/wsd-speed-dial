@@ -39,11 +39,16 @@ const NESNE_ANAHTARLARI = [
 
 /* ============ Disa aktarma ============ */
 
-export async function yedekOlustur() {
+/**
+ * Yedegin GORSEL DISI kismi. Gorseller buraya alinmiyor: 1000+ kartli
+ * depoda hepsini tek nesnede toplayip JSON.stringify'a vermek yuzlerce
+ * MB'lik tek bir dize demek - dize sinirina takilip yedek alinamiyordu.
+ * Gorseller `yedegiIndir` icinde parca parca yaziliyor.
+ */
+export async function yedekIskeleti() {
     const kok = await kokKlasoruAl();
     const gruplar = await gruplariAl();
 
-    // 1) Yer imi agaci
     const disaGruplar = [];
     const yasayanUrlIer = new Set();
 
@@ -55,50 +60,31 @@ export async function yedekOlustur() {
             kokMu: g.id === kok,
             baslik: g.baslik,
             kartlar: kartlar.map(k => ({ baslik: k.baslik, url: urlNormalle(k.url) })),
-            ikon: null,          // asagida dolduruluyor
+            ikon: null,
             gorunum: null
         });
     }
 
-    // 2) Depo
-    const hepsi = await chrome.storage.local.get(null);
+    // Yalnizca KUCUK haritalar okunuyor
+    const kucukler = await chrome.storage.local.get(
+        ['grupIkonlari', 'grupGorunumleri', 'kartNotlari', 'kartRenkleri', 'kartSayaclari']);
 
     // Grup ikonlari/gorunumleri id yerine SIRAYLA eslestiriliyor:
     // geri yuklerken yer imi id'leri farkli olacak.
-    const ikonlar = hepsi.grupIkonlari || {};
-    const gorunumler = hepsi.grupGorunumleri || {};
+    const ikonlar = kucukler.grupIkonlari || {};
+    const gorunumler = kucukler.grupGorunumleri || {};
     gruplar.forEach((g, i) => {
         disaGruplar[i].ikon = ikonlar[g.id] || null;
         disaGruplar[i].gorunum = gorunumler[g.id] || null;
     });
 
-    // 3) Gorseller - YALNIZCA yasayan kartlarinki
-    const gorseller = {};
-    let atlanan = 0;
-    for (const [anahtar, deger] of Object.entries(hepsi)) {
-        if (!urlAnahtariMi(anahtar)) continue;
-        if (!yasayanUrlIer.has(anahtar)) { atlanan++; continue; }
-        gorseller[anahtar] = deger;
-    }
-
-    // 4) Not ve renkler - yine yalnizca yasayanlar
-    const notlar = suz(hepsi.kartNotlari, yasayanUrlIer);
-    const renkler = suz(hepsi.kartRenkleri, yasayanUrlIer);
-    const sayaclar = suz(hepsi.kartSayaclari, yasayanUrlIer);
-
-    if (atlanan) console.log(`[WSD] yedege alinmayan oksuz gorsel: ${atlanan}`);
-
     return {
-        wsd: {
-            surum: SURUM,
-            tarih: new Date().toISOString(),
-            gruplar: disaGruplar,
-            gorseller,
-            notlar,
-            renkler,
-            sayaclar,
-            ayarlar: await ayarlariAl()
-        }
+        gruplar: disaGruplar,
+        yasayan: yasayanUrlIer,
+        notlar: suz(kucukler.kartNotlari, yasayanUrlIer),
+        renkler: suz(kucukler.kartRenkleri, yasayanUrlIer),
+        sayaclar: suz(kucukler.kartSayaclari, yasayanUrlIer),
+        ayarlar: await ayarlariAl()
     };
 }
 
@@ -116,9 +102,56 @@ function urlAnahtariMi(anahtar) {
 }
 
 /** Yedegi dosya olarak indirir. */
-export async function yedegiIndir() {
-    const veri = await yedekOlustur();
-    const blob = new Blob([JSON.stringify(veri)], { type: 'application/json' });
+export async function yedegiIndir(ilerleme) {
+    const isk = await yedekIskeleti();
+
+    // JSON'u PARCA PARCA uretip her partiyi hemen Blob'a ceviriyoruz.
+    // Boylece veri JS yiginindan cikip tarayicinin blob deposuna gidiyor;
+    // tek dev dize olusmuyor.
+    const parcalar = [];
+    parcalar.push('{"wsd":{');
+    parcalar.push(`"surum":${JSON.stringify(SURUM)},`);
+    parcalar.push(`"tarih":${JSON.stringify(new Date().toISOString())},`);
+    parcalar.push(`"gruplar":${JSON.stringify(isk.gruplar)},`);
+    parcalar.push(`"notlar":${JSON.stringify(isk.notlar)},`);
+    parcalar.push(`"renkler":${JSON.stringify(isk.renkler)},`);
+    parcalar.push(`"sayaclar":${JSON.stringify(isk.sayaclar)},`);
+    parcalar.push(`"ayarlar":${JSON.stringify(isk.ayarlar)},`);
+    parcalar.push('"gorseller":{');
+
+    const anahtarlar = [...isk.yasayan];
+    const PARTI = 20;
+    let ilk = true, yazilan = 0;
+
+    for (let i = 0; i < anahtarlar.length; i += PARTI) {
+        const dilim = anahtarlar.slice(i, i + PARTI);
+        let kayitlar = {};
+        try {
+            kayitlar = await chrome.storage.local.get(dilim);
+        } catch (e) {
+            console.log('[WSD] yedek: parti okunamadi', e);
+            continue;
+        }
+
+        let metin = '';
+        for (const [a, v] of Object.entries(kayitlar)) {
+            if (!v || !v.gorsel) continue;
+            // ADAYLAR yedege girmiyor: kart basina birkac tam boy gorsel
+            // daha demek ve hepsi yeniden uretilebilir. Dosya boyutu
+            // birkac kat kuculuyor.
+            const sade = { gorsel: v.gorsel, zemin: v.zemin ?? null };
+            metin += (ilk ? '' : ',') + JSON.stringify(a) + ':' + JSON.stringify(sade);
+            ilk = false;
+            yazilan++;
+        }
+        if (metin) parcalar.push(new Blob([metin]));    // yiginda tutma
+        if (ilerleme) ilerleme({ yapilan: Math.min(i + PARTI, anahtarlar.length),
+                                 toplam: anahtarlar.length });
+    }
+
+    parcalar.push('}}}');
+
+    const blob = new Blob(parcalar, { type: 'application/json' });
     const url = URL.createObjectURL(blob);
 
     // WSD-27-8-2026-1457 : gun-ay-yil-saatdakika
@@ -134,26 +167,26 @@ export async function yedegiIndir() {
     a.download = dosyaAdi;
     a.click();
 
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    setTimeout(() => URL.revokeObjectURL(url), 60000);   // buyuk dosya yazilirken erken iptal olmasin
 
-    const sayi = veri.wsd.gruplar.reduce((t, g) => t + g.kartlar.length, 0);
+    const sayi = isk.gruplar.reduce((t, g) => t + g.kartlar.length, 0);
 
     // Son yedegin izi: veri kaybi uyarisinda "hangi dosyayi arayacaksin"
-    // sorusunun cevabi. Tarayicinin indirme klasorunu bilemiyoruz ama
-    // dosya adini soyleyebiliyoruz.
+    // sorusunun cevabi.
     try {
         await chrome.storage.local.set({
             sonYedekBilgi: {
                 dosya: dosyaAdi,
                 tarih: new Date().toISOString(),
                 kart: sayi,
-                grup: veri.wsd.gruplar.length,
+                grup: isk.gruplar.length,
                 boyut: blob.size
             }
         });
     } catch (e) { /* onemli degil */ }
 
-    return { grup: veri.wsd.gruplar.length, kart: sayi, boyut: blob.size, dosya: dosyaAdi };
+    return { grup: isk.gruplar.length, kart: sayi, gorsel: yazilan,
+             boyut: blob.size, dosya: dosyaAdi };
 }
 
 /* ============ Ice aktarma ============ */
@@ -223,8 +256,12 @@ export async function yedegiYukle(veri, temizle = false, ilerleme = null) {
         }
     }
 
-    // Depoyu yaz - mevcutlarla birlestiriyoruz
-    const mevcut = await chrome.storage.local.get(null);
+    // Depoyu yaz - mevcutlarla birlestiriyoruz.
+    // Yalnizca kucuk haritalar okunuyor; get(null) tum gorselleri
+    // bellege aliyor ve buyuk depolarda sekmeyi cokertiyordu.
+    const mevcut = await chrome.storage.local.get(
+        ['kartNotlari', 'kartRenkleri', 'kartSayaclari',
+         'grupIkonlari', 'grupGorunumleri', 'ayarlar']);
     const yazilacak = {
         kartNotlari:   { ...(mevcut.kartNotlari || {}),   ...(y.notlar || {}) },
         kartRenkleri:  { ...(mevcut.kartRenkleri || {}),  ...(y.renkler || {}) },
@@ -570,11 +607,18 @@ export async function oksuzleriTemizle() {
         const { wsdUrlleri } = await import('./depo.js');
         const yasayan = await wsdUrlleri();
 
-        const hepsi = await chrome.storage.local.get(null);
+        // ANAHTAR listesiyle calisiyoruz: get(null) tum gorselleri bellege
+        // aliyordu ve buyuk depolarda sekmeyi cokertiyordu.
+        let anahtarlar = [];
+        if (chrome.storage.local.getKeys) {
+            anahtarlar = await chrome.storage.local.getKeys();       // Chrome 130+
+        } else {
+            anahtarlar = Object.keys(await chrome.storage.local.get(null));
+        }
 
         // EMNIYET FRENI: depoda URL kaydi var ama hic yasayan url yoksa
         // agac okunamamis demektir. Silme, cik.
-        const depodaki = Object.keys(hepsi).filter(urlAnahtariMi).length;
+        const depodaki = anahtarlar.filter(urlAnahtariMi).length;
         if (yasayan.size === 0 && depodaki > 0) {
             console.log('[WSD] temizlik iptal: yer imi ağacı okunamadı');
             return { gorsel: 0, kayit: 0, bayt: 0, iptal: true };
@@ -582,17 +626,24 @@ export async function oksuzleriTemizle() {
 
         const yasiyorMu = u => yasayan.has(u) || yasayan.has(urlNormalle(u));
 
-        const silinecek = [];
+        const silinecek = anahtarlar.filter(a => urlAnahtariMi(a) && !yasiyorMu(a));
+
+        // Boyutu degerleri okumadan tarayicidan soruyoruz
         let bayt = 0;
-        for (const anahtar of Object.keys(hepsi)) {
-            if (!urlAnahtariMi(anahtar) || yasiyorMu(anahtar)) continue;
-            silinecek.push(anahtar);
-            try { bayt += JSON.stringify(hepsi[anahtar] ?? '').length; } catch (e) { /* atla */ }
-        }
+        try {
+            if (chrome.storage.local.getBytesInUse) {
+                for (let i = 0; i < silinecek.length; i += 500) {
+                    bayt += await chrome.storage.local.getBytesInUse(silinecek.slice(i, i + 500));
+                }
+            }
+        } catch (e) { /* onemli degil - yalnizca bilgi amacli */ }
+
+        // Not/renk/sayac haritalari kucuk - bunlari okuyabiliriz
+        const kucukler = await chrome.storage.local.get(['kartNotlari', 'kartRenkleri', 'kartSayaclari']);
 
         const guncelle = {};
         for (const ad of ['kartNotlari', 'kartRenkleri', 'kartSayaclari']) {
-            const nesne = hepsi[ad];
+            const nesne = kucukler[ad];
             if (!nesne || typeof nesne !== 'object') continue;
             const kalan = {};
             let atilan = 0;
@@ -726,8 +777,10 @@ export async function herSeyiSil(ilerleme = null) {
     // ayni alanda olabilir ve onu silmek bize dusmez.
     if (ilerleme) ilerleme({ asama: 'depo', yapilan: toplam, toplam, ad: '' });
 
-    const hepsi = await chrome.storage.local.get(null);
-    const silinecek = Object.keys(hepsi).filter(k =>
+    const anahtarlar = chrome.storage.local.getKeys
+        ? await chrome.storage.local.getKeys()               // degerleri okumadan
+        : Object.keys(await chrome.storage.local.get(null));
+    const silinecek = anahtarlar.filter(k =>
         urlAnahtariMi(k) || NESNE_ANAHTARLARI.includes(k) ||
         ['copKutusu', 'yakalamaKuyrugu', 'sonOtomatikYedek', 'sonAcilYedek', 'depoIzi', 'sonYedekBilgi', 'atlananOnaylar'].includes(k)
     );

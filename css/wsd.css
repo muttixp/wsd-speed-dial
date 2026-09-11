@@ -1275,6 +1275,24 @@ select option:hover {
 }
 .yonetSil:hover { color: #ff8b87; }
 
+/* Satirdaki "git" ve "duzenle" dugmeleri */
+.yonetGit,
+.yonetDuzenle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    background: transparent;
+    color: var(--metin-sonuk);
+    cursor: pointer;
+    line-height: 0;
+    padding: 4px 6px;
+    flex-shrink: 0;
+    transition: color var(--gecis);
+}
+.yonetGit:hover,
+.yonetDuzenle:hover { color: var(--vurgu-parlak); }
+
 /* --- Grup seridinde surukleme --- */
 .grupSekme.tasiniyor { opacity: .4; }
 
@@ -1440,16 +1458,41 @@ body.aramaAcik #aramaKap {
 #aramaKapat:hover { background: rgba(255,255,255,.10); color: var(--metin); }
 
 /* Arama sonucunda kartin hangi gruptan geldigi yaziyor */
+/* Kucuk resmin uzerinde rozet duruyor: karta EK YUKSEKLIK vermiyor.
+   Eskiden kartin altina ekleniyor ve alttaki satirin basligiyla
+   ust uste biniyordu. */
 .kartGrupEtiketi {
-    display: block;
-    padding: 0 var(--b3);
-    margin-top: 3px;
+    position: absolute;
+    left: 6px;
+    right: 6px;
+    bottom: 6px;
+    z-index: 2;
+    max-width: calc(100% - 12px);
+    margin: 0 auto;
+    padding: 3px 9px;
+    border-radius: 999px;
+    background: rgba(12, 14, 18, .62);
+    backdrop-filter: blur(3px);
     font-size: 10.5px;
-    color: var(--metin-sonuk);
+    line-height: 1.4;
+    color: #e8eaed;
     text-align: center;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+
+    /* Normalde gizli; kartin uzerine gelince beliriyor */
+    opacity: 0;
+    transform: translateY(4px);
+    pointer-events: none;
+    transition: opacity var(--gecis), transform var(--gecis), background var(--gecis);
+}
+
+.kart:hover .kartGrupEtiketi,
+.kart:focus-within .kartGrupEtiketi {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
 }
 
 #aramaBos {
@@ -2211,3 +2254,16 @@ body.kopyaAcik #ustSerit { opacity: 0; visibility: hidden; pointer-events: none;
 }
 .logoAday img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; display: block; }
 .logoAday:hover { border-color: var(--vurgu-parlak); transform: translateY(-1px); }
+
+/* Arama sonucundaki grup etiketi tiklanabilir: o gruba gotururuyor */
+.kartGrupGit {
+    border: 0;
+    font: inherit;
+    cursor: pointer;
+    transition: background var(--gecis), color var(--gecis);
+}
+.kartGrupGit:hover {
+    background: var(--vurgu);
+    color: #fff;
+}
+.kartGrupGit:focus-visible { outline: 2px solid var(--vurgu-parlak); outline-offset: 1px; }
