@@ -1,11 +1,17 @@
 # Gizlilik Politikası — WSD Speed Dial
 
-Son güncelleme: 31 Ağustos 2026
+Son güncelleme: 11 Eylül 2026
 
 ## Kısaca
 
-WSD Speed Dial **hiçbir veri toplamaz, iletmez veya paylaşmaz.**
-Tüm veriniz kendi tarayıcınızda kalır.
+WSD Speed Dial verilerinizi **sunucuya göndermez, satmaz ve
+paylaşmaz.** Kart adresleri, sayfa başlıkları, küçük resimler, notlar
+ve ayarlar yalnızca kendi tarayıcınızda saklanır.
+
+Google'ın kural gereği yerel olarak işlenen veri de beyan edilir:
+eklenti **web sitesi içeriği** (eklediğiniz sayfaların ekran görüntüsü
+ve logosu) ile **kaydettiğiniz sayfa adreslerini ve başlıklarını**
+cihazınızda işler. Bunların hiçbiri dışarı aktarılmaz.
 
 Eklentinin bir sunucusu yoktur. Analitik, izleme veya reklam kodu
 içermez. Geliştiricinin verilerinize erişimi yoktur.
@@ -37,7 +43,7 @@ kalır.
 
 ## Dış bağlantılar
 
-Eklenti yalnızca iki durumda dışarıya bağlanır:
+Eklenti yalnızca şu durumlarda dışarıya bağlanır:
 
 **1. Kart görseli yakalarken** — eklediğiniz sayfayı arka planda açıp
 ekran görüntüsünü alır. Bu, o siteye normal bir ziyaret gibidir; site
@@ -46,6 +52,12 @@ sizi görebilir. Başka bir sunucuya veri gitmez.
 **2. Favicon alırken** — grup ikonu olarak site simgesi seçerseniz
 `google.com/s2/favicons` adresinden çekilir. Yalnızca sitenin alan adı
 gönderilir. Bu özelliği kullanmazsanız böyle bir istek olmaz.
+
+**3. Logo Yakala kullanırken** — kart düzenleme penceresinde "Logo
+Yakala" düğmesine basarsanız, o kartın alan adı (ör. `example.com`)
+`cdn.brandfetch.io` logo servisine gönderilir ve sitenin logosu alınır.
+Kişisel veri, tanımlayıcı ya da tarama geçmişi gönderilmez. Özellik
+yalnızca siz tetiklediğinizde çalışır; kendiliğinden istek yapmaz.
 
 ---
 
@@ -60,7 +72,6 @@ gönderilir. Bu özelliği kullanmazsanız böyle bir istek olmaz.
 | `alarms` | Görsel yakalama kuyruğunu sürdürmek. Manifest V3'te servis işçisi uyuduğunda kuyruk kesiliyor; alarm onu uyandırıyor |
 | `scripting` | Yakalanan sayfayı kaydırmak ve sayfa görsellerini okumak |
 | `debugger` | Yalnızca "Gizli" yakalama kipinde. Pencere açmadan ekran görüntüsü almak için. Varsayılan kip bunu kullanmaz |
-| `offscreen` | Servis işçisinde DOM olmadığından görsel küçültme için |
 | `<all_urls>` | Hangi siteyi ekleyeceğiniz önceden bilinemez; yalnızca eklediğiniz sayfaların görselini almak için kullanılır |
 
 Hiçbir izin veri toplamak için kullanılmaz.

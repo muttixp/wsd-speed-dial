@@ -35,7 +35,6 @@
     "contextMenus",
     "alarms",
     "scripting",
-    "offscreen",
     "debugger"
   ],
   "host_permissions": [
