@@ -22,7 +22,7 @@ import { otomatikYedekDene } from './yedek.js';
 import { kisayollariKur } from './kisayol.js';
 import { copuSuz } from './cop.js';
 import { kayipDenetle } from './depo.js';
-import { tazelemeBastirildiMi } from './arayuz.js';
+import { tazelemeBastirildiMi, seritGozcusunuKur } from './arayuz.js';
 import { aktifGrup, grubuAc } from './cizim.js';
 import { bildir } from './etkilesim.js';
 
@@ -245,7 +245,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                     });
             }
         }, 3000);
-        copuSuz().catch(() => {});
+        copuSuz();
+        seritGozcusunuKur();       // ust serit kart basliklarini kapatmasin
+        // Kirik isaretleri varsa yan seritteki dugme gorunsun
+        import('./kirik.js').then(k => k.kirikDugmesiniTazele()).catch(() => {});
     } catch (e) {
         console.log('[WSD] baslatma hatasi:', e);
     } finally {

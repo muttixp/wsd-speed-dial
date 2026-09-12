@@ -404,6 +404,16 @@ async function basligiTazele(url) {
 
 async function gorseliKaydet(url, adaylar) {
     await basligiTazele(url);
+
+    // Yakalama BASARILI ise sayfa yeniden acilabiliyor demektir;
+    // varsa kirik isaretini kaldiriyoruz. Isaretin kendiliginden
+    // duzelmesinin tek yolu bu.
+    if (adaylar && adaylar.length) {
+        try {
+            const { kirikIsaretiKaldir } = await import('./kirik.js');
+            await kirikIsaretiKaldir(url);
+        } catch (e) { /* onemli degil */ }
+    }
     const liste = Array.isArray(adaylar) ? adaylar : (adaylar ? [adaylar] : []);
     let depoHatasi = null;
 

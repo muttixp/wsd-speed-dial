@@ -504,6 +504,35 @@ function kurulumBolumunuKur() {
     });
 }
 
+/** Kirik tarama raporunu HTML'e cevirir. */
+function kirikRaporHTML(s) {
+    const kacis = t => String(t).replace(/[&<>"]/g, x =>
+        ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[x]));
+
+    const satir = k => `<li><b>${kacis(k.baslik)}</b>` +
+        `<span class="kirikGrup">${kacis(k.grup)}</span>` +
+        `<span class="kirikKod">${k.kod || '—'}</span>` +
+        `<br><span class="kirikUrl">${kacis(k.url)}</span></li>`;
+
+    let h = '';
+    if (s.iptal) h += `<p class="dnKutu uyari">${c('taramaDurduruldu')}</p>`;
+
+    if (!s.kirik.length) {
+        h += `<p class="dnKutu tamam">${c('kirikBaglantiYok', s.toplam)}</p>`;
+    } else {
+        h += `<div class="dnKutu sorun"><h3>${c('nKirik', s.kirik.length)}</h3>` +
+             `<p>${c('kirikAciklama')}</p>` +
+             `<ul class="kirikListe">${s.kirik.map(satir).join('')}</ul></div>`;
+    }
+
+    if (s.supheli.length) {
+        h += `<div class="dnKutu uyari"><h3>${c('nSupheli', s.supheli.length)}</h3>` +
+             `<p>${c('supheliAciklama')}</p>` +
+             `<ul class="kirikListe">${s.supheli.slice(0, 40).map(satir).join('')}</ul></div>`;
+    }
+    return h;
+}
+
 /** Bakim bolumundeki depolama ozeti. */
 async function depoDurumunuCiz() {
     const d = await depoDurumu();
@@ -511,6 +540,7 @@ async function depoDurumunuCiz() {
     const yaz = (id, m) => { const e = document.getElementById(id); if (e) e.textContent = m; };
     // "kart" degil "gorsel": sayilan sey depodaki gorsel kaydi,
     // silinmis kartlarinki de burada
+    yaz('depoKart', `${c('nGrup', d.grupAdet)} · ${c('nKart', d.kartAdet)}`);
     const canli = d.gorselAdet - d.oksuzAdet;
     yaz('depoGorsel', `${mb(d.gorselBayt)}  (${c('nGorsel', canli)})`);
     yaz('depoDiger', mb(d.digerBayt));
@@ -648,7 +678,9 @@ function yedekAraclariniKur() {
 
             const s = await yedegiYukle(JSON.parse(metin), temizle, ilerlemeCiz);
 
-            bildir(c('nGrupNKartYuklendi', s.grup, s.kart));
+            // Birlestirme yapildiysa atlanan kart sayisini da soyle
+            bildir(c('nGrupNKartYuklendi', s.grup, s.eklenen ?? s.kart) +
+                   (s.atlanan ? ' · ' + c('nKartZatenVardi', s.atlanan) : ''));
             setTimeout(() => location.reload(), 900);
         } catch (err) {
             pencere.hidden = true;
@@ -667,6 +699,58 @@ function yedekAraclariniKur() {
         chrome.runtime.sendMessage({ hedef: 'arkaplan', tur: 'kuyrugaTemizle' })
             .catch(() => {});
         bildir(c('bekleyenYakalamalarIptalEdiliyor'));
+    });
+
+    // --- Kirik baglanti taramasi ---
+    document.getElementById('ayKirikTara')?.addEventListener('click', async () => {
+        const { kirikTara, taramayiIptalEt } = await import('./kirik.js');
+        const kutu    = document.getElementById('kirikRapor');
+        const pencere = document.getElementById('kirikPencere');
+        const durdur  = document.getElementById('kirikDurdur');
+        const isaret  = document.getElementById('kirikIsaretSil');
+
+        pencere.hidden = false;
+        durdur.hidden = false;
+        isaret.hidden = true;
+        kutu.innerHTML = `<p class="dnKutu bilgi">${c('taraniyor')}</p>`;
+        durdur.onclick = () => taramayiIptalEt();
+
+        const { kirikEkraninaEkle } = await import('./kirik.js');
+        const sonuc = await kirikTara(d => {
+            kutu.innerHTML = `<p class="dnKutu bilgi">${d.yapilan} / ${d.toplam}` +
+                             ` · ${c('nKirik', d.kirik)}</p>`;
+            // Bulunan kart ekran aciksa aninda listeye dussun
+            if (d.yeni) kirikEkraninaEkle(d.yeni);
+        });
+
+        durdur.hidden = true;
+        isaret.hidden = !sonuc.kirik.length;
+        const goster = document.getElementById('kirikGoster');
+        if (goster) goster.hidden = !sonuc.kirik.length;
+        kutu.innerHTML = kirikRaporHTML(sonuc);
+
+        // Yan serit dugmesi gorunur olsun
+        try {
+            const { kirikDugmesiniTazele } = await import('./kirik.js');
+            await kirikDugmesiniTazele();
+        } catch (e) { /* onemli degil */ }
+    });
+
+    document.getElementById('kirikGoster')?.addEventListener('click', async () => {
+        const { kirikEkraniniAc } = await import('./kirik.js');
+        await kirikEkraniniAc();
+    });
+
+    document.getElementById('kirikKapat')?.addEventListener('click', () => {
+        document.getElementById('kirikPencere').hidden = true;
+    });
+
+    document.getElementById('kirikIsaretSil')?.addEventListener('click', async () => {
+        const { isaretleriSil, kirikDugmesiniTazele } = await import('./kirik.js');
+        await isaretleriSil();
+        await kirikDugmesiniTazele();
+        document.getElementById('kirikPencere').hidden = true;
+        bildir(c('isaretlerTemizlendi'));
     });
 
     document.getElementById('ayDenetle')?.addEventListener('click', async () => {

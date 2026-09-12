@@ -391,8 +391,17 @@ let kuyruktakiler = [];             // yakalama kuyrugundaki anahtarlar
 const bekleyenAnahtarlar = new Map();   // anahtar -> [element, ...]
 let toplayiciSayac = null;
 
-function gozculeriKur() {
-    if (yukleGozcu) { yukleGozcu.disconnect(); birakGozcu.disconnect(); return; }
+/**
+ * @param {boolean} sifirla  true ise onceki gozlemler birakiliyor
+ *   (yeni ekran ciziliyor demektir). Tek kart EKLERKEN false gecilmeli;
+ *   yoksa daha once gozetlenen kartlarin gozlemi kopuyor ve gorselleri
+ *   hic yuklenmiyordu.
+ */
+function gozculeriKur(sifirla = true) {
+    if (yukleGozcu) {
+        if (sifirla) { yukleGozcu.disconnect(); birakGozcu.disconnect(); }
+        return;
+    }
 
     yukleGozcu = new IntersectionObserver(girisler => {
         for (const g of girisler) {
@@ -480,8 +489,8 @@ async function bekleyenleriYukle() {
  * eslesen TUM kartlarin gorselini tek seferde okuyordu.
  * Elemanlarda `data-anahtar` bulunmali.
  */
-export function gorselleriGozle(elemanlar) {
-    gozculeriKur();
+export function gorselleriGozle(elemanlar, sifirla = true) {
+    gozculeriKur(sifirla);
     for (const kart of elemanlar) {
         if (!kart.dataset.anahtar) continue;
         kart.dataset.gorselYuklendi = '';
@@ -493,7 +502,7 @@ export function gorselleriGozle(elemanlar) {
 async function gorselleriUygula(kartlar) {
     if (!kartlar.length) return;
 
-    gozculeriKur();                      // onceki gruptan kalan gozlemleri birak
+    gozculeriKur(true);                  // onceki gruptan kalan gozlemleri birak
     bekleyenAnahtarlar.clear();
 
     // Yakalama kuyrugunda bekleyen kartlar donence gostersin - sayfa

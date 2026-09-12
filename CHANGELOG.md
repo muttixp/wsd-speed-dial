@@ -3,11 +3,42 @@
 Sürüm numaraları [Semantic Versioning](https://semver.org/lang/tr/)
 kurallarına uyar.
 
+## [1.4.1] — 2026-09-12
+
+### Yeni
+- **Kırık bağlantı taraması**: kartların adresleri yoklanıyor, artık var
+  olmayanlar (404/410) ayrı bir ekranda listeleniyor. Bulunan kartlar
+  tarama sürerken anlık ekleniyor, beklemek gerekmiyor. Yan araç
+  şeridindeki düğme yalnızca işaretli kart varken görünüyor; adres
+  değiştirilince ya da sayfa yeniden yakalanabildiğinde işaret
+  kendiliğinden kalkıyor. Ulaşılamayan ama kesin sonuç alınamayan
+  adresler "şüpheli" olarak ayrı tutuluyor — bot koruması olan siteler
+  yanlış işaretlenmesin diye
+- Arama artık grup adlarıyla da eşleşiyor: yazdığınız terim bir grubun
+  adında geçiyorsa sonuçların üstünde kart sayısıyla birlikte rozet
+  olarak çıkıyor, tıklayınca o gruba gidiyor. Çok gruplu kurulumlarda
+  aradığınız grubu bulmanın en hızlı yolu
+- Yan araç şeridinden çöp kutusu, yinelenen kartlar ve grupları yönet
+  ekranlarına doğrudan erişiliyor. Ayarlar panelindeki girişler de
+  duruyor. Sıra: gizle, ara, grupları yönet, kırık bağlantılar,
+  yinelenen kartlar, çöp kutusu, ayarlar
+- Bakım bölümünde grup ve kart sayısı gösteriliyor
+
+### Değişiklikler
+- Yan araç şeridi kullanılmıyorken kenara çekiliyor, fare yaklaşınca
+  açılıyor. Dar ekranda sağdaki kartların üzerine biniyordu; ızgaraya
+  pay bırakmak yerine şerit kendisi çekiliyor, kart düzeni değişmiyor
+- Çöp kutusu, yinelenen kartlar ve kırık bağlantılar şeritleri tek CSS
+  kuralından besleniyor; köşe yarıçapı kart ayarını izliyor
+- Üst bant şeridi kart başlıklarının üzerine biniyordu; artık açık olan
+  şerit ölçülüp kart alanına o kadar boşluk veriliyor (önceden yalnızca
+  arama şeridinde yapılıyordu)
+
 ## [1.4.0] — 2026-09-11
 
 ### Yeni
-- Arama sonuçlarında grup rozeti: karta gelince beliriyor, tıklayınca
-  o gruba gidiyor — grup araması da bu şekilde yapılabiliyor
+- Arama sonucu kartlarında grup rozeti: karta gelince beliriyor,
+  tıklayınca o gruba gidiyor
 - Grupları Yönet satırlarına "gruba git" ve "grubu düzenle" düğmeleri
 - `chrome://`, `edge://`, `about:` gibi adresler artık kartlardan
   açılabiliyor (tıklama ve orta tık) ve bu adresler için adresi yazan
@@ -30,6 +61,11 @@ kurallarına uyar.
 - Kart başlığı 404 sayfasından kalmışsa yakalamada düzeltiliyor
 
 ### Değişiklikler
+- **Yedekten yükle → Ekle** artık birleştiriyor: aynı adlı grup varsa
+  yenisi açılmadan onun içine ekleniyor, o grupta zaten bulunan adresler
+  atlanıyor. Var olan grubun ikonu ve görünümü korunuyor. İki ayrı yedeği
+  üst üste yüklerken her grubun ikinci kopyası oluşuyordu
+- Yedek dosyasına aday görseller yazılmıyor; dosya birkaç kat küçüldü
 - "Zemini Renklendir" anahtarı kaldırıldı; nötr değerler zaten kapalı
   anlamına geliyor. Yanındaki işaretleme hatası da düzeltildi
 - Kullanılmayan 6 dil anahtarı silindi

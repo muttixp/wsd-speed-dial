@@ -24,13 +24,14 @@ import { kartAraclariOlustur, gorselleriGozle } from './cizim.js';
 import { renkleriAl } from './renk.js';
 import { notlariAl } from './not.js';
 import { c } from './dil.js';
+import { seritBoslugunuAyarla } from './arayuz.js';
 
 // Arama seridinin kartlarla ortusmesini olcup ust bosluk veriyoruz.
 // Sabit bir deger yetmiyor: serit yuksekligi ve sayfa duzeni degisebiliyor.
-const NEFES_PAYI = 26;
 
 let acik = false;
-let tumKartlar = null;      // { url, baslik, grupAdi, grupId }
+let tumKartlar = null;
+let tumGruplar = [];        // { id, baslik, adet } - grup aramasi icin
 let zamanlayici = null;
 
 const el = id => document.getElementById(id);
@@ -66,7 +67,6 @@ export function aramayiKur({ aktifGrup, grubuAc }) {
         }
     });
 
-    window.addEventListener('resize', bosluguAyarla);
 }
 
 async function ac() {
@@ -76,7 +76,7 @@ async function ac() {
     // gruplarda calisiyor, ekranda duran eski kartlar sonucmus gibi
     // gorunuyordu. Terim yazilinca sonuclar cizilecek.
     document.body.classList.add('aramaBekliyor');
-    bosluguAyarla();
+    seritBoslugunuAyarla();
     // Serit acilma animasyonu bitmeden odaklanirsa kaydirma zipliyor
     setTimeout(() => el('aramaAlan')?.focus(), 180);
 
@@ -96,7 +96,7 @@ async function grubaGit(grupId, baglam) {
     document.body.classList.remove('aramaAcik', 'aramaBekliyor');
     const alan = el('aramaAlan');
     if (alan) { alan.value = ''; alan.blur(); }
-    bosluguAyarla();
+    seritBoslugunuAyarla();
 
     await ac(grupId);
 }
@@ -112,38 +112,17 @@ function kapat(baglam) {
         // Yalnizca arama yapilmissa normale don - bosuna yeniden cizme
         if (doluydu && baglam) baglam.grubuAc(baglam.aktifGrup());
     }
-    bosluguAyarla();
+    seritBoslugunuAyarla();
 }
 
-/** Serit ile kart alani ortusuyorsa ust bosluk verir. */
-function bosluguAyarla() {
-    const alan = el('kartAlani');
-    if (!alan) return;
-
-    if (!document.body.classList.contains('aramaAcik')) {
-        alan.style.paddingTop = '';
-        return;
-    }
-
-    // Once sifirla: onceki itmeyi olcumun icine katmayalim
-    alan.style.paddingTop = '';
-
-    requestAnimationFrame(() => {
-        if (!document.body.classList.contains('aramaAcik')) return;
-        const serit = el('aramaKap').getBoundingClientRect();
-        const kutu = alan.getBoundingClientRect();
-        const ortusme = serit.bottom - kutu.top;
-        alan.style.paddingTop = ortusme > 0
-            ? Math.ceil(ortusme + NEFES_PAYI) + 'px'
-            : '';
-    });
-}
-
-/** Tum gruplardaki kartlari tek listede toplar. */
+/** Tum gruplardaki kartlari tek listede toplar; grup listesini de doldurur. */
 async function dizinOlustur() {
     const liste = [];
+    tumGruplar = [];
     for (const g of await gruplariAl()) {
-        for (const k of await kartlariAl(g.id)) {
+        const kartlar = await kartlariAl(g.id);
+        tumGruplar.push({ id: g.id, baslik: g.baslik, adet: kartlar.length });
+        for (const k of kartlar) {
             liste.push({
                 url: urlNormalle(k.url),
                 baslik: k.baslik || k.url,
@@ -196,14 +175,39 @@ async function suz(terim, baglam) {
         k.url.toLocaleLowerCase('tr').includes(t)
     );
 
-    ciz(eslesen, sonBaglam, t);
+    // GRUP ARAMASI: ayni kutudan, ayri kip yok. Eslesen gruplar
+    // sonuclarin ustunde kucuk rozetler olarak cikiyor.
+    const eslesenGrup = tumGruplar.filter(g =>
+        (g.baslik || '').toLocaleLowerCase('tr').includes(t));
+
+    ciz(eslesen, sonBaglam, t, eslesenGrup);
 }
 
-async function ciz(kartlar, baglam, terim) {
+async function ciz(kartlar, baglam, terim, gruplar = []) {
     const kap = el('kartKabi');
     kap.textContent = '';
 
-    if (!kartlar.length) {
+    // Eslesen gruplar - sonuclarin ustunde tek satir
+    if (gruplar.length) {
+        const serit = document.createElement('div');
+        serit.id = 'aramaGrupSerit';
+        for (const g of gruplar) {
+            const d = document.createElement('button');
+            d.type = 'button';
+            d.className = 'aramaGrupRozet';
+            d.innerHTML = '<svg viewBox="0 0 16 16" width="13" height="13" fill="none" ' +
+                'stroke="currentColor" stroke-width="1.5" stroke-linecap="round" ' +
+                'stroke-linejoin="round"><path d="M1.8 12.7V4.4c0-.6.5-1.1 1.1-1.1h3l1.5 1.8h6.8c.6 0 ' +
+                '1.1.5 1.1 1.1v6.5c0 .6-.5 1.1-1.1 1.1H2.9c-.6 0-1.1-.5-1.1-1.1z"/></svg>' +
+                '<span></span>';
+            d.querySelector('span').textContent = `${g.baslik} (${g.adet})`;
+            d.addEventListener('click', () => grubaGit(g.id, baglam));
+            serit.appendChild(d);
+        }
+        kap.appendChild(serit);
+    }
+
+    if (!kartlar.length && !gruplar.length) {
         const bos = document.createElement('p');
         bos.id = 'aramaBos';
         bos.textContent = c('sonucBulunamadi', terim);

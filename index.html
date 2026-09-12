@@ -59,6 +59,35 @@
                 <circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>
             </svg>
         </button>
+        <button id="grupYonetBtn" class="yanBtn" title="Grupları yönet" data-c-title="gruplariYonet">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+                 stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 7.5V18a2 2 0 0 0 2 2h14"/>
+                <path d="M3 7.5V6a2 2 0 0 1 2-2h3.5L10 6h5a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                <path d="M21 9v9"/>
+            </svg>
+        </button>
+        <button id="kirikBtn" class="yanBtn" title="Kırık bağlantılar" data-c-title="kirikBaglantilar" hidden>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+                 stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 17H7A5 5 0 0 1 7 7h2"/><path d="M15 7h2a5 5 0 0 1 3.5 8.5"/>
+                <path d="M8 12h3"/><path d="m3 3 18 18"/>
+            </svg>
+        </button>
+        <button id="kopyaBtn" class="yanBtn" title="Yinelenen kartlar" data-c-title="yinelenenKartlar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+                 stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="12" height="12" rx="2"/>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+            </svg>
+        </button>
+        <button id="copBtn" class="yanBtn" title="Çöp kutusu" data-c-title="copKutusu">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+                 stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 6h18"/><path d="M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2"/>
+                <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+            </svg>
+        </button>
         <button id="ayarBtn" class="yanBtn" title="Ayarlar" data-c-title="ayarlar">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
                  stroke-linecap="round" stroke-linejoin="round">
@@ -88,6 +117,18 @@
         <span data-c="yinelenenKartlar">Yinelenen Kartlar</span>
         <span id="kopyaSayi"></span>
         <button type="button" id="kopyaKapat" class="copSeritDugme"><span data-c="kapat">Kapat</span></button>
+    </div>
+
+    <div id="kirikKap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+             stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 17H7A5 5 0 0 1 7 7h2"/><path d="M15 7h2a5 5 0 0 1 3.5 8.5"/>
+            <path d="M8 12h3"/><path d="m3 3 18 18"/>
+        </svg>
+        <span data-c="kirikBaglantilar">Kırık Bağlantılar</span>
+        <span id="kirikSayi"></span>
+        <button type="button" id="kirikTekrarTara" class="copSeritDugme"><span data-c="tekrarTara">Tekrar tara</span></button>
+        <button type="button" id="kirikEkranKapat" class="copSeritDugme"><span data-c="kapat">Kapat</span></button>
     </div>
 
     <!-- Cop kutusu seridi - arama gibi ust bantta -->
@@ -521,6 +562,10 @@
             <div class="bolumIc"><div class="bolumGovde">
                 <div id="depoDurum" class="depoKutu">
                     <div class="depoSatir">
+                        <span data-c="kartlarVeGruplar">Gruplar ve kartlar</span>
+                        <b id="depoKart">—</b>
+                    </div>
+                    <div class="depoSatir">
                         <span data-c="gorseller">Görseller</span>
                         <b id="depoGorsel">—</b>
                     </div>
@@ -554,6 +599,7 @@
                 </div>
 
                 <div class="ayarSatir tekSutun">
+                    <button type="button" class="miniDugme" id="ayKirikTara" style="width:100%"><svg class="dugmeSimge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 17H7A5 5 0 0 1 7 7h2"/><path d="M15 7h2a5 5 0 0 1 3.5 8.5"/><path d="M8 12h3"/><path d="m3 3 18 18"/></svg><span data-c="kirikBaglantilariTara">Kırık bağlantıları tara</span></button>
                     <button type="button" class="miniDugme" id="ayDenetle" style="width:100%">
                         <svg class="dugmeSimge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
                         <span data-c="tutarlilikKontrolu">Tutarlılık kontrolü</span>
@@ -834,6 +880,20 @@
             </div>
             <div class="pencereAlt">
                 <button id="siralaIptal" class="dugme" data-c="vazgec">Vazgeç</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Kirik baglanti raporu -->
+    <div id="kirikPencere" class="pencere" hidden>
+        <div class="pencereIc">
+            <h2 data-c="kirikBaglantilar">Kırık Bağlantılar</h2>
+            <div id="kirikRapor" class="denetimRapor"></div>
+            <div class="pencereAlt">
+                <button id="kirikDurdur" class="dugme" hidden><span data-c="durdur">Durdur</span></button>
+                <button id="kirikGoster" class="dugme" hidden><span data-c="kirikKartlariGoster">Kırık kartları göster</span></button>
+                <button id="kirikIsaretSil" class="dugme" hidden><span data-c="isaretleriTemizle">İşaretleri temizle</span></button>
+                <button id="kirikKapat" class="dugme"><span data-c="kapat">Kapat</span></button>
             </div>
         </div>
     </div>

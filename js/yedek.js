@@ -230,18 +230,66 @@ export async function yedegiYukle(veri, temizle = false, ilerleme = null) {
 
     const yeniIkonlar = {};
     const yeniGorunumler = {};
-    let eklenen = 0;
+    let eklenen = 0, atlanan = 0, birlesen = 0;
+
+    // BIRLESTIRME (yalnizca "ekle" kipinde):
+    // Ayni adli grup varsa yenisini acmak yerine ICINE ekliyoruz, ayni
+    // adres o grupta zaten varsa atliyoruz. Iki yedegi ust uste
+    // yuklerken her grubun ikinci kopyasi olusuyordu.
+    const mevcutGruplar = new Map();
+    if (!temizle) {
+        for (const c of await chrome.bookmarks.getChildren(kok)) {
+            if (!c.url) mevcutGruplar.set(adAnahtari(c.title), c.id);
+        }
+    }
+
+    // Bir gruptaki mevcut adresler - tekrar eklememek icin
+    const adresleriAl = async grupId => {
+        const kume = new Set();
+        try {
+            for (const c of await chrome.bookmarks.getChildren(grupId)) {
+                if (c.url) kume.add(urlNormalle(c.url));
+            }
+        } catch (e) { /* grup okunamadi */ }
+        return kume;
+    };
 
     for (const g of y.gruplar) {
-        // Kok grubun kartlari dogrudan koke, digerleri yeni klasore
-        const hedefId = g.kokMu ? kok : (await chrome.bookmarks.create({
-            parentId: kok, title: g.baslik
-        })).id;
+        let hedefId, yeniGrup = false;
+        if (g.kokMu) {
+            hedefId = kok;                       // kok grubun kartlari dogrudan koke
+        } else {
+            const varOlan = mevcutGruplar.get(adAnahtari(g.baslik));
+            if (varOlan) {
+                hedefId = varOlan;               // AYNI ADLI GRUBA ekle
+                birlesen++;
+            } else {
+                yeniGrup = true;
+                hedefId = (await chrome.bookmarks.create({
+                    parentId: kok, title: g.baslik
+                })).id;
+                mevcutGruplar.set(adAnahtari(g.baslik), hedefId);
+            }
+        }
 
-        if (g.ikon) yeniIkonlar[hedefId] = g.ikon;
-        if (g.gorunum) yeniGorunumler[hedefId] = g.gorunum;
+        // Ikon/gorunum yalnizca YENI acilan gruba yaziliyor; var olan
+        // grubun kendi ikonu yedektekiyle ezilmesin
+        if (yeniGrup) {
+            if (g.ikon) yeniIkonlar[hedefId] = g.ikon;
+            if (g.gorunum) yeniGorunumler[hedefId] = g.gorunum;
+        }
+
+        const varolanAdresler = temizle ? new Set() : await adresleriAl(hedefId);
 
         for (const k of g.kartlar) {
+            const anahtar = urlNormalle(k.url);
+            if (varolanAdresler.has(anahtar)) {     // bu grupta zaten var
+                atlanan++;
+                eklenen++;
+                continue;
+            }
+            varolanAdresler.add(anahtar);
+
             await chrome.bookmarks.create({
                 parentId: hedefId, title: k.baslik, url: k.url
             }).catch(() => {});
@@ -274,7 +322,13 @@ export async function yedegiYukle(veri, temizle = false, ilerleme = null) {
     await chrome.storage.local.set(yazilacak);
 
     bildir(c('bitti'), toplamKart, '');
-    return { grup: y.gruplar.length, kart: toplamKart };
+    return { grup: y.gruplar.length, kart: toplamKart,
+             eklenen: toplamKart - atlanan, atlanan, birlesen };
+}
+
+/** Grup adini karsilastirma anahtarina cevirir (buyuk/kucuk ve bosluk farki onemsiz). */
+function adAnahtari(ad) {
+    return (ad || '').trim().toLocaleLowerCase('tr').replace(/\s+/g, ' ');
 }
 
 /* ============ Bicim cozumleme ============ */

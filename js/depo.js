@@ -24,6 +24,7 @@ export async function depoDurumu() {
         gorselBayt: 0, gorselAdet: 0,
         oksuzAdet: 0, oksuzBayt: 0, oksuzSayildi: false,
         digerBayt: 0, toplamBayt: 0,
+        kartAdet: 0, grupAdet: 0,
         kullanilan: null, ayrilan: null, oran: null
     };
 
@@ -86,7 +87,14 @@ export async function depoDurumu() {
         // YALNIZCA WSD AGACI. Baska klasorlerdeki ayni adresler
         // gorselleri "yasiyor" gosteriyordu; depomuzda yalnizca WSD
         // kartlarinin gorselinin durmasi gerekiyor.
+        // Kart ve grup sayisi: kullanici "kac kartim var" diye
+        // bakabilsin. Yer imi agacindan geliyor, depodan degil.
         const yasayan = await wsdUrlleri();
+        sonuc.kartAdet = yasayan.size;
+        try {
+            const { gruplariAl } = await import('./yerimi.js');
+            sonuc.grupAdet = (await gruplariAl()).length;
+        } catch (e) { /* onemli degil */ }
 
         // Emniyet: agac okunamadiysa hepsini oksuz sayma
         if (yasayan.size) {

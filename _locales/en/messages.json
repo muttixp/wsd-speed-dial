@@ -1102,5 +1102,65 @@
   },
   "grubaGit": {
     "message": "Go to this group"
+  },
+  "kartlarVeGruplar": {
+    "message": "Groups and tiles"
+  },
+  "nGrup": {
+    "message": "$1 groups"
+  },
+  "nKartZatenVardi": {
+    "message": "$1 already existed"
+  },
+  "kirikBaglantilariTara": {
+    "message": "Scan for broken links"
+  },
+  "kirikBaglantilar": {
+    "message": "Broken Links"
+  },
+  "taraniyor": {
+    "message": "Scanning..."
+  },
+  "durdur": {
+    "message": "Stop"
+  },
+  "isaretleriTemizle": {
+    "message": "Clear marks"
+  },
+  "isaretlerTemizlendi": {
+    "message": "Marks cleared"
+  },
+  "nKirik": {
+    "message": "$1 broken"
+  },
+  "nSupheli": {
+    "message": "$1 uncertain"
+  },
+  "taramaDurduruldu": {
+    "message": "Scan stopped, results are incomplete."
+  },
+  "kirikBaglantiYok": {
+    "message": "Scanned $1 addresses, no broken links found."
+  },
+  "kirikAciklama": {
+    "message": "These addresses returned 404/410; the page no longer exists. Their tiles are marked with a red exclamation."
+  },
+  "supheliAciklama": {
+    "message": "These addresses could not be reached, but the result is inconclusive (timeout, network error or bot protection). Tiles were not marked."
+  },
+  "kirikKartlariGoster": {
+    "message": "Show broken tiles"
+  },
+  "tekrarTara": {
+    "message": "Rescan"
+  },
+  "nKartDuzelmis": {
+    "message": "$1 tiles are back online, removed from the list"
+  },
+  "degisiklikYok": {
+    "message": "No change, all still broken"
+  },
+  "kirikKartYokTara": {
+    "message": "No tiles are marked as broken. Use \"Rescan\" to check every tile."
   }
 }

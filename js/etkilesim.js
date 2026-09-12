@@ -64,6 +64,61 @@ export function etkilesimiKur() {
     // orta tikta da sessizce hicbir sey olmuyor. Ozel semalarda olayi
     // devralip arka planda sekme aciyoruz. Normal adreslerde tarayicinin
     // kendi davranisina KARISMIYORUZ.
+    // Yan seritten hizli erisim - ayarlardaki girisler de duruyor
+    el('copBtn')?.addEventListener('click', () => copPenceresiniAc());
+
+    el('kopyaBtn')?.addEventListener('click', async () => {
+        const { kopyaEkraniniAc } = await import('./kopyalar.js');
+        await kopyaEkraniniAc();
+    });
+
+    el('grupYonetBtn')?.addEventListener('click', () => gruplariYonetDis());
+
+    el('kirikBtn')?.addEventListener('click', async () => {
+        const { kirikEkraniniAc } = await import('./kirik.js');
+        await kirikEkraniniAc();
+    });
+
+    el('kirikTekrarTara')?.addEventListener('click', async () => {
+        const btn = el('kirikTekrarTara');
+        const sayi = el('kirikSayi');
+        btn.disabled = true;
+        try {
+            const { kirikleriYenidenTara, kirikTara, kirikEkraniniYenile,
+                    kirikEkraninaEkle } = await import('./kirik.js');
+            const ilerle = d => {
+                sayi.textContent = `${d.yapilan} / ${d.toplam}`;
+                if (d.yeni) kirikEkraninaEkle(d.yeni);      // bulundukca ekle
+            };
+
+            const s = await kirikleriYenidenTara(ilerle);
+
+            if (s.toplam === 0) {
+                // Isaretli kart kalmamis (kullanici temizlemis olabilir):
+                // yalnizca isaretlileri yoklamanin anlami yok, TUMUNU tara
+                const tam = await kirikTara(ilerle);
+                await kirikEkraniniYenile();
+                bildir(tam.kirik.length
+                    ? c('nKirik', tam.kirik.length)
+                    : c('kirikBaglantiYok', tam.toplam));
+            } else {
+                await kirikEkraniniYenile();
+                bildir(s.duzelen ? c('nKartDuzelmis', s.duzelen) : c('degisiklikYok'));
+            }
+        } catch (e) {
+            console.log('[WSD] yeniden tarama hatasi:', e);
+        } finally {
+            btn.disabled = false;
+        }
+    });
+
+    el('kirikEkranKapat')?.addEventListener('click', async () => {
+        const { kirikEkraniniKapat } = await import('./kirik.js');
+        kirikEkraniniKapat();
+        const { grubuAc, aktifGrup } = await import('./cizim.js');
+        await grubuAc(aktifGrup());
+    });
+
     el('kartKabi')?.addEventListener('auxclick', e => {
         if (e.button !== 1) return;
         const kart = e.target.closest('.kart:not(.ekleKart)');
@@ -397,6 +452,12 @@ async function kartiKaydet() {
             // URL degistiyse eski renk kaydi oksuz kalmasin
             if (duzenlenenUrl && duzenlenenUrl !== url) {
                 await renkYaz(duzenlenenUrl, null);
+                // Kirik isareti eski adrese aitti - adres degisti, kalksin
+                try {
+                    const { kirikIsaretiKaldir, kirikDugmesiniTazele } = await import('./kirik.js');
+                    await kirikIsaretiKaldir(duzenlenenUrl);
+                    await kirikDugmesiniTazele();
+                } catch (e) { /* onemli degil */ }
             }
         } else {
             await kartEkle(hedefGrup, baslik || url, url);

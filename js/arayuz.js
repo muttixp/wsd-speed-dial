@@ -169,3 +169,48 @@ export function tazelemeBastirildiMi() {
 export function menuTazele() {
     chrome.runtime.sendMessage({ hedef: 'arkaplan', tur: 'menuTazele' }).catch(() => {});
 }
+
+
+/* ============ Ust serit boslugu ============ */
+
+const SERITLER = [
+    ['aramaAcik', 'aramaKap'],
+    ['copAcik',   'copKap'],
+    ['kopyaAcik', 'kopyaKap'],
+    ['kirikAcik', 'kirikKap']
+];
+const SERIT_NEFES = 26;
+
+/**
+ * Ust bantta yuzen serit (arama, cop, yinelenenler, kirik) kart
+ * alaninin ustune biniyordu ve ilk sıradaki kartlarin basligini
+ * kapatiyordu. Acik olan seridi olcup kart alanina o kadar bosluk
+ * veriyoruz. Daha once yalnizca arama seridi icin yapiliyordu.
+ */
+export function seritBoslugunuAyarla() {
+    const alan = document.getElementById('kartAlani');
+    if (!alan) return;
+
+    const acik = SERITLER.find(([sinif]) => document.body.classList.contains(sinif));
+    alan.style.paddingTop = '';                 // once sifirla, olcum bozulmasin
+    if (!acik) return;
+
+    const serit = document.getElementById(acik[1]);
+    if (!serit) return;
+
+    requestAnimationFrame(() => {
+        if (!document.body.classList.contains(acik[0])) return;
+        const s = serit.getBoundingClientRect();
+        const k = alan.getBoundingClientRect();
+        const ortusme = s.bottom - k.top;
+        alan.style.paddingTop = ortusme > 0 ? Math.ceil(ortusme + SERIT_NEFES) + 'px' : '';
+    });
+}
+
+/** Body sinifi degisince (ekran acilip kapaninca) boslugu tazele. */
+export function seritGozcusunuKur() {
+    const gozcu = new MutationObserver(() => seritBoslugunuAyarla());
+    gozcu.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    window.addEventListener('resize', seritBoslugunuAyarla);
+    seritBoslugunuAyarla();
+}

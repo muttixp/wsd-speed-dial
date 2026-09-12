@@ -1102,5 +1102,65 @@
   },
   "grubaGit": {
     "message": "Bu gruba git"
+  },
+  "kartlarVeGruplar": {
+    "message": "Gruplar ve kartlar"
+  },
+  "nGrup": {
+    "message": "$1 grup"
+  },
+  "nKartZatenVardi": {
+    "message": "$1 kart zaten vardı"
+  },
+  "kirikBaglantilariTara": {
+    "message": "Kırık bağlantıları tara"
+  },
+  "kirikBaglantilar": {
+    "message": "Kırık Bağlantılar"
+  },
+  "taraniyor": {
+    "message": "Taranıyor..."
+  },
+  "durdur": {
+    "message": "Durdur"
+  },
+  "isaretleriTemizle": {
+    "message": "İşaretleri temizle"
+  },
+  "isaretlerTemizlendi": {
+    "message": "İşaretler temizlendi"
+  },
+  "nKirik": {
+    "message": "$1 kırık"
+  },
+  "nSupheli": {
+    "message": "$1 şüpheli"
+  },
+  "taramaDurduruldu": {
+    "message": "Tarama durduruldu, sonuçlar eksik."
+  },
+  "kirikBaglantiYok": {
+    "message": "$1 adres tarandı, kırık bağlantı bulunamadı."
+  },
+  "kirikAciklama": {
+    "message": "Bu adresler 404/410 döndü; sayfa artık yok. Kartları kadranda kırmızı ünlemle işaretlendi."
+  },
+  "supheliAciklama": {
+    "message": "Bu adreslere ulaşılamadı ama kesin sonuç alınamadı (zaman aşımı, ağ hatası ya da bot koruması). Kartlar işaretlenmedi."
+  },
+  "kirikKartlariGoster": {
+    "message": "Kırık kartları göster"
+  },
+  "tekrarTara": {
+    "message": "Tekrar tara"
+  },
+  "nKartDuzelmis": {
+    "message": "$1 kart düzelmiş, listeden çıkarıldı"
+  },
+  "degisiklikYok": {
+    "message": "Değişiklik yok, hepsi hâlâ kırık"
+  },
+  "kirikKartYokTara": {
+    "message": "İşaretli kırık kart yok. Tüm kartları yoklamak için \"Tekrar tara\" düğmesini kullanın."
   }
 }
