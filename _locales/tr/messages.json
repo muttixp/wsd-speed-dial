@@ -894,7 +894,7 @@
     "message": "Kartlarınızı gruplara ayırın, şeritteki + ile yeni grup açın"
   },
   "ipucuKartEkle": {
-    "message": "Bir sayfada sağ tıklayıp \"WSD Speed Dial'e ekle\" deyin, kart burada belirsin"
+    "message": "Ya da bir sayfada sağ tıklayıp \"WSD Speed Dial'e ekle\" deyin"
   },
   "nKartYenidenYakalanacak": {
     "message": "$1 kartın görseli yeniden yakalanacak. Bu işlem birkaç dakika sürebilir."
@@ -1162,5 +1162,65 @@
   },
   "kirikKartYokTara": {
     "message": "İşaretli kırık kart yok. Tüm kartları yoklamak için \"Tekrar tara\" düğmesini kullanın."
+  },
+  "nKartEklendi": {
+    "message": "$1 kart eklendi"
+  },
+  "yerimlerindenIctar": {
+    "message": "Yer imlerinden içe aktar"
+  },
+  "htmlDosyasindanIctar": {
+    "message": "HTML dosyasından içe aktar"
+  },
+  "yerImleriniIceAktar": {
+    "message": "Yer İmlerini İçe Aktar"
+  },
+  "ictarAciklama": {
+    "message": "Seçtiğiniz her klasör bir grup olur. Aynı adlı grup varsa kartlar onun içine eklenir."
+  },
+  "ictarKlasorYok": {
+    "message": "İçe aktarılacak yer imi klasörü bulunamadı."
+  },
+  "ictarSecimYok": {
+    "message": "Hiçbir klasör seçilmedi."
+  },
+  "ictarBasarisiz": {
+    "message": "İçe aktarma tamamlanamadı."
+  },
+  "nKlasorNBaglanti": {
+    "message": "$1 klasör · $2 bağlantı"
+  },
+  "hepsiniSec": {
+    "message": "Hepsini seç / bırak"
+  },
+  "yerImleri": {
+    "message": "Yer İmleri"
+  },
+  "grubaEklenecek": {
+    "message": "mevcut gruba eklenecek"
+  },
+  "ipucuYerimiSurukle": {
+    "message": "Yer imi çubuğundan bir bağlantıyı sürükleyip buraya bırakın, kart olsun"
+  },
+  "ipucuYerimiIctar": {
+    "message": "Tarayıcınızdaki yer imlerini içe aktarın; her klasör bir grup olur"
+  },
+  "silmeyiGeriAl": {
+    "message": "Silmeyi geri al"
+  },
+  "klasorSurukleme": {
+    "message": "Klasör sürüklenemiyor. Toplu aktarım için Ayarlar → Yer imlerinden içe aktar"
+  },
+  "kartEklenemedi": {
+    "message": "Kart eklenemedi"
+  },
+  "hepsiniSil": {
+    "message": "Hepsini sil"
+  },
+  "nKirikKartCopeTasinacak": {
+    "message": "$1 kırık kart çöp kutusuna taşınacak. Geri alabilirsiniz."
+  },
+  "nKartCopeTasindi": {
+    "message": "$1 kart çöp kutusuna taşındı"
   }
 }

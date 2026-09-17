@@ -26,7 +26,17 @@ let kokId = null;
 
 /** Kok klasoru bulur, yoksa olusturur. Sonucu onbellege alir. */
 export async function kokKlasoruAl() {
-    if (kokId) return kokId;
+    // Onbellekteki kimlik BAYAT olabilir: "her seyi sil" ya da kullanici
+    // klasoru elle silince kimlik gecersizlesiyor, ama bellekte duruyordu.
+    // Bu yuzden ice aktarma ekrani WSD'nin kendi gruplarini yabanci
+    // klasor sanip listeliyordu.
+    if (kokId) {
+        try {
+            const [d] = await chrome.bookmarks.get(kokId);
+            if (d && !d.url) return kokId;
+        } catch (e) { /* silinmis */ }
+        kokId = null;
+    }
 
     // Once "Diger yer imleri" altinda ariyoruz
     const agac = await chrome.bookmarks.getTree();

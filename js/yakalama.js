@@ -184,6 +184,16 @@ async function kuyruguIsle() {
             break;
         }
         const is = kuyruk.shift();
+
+        // KART HALA VAR MI? Kuyruk beklerken kart silinmis olabilir
+        // ("her seyi sil" ya da tek kart silme). Yoksa sekme acip
+        // gorsel yazmanin anlami yok; silinen kartin gorseli depoya
+        // geri yaziliyordu.
+        try {
+            const dugumler = await chrome.bookmarks.search({ url: is.url });
+            if (!dugumler.length) continue;
+        } catch (e) { /* arama yapilamadi - islemeye devam */ }
+
         islenenler.add(is.url);
 
         // On yuze haber ver: kart donence gostersin.

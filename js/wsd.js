@@ -17,12 +17,13 @@ import { etkilesimiKur, gorselHazir, kartEklePenceresi, grupEklePenceresiDis,
          gruplariYonetDis } from './etkilesim.js';
 import { grupSuruklemeKur } from './grupsurukle.js';
 import { kartSuruklemeKur } from './kartsurukle.js';
+import { disBirakmayiKur } from './disbirak.js';
 import { aramayiKur, dizinBayatladi } from './arama.js';
 import { otomatikYedekDene } from './yedek.js';
 import { kisayollariKur } from './kisayol.js';
 import { copuSuz } from './cop.js';
 import { kayipDenetle } from './depo.js';
-import { tazelemeBastirildiMi, seritGozcusunuKur } from './arayuz.js';
+import { tazelemeBastirildiMi, seritGozcusunuKur, yanSeridiKur } from './arayuz.js';
 import { aktifGrup, grubuAc } from './cizim.js';
 import { bildir } from './etkilesim.js';
 
@@ -59,6 +60,7 @@ function ekraniTazele() {
             if (document.body.classList.contains('aramaAcik')) return;
             if (document.body.classList.contains('copAcik')) return;
             if (document.body.classList.contains('kopyaAcik')) return;
+            if (document.body.classList.contains('kirikAcik')) return;
 
             await arayuzuKur();
         } catch (e) {
@@ -247,6 +249,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         }, 3000);
         copuSuz();
         seritGozcusunuKur();       // ust serit kart basliklarini kapatmasin
+        yanSeridiKur();            // yan serit yakinlikla aciliyor
+        disBirakmayiKur();         // yer imi surukleyip birakma
+        import('./yerimiictar.js').then(m => m.ictarPenceresiniKur()).catch(() => {})
         // Kirik isaretleri varsa yan seritteki dugme gorunsun
         import('./kirik.js').then(k => k.kirikDugmesiniTazele()).catch(() => {});
     } catch (e) {

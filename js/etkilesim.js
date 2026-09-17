@@ -64,19 +64,61 @@ export function etkilesimiKur() {
     // orta tikta da sessizce hicbir sey olmuyor. Ozel semalarda olayi
     // devralip arka planda sekme aciyoruz. Normal adreslerde tarayicinin
     // kendi davranisina KARISMIYORUZ.
-    // Yan seritten hizli erisim - ayarlardaki girisler de duruyor
-    el('copBtn')?.addEventListener('click', () => copPenceresiniAc());
+    // Yan seritten hizli erisim. Hepsi ACIP KAPATIYOR: ayni dugmeye
+    // tekrar basinca ekran kapanip kadrana donuluyor.
+    const ekranAcik = sinif => document.body.classList.contains(sinif);
+
+    el('copBtn')?.addEventListener('click', async () => {
+        if (ekranAcik('copAcik')) {
+            const { copuKapat } = await import('./copekrani.js');
+            return copuKapat();
+        }
+        await copPenceresiniAc();
+    });
 
     el('kopyaBtn')?.addEventListener('click', async () => {
-        const { kopyaEkraniniAc } = await import('./kopyalar.js');
-        await kopyaEkraniniAc();
+        const m = await import('./kopyalar.js');
+        if (ekranAcik('kopyaAcik')) return m.kopyaEkraniniKapat();
+        await m.kopyaEkraniniAc();
+    });
+
+    el('kirikBtn')?.addEventListener('click', async () => {
+        const m = await import('./kirik.js');
+        if (ekranAcik('kirikAcik')) {
+            m.kirikEkraniniKapat();
+            return grubuAc(aktifGrup());
+        }
+        await m.kirikEkraniniAc();
     });
 
     el('grupYonetBtn')?.addEventListener('click', () => gruplariYonetDis());
 
-    el('kirikBtn')?.addEventListener('click', async () => {
-        const { kirikEkraniniAc } = await import('./kirik.js');
-        await kirikEkraniniAc();
+    el('kirikHepsiniSil')?.addEventListener('click', async () => {
+        const sayi = el('kartKabi').querySelectorAll('.kart[data-anahtar]').length;
+        if (!sayi) return;
+
+        if (!await onaySor({
+            baslik: c('hepsiniSil'),
+            metin: c('nKirikKartCopeTasinacak', sayi),
+            evet: c('sil'), tehlikeli: true
+        })) return;
+
+        const btn = el('kirikHepsiniSil');
+        const sayac = el('kirikSayi');
+        btn.disabled = true;
+        try {
+            const { kirikleriTumdenSil, kirikEkraniniYenile } = await import('./kirik.js');
+            const s = await kirikleriTumdenSil(d => {
+                sayac.textContent = `${d.yapilan} / ${d.toplam}`;
+            });
+            await kirikEkraniniYenile();
+            bildir(c('nKartCopeTasindi', s.silinen));
+        } catch (e) {
+            console.log('[WSD] toplu silme hatasi:', e);
+            bildir(c('silinemedi'));
+        } finally {
+            btn.disabled = false;
+        }
     });
 
     el('kirikTekrarTara')?.addEventListener('click', async () => {
@@ -197,6 +239,12 @@ function karsilamaKur() {
     // atmak zorunda kaliyordu.
     el('karsilamaAktar')?.addEventListener('click', () => {
         el('ayYedekSecici')?.click();
+    });
+
+    // Yer imlerinden ice aktarma - bos kadranda en hizli baslangic
+    el('karsilamaYerimi')?.addEventListener('click', async () => {
+        const { ictarPenceresiniAc } = await import('./yerimiictar.js');
+        await ictarPenceresiniAc('tarayici');
     });
 }
 
@@ -926,6 +974,12 @@ async function ekraniTazele() {
     if (document.body.classList.contains('aramaAcik')) {
         const { aramayiTazele } = await import('./arama.js');
         return aramayiTazele();
+    }
+    // Kirik baglantilar ekrani listede yoktu; kart silinince alttaki
+    // grup cizilip ekrandan dusuluyordu
+    if (document.body.classList.contains('kirikAcik')) {
+        const { kirikEkraniniYenile } = await import('./kirik.js');
+        return kirikEkraniniYenile();
     }
     return grubuAc(aktifGrup());
 }

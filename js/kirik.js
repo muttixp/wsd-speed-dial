@@ -16,6 +16,7 @@
  */
 
 import { gruplariAl, kartlariAl, urlNormalle } from './yerimi.js';
+import { ekranSinifiniVer } from './arayuz.js';
 
 const ES_ZAMANLI   = 6;         // ayni anda kac istek
 const ZAMAN_ASIMI  = 9000;      // ms
@@ -175,7 +176,7 @@ export async function kirikEkraniniAc() {
     document.body.classList.remove('ayarAcik');
     if (el('kirikPencere')) el('kirikPencere').hidden = true;
 
-    document.body.classList.add('kirikAcik');
+    ekranSinifiniVer('kirikAcik');   // digerleri kapansin
     await kirikEkraniniCiz();
 }
 
@@ -251,6 +252,41 @@ export function kirikEkraninaEkle(kayit) {
 
     const sayi = document.getElementById('kirikSayi');
     if (sayi) sayi.textContent = String(kap.querySelectorAll('.kart').length);
+}
+
+/**
+ * Ekrandaki TUM kirik kartlari cop kutusuna tasir.
+ * Cop kutusuna gidiyorlar, yani geri alinabilir.
+ */
+export async function kirikleriTumdenSil(ilerleme) {
+    const kume = await kirikAnahtarlar();
+    if (!kume.size) return { silinen: 0 };
+
+    const { kartiYedekle } = await import('./copekrani.js');
+    const { copeAt } = await import('./cop.js');
+
+    const silinecek = [];
+    for (const g of await gruplariAl()) {
+        for (const k of await kartlariAl(g.id)) {
+            if (kume.has(urlNormalle(k.url))) silinecek.push(k);
+        }
+    }
+
+    let silinen = 0;
+    for (const k of silinecek) {
+        try {
+            const yedek = await kartiYedekle(k.id, k.url);
+            await copeAt(yedek);
+            await chrome.bookmarks.remove(k.id);
+            silinen++;
+        } catch (e) {
+            console.log('[WSD] kirik kart silinemedi:', k.url, e);
+        }
+        if (ilerleme) ilerleme({ yapilan: silinen, toplam: silinecek.length });
+    }
+
+    try { await chrome.storage.local.remove('kirikSonuc'); } catch (e) { /* yok */ }
+    return { silinen };
 }
 
 /** Ekran acikken kart silinirse listeyi ve sayiyi tazele. */

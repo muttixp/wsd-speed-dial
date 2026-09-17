@@ -13,7 +13,8 @@ kurallarına uyar.
   değiştirilince ya da sayfa yeniden yakalanabildiğinde işaret
   kendiliğinden kalkıyor. Ulaşılamayan ama kesin sonuç alınamayan
   adresler "şüpheli" olarak ayrı tutuluyor — bot koruması olan siteler
-  yanlış işaretlenmesin diye
+  yanlış işaretlenmesin diye. Ekrandaki "Hepsini sil" bulunan kırık
+  kartları tek seferde çöp kutusuna taşıyor, geri alınabiliyor
 - Arama artık grup adlarıyla da eşleşiyor: yazdığınız terim bir grubun
   adında geçiyorsa sonuçların üstünde kart sayısıyla birlikte rozet
   olarak çıkıyor, tıklayınca o gruba gidiyor. Çok gruplu kurulumlarda
@@ -22,12 +23,45 @@ kurallarına uyar.
   ekranlarına doğrudan erişiliyor. Ayarlar panelindeki girişler de
   duruyor. Sıra: gizle, ara, grupları yönet, kırık bağlantılar,
   yinelenen kartlar, çöp kutusu, ayarlar
+- **Yer imlerini içe aktarma**: Ayarlar → Bakım'dan tarayıcınızdaki yer
+  imi klasörleri listeleniyor, seçtikleriniz grup olarak aktarılıyor.
+  Aynı adlı grup varsa kartlar onun içine ekleniyor, o grupta bulunan
+  adresler atlanıyor
+- **HTML dosyasından içe aktarma**: başka tarayıcıdan dışa aktarılmış
+  yer imi dosyası (Netscape biçimi) aynı akışla aktarılıyor
+- **Sürükle bırak**: yer imi çubuğundan, yer imi yöneticisinden ya da
+  bir sayfadaki bağlantıyı kadrana bırakınca aktif gruba kart oluyor.
+  Çoklu seçim destekleniyor; klasörler tarayıcı sürükleme verisine
+  içerik koymadığı için aktarılamıyor
+- **Silmeyi geri al**: "Tüm verileri sil" öncesinde yapı (gruplar,
+  kartlar, notlar, renkler, ayarlar) saklanıyor ve tek düğmeyle geri
+  alınabiliyor. Küçük resimler yedeğe girmiyor, yeniden yakalanıyorlar
 - Bakım bölümünde grup ve kart sayısı gösteriliyor
+- Boş kadrandaki karşılama ekranı yenilendi: yer imi içe aktarma ve
+  sürükle bırak öne çıkıyor
+
+### Düzeltmeler
+- Kök klasör kimliği bellekte tutulup doğrulanmıyordu; klasör silinince
+  bayat kimlik kullanılmaya devam ediyordu
+- İçe aktarma listesinde tarayıcının yer imi çöp kutusu da görünüyordu
+  (Vivaldi silinen yer imlerini orada tutuyor); artık yalnızca kalıcı
+  kökler taranıyor
+- "Tüm verileri sil" sırasında yakalama kuyruğu çalışmaya devam edip
+  silinen kartlar için görsel yazıyordu; kuyruk önce iptal ediliyor ve
+  her iş öncesi kartın hâlâ var olup olmadığına bakılıyor
+- Arama, çöp kutusu, yinelenen kartlar ve kırık bağlantılar ekranları
+  üst üste açılabiliyordu; biri açılırken diğerleri kapanıyor
+- Kırık bağlantılar ekranında kart silinince normal ızgaraya
+  dönülüyordu; ekran korunuyor ve liste yerinde tazeleniyor
+- Yan şerit düğmeleri artık açıp kapatıyor
 
 ### Değişiklikler
-- Yan araç şeridi kullanılmıyorken kenara çekiliyor, fare yaklaşınca
-  açılıyor. Dar ekranda sağdaki kartların üzerine biniyordu; ızgaraya
-  pay bırakmak yerine şerit kendisi çekiliyor, kart düzeni değişmiyor
+- Yan araç şeridi kullanılmıyorken kenara çekiliyor. Dar ekranda
+  sağdaki kartların üzerine biniyordu; ızgaraya pay bırakmak yerine
+  şerit kendisi çekiliyor, kart düzeni değişmiyor. Açılış imlecin sağ
+  kenara yakınlığıyla tetikleniyor (yalnızca `:hover` ile hızlı fare
+  hareketinde dar şerit atlanıyordu), fare uzaklaşınca kısa bir süre
+  açık kalıyor
 - Çöp kutusu, yinelenen kartlar ve kırık bağlantılar şeritleri tek CSS
   kuralından besleniyor; köşe yarıçapı kart ayarını izliyor
 - Üst bant şeridi kart başlıklarının üzerine biniyordu; artık açık olan

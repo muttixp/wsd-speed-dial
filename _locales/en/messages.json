@@ -339,7 +339,7 @@
     "message": "Loading backup"
   },
   "yedektenYukle": {
-    "message": "Import backup"
+    "message": "Restore backup"
   },
   "yeniGrup": {
     "message": "New Group"
@@ -894,7 +894,7 @@
     "message": "Organise tiles into groups; use + in the bar to add one"
   },
   "ipucuKartEkle": {
-    "message": "Right-click any page and choose \"Add to WSD Speed Dial\" — the tile appears here"
+    "message": "Or right-click any page and choose \"Add to WSD Speed Dial\""
   },
   "nKartYenidenYakalanacak": {
     "message": "Images for $1 tiles will be captured again. This may take a few minutes."
@@ -1162,5 +1162,65 @@
   },
   "kirikKartYokTara": {
     "message": "No tiles are marked as broken. Use \"Rescan\" to check every tile."
+  },
+  "nKartEklendi": {
+    "message": "$1 tiles added"
+  },
+  "yerimlerindenIctar": {
+    "message": "Import from bookmarks"
+  },
+  "htmlDosyasindanIctar": {
+    "message": "Import from HTML file"
+  },
+  "yerImleriniIceAktar": {
+    "message": "Import Bookmarks"
+  },
+  "ictarAciklama": {
+    "message": "Each folder you select becomes a group. If a group with the same name exists, tiles are added to it."
+  },
+  "ictarKlasorYok": {
+    "message": "No bookmark folders found to import."
+  },
+  "ictarSecimYok": {
+    "message": "No folders selected."
+  },
+  "ictarBasarisiz": {
+    "message": "Import could not be completed."
+  },
+  "nKlasorNBaglanti": {
+    "message": "$1 folders · $2 links"
+  },
+  "hepsiniSec": {
+    "message": "Select / clear all"
+  },
+  "yerImleri": {
+    "message": "Bookmarks"
+  },
+  "grubaEklenecek": {
+    "message": "will be added to existing group"
+  },
+  "ipucuYerimiSurukle": {
+    "message": "Drag a link from your bookmarks bar and drop it here to make a tile"
+  },
+  "ipucuYerimiIctar": {
+    "message": "Import your browser bookmarks — each folder becomes a group"
+  },
+  "silmeyiGeriAl": {
+    "message": "Undo delete all"
+  },
+  "klasorSurukleme": {
+    "message": "Folders can't be dropped. Use Settings → Import from bookmarks instead"
+  },
+  "kartEklenemedi": {
+    "message": "Could not add tile"
+  },
+  "hepsiniSil": {
+    "message": "Delete all"
+  },
+  "nKirikKartCopeTasinacak": {
+    "message": "$1 broken tiles will be moved to the trash. You can restore them."
+  },
+  "nKartCopeTasindi": {
+    "message": "$1 tiles moved to the trash"
   }
 }

@@ -780,6 +780,57 @@ export async function otomatikYedekDene() {
  * Tarayicinin DIGER yer imlerine dokunulmuyor: yalnizca WSD kokunun
  * altindakiler siliniyor.
  */
+/**
+ * Silmeden ONCE yapiyi depoya alir: gruplar, kartlar, notlar, renkler,
+ * sayaclar, ayarlar. Kucuk resimler DAHIL DEGIL - onlar depoyu ikiye
+ * katlardi ve zaten yeniden yakalanabiliyorlar.
+ */
+export async function silmeYedegiAl() {
+    try {
+        const isk = await yedekIskeleti();
+        await chrome.storage.local.set({ silmeYedegi: {
+            tarih: new Date().toISOString(),
+            wsd: {
+                surum: SURUM,
+                tarih: new Date().toISOString(),
+                gruplar: isk.gruplar,
+                gorseller: {},
+                notlar: isk.notlar,
+                renkler: isk.renkler,
+                sayaclar: isk.sayaclar,
+                ayarlar: isk.ayarlar
+            },
+            kart: isk.gruplar.reduce((t, g) => t + g.kartlar.length, 0),
+            grup: isk.gruplar.length
+        }});
+        return true;
+    } catch (e) {
+        console.log('[WSD] silme yedegi alinamadi:', e);
+        return false;
+    }
+}
+
+/** Silme yedegi var mi? { tarih, kart, grup } ya da null. */
+export async function silmeYedegiBilgisi() {
+    try {
+        const d = await chrome.storage.local.get('silmeYedegi');
+        if (!d.silmeYedegi) return null;
+        const { tarih, kart, grup } = d.silmeYedegi;
+        return { tarih, kart, grup };
+    } catch (e) {
+        return null;
+    }
+}
+
+/** Silme yedegini geri yukler. Gorseller yeniden yakalanacak. */
+export async function silmeYedeginiGeriAl(ilerleme = null) {
+    const d = await chrome.storage.local.get('silmeYedegi');
+    if (!d.silmeYedegi?.wsd) throw new Error('yedek yok');
+    const s = await yedegiYukle(d.silmeYedegi, false, ilerleme);
+    await chrome.storage.local.remove('silmeYedegi');
+    return s;
+}
+
 export async function herSeyiSil(ilerleme = null) {
     const kok = await kokKlasoruAl();
     let silinenKart = 0;

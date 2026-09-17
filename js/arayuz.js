@@ -214,3 +214,74 @@ export function seritGozcusunuKur() {
     window.addEventListener('resize', seritBoslugunuAyarla);
     seritBoslugunuAyarla();
 }
+
+
+/* ============ Yan arac seridi ============ */
+
+const YAKINLIK   = 130;    // px - sag kenara bu kadar yaklasinca aciliyor
+const ACIK_KALMA = 900;    // ms - fare ayrilinca bu kadar acik duruyor
+
+/**
+ * Serit kenara cekili duruyor ve yalnizca CSS :hover ile aciliyordu.
+ * Fare hizli hareket ettiginde tarayici ara konumlari ornekleme-
+ * diginden dar seridi atliyor ve serit acilmiyordu. Artik imlecin
+ * sag kenara YAKINLIGI olculuyor; ayrica fare cekildiginde hemen
+ * degil, kisa bir sure sonra kapaniyor.
+ */
+export function yanSeridiKur() {
+    const nav = document.getElementById('yanArac');
+    if (!nav) return;
+
+    let sayac = null;
+
+    const ac = () => {
+        clearTimeout(sayac);
+        nav.classList.add('acik');
+    };
+    const kapatSonra = (gecikme = ACIK_KALMA) => {
+        clearTimeout(sayac);
+        sayac = setTimeout(() => nav.classList.remove('acik'), gecikme);
+    };
+
+    document.addEventListener('mousemove', e => {
+        if (e.clientX >= window.innerWidth - YAKINLIK) ac();
+        else if (nav.classList.contains('acik')) kapatSonra();
+    }, { passive: true });
+
+    // Fare pencereden cikarsa da kapansin
+    document.addEventListener('mouseleave', () => kapatSonra(400));
+
+    nav.addEventListener('mouseenter', ac);
+    nav.addEventListener('focusin', ac);
+    nav.addEventListener('focusout', () => kapatSonra(600));
+}
+
+
+/* ============ Tam ekran gorunumler ============ */
+
+const EKRAN_SINIFLARI = ['aramaAcik', 'aramaBekliyor', 'copAcik', 'kopyaAcik', 'kirikAcik'];
+
+/**
+ * Arama, cop kutusu, yinelenenler ve kirik baglantilar ayni kart
+ * alanini kullaniyor. Biri acilirken digerleri kapanmiyordu; seritler
+ * ust uste biniyor ve izgarada hangisinin cizdigi belirsiz kaliyordu.
+ * Her acilis once digerlerini kapatiyor.
+ *
+ * @param {string} hedef  acilacak ekranin sinifi ('copAcik' gibi)
+ */
+export function ekranSinifiniVer(hedef) {
+    for (const sinif of EKRAN_SINIFLARI) {
+        if (sinif !== hedef && sinif !== 'aramaBekliyor') {
+            document.body.classList.remove(sinif);
+        }
+    }
+    if (hedef !== 'aramaAcik') document.body.classList.remove('aramaBekliyor');
+
+    // Arama kutusu aciksa metni de temizle - kapali gorunup dolu kalmasin
+    if (hedef !== 'aramaAcik') {
+        const alan = document.getElementById('aramaAlan');
+        if (alan && alan.value) { alan.value = ''; alan.blur(); }
+    }
+
+    if (hedef) document.body.classList.add(hedef);
+}

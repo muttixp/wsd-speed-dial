@@ -127,6 +127,7 @@
         </svg>
         <span data-c="kirikBaglantilar">Kırık Bağlantılar</span>
         <span id="kirikSayi"></span>
+        <button type="button" id="kirikHepsiniSil" class="copSeritDugme yikici"><span data-c="hepsiniSil">Hepsini sil</span></button>
         <button type="button" id="kirikTekrarTara" class="copSeritDugme"><span data-c="tekrarTara">Tekrar tara</span></button>
         <button type="button" id="kirikEkranKapat" class="copSeritDugme"><span data-c="kapat">Kapat</span></button>
     </div>
@@ -164,27 +165,28 @@
                          stroke-linecap="round" stroke-linejoin="round">
                         <path d="M12 3l2.6 5.6 6 .8-4.4 4.2 1.1 6.1-5.3-2.9-5.3 2.9 1.1-6.1L3.4 9.4l6-.8z"/>
                     </svg>
-                    <span data-c="ipucuKartEkle">Bir sayfada sağ tıklayıp "WSD Speed Dial'e ekle" deyin, kart burada belirsin</span>
+                    <span data-c="ipucuYerimiSurukle">Yer imi çubuğundan bir bağlantıyı sürükleyip buraya bırakın, kart olsun</span>
                 </li>
                 <li>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
                          stroke-linecap="round" stroke-linejoin="round">
                         <path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
                     </svg>
-                    <span data-c="ipucuGrup">Kartlarınızı gruplara ayırın, şeritteki + ile yeni grup açın</span>
+                    <span data-c="ipucuYerimiIctar">Tarayıcınızdaki yer imlerini içe aktarın; her klasör bir grup olur</span>
                 </li>
                 <li>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
                          stroke-linecap="round" stroke-linejoin="round">
                         <path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/>
                     </svg>
-                    <span data-c="duzenlemekIcinKartaSagTiklayinSiralamak">Düzenlemek için karta sağ tıklayın, sıralamak için sürükleyip bırakın</span>
+                    <span data-c="ipucuKartEkle">Ya da bir sayfada sağ tıklayıp "WSD Speed Dial'e ekle" deyin</span>
                 </li>
             </ul>
 
             <div class="karsilamaDugmeler">
-                <button type="button" id="karsilamaEkle" class="dugme birincil" data-c="kartEkle">+ Kart Ekle</button>
-                <button type="button" id="karsilamaAktar" class="dugme" data-c="iceAktar">İçe Aktar</button>
+                <button type="button" id="karsilamaYerimi" class="dugme birincil" data-c="yerimlerindenIctar">Yer imlerinden içe aktar</button>
+                <button type="button" id="karsilamaEkle" class="dugme" data-c="kartEkle">+ Kart Ekle</button>
+                <button type="button" id="karsilamaAktar" class="dugme" data-c="yedektenYukle">Yedekten yükle</button>
             </div>
         </div>
     </main>
@@ -599,6 +601,9 @@
                 </div>
 
                 <div class="ayarSatir tekSutun">
+                    <button type="button" class="miniDugme" id="ayYerimiIctar" style="width:100%"><svg class="dugmeSimge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg><span data-c="yerimlerindenIctar">Yer imlerinden içe aktar</span></button>
+                    <button type="button" class="miniDugme" id="ayHtmlIctar" style="width:100%"><svg class="dugmeSimge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M12 18v-6"/><path d="m9 15 3 3 3-3"/></svg><span data-c="htmlDosyasindanIctar">HTML dosyasından içe aktar</span></button>
+                    <input type="file" id="ayHtmlSecici" accept=".html,.htm" hidden>
                     <button type="button" class="miniDugme" id="ayKirikTara" style="width:100%"><svg class="dugmeSimge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 17H7A5 5 0 0 1 7 7h2"/><path d="M15 7h2a5 5 0 0 1 3.5 8.5"/><path d="M8 12h3"/><path d="m3 3 18 18"/></svg><span data-c="kirikBaglantilariTara">Kırık bağlantıları tara</span></button>
                     <button type="button" class="miniDugme" id="ayDenetle" style="width:100%">
                         <svg class="dugmeSimge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
@@ -609,6 +614,7 @@
                     <button type="button" class="miniDugme" id="ayAyarSifirla" style="width:100%"><svg class="dugmeSimge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.6-6.4"/><path d="M21 3v6h-6"/></svg><span data-c="ayarlariSifirla">Ayarları sıfırla</span></button>
                 </div>
                 <div class="ayarSatir tekSutun">
+                    <button type="button" class="miniDugme" id="ayySilmeGeriAl" style="width:100%" hidden><svg class="dugmeSimge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7v6h6"/><path d="M3.5 13a9 9 0 1 0 2.1-9.4L3 7"/></svg><span data-c="silmeyiGeriAl">Silmeyi geri al</span></button>
                     <button type="button" class="dugme tehlikeli" id="ayHepsiniSil" style="width:100%"><svg class="dugmeSimge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg><span data-c="tumVerileriSil">Tüm verileri sil</span></button>
                 </div>
             </div></div>
@@ -880,6 +886,21 @@
             </div>
             <div class="pencereAlt">
                 <button id="siralaIptal" class="dugme" data-c="vazgec">Vazgeç</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Yer imi ice aktarma -->
+    <div id="ictarPencere" class="pencere" hidden>
+        <div class="pencereIc">
+            <h2 data-c="yerImleriniIceAktar">Yer İmlerini İçe Aktar</h2>
+            <p class="kucukBilgi" id="ictarOzet"></p>
+            <p class="kucukBilgi" data-c="ictarAciklama">Seçtiğiniz her klasör bir grup olur. Aynı adlı grup varsa kartlar onun içine eklenir.</p>
+            <div id="ictarListe" class="ictarListe"></div>
+            <div class="pencereAlt">
+                <button id="ictarHepsi" class="dugme"><span data-c="hepsiniSec">Hepsini seç</span></button>
+                <button id="ictarKapat" class="dugme"><span data-c="iptal">İptal</span></button>
+                <button id="ictarAktar" class="dugme birincil"><span data-c="iceAktar">İçe aktar</span></button>
             </div>
         </div>
     </div>

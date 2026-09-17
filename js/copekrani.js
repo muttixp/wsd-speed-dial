@@ -24,7 +24,7 @@ import { kokKlasoruAl, kartlariAl, urlNormalle } from './yerimi.js';
 import { ikonHTML } from './ikon.js';
 import { tarihMetni } from './sayac.js';
 import { onaySor } from './onay.js';
-import { bildir, menuTazele } from './arayuz.js';
+import { bildir, menuTazele, ekranSinifiniVer } from './arayuz.js';
 
 const el = id => document.getElementById(id);
 
@@ -60,11 +60,11 @@ export async function copPenceresiniAc() {
     el('perde')?.classList.remove('acik');
     document.body.classList.remove('ayarAcik');
 
-    document.body.classList.add('copAcik');
+    ekranSinifiniVer('copAcik');   // digerleri kapansin
     await copuCiz();
 }
 
-function copuKapat() {
+export function copuKapat() {
     document.body.classList.remove('copAcik');
     grubuAc(aktifGrup());
 }

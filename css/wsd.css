@@ -37,6 +37,10 @@
     --kart-en: 250px;
     --kart-gorsel-boy: 156px;      /* en * oran carpani - JS hesapliyor */
     --kart-kose: 7px;
+    /* Yan arac seridi: kapaliyken gorunen genislik ve fare hedefini
+       buyuten saydam kenarlik */
+    --yan-gorunur: 12px;
+    --yan-hedef: 30px;
     --kart-bosluk-yatay: 3px;
     --kart-bosluk-dikey: 12px;
     --kart-cerceve: 1px;
@@ -58,6 +62,10 @@ html { background: var(--zemin); }
 body {
     margin: 0;
     min-height: 100vh;
+    /* Yan arac seridi kapaliyken sag kenarin disina tasiyor; yatay
+       kaydirma cubugu beliriyor ve sayfa genisligi oynadikca fare
+       seritten dusup tekrar yakaliyordu - acilip kapanma bundandi */
+    overflow-x: hidden;
     background: transparent;
     color: var(--metin);
     font: 400 14px/1.5 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
@@ -788,7 +796,11 @@ body.araclarKapali .kartAraclari { display: none; }
     /* KENARA CEKILI durur: dar ekranda kartlarin uzerine biniyordu.
        Izgaraya pay birakmak duzeni bozuyordu, bu yuzden serit kendisi
        geri cekiliyor - fare yaklasinca aciliyor. */
-    transform: translateY(-50%) translateX(calc(100% - 11px));
+    /* Saydam kenarlik da genislige dahil - onu da eklemezsek serit
+       tamamen ekran disinda kaliyor */
+    transform: translateY(-50%)
+               translateX(calc(100% - var(--yan-gorunur) - var(--yan-hedef)));
+    /* Acilma/kapanma zamanlamasi JS'te (yakinlik olcumu + bekleme) */
     display: flex;
     flex-direction: column;
     gap: var(--b1);
@@ -796,8 +808,21 @@ body.araclarKapali .kartAraclari { display: none; }
     background: rgba(28, 31, 38, .92);
     border: 1px solid var(--cerceve);
     border-right: 0;
-    border-radius: var(--k2) 0 0 var(--k2);
-    box-shadow: var(--golge-2);
+    /* Fare hedefini buyuten SAYDAM kenarlik: serit yalnizca 11px
+       gorunuyor ve kaydirma cubuguyla ayni hizada oldugu icin
+       tutturmak zordu. background-clip sayesinde zemin bu alana
+       tasmiyor, gorunum degismiyor. */
+    border-left: var(--yan-hedef) solid transparent;
+    border-top: 16px solid transparent;
+    border-bottom: 16px solid transparent;
+    background-clip: padding-box;
+    /* Kose yaricapi DIS kutuya gore hesaplaniyor; saydam kenarlik
+       kadar buyutulunce gorunen kenar eski yuvarlakligini koruyor */
+    border-radius: calc(var(--k2) + var(--yan-hedef)) 0 0 calc(var(--k2) + var(--yan-hedef)) /
+                   calc(var(--k2) + 16px) 0 0 calc(var(--k2) + 16px);
+    /* box-shadow dis kutuyu izliyor ve saydam alanin etrafina golge
+       cizerdi; drop-shadow yalnizca gercekten boyanan yuzeyi izliyor */
+    filter: drop-shadow(0 4px 14px rgba(0, 0, 0, .45));
     z-index: 40;
 }
 
@@ -824,7 +849,8 @@ body.araclarKapali .kartAraclari { display: none; }
 body.ayarAcik #yanArac { opacity: 0; pointer-events: none; }
 #yanArac { transition: opacity var(--gecis), transform var(--gecis); }
 
-/* Fare yaklasinca ya da klavyeyle gezilirken tamamen aciliyor */
+/* .acik sinifini JS veriyor; :hover yedek olarak duruyor */
+#yanArac.acik,
 #yanArac:hover,
 #yanArac:focus-within { transform: translateY(-50%) translateX(0); }
 
@@ -841,11 +867,12 @@ body.ayarAcik #yanArac { opacity: 0; pointer-events: none; }
     background: var(--cerceve);
     transition: opacity var(--gecis);
 }
+#yanArac.acik::before,
 #yanArac:hover::before,
 #yanArac:focus-within::before { opacity: 0; }
 
 #yanArac .yanBtn { transition: opacity var(--gecis), background var(--gecis), color var(--gecis); }
-#yanArac:not(:hover):not(:focus-within) .yanBtn { opacity: .55; }
+#yanArac:not(.acik):not(:hover):not(:focus-within) .yanBtn { opacity: .55; }
 
 .ayarSatir.tekSutun { display: block; }
 
@@ -2146,3 +2173,62 @@ body.yanPanelKapali #yanArac { display: none; }
 .kopyaKume b { color: var(--metin); font-weight: 600; }
 
 .kart.kopyaKart .kartGrupEtiketi { font-weight: 600; color: var(--vurgu-parlak); }
+
+/* ============ Disaridan baglanti birakma ============ */
+/* Klasor suruklendiginde: kirmizi cerceve, birakmaya izin yok */
+body.disBirakmaRed #kartAlani::after {
+    content: '';
+    position: fixed;
+    inset: 8px;
+    border: 2px dashed #d9544f;
+    border-radius: calc(var(--kart-kose) + 6px);
+    background: rgba(217, 84, 79, .06);
+    pointer-events: none;
+    z-index: 60;
+}
+
+body.disBirakma #kartAlani::after {
+    content: '';
+    position: fixed;
+    inset: 8px;
+    border: 2px dashed var(--vurgu);
+    border-radius: calc(var(--kart-kose) + 6px);
+    background: rgba(93, 147, 194, .07);
+    pointer-events: none;
+    z-index: 60;
+}
+
+/* ============ Yer imi ice aktarma ============ */
+.ictarListe {
+    max-height: 46vh;
+    overflow-y: auto;
+    margin: var(--b3) 0;
+    border: 1px solid var(--cerceve);
+    border-radius: var(--k1);
+}
+.ictarSatir {
+    display: flex;
+    align-items: center;
+    gap: var(--b3);
+    padding: 7px var(--b3);
+    border-bottom: 1px solid var(--cerceve);
+    cursor: pointer;
+    font-size: 13px;
+}
+.ictarSatir:last-child { border-bottom: 0; }
+.ictarSatir:hover { background: rgba(255, 255, 255, .04); }
+.ictarAd {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.ictarAdet { color: var(--metin-sonuk); font-size: 12px; }
+.ictarVar {
+    margin-left: 8px;
+    padding: 1px 7px;
+    border-radius: 999px;
+    background: rgba(93, 147, 194, .18);
+    color: var(--vurgu-parlak);
+    font-size: 11px;
+}

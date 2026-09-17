@@ -24,7 +24,7 @@ import { kartAraclariOlustur, gorselleriGozle } from './cizim.js';
 import { renkleriAl } from './renk.js';
 import { notlariAl } from './not.js';
 import { c } from './dil.js';
-import { seritBoslugunuAyarla } from './arayuz.js';
+import { seritBoslugunuAyarla, ekranSinifiniVer } from './arayuz.js';
 
 // Arama seridinin kartlarla ortusmesini olcup ust bosluk veriyoruz.
 // Sabit bir deger yetmiyor: serit yuksekligi ve sayfa duzeni degisebiliyor.
@@ -37,7 +37,10 @@ let zamanlayici = null;
 const el = id => document.getElementById(id);
 
 export function aramayiKur({ aktifGrup, grubuAc }) {
-    el('araBtn')?.addEventListener('click', () => (acik ? kapat() : ac()));
+    // Durum GOVDE SINIFINDAN okunuyor: baska bir ekran acilinca arama
+    // disaridan kapatiliyor ve yerel `acik` degiskeni bayatliyordu
+    el('araBtn')?.addEventListener('click', () =>
+        (document.body.classList.contains('aramaAcik') ? kapat(sonBaglam) : ac()));
     el('aramaKapat')?.addEventListener('click', () => kapat({ grubuAc, aktifGrup }));
 
     el('aramaAlan')?.addEventListener('input', e => {
@@ -71,7 +74,7 @@ export function aramayiKur({ aktifGrup, grubuAc }) {
 
 async function ac() {
     acik = true;
-    document.body.classList.add('aramaAcik');
+    ekranSinifiniVer('aramaAcik');   // digerleri kapansin
     // Arama acilinca mevcut grubun kartlari da gizleniyor: arama tum
     // gruplarda calisiyor, ekranda duran eski kartlar sonucmus gibi
     // gorunuyordu. Terim yazilinca sonuclar cizilecek.

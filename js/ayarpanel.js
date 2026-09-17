@@ -14,7 +14,8 @@
 import { ayarlariAl, ayarYaz, ayarlariSifirla } from './ayar.js';
 import { c } from './dil.js';
 import { filtreZinciri, ikiRenkKatmanlari } from './filtre.js';
-import { yedegiIndir, yedegiYukle, oksuzleriTemizle, herSeyiSil } from './yedek.js';
+import { yedegiIndir, yedegiYukle, oksuzleriTemizle, herSeyiSil,
+         silmeYedegiAl, silmeYedegiBilgisi, silmeYedeginiGeriAl } from './yedek.js';
 import { depoDurumu, mb, UYARI_ESIGI } from './depo.js';
 import { onaySor, onaylariGeriGetir } from './onay.js';
 
@@ -701,6 +702,62 @@ function yedekAraclariniKur() {
         bildir(c('bekleyenYakalamalarIptalEdiliyor'));
     });
 
+    // --- Silmeyi geri alma ---
+    const silmeDugmesiniTazele = async () => {
+        const btn = document.getElementById('ayySilmeGeriAl');
+        if (!btn) return;
+        const bilgi = await silmeYedegiBilgisi();
+        btn.hidden = !bilgi;
+        if (bilgi) {
+            btn.title = `${bilgi.grup} grup · ${bilgi.kart} kart`;
+        }
+    };
+    silmeDugmesiniTazele();
+
+    document.getElementById('ayySilmeGeriAl')?.addEventListener('click', async () => {
+        const btn = document.getElementById('ayySilmeGeriAl');
+        const pencere = document.getElementById('ilerlemePencere');
+        btn.disabled = true;
+        try {
+            // Geri alma yuzlerce kart yaziyor ve sessizce suruyordu;
+            // yedek yuklemedeki ilerleme penceresinin aynisi
+            document.getElementById('ilerlemeBaslik').textContent = c('silmeyiGeriAl');
+            pencere.hidden = false;
+            document.getElementById('perde')?.classList.add('acik');
+            ilerlemeCiz({ asama: 'kartlar', yapilan: 0, toplam: 0, ad: '' });
+
+            const s = await silmeYedeginiGeriAl(ilerlemeCiz);
+            ilerlemeCiz({ asama: 'bitti', yapilan: 1, toplam: 1, ad: '' });
+
+            bildir(c('nGrupNKartYuklendi', s.grup, s.eklenen ?? s.kart));
+            setTimeout(() => location.reload(), 1200);
+        } catch (e) {
+            pencere.hidden = true;
+            document.getElementById('perde')?.classList.remove('acik');
+            console.log('[WSD] silme yedegi geri alinamadi:', e);
+            bildir(c('yedekYuklenemedi'));
+            btn.disabled = false;
+        }
+    });
+
+    // --- Yer imi ice aktarma ---
+    document.getElementById('ayYerimiIctar')?.addEventListener('click', async () => {
+        const { ictarPenceresiniAc } = await import('./yerimiictar.js');
+        await ictarPenceresiniAc('tarayici');
+    });
+
+    document.getElementById('ayHtmlIctar')?.addEventListener('click', () => {
+        document.getElementById('ayHtmlSecici')?.click();
+    });
+
+    document.getElementById('ayHtmlSecici')?.addEventListener('change', async e => {
+        const dosya = e.target.files?.[0];
+        e.target.value = '';                      // ayni dosya tekrar secilebilsin
+        if (!dosya) return;
+        const { ictarPenceresiniAc } = await import('./yerimiictar.js');
+        await ictarPenceresiniAc('html', await dosya.text());
+    });
+
     // --- Kirik baglanti taramasi ---
     document.getElementById('ayKirikTara')?.addEventListener('click', async () => {
         const { kirikTara, taramayiIptalEt } = await import('./kirik.js');
@@ -826,6 +883,15 @@ function yedekAraclariniKur() {
             pencere.hidden = false;
             document.getElementById('perde')?.classList.add('acik');
             ilerlemeCiz({ asama: 'siliniyor', yapilan: 0, toplam: 0, ad: '' });
+
+            // Bekleyen yakalamalari ONCE iptal et: kuyruk calismaya devam
+            // edip silinen kartlar icin sekme acmasin ve gorsel yazmasin
+            try {
+                await chrome.runtime.sendMessage({ hedef: 'arkaplan', tur: 'kuyrugaTemizle' });
+            } catch (hata) { /* isci uyaniyor olabilir - silme yine de surer */ }
+
+            // Yanlislikla silmeye karsi yapiyi sakla (gorseller haric)
+            await silmeYedegiAl();
 
             const s = await herSeyiSil(ilerlemeCiz);
             ilerlemeCiz({ asama: 'bitti', yapilan: 1, toplam: 1, ad: '' });

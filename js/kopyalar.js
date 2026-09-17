@@ -22,20 +22,20 @@
 import { gruplariAl, kartlariAl, kartSil, urlNormalle } from './yerimi.js';
 import { kartAraclariOlustur } from './cizim.js';
 import { aktifGrup, grubuAc } from './cizim.js';
-import { bildir } from './arayuz.js';
+import { bildir, ekranSinifiniVer } from './arayuz.js';
 import { onaySor } from './onay.js';
 import { c } from './dil.js';
 
 const el = id => document.getElementById(id);
 
 export function kopyaEkraniniKur() {
-    el('kopyaKapat')?.addEventListener('click', kapat);
+    el('kopyaKapat')?.addEventListener('click', kopyaEkraniniKapat);
     document.addEventListener('keydown', e => {
-        if (e.key === 'Escape' && document.body.classList.contains('kopyaAcik')) kapat();
+        if (e.key === 'Escape' && document.body.classList.contains('kopyaAcik')) kopyaEkraniniKapat();
     });
 }
 
-function kapat() {
+export function kopyaEkraniniKapat() {
     document.body.classList.remove('kopyaAcik');
     grubuAc(aktifGrup());
 }
@@ -47,7 +47,7 @@ export async function kopyaEkraniniAc() {
     document.body.classList.remove('ayarAcik');
     el('denetimPencere') && (el('denetimPencere').hidden = true);
 
-    document.body.classList.add('kopyaAcik');
+    ekranSinifiniVer('kopyaAcik');   // digerleri kapansin
     await ciz();
 }
 

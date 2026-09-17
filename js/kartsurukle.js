@@ -23,6 +23,9 @@ import { c } from './dil.js';
 
 
 let surukKart = null;          // suruklenen kart
+
+/** disbirak.js ic suruklemeyi bundan anliyor. */
+export function icSuruklemeVarMi() { return surukKart !== null; }
 let surukHedefi = null;        // { kart, sonrasina } - araya girilecek yer
 let hayalet = null;            // imleci takip eden kopya
 let hedefGrupId = null;        // grup sekmesi uzerindeysek
