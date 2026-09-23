@@ -93,6 +93,34 @@ export function etkilesimiKur() {
 
     el('grupYonetBtn')?.addEventListener('click', () => gruplariYonetDis());
 
+    el('kopyaTekille')?.addEventListener('click', async () => {
+        const m = await import('./kopyalar.js');
+        const sayi = el('kartKabi').querySelectorAll('.kart[data-anahtar]').length;
+        if (!sayi) return;
+
+        if (!await onaySor({
+            baslik: c('tekleDusur'),
+            metin: c('tekleDusurOnay'),
+            evet: c('sil'), tehlikeli: true
+        })) return;
+
+        const btn = el('kopyaTekille');
+        const sayac = el('kopyaSayi');
+        btn.disabled = true;
+        try {
+            const s = await m.kopyalariTekilleStir(d => {
+                sayac.textContent = `${d.yapilan} / ${d.toplam}`;
+            });
+            await m.kopyaEkraniniAc();
+            bildir(c('nKartCopeTasindi', s.silinen));
+        } catch (e) {
+            console.log('[WSD] tekillestirme hatasi:', e);
+            bildir(c('silinemedi'));
+        } finally {
+            btn.disabled = false;
+        }
+    });
+
     el('kirikHepsiniSil')?.addEventListener('click', async () => {
         const sayi = el('kartKabi').querySelectorAll('.kart[data-anahtar]').length;
         if (!sayi) return;
@@ -1386,11 +1414,19 @@ async function grupMenuEylemi(e) {
             const yedek = await grubuYedekle(id);
             if (yedek) await copeAt(yedek);
 
+            // Silmeden ONCE sirayi al: komsu gruba donebilmek icin
+            const oncekiler = await gruplariAl();
+            const sira = oncekiler.findIndex(g => g.id === id);
+
             await grupSil(id);
-            // Silinen grup aktifse ilk gruba don - yoksa bos ekran kaliyor
+
+            // Silinen grup aktifse KOMSUSUNA don (solundaki, yoksa
+            // sagindaki). Eskiden hep ilk gruba gidiyordu; uzaktaki bir
+            // grubu silince kullanici bastaki gruba firliyordu.
             if (aktifGrup() === id) {
                 const kalanlar = await gruplariAl();
-                await grubuAc(kalanlar[0].id);
+                const hedef = kalanlar[Math.max(0, Math.min(sira - 1, kalanlar.length - 1))];
+                await grubuAc((hedef || kalanlar[0]).id);
             }
             await arayuzuKur();
             menuTazele();

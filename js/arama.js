@@ -180,8 +180,20 @@ async function suz(terim, baglam) {
 
     // GRUP ARAMASI: ayni kutudan, ayri kip yok. Eslesen gruplar
     // sonuclarin ustunde kucuk rozetler olarak cikiyor.
-    const eslesenGrup = tumGruplar.filter(g =>
-        (g.baslik || '').toLocaleLowerCase('tr').includes(t));
+    //
+    // SIRALAMA VE SINIR: kisa terimlerde (or. "de") 20 grup birden
+    // esleserek serit karmasaya donuyordu. Adi terimle BASLAYANLAR
+    // once, sonra kart sayisi cok olanlar; en fazla EN_COK_GRUP tane.
+    const EN_COK_GRUP = 6;
+    const eslesenGrup = tumGruplar
+        .filter(g => (g.baslik || '').toLocaleLowerCase('tr').includes(t))
+        .sort((a, b) => {
+            const aBas = (a.baslik || '').toLocaleLowerCase('tr').startsWith(t) ? 1 : 0;
+            const bBas = (b.baslik || '').toLocaleLowerCase('tr').startsWith(t) ? 1 : 0;
+            if (aBas !== bBas) return bBas - aBas;
+            return b.adet - a.adet;
+        })
+        .slice(0, EN_COK_GRUP);
 
     ciz(eslesen, sonBaglam, t, eslesenGrup);
 }

@@ -873,7 +873,12 @@ function yedekAraclariniKur() {
             metin: c('onaylamakIcinSilYazin'),
             evet: c('sil')
         });
-        if (!dogrulama || dogrulama.toLocaleUpperCase('tr') !== c('silOnayKelimesi')) {
+        // Buyutme ARAYUZ DILINE gore: sabit 'tr' kullaniliyordu ve Turkce
+        // kuralinda i -> I degil I-noktali oldugu icin Ispanyolca "eliminar",
+        // Portekizce "excluir" onayi hic gecmiyordu
+        const dil = chrome.i18n.getUILanguage();
+        const buyut = t => String(t || '').trim().toLocaleUpperCase(dil);
+        if (!dogrulama || buyut(dogrulama) !== buyut(c('silOnayKelimesi'))) {
             return bildir(c('iptalEdildi'));
         }
 

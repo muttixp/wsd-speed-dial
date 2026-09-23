@@ -1,0 +1,1232 @@
+{
+  "extName": {
+    "message": "WSD Speed Dial"
+  },
+  "extDesc": {
+    "message": "以可视化磁贴显示书签的快速访问页面。"
+  },
+  "actionTitle": {
+    "message": "添加到 WSD Speed Dial"
+  },
+  "anaSayfa": {
+    "message": "主页"
+  },
+  "kartEkle": {
+    "message": "添加磁贴"
+  },
+  "ayarlar": {
+    "message": "设置"
+  },
+  "ara": {
+    "message": "搜索"
+  },
+  "GenisEkran": {
+    "message": "16:9 — 宽屏"
+  },
+  "aciklik": {
+    "message": "亮度"
+  },
+  "aktifGrupRengi": {
+    "message": "当前分组颜色"
+  },
+  "aktifGrupSaydamligi": {
+    "message": "当前分组不透明度"
+  },
+  "anaSayfaGrubunuGoster": {
+    "message": "显示“主页”分组"
+  },
+  "ayarlariAcKapat": {
+    "message": "打开 / 关闭设置"
+  },
+  "ayarlariSifirla": {
+    "message": "重置设置"
+  },
+  "ayniSekme": {
+    "message": "当前标签页"
+  },
+  "basaKaydir": {
+    "message": "滚动到开头"
+  },
+  "baslik": {
+    "message": "标题"
+  },
+  "baslikYaziBoyutu": {
+    "message": "标题字号"
+  },
+  "bekleyenYakalamalariIptalEt": {
+    "message": "取消待处理的截图"
+  },
+  "bicim": {
+    "message": "格式"
+  },
+  "buKartlaIlgiliNotunuz": {
+    "message": "关于此磁贴的备注..."
+  },
+  "caprazVe": {
+    "message": "对角 2 和 3"
+  },
+  "copKutusu": {
+    "message": "回收站"
+  },
+  "degistirmekIcinTiklayin": {
+    "message": "点击更改"
+  },
+  "duvarKagidi": {
+    "message": "壁纸"
+  },
+  "duzenle": {
+    "message": "编辑"
+  },
+  "duzenlemekIcinKartaSagTiklayinSiralamak": {
+    "message": "右键点击磁贴进行编辑；拖放可调整顺序"
+  },
+  "eklemeKarti": {
+    "message": "“+”磁贴"
+  },
+  "ekranGoruntusuBoyutu": {
+    "message": "截图尺寸"
+  },
+  "ekranGoruntusuOnerilen": {
+    "message": "截图（推荐）"
+  },
+  "enCokZiyaretEdilen": {
+    "message": "最常访问"
+  },
+  "enFazlaSutun": {
+    "message": "最大列数"
+  },
+  "enOnceEklenen": {
+    "message": "最早添加"
+  },
+  "genelAyar": {
+    "message": "使用全局设置"
+  },
+  "gerekirsePencereyiOneAl": {
+    "message": "必要时将窗口置于前台"
+  },
+  "gizliHataAyiklamaCubuguCikar": {
+    "message": "隐藏（会显示调试栏）"
+  },
+  "gizliSekmedeAc": {
+    "message": "在隐私标签页中打开"
+  },
+  "golgeRengi": {
+    "message": "阴影颜色"
+  },
+  "goruntuDosyasi": {
+    "message": "图片文件"
+  },
+  "goruntuUrlSi": {
+    "message": "图片网址"
+  },
+  "gosterim": {
+    "message": "显示方式"
+  },
+  "grubuDuzenle": {
+    "message": "编辑分组"
+  },
+  "grubunGorselleriniYenile": {
+    "message": "刷新分组图片"
+  },
+  "grup": {
+    "message": "分组"
+  },
+  "grupOlustur": {
+    "message": "创建分组"
+  },
+  "gruplariYonet": {
+    "message": "管理分组"
+  },
+  "hazirBoyutlar": {
+    "message": "预设尺寸"
+  },
+  "hedefGrup": {
+    "message": "目标分组"
+  },
+  "hepsiniAc": {
+    "message": "全部打开"
+  },
+  "herSeyiGizle": {
+    "message": "全部隐藏"
+  },
+  "herSeyiGizleGoster": {
+    "message": "隐藏 / 显示全部"
+  },
+  "htmlSayfasiOlarakDisaAktar": {
+    "message": "导出为 HTML 页面"
+  },
+  "iceAktar": {
+    "message": "导入"
+  },
+  "ikon": {
+    "message": "图标"
+  },
+  "ikonRengi": {
+    "message": "图标颜色"
+  },
+  "ikonYazi": {
+    "message": "图标+文字"
+  },
+  "ilkSonGrup": {
+    "message": "第一个 / 最后一个分组"
+  },
+  "iptal": {
+    "message": "取消"
+  },
+  "isikRengi": {
+    "message": "亮色"
+  },
+  "kaldir": {
+    "message": "移除"
+  },
+  "kartAcilisSekli": {
+    "message": "磁贴打开方式"
+  },
+  "kartBasliklari": {
+    "message": "磁贴标题"
+  },
+  "kartBoyutu": {
+    "message": "磁贴大小"
+  },
+  "kartCerceveRengi": {
+    "message": "边框颜色"
+  },
+  "kartCerceveRengiUzerineGelince": {
+    "message": "边框颜色（悬停）"
+  },
+  "kartCercevesi": {
+    "message": "磁贴边框"
+  },
+  "kartKoseYuvarlakligi": {
+    "message": "磁贴圆角"
+  },
+  "kartOrani": {
+    "message": "磁贴比例"
+  },
+  "kartSayisi": {
+    "message": "磁贴数量"
+  },
+  "kartUstuButonlar": {
+    "message": "磁贴悬停按钮"
+  },
+  "kartZeminRengi": {
+    "message": "磁贴背景"
+  },
+  "kartiDuzenle": {
+    "message": "编辑磁贴"
+  },
+  "kartiTasi": {
+    "message": "移动磁贴"
+  },
+  "kartlarArasiBoslukDikey": {
+    "message": "磁贴间距（垂直）"
+  },
+  "kartlarArasiBoslukYatay": {
+    "message": "磁贴间距（水平）"
+  },
+  "kartlariSirala": {
+    "message": "排序磁贴"
+  },
+  "kaydirmaPx": {
+    "message": "滚动"
+  },
+  "kisayollarBirMetinAlanindaykenCalismaz": {
+    "message": "在输入框中输入时快捷键不可用。"
+  },
+  "kullanilmayanVerileriTemizle": {
+    "message": "清理未使用的数据"
+  },
+  "notuSil": {
+    "message": "删除备注"
+  },
+  "oSiradakiGrubaGec": {
+    "message": "切换到该分组"
+  },
+  "onceSayfaGorseliYoksaEkran": {
+    "message": "优先使用页面图片，否则截图"
+  },
+  "oncekiSonrakiGrup": {
+    "message": "上一个 / 下一个分组"
+  },
+  "otomatikYedekGunde": {
+    "message": "自动备份（每天）"
+  },
+  "ozelEmoji": {
+    "message": "自定义表情"
+  },
+  "pencereKisaSureGorunur": {
+    "message": "窗口（短暂可见）"
+  },
+  "pencereyiAramayiKapat": {
+    "message": "关闭对话框 / 搜索"
+  },
+  "renkEtiketi": {
+    "message": "颜色标签"
+  },
+  "renkTonu": {
+    "message": "色相"
+  },
+  "renklendirmeSiddeti": {
+    "message": "着色强度"
+  },
+  "renklendirmeYontemi": {
+    "message": "着色方式"
+  },
+  "resmiIndir": {
+    "message": "下载图片"
+  },
+  "sekmeKoseYuvarlakligi": {
+    "message": "标签圆角"
+  },
+  "sekmeZeminSaydamligi": {
+    "message": "标签背景不透明度"
+  },
+  "sekmedeAc": {
+    "message": "在标签页中打开"
+  },
+  "sil": {
+    "message": "删除"
+  },
+  "siraBirKezUygulanirSonrasindaSurukleyerek": {
+    "message": "排序只应用一次；之后可以拖动重新排列。"
+  },
+  "siralamakIcinTutamactanSurukleyin": {
+    "message": "拖动手柄调整顺序。"
+  },
+  "sonGrubuHatirla": {
+    "message": "记住上次的分组"
+  },
+  "sonaKaydir": {
+    "message": "滚动到末尾"
+  },
+  "tasi": {
+    "message": "移动"
+  },
+  "tumVerileriSil": {
+    "message": "删除所有数据"
+  },
+  "tumunuSil": {
+    "message": "全部删除"
+  },
+  "tumunuYeniSekmeGrubundaAc": {
+    "message": "在新窗口中全部打开"
+  },
+  "varsayilan": {
+    "message": "默认"
+  },
+  "varsayilanRenklereDon": {
+    "message": "恢复默认颜色"
+  },
+  "varsayilanaDon": {
+    "message": "恢复默认"
+  },
+  "vazgec": {
+    "message": "取消"
+  },
+  "yalnizcaIkon": {
+    "message": "仅图标"
+  },
+  "yalnizcaYazi": {
+    "message": "仅文字"
+  },
+  "yanAracPaneli": {
+    "message": "侧边工具栏"
+  },
+  "yazi": {
+    "message": "文字"
+  },
+  "yedekYukleniyor": {
+    "message": "正在加载备份"
+  },
+  "yedektenYukle": {
+    "message": "从备份恢复"
+  },
+  "yeniGrup": {
+    "message": "新建分组"
+  },
+  "yeniKart": {
+    "message": "新磁贴"
+  },
+  "yeniSekme": {
+    "message": "新标签页"
+  },
+  "yeniSekmeArkaPlan": {
+    "message": "新标签页（后台）"
+  },
+  "yeniSekmedeAc": {
+    "message": "在新标签页中打开"
+  },
+  "yontem": {
+    "message": "方式"
+  },
+  "kullanilanAlan": {
+    "message": "总占用"
+  },
+  "kullanilmayan": {
+    "message": "未使用"
+  },
+  "birDahaSorma": {
+    "message": "不再询问"
+  },
+  "gorseller": {
+    "message": "图片"
+  },
+  "digerVeriler": {
+    "message": "其他数据"
+  },
+  "yedekAl": {
+    "message": "导出备份"
+  },
+  "simdiYedekAl": {
+    "message": "立即备份"
+  },
+  "onaySorulariniGeriGetir": {
+    "message": "恢复确认提示"
+  },
+  "adresiKopyala": {
+    "message": "复制地址"
+  },
+  "arkaPlan": {
+    "message": "背景"
+  },
+  "yedekAlinamadi": {
+    "message": "无法创建备份"
+  },
+  "htmlHazirlaniyor": {
+    "message": "正在准备 HTML..."
+  },
+  "htmlOlusturulamadi": {
+    "message": "无法生成 HTML"
+  },
+  "yedekYuklenemedi": {
+    "message": "无法导入备份："
+  },
+  "bekleyenYakalamalarIptalEdiliyor": {
+    "message": "正在取消待处理的截图"
+  },
+  "ayarlarSifirlandi": {
+    "message": "设置已重置"
+  },
+  "sifirlanamadi": {
+    "message": "无法重置"
+  },
+  "iptalEdildi": {
+    "message": "已取消"
+  },
+  "silinemedi": {
+    "message": "无法删除"
+  },
+  "temizlikAtlandi": {
+    "message": "已跳过清理"
+  },
+  "temizlenecekVeriYok": {
+    "message": "没有需要清理的数据"
+  },
+  "yedektenYukleBd": {
+    "message": "导入备份"
+  },
+  "mevcutGruplarSilinsinMiHayirDerseniz": {
+    "message": "要替换现有分组吗？选择“添加”可将备份与现有内容合并。"
+  },
+  "silVeYukle": {
+    "message": "替换并导入"
+  },
+  "ekle": {
+    "message": "添加"
+  },
+  "ayarlariSifirlaBd": {
+    "message": "重置设置"
+  },
+  "tumGorunumVeDavranisAyarlariVarsayilana": {
+    "message": "所有外观和行为设置将恢复默认。磁贴、分组和图片不受影响。"
+  },
+  "sifirla": {
+    "message": "重置"
+  },
+  "tumVerileriSilBd": {
+    "message": "删除所有数据"
+  },
+  "butunGruplarKartlarGorsellerNotlarVe": {
+    "message": "所有分组、磁贴、图片、备注和设置都将被永久删除。它们不会进入回收站，也无法恢复。"
+  },
+  "devam": {
+    "message": "继续"
+  },
+  "eminMisiniz": {
+    "message": "确定吗？"
+  },
+  "onaylamakIcinSilYazin": {
+    "message": "输入“删除”以确认："
+  },
+  "copKutusuZatenBos": {
+    "message": "回收站已经是空的"
+  },
+  "copKutusuBosaltildi": {
+    "message": "回收站已清空"
+  },
+  "kartGeriAlindi": {
+    "message": "磁贴已恢复"
+  },
+  "geriAlinamadi": {
+    "message": "无法撤销"
+  },
+  "kaliciOlarakSilindi": {
+    "message": "已永久删除"
+  },
+  "copKutusunuBosalt": {
+    "message": "清空回收站"
+  },
+  "kaliciSil": {
+    "message": "永久删除"
+  },
+  "gruplarGuncellendi": {
+    "message": "分组已更新"
+  },
+  "grupOlusturuldu": {
+    "message": "分组已创建"
+  },
+  "grupOlusturulamadi": {
+    "message": "无法创建分组"
+  },
+  "kaydedilemedi": {
+    "message": "无法保存"
+  },
+  "siralanacakYeterliKartYok": {
+    "message": "磁贴数量不足，无法排序"
+  },
+  "kartlarZatenBuSirada": {
+    "message": "磁贴已是此顺序"
+  },
+  "eskiSiraGeriAlindi": {
+    "message": "已恢复之前的顺序"
+  },
+  "siralanamadi": {
+    "message": "无法排序"
+  },
+  "notKaydedildi": {
+    "message": "备注已保存"
+  },
+  "notSilindi": {
+    "message": "备注已删除"
+  },
+  "baskaGrupYok": {
+    "message": "没有其他分组"
+  },
+  "kartTasindi": {
+    "message": "磁贴已移动"
+  },
+  "tasinamadi": {
+    "message": "无法移动"
+  },
+  "dosyaOkunamadi": {
+    "message": "无法读取文件"
+  },
+  "goruntuAlinamadi": {
+    "message": "无法获取图片"
+  },
+  "indirilecekGorselYok": {
+    "message": "没有可下载的图片"
+  },
+  "kartSilindi": {
+    "message": "磁贴已删除"
+  },
+  "gizliPencereAcilamadi": {
+    "message": "无法打开隐私窗口"
+  },
+  "adresKopyalandi": {
+    "message": "地址已复制"
+  },
+  "kopyalanamadi": {
+    "message": "无法复制"
+  },
+  "buGrupBos": {
+    "message": "此分组为空"
+  },
+  "pencereAcilamadi": {
+    "message": "无法打开窗口"
+  },
+  "grupGuncellendi": {
+    "message": "分组已更新"
+  },
+  "yenidenAdlandirilamadi": {
+    "message": "无法重命名"
+  },
+  "grupSilinemedi": {
+    "message": "无法删除分组："
+  },
+  "acilacakKartYok": {
+    "message": "没有可打开的磁贴"
+  },
+  "yenilenecekKartYok": {
+    "message": "没有可刷新的磁贴"
+  },
+  "gorselYenilendi": {
+    "message": "图片已刷新"
+  },
+  "gorselAlinamadi": {
+    "message": "无法获取图片"
+  },
+  "sirala": {
+    "message": "排序"
+  },
+  "geriAl": {
+    "message": "撤销"
+  },
+  "gorselAdresiniYapistirin": {
+    "message": "粘贴图片地址："
+  },
+  "kartiSil": {
+    "message": "删除磁贴"
+  },
+  "hepsiniAcBd": {
+    "message": "全部打开"
+  },
+  "ac": {
+    "message": "打开"
+  },
+  "gorselleriYenile": {
+    "message": "刷新图片"
+  },
+  "baslat": {
+    "message": "开始"
+  },
+  "grubuSil": {
+    "message": "删除分组"
+  },
+  "grupVeIcindekiTumKartlarCop": {
+    "message": "该分组及其中所有磁贴将移至回收站。"
+  },
+  "hepsiniYenile": {
+    "message": "全部刷新"
+  },
+  "e8eaed": {
+    "message": "#e8eaed"
+  },
+  "gorselKaydedilemedi": {
+    "message": "无法保存图片"
+  },
+  "depolamaAlaniDoluYedekAliniyor": {
+    "message": "存储空间已满 — 正在创建备份"
+  },
+  "bakim": {
+    "message": "维护"
+  },
+  "temizlik": {
+    "message": "清理"
+  },
+  "gorsellerBd": {
+    "message": "图片"
+  },
+  "kartlar": {
+    "message": "磁贴"
+  },
+  "bitti": {
+    "message": "完成"
+  },
+  "depoDoluYedekIndirildi": {
+    "message": "存储空间已满。备份已下载 — 请在“维护”中清理。"
+  },
+  "depoDoluTemizlikYapin": {
+    "message": "存储空间已满 — 请在“维护”中清理"
+  },
+  "nKartKuyrugaAlindi": {
+    "message": "已将 $1 个磁贴加入队列"
+  },
+  "nKartSiralandi": {
+    "message": "已排序 $1 个磁贴"
+  },
+  "nKartGorseliYenilenecek": {
+    "message": "将重新截取 $1 个磁贴的图片，可能需要几分钟。"
+  },
+  "nKartSirasiDegisecek": {
+    "message": "$1 个磁贴的顺序将改变，手动排列将丢失。"
+  },
+  "nSekmeAcilacak": {
+    "message": "将打开 $1 个标签页。继续吗？"
+  },
+  "grupSilindiNKart": {
+    "message": "分组已删除（$1 个磁贴）"
+  },
+  "nKayitKaliciSilinecek": {
+    "message": "将永久删除 $1 条记录。"
+  },
+  "nGrupNKartSilindi": {
+    "message": "已删除 $1 个分组、$2 个磁贴"
+  },
+  "nGrupNKartYedeklendi": {
+    "message": "已备份 $1 个分组、$2 个磁贴 — $3"
+  },
+  "nGrupNKartYuklendi": {
+    "message": "已导入 $1 个分组、$2 个磁贴"
+  },
+  "yedekAlindiDosya": {
+    "message": "备份已保存 — $1"
+  },
+  "geriAlindiAd": {
+    "message": "已恢复“$1”"
+  },
+  "tutarlilikKontrolu": {
+    "message": "一致性检查"
+  },
+  "kapat": {
+    "message": "关闭"
+  },
+  "yinelenenKartlar": {
+    "message": "重复磁贴"
+  },
+  "yinelenenKartYok": {
+    "message": "没有重复磁贴"
+  },
+  "sinirsiz": {
+    "message": "无限制"
+  },
+  "gorsellerYaziliyor": {
+    "message": "正在写入图片"
+  },
+  "gorsellerVeAyarlarSiliniyor": {
+    "message": "正在删除图片和设置"
+  },
+  "tamamlandi": {
+    "message": "完成"
+  },
+  "sayilamadi": {
+    "message": "无法统计"
+  },
+  "silOnayKelimesi": {
+    "message": "删除"
+  },
+  "copKutusuBos": {
+    "message": "回收站为空"
+  },
+  "iceriginiGor": {
+    "message": "查看内容"
+  },
+  "kartiNereyeAlalim": {
+    "message": "磁贴放到哪里？"
+  },
+  "iceriginiGoster": {
+    "message": "显示内容"
+  },
+  "henuzAcilmadi": {
+    "message": "尚未打开"
+  },
+  "gorselDegil": {
+    "message": "不是图片"
+  },
+  "gorselYuklenemedi": {
+    "message": "无法加载图片"
+  },
+  "azOnce": {
+    "message": "刚刚"
+  },
+  "dun": {
+    "message": "昨天"
+  },
+  "kartGorseli": {
+    "message": "磁贴图片"
+  },
+  "yedegiYukle": {
+    "message": "导入备份"
+  },
+  "gecersizYedekDosyasi": {
+    "message": "无效的备份文件"
+  },
+  "onceEnAzBirGrupOlusturun": {
+    "message": "请先创建至少一个分组"
+  },
+  "simgeRenkleriSifirlandi": {
+    "message": "图标颜色已重置"
+  },
+  "kopyalandi": {
+    "message": "已复制"
+  },
+  "kopyalanamadiElleSecin": {
+    "message": "无法复制 — 请手动选择地址"
+  },
+  "kapatilmisOnaySorusuYok": {
+    "message": "没有已关闭的确认提示"
+  },
+  "notuDuzenle": {
+    "message": "编辑备注"
+  },
+  "tamam": {
+    "message": "确定"
+  },
+  "denetimYapilamadi": {
+    "message": "检查失败"
+  },
+  "nKartCizilmemis": {
+    "message": "有 $1 个磁贴未绘制"
+  },
+  "sayfayiYenileyipDeneyin": {
+    "message": "请刷新页面后重试。"
+  },
+  "nKartinGorseliYok": {
+    "message": "有 $1 个磁贴没有图片"
+  },
+  "grupMenusundenYenilenebilir": {
+    "message": "可在分组菜单中使用“刷新分组图片”截取。"
+  },
+  "buKartlarPaylasir": {
+    "message": "这些磁贴共享图片、备注和颜色。"
+  },
+  "yinelenenKartlariAc": {
+    "message": "打开重复磁贴"
+  },
+  "nBosGrup": {
+    "message": "$1 个空分组"
+  },
+  "cizimKontroluAtlandi": {
+    "message": "已跳过绘制检查"
+  },
+  "ozelEkranAcikNormaleDonun": {
+    "message": "搜索、回收站或重复磁贴视图已打开。请返回普通视图后再运行。"
+  },
+  "sorunBulunamadi": {
+    "message": "未发现问题"
+  },
+  "nKezAcildi": {
+    "message": "已打开 $1 次"
+  },
+  "nSekmeAcilacakDevam": {
+    "message": "将打开 $1 个标签页。继续吗？"
+  },
+  "nKartKuyrugaAlindi2": {
+    "message": "已将 $1 个磁贴加入队列"
+  },
+  "nDakikaOnce": {
+    "message": "$1 分钟前"
+  },
+  "nSaatOnce": {
+    "message": "$1 小时前"
+  },
+  "nGunOnce": {
+    "message": "$1 天前"
+  },
+  "nAyOnce": {
+    "message": "$1 个月前"
+  },
+  "nYilOnce": {
+    "message": "$1 年前"
+  },
+  "sizSilmediyseniz": {
+    "message": "如果不是你删除的，可以从备份恢复。"
+  },
+  "depoDolduYedekAlipTemizleyin": {
+    "message": "存储空间已满 — 请备份并清理"
+  },
+  "anaSayfaGizlendiNKart": {
+    "message": "“主页”已隐藏 — $1 个磁贴不再显示在栏中"
+  },
+  "nGorsel": {
+    "message": "$1 张图片"
+  },
+  "ayrilanAlanDoldu": {
+    "message": "存储空间已满，无法保存新图片。请先备份，然后清理未使用的数据或删除不需要的磁贴。"
+  },
+  "yedekAlipTemizlemenizOnerilir": {
+    "message": "建议备份并清理未使用的数据。"
+  },
+  "kartlarinizaDokunulmaz": {
+    "message": "磁贴、分组和图片不受影响。"
+  },
+  "kaliciSilinecekCopeGitmez": {
+    "message": "将被永久删除。它们不会进入回收站，也无法恢复。"
+  },
+  "bos": {
+    "message": "空"
+  },
+  "nKayit": {
+    "message": "$1 条记录"
+  },
+  "nKartSilinmisGrup": {
+    "message": "$1 个磁贴 · 已删除的分组"
+  },
+  "goruntuUrlsi": {
+    "message": "图片网址"
+  },
+  "oncekiSimdiKayip": {
+    "message": "原有 $1 $2，现在 $3。"
+  },
+  "nGorselTemizlendi": {
+    "message": "已清理 $1 张图片"
+  },
+  "giris": {
+    "message": "输入"
+  },
+  "gorunum": {
+    "message": "外观"
+  },
+  "kartlarBolum": {
+    "message": "磁贴"
+  },
+  "grupSeridi": {
+    "message": "分组栏"
+  },
+  "goruntuYakalama": {
+    "message": "截图"
+  },
+  "yedeklemeBolum": {
+    "message": "备份"
+  },
+  "bakimBolum": {
+    "message": "维护"
+  },
+  "anasayfaKurulumu": {
+    "message": "主页设置"
+  },
+  "kisayollarBolum": {
+    "message": "快捷键"
+  },
+  "uzantiSimgesi": {
+    "message": "扩展图标"
+  },
+  "baslamakIcin": {
+    "message": "开始使用"
+  },
+  "tonKaydir": {
+    "message": "色相偏移"
+  },
+  "ikiRenk": {
+    "message": "双色"
+  },
+  "ipucuGrup": {
+    "message": "将磁贴整理到分组中；点击栏中的 + 新建分组"
+  },
+  "ipucuKartEkle": {
+    "message": "或在任意页面右键点击，选择“添加到 WSD Speed Dial”"
+  },
+  "nKartYenidenYakalanacak": {
+    "message": "将重新截取 $1 个磁贴的图片，可能需要几分钟。"
+  },
+  "yenile": {
+    "message": "刷新"
+  },
+  "notEkle": {
+    "message": "添加备注"
+  },
+  "urlYiKopyala": {
+    "message": "复制网址"
+  },
+  "colorizeTekTonaIndir": {
+    "message": "着色（单色调）"
+  },
+  "doygunluk": {
+    "message": "饱和度"
+  },
+  "arkaPlanRengi": {
+    "message": "背景颜色"
+  },
+  "metinRengi": {
+    "message": "文字颜色"
+  },
+  "kare": {
+    "message": "正方形"
+  },
+  "sekmeZeminRengi": {
+    "message": "标签背景"
+  },
+  "sekmeBoyutu": {
+    "message": "标签大小"
+  },
+  "yakalamaKipi": {
+    "message": "截图模式"
+  },
+  "bekleme": {
+    "message": "等待"
+  },
+  "jpegKalitesi": {
+    "message": "JPEG 质量"
+  },
+  "arama": {
+    "message": "搜索"
+  },
+  "adres": {
+    "message": "地址"
+  },
+  "kaydet": {
+    "message": "保存"
+  },
+  "ad": {
+    "message": "名称"
+  },
+  "siteUrl": {
+    "message": "网站网址"
+  },
+  "enSonEklenen": {
+    "message": "最近添加"
+  },
+  "not": {
+    "message": "备注"
+  },
+  "onay": {
+    "message": "确认"
+  },
+  "oranDengeli": {
+    "message": "16:10 — 均衡"
+  },
+  "veya": {
+    "message": "或"
+  },
+  "zeminRenklendirme": {
+    "message": "背景着色"
+  },
+  "kurulumAciklama": {
+    "message": "如需通过主页按钮打开 WSD，请将下方地址复制到 设置 → 启动时 → 主页。"
+  },
+  "gruplar": {
+    "message": "分组"
+  },
+  "araclar": {
+    "message": "工具"
+  },
+  "kartlardaAra": {
+    "message": "搜索磁贴..."
+  },
+  "onceki": {
+    "message": "上一个"
+  },
+  "sonraki": {
+    "message": "下一个"
+  },
+  "nKart": {
+    "message": "$1 个磁贴"
+  },
+  "silindiTarih": {
+    "message": "删除于 $1"
+  },
+  "sonYedekBilgisi": {
+    "message": "上次备份：$1 · $2 · $3 个磁贴 · $4"
+  },
+  "nGrupNKart": {
+    "message": "$1 个分组 · $2 个磁贴"
+  },
+  "nAdresNKart": {
+    "message": "$1 个地址 · $2 个磁贴"
+  },
+  "grubaEklendi": {
+    "message": "已添加到“$1”"
+  },
+  "speedDialeEklendi": {
+    "message": "已添加到 Speed Dial"
+  },
+  "sonAcilis": {
+    "message": "上次：$1"
+  },
+  "grupNeIcin": {
+    "message": "这个分组的用途是？"
+  },
+  "aciklamaIstege": {
+    "message": "描述（可选）"
+  },
+  "gorselYerlesim": {
+    "message": "图片适配"
+  },
+  "yerlesimKirp": {
+    "message": "裁剪（填满）"
+  },
+  "yerlesimSigdir": {
+    "message": "适应（完整显示）"
+  },
+  "sahneYakala": {
+    "message": "截取场景"
+  },
+  "onceAdresGirin": {
+    "message": "请先输入地址"
+  },
+  "sahneEklendi": {
+    "message": "场景已添加"
+  },
+  "yakalanamadi": {
+    "message": "无法截图"
+  },
+  "grupKaliciSilMetin": {
+    "message": "分组“$1”及其 $2 个磁贴将被永久删除。"
+  },
+  "sifirlaKucuk": {
+    "message": "重置"
+  },
+  "copeTasinacak": {
+    "message": "“$1”将移至回收站。"
+  },
+  "sonucBulunamadi": {
+    "message": "没有与“$1”相关的结果"
+  },
+  "depoDoluUyari": {
+    "message": "已使用分配空间的 $1%。"
+  },
+  "depoDoluBildirim": {
+    "message": "存储空间已使用 $1% — 建议备份"
+  },
+  "grupVeKartSilinecek": {
+    "message": "“$1”及其中的 $2 个磁贴将被删除。"
+  },
+  "grupAdiZatenVar": {
+    "message": "名为“$1”的分组已存在"
+  },
+  "htmlAltBilgi": {
+    "message": "由 WSD Speed Dial 创建"
+  },
+  "elleSahne": {
+    "message": "调整好场景后："
+  },
+  "cek": {
+    "message": "截取"
+  },
+  "sayfaZatenEkli": {
+    "message": "此页面已添加"
+  },
+  "sayfaZatenEkliMetin": {
+    "message": "此地址已存在于分组 $1 中。仍要添加吗？"
+  },
+  "yineDeEkle": {
+    "message": "仍然添加"
+  },
+  "alanSec": {
+    "message": "选择区域"
+  },
+  "uzunCekim": {
+    "message": "长截图"
+  },
+  "logoYakala": {
+    "message": "截取标志"
+  },
+  "logoEklendi": {
+    "message": "标志已添加"
+  },
+  "logoBulunamadi": {
+    "message": "未找到网站标志"
+  },
+  "logoSecin": {
+    "message": "点击要添加的标志："
+  },
+  "grubaGit": {
+    "message": "转到此分组"
+  },
+  "kartlarVeGruplar": {
+    "message": "分组和磁贴"
+  },
+  "nGrup": {
+    "message": "$1 个分组"
+  },
+  "nKartZatenVardi": {
+    "message": "$1 个已存在"
+  },
+  "kirikBaglantilariTara": {
+    "message": "扫描失效链接"
+  },
+  "kirikBaglantilar": {
+    "message": "失效链接"
+  },
+  "taraniyor": {
+    "message": "正在扫描..."
+  },
+  "durdur": {
+    "message": "停止"
+  },
+  "isaretleriTemizle": {
+    "message": "清除标记"
+  },
+  "isaretlerTemizlendi": {
+    "message": "标记已清除"
+  },
+  "nKirik": {
+    "message": "$1 个失效"
+  },
+  "nSupheli": {
+    "message": "$1 个不确定"
+  },
+  "taramaDurduruldu": {
+    "message": "扫描已停止，结果不完整。"
+  },
+  "kirikBaglantiYok": {
+    "message": "已扫描 $1 个地址，未发现失效链接。"
+  },
+  "kirikAciklama": {
+    "message": "这些地址返回 404/410，页面已不存在。"
+  },
+  "supheliAciklama": {
+    "message": "无法访问这些地址，但结果不确定（超时、网络错误或反机器人保护）。未做标记。"
+  },
+  "kirikKartlariGoster": {
+    "message": "显示失效磁贴"
+  },
+  "tekrarTara": {
+    "message": "重新扫描"
+  },
+  "nKartDuzelmis": {
+    "message": "$1 个磁贴已恢复可用，已从列表移除"
+  },
+  "degisiklikYok": {
+    "message": "没有变化，仍然全部失效"
+  },
+  "kirikKartYokTara": {
+    "message": "没有标记为失效的磁贴。使用“重新扫描”检查全部磁贴。"
+  },
+  "nKartEklendi": {
+    "message": "已添加 $1 个磁贴"
+  },
+  "yerimlerindenIctar": {
+    "message": "从书签导入"
+  },
+  "htmlDosyasindanIctar": {
+    "message": "从 HTML 文件导入"
+  },
+  "yerImleriniIceAktar": {
+    "message": "导入书签"
+  },
+  "ictarAciklama": {
+    "message": "每个选中的文件夹都会成为一个分组。如果已有同名分组，磁贴会添加到其中。"
+  },
+  "ictarKlasorYok": {
+    "message": "未找到可导入的书签文件夹。"
+  },
+  "ictarSecimYok": {
+    "message": "未选择文件夹。"
+  },
+  "ictarBasarisiz": {
+    "message": "导入未能完成。"
+  },
+  "nKlasorNBaglanti": {
+    "message": "$1 个文件夹 · $2 个链接"
+  },
+  "hepsiniSec": {
+    "message": "全选 / 全不选"
+  },
+  "yerImleri": {
+    "message": "书签"
+  },
+  "grubaEklenecek": {
+    "message": "将添加到现有分组"
+  },
+  "ipucuYerimiSurukle": {
+    "message": "从书签栏拖动链接到这里，即可生成磁贴"
+  },
+  "ipucuYerimiIctar": {
+    "message": "导入浏览器书签 — 每个文件夹成为一个分组"
+  },
+  "silmeyiGeriAl": {
+    "message": "撤销全部删除"
+  },
+  "klasorSurukleme": {
+    "message": "无法拖放文件夹。请使用 设置 → 从书签导入"
+  },
+  "kartEklenemedi": {
+    "message": "无法添加磁贴"
+  },
+  "hepsiniSil": {
+    "message": "全部删除"
+  },
+  "nKirikKartCopeTasinacak": {
+    "message": "$1 个失效磁贴将移至回收站，可以恢复。"
+  },
+  "nKartCopeTasindi": {
+    "message": "已将 $1 个磁贴移至回收站"
+  },
+  "tekleDusur": {
+    "message": "每个只保留一个"
+  },
+  "tekleDusurOnay": {
+    "message": "每个重复地址只保留一个磁贴，其余移至回收站，可以恢复。"
+  }
+}

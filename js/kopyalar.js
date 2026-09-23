@@ -68,6 +68,61 @@ async function kumeleriBul() {
         .map(([url, liste]) => ({ url, liste }));
 }
 
+/**
+ * Her yinelenen adresten BIR kart birakip digerlerini cop kutusuna
+ * tasir. Hangisi kalir: en cok bilgi tasiyani - once gorseli olan,
+ * sonra notu/rengi olan, o da esitse ilk eklenen.
+ */
+export async function kopyalariTekilleStir(ilerleme) {
+    const kumeler = await kumeleriBul();
+    if (!kumeler.length) return { silinen: 0, kume: 0 };
+
+    const { kartiYedekle } = await import('./copekrani.js');
+    const { copeAt } = await import('./cop.js');
+    const { gorselAl } = await import('./gorsel.js');
+    const { notlariAl } = await import('./not.js');
+    const { renkleriAl } = await import('./renk.js');
+
+    const notlar = await notlariAl();
+    const renkler = await renkleriAl();
+
+    let silinen = 0, yapilan = 0;
+
+    for (const kume of kumeler) {
+        const anahtar = urlNormalle(kume.url);
+        const kayit = (await gorselAl(anahtar))[anahtar];
+
+        // Puan: gorsel > not/renk > sira. Ayni adres oldugu icin gorsel
+        // ortak; bu yuzden asil ayrim not/renk ve ilk eklenme.
+        const puanla = ({ kart }) => {
+            let p = 0;
+            if (kayit && kayit.gorsel) p += 1;
+            if (notlar[anahtar]) p += 2;
+            if (renkler[anahtar]) p += 2;
+            return p;
+        };
+
+        const sirali = kume.liste.slice().sort((a, b) => puanla(b) - puanla(a));
+        const kalan = sirali[0];
+
+        for (const { kart } of sirali.slice(1)) {
+            try {
+                const yedek = await kartiYedekle(kart.id, kart.url);
+                await copeAt(yedek);
+                await chrome.bookmarks.remove(kart.id);
+                silinen++;
+            } catch (e) {
+                console.log('[WSD] kopya silinemedi:', kart.url, e);
+            }
+        }
+        yapilan++;
+        if (ilerleme) ilerleme({ yapilan, toplam: kumeler.length, silinen });
+        void kalan;
+    }
+
+    return { silinen, kume: kumeler.length };
+}
+
 async function ciz() {
     const kap = el('kartKabi');
     kap.textContent = '';

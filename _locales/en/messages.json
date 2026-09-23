@@ -732,25 +732,25 @@
     "message": "Invalid backup file"
   },
   "onceEnAzBirGrupOlusturun": {
-    "message": "onceEnAzBirGrupOlusturun"
+    "message": "Create at least one group first"
   },
   "simgeRenkleriSifirlandi": {
-    "message": "simgeRenkleriSifirlandi"
+    "message": "Icon colours reset"
   },
   "kopyalandi": {
-    "message": "kopyalandi"
+    "message": "Copied"
   },
   "kopyalanamadiElleSecin": {
-    "message": "kopyalanamadiElleSecin"
+    "message": "Could not copy — select the address manually"
   },
   "kapatilmisOnaySorusuYok": {
-    "message": "kapatilmisOnaySorusuYok"
+    "message": "No dismissed confirmation prompts"
   },
   "notuDuzenle": {
-    "message": "notuDuzenle"
+    "message": "Edit Note"
   },
   "tamam": {
-    "message": "tamam"
+    "message": "OK"
   },
   "denetimYapilamadi": {
     "message": "Check failed"
@@ -1222,5 +1222,11 @@
   },
   "nKartCopeTasindi": {
     "message": "$1 tiles moved to the trash"
+  },
+  "tekleDusur": {
+    "message": "Keep one of each"
+  },
+  "tekleDusurOnay": {
+    "message": "One tile per duplicated address will be kept, the rest move to the trash. You can restore them."
   }
 }

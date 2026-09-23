@@ -3,6 +3,21 @@
 Sürüm numaraları [Semantic Versioning](https://semver.org/lang/tr/)
 kurallarına uyar.
 
+## [1.4.2] — 2026-09-24
+
+### Yeni
+- **Yeni arayüz dilleri**: Rusça, Ukraynaca, İspanyolca, Portekizce
+  (Brezilya ve Portekiz) ve Çince (Basitleştirilmiş). Tarayıcı diline göre
+  otomatik seçiliyor
+
+### Düzeltmeler
+- Aktif grup silinince listenin başındaki gruba gidiliyordu; artık
+  silinen grubun komşusuna geçiliyor
+- "Tüm verileri sil" onayı Türkçe büyük harf kuralıyla karşılaştırılıyordu;
+  İspanyolca ve Portekizce onay kelimesi hiç kabul edilmiyordu
+- İngilizce arayüzde yedi metin çevrilmemişti, anahtar adı görünüyordu
+  ("kopyalandi", "tamam" gibi); düzeltildi
+
 ## [1.4.1] — 2026-09-12
 
 ### Yeni
@@ -23,6 +38,9 @@ kurallarına uyar.
   ekranlarına doğrudan erişiliyor. Ayarlar panelindeki girişler de
   duruyor. Sıra: gizle, ara, grupları yönet, kırık bağlantılar,
   yinelenen kartlar, çöp kutusu, ayarlar
+- **Yinelenen kartlarda "Tümünü teke düşür"**: her yinelenen adresten
+  bir kart kalıyor, gerisi çöp kutusuna taşınıyor. Kalan kart notu ya
+  da rengi olana göre seçiliyor, eşitse ilk eklenen
 - **Yer imlerini içe aktarma**: Ayarlar → Bakım'dan tarayıcınızdaki yer
   imi klasörleri listeleniyor, seçtikleriniz grup olarak aktarılıyor.
   Aynı adlı grup varsa kartlar onun içine ekleniyor, o grupta bulunan
@@ -53,6 +71,12 @@ kurallarına uyar.
   üst üste açılabiliyordu; biri açılırken diğerleri kapanıyor
 - Kırık bağlantılar ekranında kart silinince normal ızgaraya
   dönülüyordu; ekran korunuyor ve liste yerinde tazeleniyor
+- Arama grup rozetleri kısa terimlerde onlarca çıkıp karmaşaya
+  dönüyordu; en fazla altı rozet gösteriliyor, adı terimle başlayanlar
+  önce geliyor, şerit kart alanından çizgiyle ayrılıyor
+- Stil dosyasında bir düzenleme sırasında silinen kurallar geri kondu:
+  yinelenen kart kümeleri, arama grup şeridi, denetim/kırık rapor
+  kutuları, logo aday ızgarası
 - Yan şerit düğmeleri artık açıp kapatıyor
 
 ### Değişiklikler

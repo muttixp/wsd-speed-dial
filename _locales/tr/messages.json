@@ -1222,5 +1222,11 @@
   },
   "nKartCopeTasindi": {
     "message": "$1 kart çöp kutusuna taşındı"
+  },
+  "tekleDusur": {
+    "message": "Tümünü teke düşür"
+  },
+  "tekleDusurOnay": {
+    "message": "Her yinelenen adresten bir kart kalacak, diğerleri çöp kutusuna taşınacak. Geri alabilirsiniz."
   }
 }

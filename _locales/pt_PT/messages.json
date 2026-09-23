@@ -1,0 +1,1232 @@
+{
+  "extName": {
+    "message": "WSD Speed Dial"
+  },
+  "extDesc": {
+    "message": "Uma página de acesso rápido que mostra seus marcadores como blocos visuais."
+  },
+  "actionTitle": {
+    "message": "Adicionar ao WSD Speed Dial"
+  },
+  "anaSayfa": {
+    "message": "Início"
+  },
+  "kartEkle": {
+    "message": "Adicionar bloco"
+  },
+  "ayarlar": {
+    "message": "Definições"
+  },
+  "ara": {
+    "message": "Pesquisar"
+  },
+  "GenisEkran": {
+    "message": "16:9 — widescreen"
+  },
+  "aciklik": {
+    "message": "Brilho"
+  },
+  "aktifGrupRengi": {
+    "message": "Cor do grupo ativo"
+  },
+  "aktifGrupSaydamligi": {
+    "message": "Opacidade do grupo ativo"
+  },
+  "anaSayfaGrubunuGoster": {
+    "message": "Mostrar grupo Início"
+  },
+  "ayarlariAcKapat": {
+    "message": "abrir / fechar definições"
+  },
+  "ayarlariSifirla": {
+    "message": "Redefinir definições"
+  },
+  "ayniSekme": {
+    "message": "Mesmo separador"
+  },
+  "basaKaydir": {
+    "message": "Rolar para o início"
+  },
+  "baslik": {
+    "message": "Título"
+  },
+  "baslikYaziBoyutu": {
+    "message": "Tamanho da fonte do título"
+  },
+  "bekleyenYakalamalariIptalEt": {
+    "message": "Cancelar capturas pendentes"
+  },
+  "bicim": {
+    "message": "Formato"
+  },
+  "buKartlaIlgiliNotunuz": {
+    "message": "A sua nota sobre este bloco..."
+  },
+  "caprazVe": {
+    "message": "Diagonal 2 e 3"
+  },
+  "copKutusu": {
+    "message": "Reciclagem"
+  },
+  "degistirmekIcinTiklayin": {
+    "message": "Clique para alterar"
+  },
+  "duvarKagidi": {
+    "message": "Papel de parede"
+  },
+  "duzenle": {
+    "message": "Editar"
+  },
+  "duzenlemekIcinKartaSagTiklayinSiralamak": {
+    "message": "Clique com o botão direito do rato num bloco para editar; arraste para reordenar"
+  },
+  "eklemeKarti": {
+    "message": "Bloco \"+\""
+  },
+  "ekranGoruntusuBoyutu": {
+    "message": "Tamanho da captura"
+  },
+  "ekranGoruntusuOnerilen": {
+    "message": "Captura de ecrã (recomendado)"
+  },
+  "enCokZiyaretEdilen": {
+    "message": "Mais visitados"
+  },
+  "enFazlaSutun": {
+    "message": "Máx. de colunas"
+  },
+  "enOnceEklenen": {
+    "message": "Mais antigos primeiro"
+  },
+  "genelAyar": {
+    "message": "Usar configuração geral"
+  },
+  "gerekirsePencereyiOneAl": {
+    "message": "Trazer a janela para frente se necessário"
+  },
+  "gizliHataAyiklamaCubuguCikar": {
+    "message": "Oculto (mostra barra de depuração)"
+  },
+  "gizliSekmedeAc": {
+    "message": "Abrir em separador anónimo"
+  },
+  "golgeRengi": {
+    "message": "Cor da sombra"
+  },
+  "goruntuDosyasi": {
+    "message": "Ficheiro de imagem"
+  },
+  "goruntuUrlSi": {
+    "message": "URL da imagem"
+  },
+  "gosterim": {
+    "message": "Exibição"
+  },
+  "grubuDuzenle": {
+    "message": "Editar grupo"
+  },
+  "grubunGorselleriniYenile": {
+    "message": "Atualizar imagens do grupo"
+  },
+  "grup": {
+    "message": "Grupo"
+  },
+  "grupOlustur": {
+    "message": "Criar grupo"
+  },
+  "gruplariYonet": {
+    "message": "gerenciar grupos"
+  },
+  "hazirBoyutlar": {
+    "message": "Tamanhos prontos"
+  },
+  "hedefGrup": {
+    "message": "Grupo de destino"
+  },
+  "hepsiniAc": {
+    "message": "Abrir todos"
+  },
+  "herSeyiGizle": {
+    "message": "Ocultar tudo"
+  },
+  "herSeyiGizleGoster": {
+    "message": "ocultar / mostrar tudo"
+  },
+  "htmlSayfasiOlarakDisaAktar": {
+    "message": "Exportar como página HTML"
+  },
+  "iceAktar": {
+    "message": "Importar"
+  },
+  "ikon": {
+    "message": "Ícone"
+  },
+  "ikonRengi": {
+    "message": "Cor do ícone"
+  },
+  "ikonYazi": {
+    "message": "Ícone+texto"
+  },
+  "ilkSonGrup": {
+    "message": "primeiro / último grupo"
+  },
+  "iptal": {
+    "message": "Cancelar"
+  },
+  "isikRengi": {
+    "message": "Cor da luz"
+  },
+  "kaldir": {
+    "message": "Remover"
+  },
+  "kartAcilisSekli": {
+    "message": "Abrir bloco em"
+  },
+  "kartBasliklari": {
+    "message": "Títulos dos blocos"
+  },
+  "kartBoyutu": {
+    "message": "Tamanho do bloco"
+  },
+  "kartCerceveRengi": {
+    "message": "Cor da borda"
+  },
+  "kartCerceveRengiUzerineGelince": {
+    "message": "Cor da borda (ao passar)"
+  },
+  "kartCercevesi": {
+    "message": "Borda do bloco"
+  },
+  "kartKoseYuvarlakligi": {
+    "message": "Arredondamento dos cantos"
+  },
+  "kartOrani": {
+    "message": "Proporção do bloco"
+  },
+  "kartSayisi": {
+    "message": "Quantidade de blocos"
+  },
+  "kartUstuButonlar": {
+    "message": "Botões sobre o bloco"
+  },
+  "kartZeminRengi": {
+    "message": "Fundo do bloco"
+  },
+  "kartiDuzenle": {
+    "message": "Editar bloco"
+  },
+  "kartiTasi": {
+    "message": "Mover bloco"
+  },
+  "kartlarArasiBoslukDikey": {
+    "message": "Espaço entre blocos (vertical)"
+  },
+  "kartlarArasiBoslukYatay": {
+    "message": "Espaço entre blocos (horizontal)"
+  },
+  "kartlariSirala": {
+    "message": "Ordenar blocos"
+  },
+  "kaydirmaPx": {
+    "message": "Rolagem"
+  },
+  "kisayollarBirMetinAlanindaykenCalismaz": {
+    "message": "Os atalhos não funcionam enquanto digita num campo."
+  },
+  "kullanilmayanVerileriTemizle": {
+    "message": "Limpar dados não usados"
+  },
+  "notuSil": {
+    "message": "Eliminar nota"
+  },
+  "oSiradakiGrubaGec": {
+    "message": "ir para esse grupo"
+  },
+  "onceSayfaGorseliYoksaEkran": {
+    "message": "Primeiro a imagem da página, senão captura"
+  },
+  "oncekiSonrakiGrup": {
+    "message": "grupo anterior / próximo"
+  },
+  "otomatikYedekGunde": {
+    "message": "Cópia automática (diário)"
+  },
+  "ozelEmoji": {
+    "message": "Emoji personalizado"
+  },
+  "pencereKisaSureGorunur": {
+    "message": "Janela (visível por um instante)"
+  },
+  "pencereyiAramayiKapat": {
+    "message": "fechar diálogo / pesquisa"
+  },
+  "renkEtiketi": {
+    "message": "Etiqueta de cor"
+  },
+  "renkTonu": {
+    "message": "Matiz"
+  },
+  "renklendirmeSiddeti": {
+    "message": "Intensidade da tonalização"
+  },
+  "renklendirmeYontemi": {
+    "message": "Método de tonalização"
+  },
+  "resmiIndir": {
+    "message": "Transferir imagem"
+  },
+  "sekmeKoseYuvarlakligi": {
+    "message": "Arredondamento dos separadores"
+  },
+  "sekmeZeminSaydamligi": {
+    "message": "Opacidade do fundo dos separadores"
+  },
+  "sekmedeAc": {
+    "message": "Abrir num separador"
+  },
+  "sil": {
+    "message": "Eliminar"
+  },
+  "siraBirKezUygulanirSonrasindaSurukleyerek": {
+    "message": "A ordem é aplicada uma vez; depois pode reorganizar arrastando."
+  },
+  "siralamakIcinTutamactanSurukleyin": {
+    "message": "Arraste pela alça para reordenar."
+  },
+  "sonGrubuHatirla": {
+    "message": "Lembrar último grupo"
+  },
+  "sonaKaydir": {
+    "message": "Rolar para o fim"
+  },
+  "tasi": {
+    "message": "Mover"
+  },
+  "tumVerileriSil": {
+    "message": "Eliminar todos os dados"
+  },
+  "tumunuSil": {
+    "message": "Eliminar tudo"
+  },
+  "tumunuYeniSekmeGrubundaAc": {
+    "message": "Abrir todos numa nova janela"
+  },
+  "varsayilan": {
+    "message": "Padrão"
+  },
+  "varsayilanRenklereDon": {
+    "message": "Restaurar cores padrão"
+  },
+  "varsayilanaDon": {
+    "message": "Restaurar padrão"
+  },
+  "vazgec": {
+    "message": "Cancelar"
+  },
+  "yalnizcaIkon": {
+    "message": "Só ícone"
+  },
+  "yalnizcaYazi": {
+    "message": "Só texto"
+  },
+  "yanAracPaneli": {
+    "message": "Barra lateral"
+  },
+  "yazi": {
+    "message": "Texto"
+  },
+  "yedekYukleniyor": {
+    "message": "A carregar cópia"
+  },
+  "yedektenYukle": {
+    "message": "Restaurar cópia"
+  },
+  "yeniGrup": {
+    "message": "Novo grupo"
+  },
+  "yeniKart": {
+    "message": "novo bloco"
+  },
+  "yeniSekme": {
+    "message": "Novo separador"
+  },
+  "yeniSekmeArkaPlan": {
+    "message": "Novo separador (em segundo plano)"
+  },
+  "yeniSekmedeAc": {
+    "message": "Abrir em novo separador"
+  },
+  "yontem": {
+    "message": "Método"
+  },
+  "kullanilanAlan": {
+    "message": "Uso total"
+  },
+  "kullanilmayan": {
+    "message": "Não usado"
+  },
+  "birDahaSorma": {
+    "message": "Não perguntar novamente"
+  },
+  "gorseller": {
+    "message": "Imagens"
+  },
+  "digerVeriler": {
+    "message": "Outros dados"
+  },
+  "yedekAl": {
+    "message": "Exportar cópia"
+  },
+  "simdiYedekAl": {
+    "message": "Fazer cópia agora"
+  },
+  "onaySorulariniGeriGetir": {
+    "message": "Restaurar confirmações"
+  },
+  "adresiKopyala": {
+    "message": "Copiar endereço"
+  },
+  "arkaPlan": {
+    "message": "Fundo"
+  },
+  "yedekAlinamadi": {
+    "message": "Não foi possível criar a cópia"
+  },
+  "htmlHazirlaniyor": {
+    "message": "A preparar HTML..."
+  },
+  "htmlOlusturulamadi": {
+    "message": "Não foi possível criar o HTML"
+  },
+  "yedekYuklenemedi": {
+    "message": "Não foi possível importar a cópia:"
+  },
+  "bekleyenYakalamalarIptalEdiliyor": {
+    "message": "A cancelar capturas pendentes"
+  },
+  "ayarlarSifirlandi": {
+    "message": "Definições redefinidas"
+  },
+  "sifirlanamadi": {
+    "message": "Não foi possível redefinir"
+  },
+  "iptalEdildi": {
+    "message": "Cancelado"
+  },
+  "silinemedi": {
+    "message": "Não foi possível eliminar"
+  },
+  "temizlikAtlandi": {
+    "message": "Limpeza ignorada"
+  },
+  "temizlenecekVeriYok": {
+    "message": "Nada para limpar"
+  },
+  "yedektenYukleBd": {
+    "message": "Importar cópia"
+  },
+  "mevcutGruplarSilinsinMiHayirDerseniz": {
+    "message": "Substituir os grupos existentes? Escolha \"Adicionar\" para mesclar a cópia com o que tem."
+  },
+  "silVeYukle": {
+    "message": "Substituir e importar"
+  },
+  "ekle": {
+    "message": "Adicionar"
+  },
+  "ayarlariSifirlaBd": {
+    "message": "Redefinir definições"
+  },
+  "tumGorunumVeDavranisAyarlariVarsayilana": {
+    "message": "Todas as definições de aparência e comportamento voltarão ao padrão. Os os seus blocos, grupos e imagens não são alterados."
+  },
+  "sifirla": {
+    "message": "Redefinir"
+  },
+  "tumVerileriSilBd": {
+    "message": "Eliminar todos os dados"
+  },
+  "butunGruplarKartlarGorsellerNotlarVe": {
+    "message": "Todos os grupos, blocos, imagens, notas e definições serão eliminados permanentemente. Eles não vão para a reciclagem e não podem ser recuperados."
+  },
+  "devam": {
+    "message": "Continuar"
+  },
+  "eminMisiniz": {
+    "message": "Tem a certeza?"
+  },
+  "onaylamakIcinSilYazin": {
+    "message": "Escreva ELIMINAR para confirmar:"
+  },
+  "copKutusuZatenBos": {
+    "message": "A reciclagem já está vazia"
+  },
+  "copKutusuBosaltildi": {
+    "message": "Reciclagem esvaziada"
+  },
+  "kartGeriAlindi": {
+    "message": "Bloco restaurado"
+  },
+  "geriAlinamadi": {
+    "message": "Não foi possível desfazer"
+  },
+  "kaliciOlarakSilindi": {
+    "message": "Eliminado permanentemente"
+  },
+  "copKutusunuBosalt": {
+    "message": "Esvaziar reciclagem"
+  },
+  "kaliciSil": {
+    "message": "Eliminar permanentemente"
+  },
+  "gruplarGuncellendi": {
+    "message": "Grupos atualizados"
+  },
+  "grupOlusturuldu": {
+    "message": "Grupo criado"
+  },
+  "grupOlusturulamadi": {
+    "message": "Não foi possível criar o grupo"
+  },
+  "kaydedilemedi": {
+    "message": "Não foi possível guardar"
+  },
+  "siralanacakYeterliKartYok": {
+    "message": "Blocos insuficientes para ordenar"
+  },
+  "kartlarZatenBuSirada": {
+    "message": "Os blocos já estão nesta ordem"
+  },
+  "eskiSiraGeriAlindi": {
+    "message": "Ordem anterior restaurada"
+  },
+  "siralanamadi": {
+    "message": "Não foi possível ordenar"
+  },
+  "notKaydedildi": {
+    "message": "Nota guardada"
+  },
+  "notSilindi": {
+    "message": "Nota eliminada"
+  },
+  "baskaGrupYok": {
+    "message": "Não há outro grupo"
+  },
+  "kartTasindi": {
+    "message": "Bloco movido"
+  },
+  "tasinamadi": {
+    "message": "Não foi possível mover"
+  },
+  "dosyaOkunamadi": {
+    "message": "Não foi possível ler o ficheiro"
+  },
+  "goruntuAlinamadi": {
+    "message": "Não foi possível obter a imagem"
+  },
+  "indirilecekGorselYok": {
+    "message": "Nenhuma imagem para transferir"
+  },
+  "kartSilindi": {
+    "message": "Bloco eliminado"
+  },
+  "gizliPencereAcilamadi": {
+    "message": "Não foi possível abrir a janela anónima"
+  },
+  "adresKopyalandi": {
+    "message": "Endereço copiado"
+  },
+  "kopyalanamadi": {
+    "message": "Não foi possível copiar"
+  },
+  "buGrupBos": {
+    "message": "Este grupo está vazio"
+  },
+  "pencereAcilamadi": {
+    "message": "Não foi possível abrir a janela"
+  },
+  "grupGuncellendi": {
+    "message": "Grupo atualizado"
+  },
+  "yenidenAdlandirilamadi": {
+    "message": "Não foi possível renomear"
+  },
+  "grupSilinemedi": {
+    "message": "Não foi possível eliminar o grupo:"
+  },
+  "acilacakKartYok": {
+    "message": "Nenhum bloco para abrir"
+  },
+  "yenilenecekKartYok": {
+    "message": "Nenhum bloco para atualizar"
+  },
+  "gorselYenilendi": {
+    "message": "Imagem atualizada"
+  },
+  "gorselAlinamadi": {
+    "message": "Não foi possível obter a imagem"
+  },
+  "sirala": {
+    "message": "Ordenar"
+  },
+  "geriAl": {
+    "message": "Desfazer"
+  },
+  "gorselAdresiniYapistirin": {
+    "message": "Cole o endereço da imagem:"
+  },
+  "kartiSil": {
+    "message": "Eliminar bloco"
+  },
+  "hepsiniAcBd": {
+    "message": "Abrir todos"
+  },
+  "ac": {
+    "message": "Abrir"
+  },
+  "gorselleriYenile": {
+    "message": "Atualizar imagens"
+  },
+  "baslat": {
+    "message": "Iniciar"
+  },
+  "grubuSil": {
+    "message": "Eliminar grupo"
+  },
+  "grupVeIcindekiTumKartlarCop": {
+    "message": "O grupo e todos os os seus blocos serão movidos para a reciclagem."
+  },
+  "hepsiniYenile": {
+    "message": "Atualizar todos"
+  },
+  "e8eaed": {
+    "message": "#e8eaed"
+  },
+  "gorselKaydedilemedi": {
+    "message": "Não foi possível guardar a imagem"
+  },
+  "depolamaAlaniDoluYedekAliniyor": {
+    "message": "Armazenamento cheio — a criar cópia"
+  },
+  "bakim": {
+    "message": "Manutenção"
+  },
+  "temizlik": {
+    "message": "limpeza"
+  },
+  "gorsellerBd": {
+    "message": "imagens"
+  },
+  "kartlar": {
+    "message": "blocos"
+  },
+  "bitti": {
+    "message": "concluído"
+  },
+  "depoDoluYedekIndirildi": {
+    "message": "Armazenamento cheio. Cópia de segurança transferido — faça a limpeza em Manutenção."
+  },
+  "depoDoluTemizlikYapin": {
+    "message": "Armazenamento cheio — faça a limpeza em Manutenção"
+  },
+  "nKartKuyrugaAlindi": {
+    "message": "$1 blocos na fila"
+  },
+  "nKartSiralandi": {
+    "message": "$1 blocos ordenados"
+  },
+  "nKartGorseliYenilenecek": {
+    "message": "As imagens de $1 blocos serão capturadas novamente. Isso pode levar alguns minutos."
+  },
+  "nKartSirasiDegisecek": {
+    "message": "A ordem de $1 blocos vai mudar. A sua organização manual será perdida."
+  },
+  "nSekmeAcilacak": {
+    "message": "$1 separadores serão abertas. Continuar?"
+  },
+  "grupSilindiNKart": {
+    "message": "Grupo eliminado ($1 blocos)"
+  },
+  "nKayitKaliciSilinecek": {
+    "message": "$1 registros serão eliminados permanentemente."
+  },
+  "nGrupNKartSilindi": {
+    "message": "$1 grupos, $2 blocos eliminados"
+  },
+  "nGrupNKartYedeklendi": {
+    "message": "$1 grupos, $2 blocos guardados — $3"
+  },
+  "nGrupNKartYuklendi": {
+    "message": "$1 grupos, $2 blocos importados"
+  },
+  "yedekAlindiDosya": {
+    "message": "Cópia guardada — $1"
+  },
+  "geriAlindiAd": {
+    "message": "\"$1\" restaurado"
+  },
+  "tutarlilikKontrolu": {
+    "message": "Verificação de consistência"
+  },
+  "kapat": {
+    "message": "Fechar"
+  },
+  "yinelenenKartlar": {
+    "message": "Blocos duplicados"
+  },
+  "yinelenenKartYok": {
+    "message": "Nenhum bloco duplicado"
+  },
+  "sinirsiz": {
+    "message": "ilimitado"
+  },
+  "gorsellerYaziliyor": {
+    "message": "A gravar imagens"
+  },
+  "gorsellerVeAyarlarSiliniyor": {
+    "message": "A eliminar imagens e definições"
+  },
+  "tamamlandi": {
+    "message": "Concluído"
+  },
+  "sayilamadi": {
+    "message": "não foi possível contar"
+  },
+  "silOnayKelimesi": {
+    "message": "ELIMINAR"
+  },
+  "copKutusuBos": {
+    "message": "A reciclagem está vazia"
+  },
+  "iceriginiGor": {
+    "message": "ver conteúdo"
+  },
+  "kartiNereyeAlalim": {
+    "message": "Para onde vai o bloco?"
+  },
+  "iceriginiGoster": {
+    "message": "Mostrar conteúdo"
+  },
+  "henuzAcilmadi": {
+    "message": "Ainda não aberto"
+  },
+  "gorselDegil": {
+    "message": "não é uma imagem"
+  },
+  "gorselYuklenemedi": {
+    "message": "não foi possível carregar a imagem"
+  },
+  "azOnce": {
+    "message": "agora mesmo"
+  },
+  "dun": {
+    "message": "ontem"
+  },
+  "kartGorseli": {
+    "message": "imagem do bloco"
+  },
+  "yedegiYukle": {
+    "message": "Importar cópia"
+  },
+  "gecersizYedekDosyasi": {
+    "message": "Ficheiro de cópia inválido"
+  },
+  "onceEnAzBirGrupOlusturun": {
+    "message": "Crie pelo menos um grupo primeiro"
+  },
+  "simgeRenkleriSifirlandi": {
+    "message": "Cores dos ícones redefinidas"
+  },
+  "kopyalandi": {
+    "message": "Copiado"
+  },
+  "kopyalanamadiElleSecin": {
+    "message": "Não foi possível copiar — selecione o endereço manualmente"
+  },
+  "kapatilmisOnaySorusuYok": {
+    "message": "Nenhuma confirmação desativada"
+  },
+  "notuDuzenle": {
+    "message": "Editar nota"
+  },
+  "tamam": {
+    "message": "OK"
+  },
+  "denetimYapilamadi": {
+    "message": "A verificação falhou"
+  },
+  "nKartCizilmemis": {
+    "message": "$1 blocos não foram desenhados"
+  },
+  "sayfayiYenileyipDeneyin": {
+    "message": "Recarregue a página e tente novamente."
+  },
+  "nKartinGorseliYok": {
+    "message": "$1 blocos sem imagem"
+  },
+  "grupMenusundenYenilenebilir": {
+    "message": "Capture-as com \"Atualizar imagens do grupo\" no menu do grupo."
+  },
+  "buKartlarPaylasir": {
+    "message": "Estes blocos compartilham imagem, nota e cor."
+  },
+  "yinelenenKartlariAc": {
+    "message": "Abrir blocos duplicados"
+  },
+  "nBosGrup": {
+    "message": "$1 grupos vazios"
+  },
+  "cizimKontroluAtlandi": {
+    "message": "Verificação de desenho ignorada"
+  },
+  "ozelEkranAcikNormaleDonun": {
+    "message": "A pesquisa, a reciclagem ou os duplicados estão abertos. Volte à visualização normal e execute novamente."
+  },
+  "sorunBulunamadi": {
+    "message": "Nenhum problema encontrado"
+  },
+  "nKezAcildi": {
+    "message": "aberto $1 vezes"
+  },
+  "nSekmeAcilacakDevam": {
+    "message": "$1 separadores serão abertas. Continuar?"
+  },
+  "nKartKuyrugaAlindi2": {
+    "message": "$1 blocos na fila"
+  },
+  "nDakikaOnce": {
+    "message": "há $1 min"
+  },
+  "nSaatOnce": {
+    "message": "há $1 h"
+  },
+  "nGunOnce": {
+    "message": "há $1 dias"
+  },
+  "nAyOnce": {
+    "message": "há $1 meses"
+  },
+  "nYilOnce": {
+    "message": "há $1 anos"
+  },
+  "sizSilmediyseniz": {
+    "message": "Se não os eliminou, pode restaurar de uma cópia."
+  },
+  "depoDolduYedekAlipTemizleyin": {
+    "message": "Armazenamento cheio — faça cópia e limpe"
+  },
+  "anaSayfaGizlendiNKart": {
+    "message": "Início oculto — $1 blocos não estão mais na barra"
+  },
+  "nGorsel": {
+    "message": "$1 imagens"
+  },
+  "ayrilanAlanDoldu": {
+    "message": "O armazenamento está cheio. Novas imagens não podem ser guardadas. Faça uma cópia primeiro e depois limpe os dados não usados ou elimine blocos desnecessários."
+  },
+  "yedekAlipTemizlemenizOnerilir": {
+    "message": "Recomendamos fazer uma cópia e limpar os dados não usados."
+  },
+  "kartlarinizaDokunulmaz": {
+    "message": "Os os seus blocos, grupos e imagens não são alterados."
+  },
+  "kaliciSilinecekCopeGitmez": {
+    "message": "serão eliminados permanentemente. Eles não vão para a reciclagem e não podem ser recuperados."
+  },
+  "bos": {
+    "message": "vazio"
+  },
+  "nKayit": {
+    "message": "$1 registros"
+  },
+  "nKartSilinmisGrup": {
+    "message": "$1 blocos · grupo eliminado"
+  },
+  "goruntuUrlsi": {
+    "message": "URL da imagem"
+  },
+  "oncekiSimdiKayip": {
+    "message": "Havia $1 $2, agora $3."
+  },
+  "nGorselTemizlendi": {
+    "message": "$1 imagens limpas"
+  },
+  "giris": {
+    "message": "Entrada"
+  },
+  "gorunum": {
+    "message": "Aparência"
+  },
+  "kartlarBolum": {
+    "message": "Blocos"
+  },
+  "grupSeridi": {
+    "message": "Barra de grupos"
+  },
+  "goruntuYakalama": {
+    "message": "Capturas"
+  },
+  "yedeklemeBolum": {
+    "message": "Cópia de segurança"
+  },
+  "bakimBolum": {
+    "message": "Manutenção"
+  },
+  "anasayfaKurulumu": {
+    "message": "Página inicial"
+  },
+  "kisayollarBolum": {
+    "message": "Atalhos"
+  },
+  "uzantiSimgesi": {
+    "message": "Ícone da extensão"
+  },
+  "baslamakIcin": {
+    "message": "Comece com"
+  },
+  "tonKaydir": {
+    "message": "Deslocar matiz"
+  },
+  "ikiRenk": {
+    "message": "Duas cores"
+  },
+  "ipucuGrup": {
+    "message": "Organize os blocos em grupos; use + na barra para criar um"
+  },
+  "ipucuKartEkle": {
+    "message": "Ou clique com o botão direito em qualquer página e escolha \"Adicionar ao WSD Speed Dial\""
+  },
+  "nKartYenidenYakalanacak": {
+    "message": "As imagens de $1 blocos serão capturadas novamente. Isso pode levar alguns minutos."
+  },
+  "yenile": {
+    "message": "Atualizar"
+  },
+  "notEkle": {
+    "message": "Adicionar nota"
+  },
+  "urlYiKopyala": {
+    "message": "Copiar URL"
+  },
+  "colorizeTekTonaIndir": {
+    "message": "Colorir (um tom)"
+  },
+  "doygunluk": {
+    "message": "Saturação"
+  },
+  "arkaPlanRengi": {
+    "message": "Cor de fundo"
+  },
+  "metinRengi": {
+    "message": "Cor do texto"
+  },
+  "kare": {
+    "message": "Quadrado"
+  },
+  "sekmeZeminRengi": {
+    "message": "Fundo dos separadores"
+  },
+  "sekmeBoyutu": {
+    "message": "Tamanho dos separadores"
+  },
+  "yakalamaKipi": {
+    "message": "Modo de captura"
+  },
+  "bekleme": {
+    "message": "Espera"
+  },
+  "jpegKalitesi": {
+    "message": "Qualidade JPEG"
+  },
+  "arama": {
+    "message": "pesquisa"
+  },
+  "adres": {
+    "message": "Endereço"
+  },
+  "kaydet": {
+    "message": "Guardar"
+  },
+  "ad": {
+    "message": "Nome"
+  },
+  "siteUrl": {
+    "message": "URL do site"
+  },
+  "enSonEklenen": {
+    "message": "Mais recentes"
+  },
+  "not": {
+    "message": "Nota"
+  },
+  "onay": {
+    "message": "Confirmar"
+  },
+  "oranDengeli": {
+    "message": "16:10 — equilibrado"
+  },
+  "veya": {
+    "message": "ou"
+  },
+  "zeminRenklendirme": {
+    "message": "Tonalização do fundo"
+  },
+  "kurulumAciklama": {
+    "message": "Para abrir o WSD pelo botão Início, copie o endereço abaixo em Definições → Ao iniciar → Página inicial."
+  },
+  "gruplar": {
+    "message": "Grupos"
+  },
+  "araclar": {
+    "message": "Ferramentas"
+  },
+  "kartlardaAra": {
+    "message": "Pesquisar blocos..."
+  },
+  "onceki": {
+    "message": "Anterior"
+  },
+  "sonraki": {
+    "message": "Próximo"
+  },
+  "nKart": {
+    "message": "$1 blocos"
+  },
+  "silindiTarih": {
+    "message": "eliminado $1"
+  },
+  "sonYedekBilgisi": {
+    "message": "Última cópia: $1 · $2 · $3 blocos · $4"
+  },
+  "nGrupNKart": {
+    "message": "$1 grupos · $2 blocos"
+  },
+  "nAdresNKart": {
+    "message": "$1 endereços · $2 blocos"
+  },
+  "grubaEklendi": {
+    "message": "Adicionado a \"$1\""
+  },
+  "speedDialeEklendi": {
+    "message": "Adicionado ao Speed Dial"
+  },
+  "sonAcilis": {
+    "message": "último: $1"
+  },
+  "grupNeIcin": {
+    "message": "Para que serve este grupo?"
+  },
+  "aciklamaIstege": {
+    "message": "Descrição (opcional)"
+  },
+  "gorselYerlesim": {
+    "message": "Ajuste da imagem"
+  },
+  "yerlesimKirp": {
+    "message": "Recortar (preencher)"
+  },
+  "yerlesimSigdir": {
+    "message": "Ajustar (mostrar tudo)"
+  },
+  "sahneYakala": {
+    "message": "Capturar cena"
+  },
+  "onceAdresGirin": {
+    "message": "Escreva um endereço primeiro"
+  },
+  "sahneEklendi": {
+    "message": "Cena adicionada"
+  },
+  "yakalanamadi": {
+    "message": "Não foi possível capturar"
+  },
+  "grupKaliciSilMetin": {
+    "message": "O grupo \"$1\" e seus $2 blocos serão eliminados permanentemente."
+  },
+  "sifirlaKucuk": {
+    "message": "redefinir"
+  },
+  "copeTasinacak": {
+    "message": "\"$1\" será movido para a reciclagem."
+  },
+  "sonucBulunamadi": {
+    "message": "Nenhum resultado para \"$1\""
+  },
+  "depoDoluUyari": {
+    "message": "$1% do espaço reservado está em uso."
+  },
+  "depoDoluBildirim": {
+    "message": "Armazenamento em $1% — recomenda-se uma cópia"
+  },
+  "grupVeKartSilinecek": {
+    "message": "\"$1\" e os $2 blocos dentro dele serão eliminados."
+  },
+  "grupAdiZatenVar": {
+    "message": "Já existe um grupo chamado \"$1\""
+  },
+  "htmlAltBilgi": {
+    "message": "Criado com WSD Speed Dial"
+  },
+  "elleSahne": {
+    "message": "Prepare a cena e depois:"
+  },
+  "cek": {
+    "message": "Capturar"
+  },
+  "sayfaZatenEkli": {
+    "message": "Esta página já foi adicionada"
+  },
+  "sayfaZatenEkliMetin": {
+    "message": "Este endereço já existe no grupo $1. Adicionar mesmo assim?"
+  },
+  "yineDeEkle": {
+    "message": "Adicionar mesmo assim"
+  },
+  "alanSec": {
+    "message": "Selecionar área"
+  },
+  "uzunCekim": {
+    "message": "Captura longa"
+  },
+  "logoYakala": {
+    "message": "Capturar logo"
+  },
+  "logoEklendi": {
+    "message": "Logo adicionado"
+  },
+  "logoBulunamadi": {
+    "message": "Logo do site não encontrado"
+  },
+  "logoSecin": {
+    "message": "Clique no logo que deseja adicionar:"
+  },
+  "grubaGit": {
+    "message": "Ir para este grupo"
+  },
+  "kartlarVeGruplar": {
+    "message": "Grupos e blocos"
+  },
+  "nGrup": {
+    "message": "$1 grupos"
+  },
+  "nKartZatenVardi": {
+    "message": "$1 já existiam"
+  },
+  "kirikBaglantilariTara": {
+    "message": "Procurar links quebrados"
+  },
+  "kirikBaglantilar": {
+    "message": "Links quebrados"
+  },
+  "taraniyor": {
+    "message": "A procurar..."
+  },
+  "durdur": {
+    "message": "Parar"
+  },
+  "isaretleriTemizle": {
+    "message": "Limpar marcas"
+  },
+  "isaretlerTemizlendi": {
+    "message": "Marcas limpas"
+  },
+  "nKirik": {
+    "message": "$1 quebrados"
+  },
+  "nSupheli": {
+    "message": "$1 incertos"
+  },
+  "taramaDurduruldu": {
+    "message": "Verificação interrompida; resultados incompletos."
+  },
+  "kirikBaglantiYok": {
+    "message": "$1 endereços verificados; nenhum link quebrado encontrado."
+  },
+  "kirikAciklama": {
+    "message": "Estes endereços retornaram 404/410; a página não existe mais."
+  },
+  "supheliAciklama": {
+    "message": "Não foi possível acessar estes endereços, mas o resultado é inconclusivo (tempo esgotado, erro de rede ou proteção contra bots). Não foram marcados."
+  },
+  "kirikKartlariGoster": {
+    "message": "Mostrar blocos quebrados"
+  },
+  "tekrarTara": {
+    "message": "Verificar novamente"
+  },
+  "nKartDuzelmis": {
+    "message": "$1 blocos voltaram a funcionar, removidos da lista"
+  },
+  "degisiklikYok": {
+    "message": "Sem alterações, todos ainda quebrados"
+  },
+  "kirikKartYokTara": {
+    "message": "Nenhum bloco marcado como quebrado. Use \"Verificar novamente\" para verificar todos."
+  },
+  "nKartEklendi": {
+    "message": "$1 blocos adicionados"
+  },
+  "yerimlerindenIctar": {
+    "message": "Importar dos marcadores"
+  },
+  "htmlDosyasindanIctar": {
+    "message": "Importar de ficheiro HTML"
+  },
+  "yerImleriniIceAktar": {
+    "message": "Importar marcadores"
+  },
+  "ictarAciklama": {
+    "message": "Cada pasta escolhida torna-se um grupo. Se já existir um grupo com o mesmo nome, os blocos são adicionados a ele."
+  },
+  "ictarKlasorYok": {
+    "message": "Nenhuma pasta de marcadores encontrada para importar."
+  },
+  "ictarSecimYok": {
+    "message": "Nenhuma pasta selecionada."
+  },
+  "ictarBasarisiz": {
+    "message": "Não foi possível concluir a importação."
+  },
+  "nKlasorNBaglanti": {
+    "message": "$1 pastas · $2 links"
+  },
+  "hepsiniSec": {
+    "message": "Selecionar / limpar tudo"
+  },
+  "yerImleri": {
+    "message": "Marcadores"
+  },
+  "grubaEklenecek": {
+    "message": "será adicionado ao grupo existente"
+  },
+  "ipucuYerimiSurukle": {
+    "message": "Arraste um link da barra de marcadores e solte aqui para criar um bloco"
+  },
+  "ipucuYerimiIctar": {
+    "message": "Importe os marcadores do navegador; cada pasta torna-se um grupo"
+  },
+  "silmeyiGeriAl": {
+    "message": "Desfazer eliminação total"
+  },
+  "klasorSurukleme": {
+    "message": "Não é possível soltar pastas. Use Definições → Importar dos marcadores"
+  },
+  "kartEklenemedi": {
+    "message": "Não foi possível adicionar o bloco"
+  },
+  "hepsiniSil": {
+    "message": "Eliminar todos"
+  },
+  "nKirikKartCopeTasinacak": {
+    "message": "$1 blocos quebrados serão movidos para a reciclagem. Pode restaurá-los."
+  },
+  "nKartCopeTasindi": {
+    "message": "$1 blocos movidos para a reciclagem"
+  },
+  "tekleDusur": {
+    "message": "Manter um de cada"
+  },
+  "tekleDusurOnay": {
+    "message": "Um bloco por endereço duplicado será mantido; o resto irá para a reciclagem. Pode restaurá-los."
+  }
+}

@@ -2232,3 +2232,127 @@ body.disBirakma #kartAlani::after {
     color: var(--vurgu-parlak);
     font-size: 11px;
 }
+
+/* ============ Arama: eslesen gruplar ============
+   Izgaranin TUM genisligini kaplar; yoksa tek sutuna sikisip
+   kartlarin uzerine biniyor. */
+#aramaGrupSerit {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--b2);
+    margin-bottom: var(--b4);
+    padding-bottom: var(--b3);
+    border-bottom: 1px solid var(--cerceve);
+}
+.aramaGrupRozet {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 13px;
+    border: 1px solid var(--cerceve);
+    border-radius: calc(var(--kart-kose) + 2px);
+    background: var(--yuzey);
+    color: var(--metin);
+    font: inherit;
+    font-size: 13px;
+    cursor: pointer;
+    transition: border-color var(--gecis), background var(--gecis), color var(--gecis);
+}
+.aramaGrupRozet:hover {
+    border-color: var(--vurgu);
+    background: var(--vurgu);
+    color: #fff;
+}
+.aramaGrupRozet svg { flex-shrink: 0; opacity: .85; }
+
+/* ============ Denetim / kirik raporu kutulari ============
+   Onceki serit birlestirmelerinde bu bloklar silinmisti; rapor
+   kutulari bicimsiz kaliyordu. */
+.dnKutu {
+    margin: 0 0 var(--b3);
+    padding: var(--b3);
+    border: 1px solid var(--cerceve);
+    border-left-width: 3px;
+    border-radius: var(--k1);
+    background: rgba(255, 255, 255, .03);
+    font: inherit;
+    font-size: 13px;
+    line-height: 1.6;
+}
+.dnKutu:last-child { margin-bottom: 0; }
+.dnKutu h3 {
+    margin: 0 0 var(--b2);
+    font-size: 13px;
+    font-weight: 600;
+}
+.dnKutu p { margin: 0 0 var(--b2); color: var(--metin-sonuk); }
+.dnKutu p:last-child { margin-bottom: 0; }
+
+.dnKutu.tamam  { border-left-color: #63b47d; }
+.dnKutu.bilgi  { border-left-color: var(--vurgu); }
+.dnKutu.uyari  { border-left-color: #d8a44a; }
+.dnKutu.sorun  { border-left-color: #e2706c; }
+
+.dnBaslik { font-weight: 600; margin-bottom: var(--b2); }
+.dnGovde  { color: var(--metin-sonuk); }
+.dnDugme {
+    margin-top: var(--b2);
+    padding: 4px 10px;
+    border: 1px solid var(--cerceve);
+    border-radius: var(--k1);
+    background: transparent;
+    color: var(--metin);
+    font: inherit;
+    font-size: 12px;
+    cursor: pointer;
+}
+.dnDugme:hover { background: rgba(255, 255, 255, .08); }
+.dnDaha { color: var(--metin-sonuk); font-size: 12px; }
+
+/* Kirik baglanti listesi */
+.kirikListe {
+    margin: var(--b2) 0 0;
+    padding: 0 0 0 var(--b4);
+    max-height: 40vh;
+    overflow-y: auto;
+    font-size: 12.5px;
+}
+.kirikListe li { margin-bottom: var(--b2); line-height: 1.5; }
+.kirikGrup {
+    margin-left: 8px;
+    padding: 1px 7px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, .07);
+    font-size: 11px;
+    color: var(--metin-sonuk);
+}
+.kirikKod { margin-left: 8px; color: #e2706c; font-weight: 600; }
+.kirikUrl { color: var(--metin-sonuk); word-break: break-all; font-size: 11.5px; }
+
+/* Logo aday izgarasi (Kart Duzenle) */
+.logoIzgara { margin-bottom: var(--b3); }
+.logoIzgara .kucukBilgi { margin: 0 0 var(--b2); }
+.logoListe {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--b2);
+}
+.logoAday {
+    padding: 0;
+    border: 1px solid var(--cerceve);
+    border-radius: var(--k1);
+    background: transparent;
+    cursor: pointer;
+    overflow: hidden;
+    line-height: 0;
+    transition: border-color var(--gecis), transform var(--gecis);
+}
+.logoAday img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; display: block; }
+.logoAday:hover { border-color: var(--vurgu-parlak); transform: translateY(-1px); }
+
+/* Arama sonucundaki grup etiketi tiklanabilir */
+.kartGrupGit { border: 0; font: inherit; cursor: pointer; }
+.kartGrupGit:hover { background: var(--vurgu); color: #fff; }
+.kartGrupGit:focus-visible { outline: 2px solid var(--vurgu-parlak); outline-offset: 1px; }

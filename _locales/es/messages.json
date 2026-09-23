@@ -1,0 +1,1232 @@
+{
+  "extName": {
+    "message": "WSD Speed Dial"
+  },
+  "extDesc": {
+    "message": "Una página de acceso rápido que muestra tus marcadores como mosaicos visuales."
+  },
+  "actionTitle": {
+    "message": "Añadir a WSD Speed Dial"
+  },
+  "anaSayfa": {
+    "message": "Inicio"
+  },
+  "kartEkle": {
+    "message": "Añadir mosaico"
+  },
+  "ayarlar": {
+    "message": "Ajustes"
+  },
+  "ara": {
+    "message": "Buscar"
+  },
+  "GenisEkran": {
+    "message": "16:9 — panorámico"
+  },
+  "aciklik": {
+    "message": "Brillo"
+  },
+  "aktifGrupRengi": {
+    "message": "Color del grupo activo"
+  },
+  "aktifGrupSaydamligi": {
+    "message": "Opacidad del grupo activo"
+  },
+  "anaSayfaGrubunuGoster": {
+    "message": "Mostrar grupo Inicio"
+  },
+  "ayarlariAcKapat": {
+    "message": "abrir / cerrar ajustes"
+  },
+  "ayarlariSifirla": {
+    "message": "Restablecer ajustes"
+  },
+  "ayniSekme": {
+    "message": "Misma pestaña"
+  },
+  "basaKaydir": {
+    "message": "Desplazar al inicio"
+  },
+  "baslik": {
+    "message": "Título"
+  },
+  "baslikYaziBoyutu": {
+    "message": "Tamaño de fuente del título"
+  },
+  "bekleyenYakalamalariIptalEt": {
+    "message": "Cancelar capturas pendientes"
+  },
+  "bicim": {
+    "message": "Formato"
+  },
+  "buKartlaIlgiliNotunuz": {
+    "message": "Tu nota sobre este mosaico..."
+  },
+  "caprazVe": {
+    "message": "Diagonal 2 y 3"
+  },
+  "copKutusu": {
+    "message": "Papelera"
+  },
+  "degistirmekIcinTiklayin": {
+    "message": "Haz clic para cambiar"
+  },
+  "duvarKagidi": {
+    "message": "Fondo de pantalla"
+  },
+  "duzenle": {
+    "message": "Editar"
+  },
+  "duzenlemekIcinKartaSagTiklayinSiralamak": {
+    "message": "Clic derecho en un mosaico para editarlo; arrastra para reordenar"
+  },
+  "eklemeKarti": {
+    "message": "Mosaico «+»"
+  },
+  "ekranGoruntusuBoyutu": {
+    "message": "Tamaño de captura"
+  },
+  "ekranGoruntusuOnerilen": {
+    "message": "Captura de pantalla (recomendado)"
+  },
+  "enCokZiyaretEdilen": {
+    "message": "Más visitados"
+  },
+  "enFazlaSutun": {
+    "message": "Máx. columnas"
+  },
+  "enOnceEklenen": {
+    "message": "Más antiguos primero"
+  },
+  "genelAyar": {
+    "message": "Usar ajuste general"
+  },
+  "gerekirsePencereyiOneAl": {
+    "message": "Traer la ventana al frente si hace falta"
+  },
+  "gizliHataAyiklamaCubuguCikar": {
+    "message": "Oculto (muestra barra de depuración)"
+  },
+  "gizliSekmedeAc": {
+    "message": "Abrir en pestaña privada"
+  },
+  "golgeRengi": {
+    "message": "Color de sombra"
+  },
+  "goruntuDosyasi": {
+    "message": "Archivo de imagen"
+  },
+  "goruntuUrlSi": {
+    "message": "URL de imagen"
+  },
+  "gosterim": {
+    "message": "Visualización"
+  },
+  "grubuDuzenle": {
+    "message": "Editar grupo"
+  },
+  "grubunGorselleriniYenile": {
+    "message": "Actualizar imágenes del grupo"
+  },
+  "grup": {
+    "message": "Grupo"
+  },
+  "grupOlustur": {
+    "message": "Crear grupo"
+  },
+  "gruplariYonet": {
+    "message": "gestionar grupos"
+  },
+  "hazirBoyutlar": {
+    "message": "Tamaños predefinidos"
+  },
+  "hedefGrup": {
+    "message": "Grupo de destino"
+  },
+  "hepsiniAc": {
+    "message": "Abrir todos"
+  },
+  "herSeyiGizle": {
+    "message": "Ocultar todo"
+  },
+  "herSeyiGizleGoster": {
+    "message": "ocultar / mostrar todo"
+  },
+  "htmlSayfasiOlarakDisaAktar": {
+    "message": "Exportar como página HTML"
+  },
+  "iceAktar": {
+    "message": "Importar"
+  },
+  "ikon": {
+    "message": "Icono"
+  },
+  "ikonRengi": {
+    "message": "Color del icono"
+  },
+  "ikonYazi": {
+    "message": "Icono+texto"
+  },
+  "ilkSonGrup": {
+    "message": "primer / último grupo"
+  },
+  "iptal": {
+    "message": "Cancelar"
+  },
+  "isikRengi": {
+    "message": "Color de luz"
+  },
+  "kaldir": {
+    "message": "Quitar"
+  },
+  "kartAcilisSekli": {
+    "message": "Abrir mosaico en"
+  },
+  "kartBasliklari": {
+    "message": "Títulos de mosaicos"
+  },
+  "kartBoyutu": {
+    "message": "Tamaño del mosaico"
+  },
+  "kartCerceveRengi": {
+    "message": "Color del borde"
+  },
+  "kartCerceveRengiUzerineGelince": {
+    "message": "Color del borde (al pasar)"
+  },
+  "kartCercevesi": {
+    "message": "Borde del mosaico"
+  },
+  "kartKoseYuvarlakligi": {
+    "message": "Redondeo de esquinas"
+  },
+  "kartOrani": {
+    "message": "Proporción del mosaico"
+  },
+  "kartSayisi": {
+    "message": "Número de mosaicos"
+  },
+  "kartUstuButonlar": {
+    "message": "Botones sobre el mosaico"
+  },
+  "kartZeminRengi": {
+    "message": "Fondo del mosaico"
+  },
+  "kartiDuzenle": {
+    "message": "Editar mosaico"
+  },
+  "kartiTasi": {
+    "message": "Mover mosaico"
+  },
+  "kartlarArasiBoslukDikey": {
+    "message": "Espacio entre mosaicos (vertical)"
+  },
+  "kartlarArasiBoslukYatay": {
+    "message": "Espacio entre mosaicos (horizontal)"
+  },
+  "kartlariSirala": {
+    "message": "Ordenar mosaicos"
+  },
+  "kaydirmaPx": {
+    "message": "Desplazamiento"
+  },
+  "kisayollarBirMetinAlanindaykenCalismaz": {
+    "message": "Los atajos no funcionan mientras escribes en un campo."
+  },
+  "kullanilmayanVerileriTemizle": {
+    "message": "Limpiar datos no usados"
+  },
+  "notuSil": {
+    "message": "Eliminar nota"
+  },
+  "oSiradakiGrubaGec": {
+    "message": "ir a ese grupo"
+  },
+  "onceSayfaGorseliYoksaEkran": {
+    "message": "Primero imagen de la página, si no, captura"
+  },
+  "oncekiSonrakiGrup": {
+    "message": "grupo anterior / siguiente"
+  },
+  "otomatikYedekGunde": {
+    "message": "Copia automática (diaria)"
+  },
+  "ozelEmoji": {
+    "message": "Emoji personalizado"
+  },
+  "pencereKisaSureGorunur": {
+    "message": "Ventana (visible un momento)"
+  },
+  "pencereyiAramayiKapat": {
+    "message": "cerrar diálogo / búsqueda"
+  },
+  "renkEtiketi": {
+    "message": "Etiqueta de color"
+  },
+  "renkTonu": {
+    "message": "Tono"
+  },
+  "renklendirmeSiddeti": {
+    "message": "Intensidad del tinte"
+  },
+  "renklendirmeYontemi": {
+    "message": "Método de tinte"
+  },
+  "resmiIndir": {
+    "message": "Descargar imagen"
+  },
+  "sekmeKoseYuvarlakligi": {
+    "message": "Redondeo de esquinas de pestañas"
+  },
+  "sekmeZeminSaydamligi": {
+    "message": "Opacidad del fondo de pestañas"
+  },
+  "sekmedeAc": {
+    "message": "Abrir en pestaña"
+  },
+  "sil": {
+    "message": "Eliminar"
+  },
+  "siraBirKezUygulanirSonrasindaSurukleyerek": {
+    "message": "El orden se aplica una vez; después puedes reordenar arrastrando."
+  },
+  "siralamakIcinTutamactanSurukleyin": {
+    "message": "Arrastra el asa para reordenar."
+  },
+  "sonGrubuHatirla": {
+    "message": "Recordar último grupo"
+  },
+  "sonaKaydir": {
+    "message": "Desplazar al final"
+  },
+  "tasi": {
+    "message": "Mover"
+  },
+  "tumVerileriSil": {
+    "message": "Eliminar todos los datos"
+  },
+  "tumunuSil": {
+    "message": "Eliminar todo"
+  },
+  "tumunuYeniSekmeGrubundaAc": {
+    "message": "Abrir todos en una ventana nueva"
+  },
+  "varsayilan": {
+    "message": "Predeterminado"
+  },
+  "varsayilanRenklereDon": {
+    "message": "Restaurar colores predeterminados"
+  },
+  "varsayilanaDon": {
+    "message": "Restaurar predeterminado"
+  },
+  "vazgec": {
+    "message": "Cancelar"
+  },
+  "yalnizcaIkon": {
+    "message": "Solo icono"
+  },
+  "yalnizcaYazi": {
+    "message": "Solo texto"
+  },
+  "yanAracPaneli": {
+    "message": "Barra lateral"
+  },
+  "yazi": {
+    "message": "Texto"
+  },
+  "yedekYukleniyor": {
+    "message": "Cargando copia"
+  },
+  "yedektenYukle": {
+    "message": "Restaurar copia"
+  },
+  "yeniGrup": {
+    "message": "Nuevo grupo"
+  },
+  "yeniKart": {
+    "message": "nuevo mosaico"
+  },
+  "yeniSekme": {
+    "message": "Nueva pestaña"
+  },
+  "yeniSekmeArkaPlan": {
+    "message": "Nueva pestaña (en segundo plano)"
+  },
+  "yeniSekmedeAc": {
+    "message": "Abrir en pestaña nueva"
+  },
+  "yontem": {
+    "message": "Método"
+  },
+  "kullanilanAlan": {
+    "message": "Uso total"
+  },
+  "kullanilmayan": {
+    "message": "Sin usar"
+  },
+  "birDahaSorma": {
+    "message": "No volver a preguntar"
+  },
+  "gorseller": {
+    "message": "Imágenes"
+  },
+  "digerVeriler": {
+    "message": "Otros datos"
+  },
+  "yedekAl": {
+    "message": "Exportar copia"
+  },
+  "simdiYedekAl": {
+    "message": "Hacer copia ahora"
+  },
+  "onaySorulariniGeriGetir": {
+    "message": "Restaurar avisos de confirmación"
+  },
+  "adresiKopyala": {
+    "message": "Copiar dirección"
+  },
+  "arkaPlan": {
+    "message": "Fondo"
+  },
+  "yedekAlinamadi": {
+    "message": "No se pudo crear la copia"
+  },
+  "htmlHazirlaniyor": {
+    "message": "Preparando HTML..."
+  },
+  "htmlOlusturulamadi": {
+    "message": "No se pudo crear el HTML"
+  },
+  "yedekYuklenemedi": {
+    "message": "No se pudo importar la copia:"
+  },
+  "bekleyenYakalamalarIptalEdiliyor": {
+    "message": "Cancelando capturas pendientes"
+  },
+  "ayarlarSifirlandi": {
+    "message": "Ajustes restablecidos"
+  },
+  "sifirlanamadi": {
+    "message": "No se pudo restablecer"
+  },
+  "iptalEdildi": {
+    "message": "Cancelado"
+  },
+  "silinemedi": {
+    "message": "No se pudo eliminar"
+  },
+  "temizlikAtlandi": {
+    "message": "Limpieza omitida"
+  },
+  "temizlenecekVeriYok": {
+    "message": "Nada que limpiar"
+  },
+  "yedektenYukleBd": {
+    "message": "Importar copia"
+  },
+  "mevcutGruplarSilinsinMiHayirDerseniz": {
+    "message": "¿Reemplazar los grupos existentes? Elige «Añadir» para combinar la copia con lo que tienes."
+  },
+  "silVeYukle": {
+    "message": "Reemplazar e importar"
+  },
+  "ekle": {
+    "message": "Añadir"
+  },
+  "ayarlariSifirlaBd": {
+    "message": "Restablecer ajustes"
+  },
+  "tumGorunumVeDavranisAyarlariVarsayilana": {
+    "message": "Todos los ajustes de apariencia y comportamiento volverán a los predeterminados. Tus mosaicos, grupos e imágenes no se tocan."
+  },
+  "sifirla": {
+    "message": "Restablecer"
+  },
+  "tumVerileriSilBd": {
+    "message": "Eliminar todos los datos"
+  },
+  "butunGruplarKartlarGorsellerNotlarVe": {
+    "message": "Todos los grupos, mosaicos, imágenes, notas y ajustes se eliminarán permanentemente. No van a la papelera y no se pueden recuperar."
+  },
+  "devam": {
+    "message": "Continuar"
+  },
+  "eminMisiniz": {
+    "message": "¿Seguro?"
+  },
+  "onaylamakIcinSilYazin": {
+    "message": "Escribe ELIMINAR para confirmar:"
+  },
+  "copKutusuZatenBos": {
+    "message": "La papelera ya está vacía"
+  },
+  "copKutusuBosaltildi": {
+    "message": "Papelera vaciada"
+  },
+  "kartGeriAlindi": {
+    "message": "Mosaico restaurado"
+  },
+  "geriAlinamadi": {
+    "message": "No se pudo deshacer"
+  },
+  "kaliciOlarakSilindi": {
+    "message": "Eliminado permanentemente"
+  },
+  "copKutusunuBosalt": {
+    "message": "Vaciar papelera"
+  },
+  "kaliciSil": {
+    "message": "Eliminar permanentemente"
+  },
+  "gruplarGuncellendi": {
+    "message": "Grupos actualizados"
+  },
+  "grupOlusturuldu": {
+    "message": "Grupo creado"
+  },
+  "grupOlusturulamadi": {
+    "message": "No se pudo crear el grupo"
+  },
+  "kaydedilemedi": {
+    "message": "No se pudo guardar"
+  },
+  "siralanacakYeterliKartYok": {
+    "message": "No hay suficientes mosaicos para ordenar"
+  },
+  "kartlarZatenBuSirada": {
+    "message": "Los mosaicos ya están en este orden"
+  },
+  "eskiSiraGeriAlindi": {
+    "message": "Orden anterior restaurado"
+  },
+  "siralanamadi": {
+    "message": "No se pudo ordenar"
+  },
+  "notKaydedildi": {
+    "message": "Nota guardada"
+  },
+  "notSilindi": {
+    "message": "Nota eliminada"
+  },
+  "baskaGrupYok": {
+    "message": "No hay otros grupos"
+  },
+  "kartTasindi": {
+    "message": "Mosaico movido"
+  },
+  "tasinamadi": {
+    "message": "No se pudo mover"
+  },
+  "dosyaOkunamadi": {
+    "message": "No se pudo leer el archivo"
+  },
+  "goruntuAlinamadi": {
+    "message": "No se pudo obtener la imagen"
+  },
+  "indirilecekGorselYok": {
+    "message": "No hay imagen para descargar"
+  },
+  "kartSilindi": {
+    "message": "Mosaico eliminado"
+  },
+  "gizliPencereAcilamadi": {
+    "message": "No se pudo abrir la ventana privada"
+  },
+  "adresKopyalandi": {
+    "message": "Dirección copiada"
+  },
+  "kopyalanamadi": {
+    "message": "No se pudo copiar"
+  },
+  "buGrupBos": {
+    "message": "Este grupo está vacío"
+  },
+  "pencereAcilamadi": {
+    "message": "No se pudo abrir la ventana"
+  },
+  "grupGuncellendi": {
+    "message": "Grupo actualizado"
+  },
+  "yenidenAdlandirilamadi": {
+    "message": "No se pudo renombrar"
+  },
+  "grupSilinemedi": {
+    "message": "No se pudo eliminar el grupo: "
+  },
+  "acilacakKartYok": {
+    "message": "No hay mosaicos para abrir"
+  },
+  "yenilenecekKartYok": {
+    "message": "No hay mosaicos para actualizar"
+  },
+  "gorselYenilendi": {
+    "message": "Imagen actualizada"
+  },
+  "gorselAlinamadi": {
+    "message": "No se pudo obtener la imagen"
+  },
+  "sirala": {
+    "message": "Ordenar"
+  },
+  "geriAl": {
+    "message": "Deshacer"
+  },
+  "gorselAdresiniYapistirin": {
+    "message": "Pega la dirección de la imagen:"
+  },
+  "kartiSil": {
+    "message": "Eliminar mosaico"
+  },
+  "hepsiniAcBd": {
+    "message": "Abrir todos"
+  },
+  "ac": {
+    "message": "Abrir"
+  },
+  "gorselleriYenile": {
+    "message": "Actualizar imágenes"
+  },
+  "baslat": {
+    "message": "Iniciar"
+  },
+  "grubuSil": {
+    "message": "Eliminar grupo"
+  },
+  "grupVeIcindekiTumKartlarCop": {
+    "message": "El grupo y todos sus mosaicos se moverán a la papelera."
+  },
+  "hepsiniYenile": {
+    "message": "Actualizar todos"
+  },
+  "e8eaed": {
+    "message": "#e8eaed"
+  },
+  "gorselKaydedilemedi": {
+    "message": "No se pudo guardar la imagen"
+  },
+  "depolamaAlaniDoluYedekAliniyor": {
+    "message": "Almacenamiento lleno — creando copia"
+  },
+  "bakim": {
+    "message": "Mantenimiento"
+  },
+  "temizlik": {
+    "message": "limpieza"
+  },
+  "gorsellerBd": {
+    "message": "imágenes"
+  },
+  "kartlar": {
+    "message": "mosaicos"
+  },
+  "bitti": {
+    "message": "hecho"
+  },
+  "depoDoluYedekIndirildi": {
+    "message": "Almacenamiento lleno. Copia descargada — limpia desde Mantenimiento."
+  },
+  "depoDoluTemizlikYapin": {
+    "message": "Almacenamiento lleno — limpia desde Mantenimiento"
+  },
+  "nKartKuyrugaAlindi": {
+    "message": "$1 mosaicos en cola"
+  },
+  "nKartSiralandi": {
+    "message": "$1 mosaicos ordenados"
+  },
+  "nKartGorseliYenilenecek": {
+    "message": "Se volverán a capturar las imágenes de $1 mosaicos. Puede tardar unos minutos."
+  },
+  "nKartSirasiDegisecek": {
+    "message": "El orden de $1 mosaicos cambiará. Tu disposición manual se perderá."
+  },
+  "nSekmeAcilacak": {
+    "message": "Se abrirán $1 pestañas. ¿Continuar?"
+  },
+  "grupSilindiNKart": {
+    "message": "Grupo eliminado ($1 mosaicos)"
+  },
+  "nKayitKaliciSilinecek": {
+    "message": "Se eliminarán permanentemente $1 entradas."
+  },
+  "nGrupNKartSilindi": {
+    "message": "$1 grupos, $2 mosaicos eliminados"
+  },
+  "nGrupNKartYedeklendi": {
+    "message": "$1 grupos, $2 mosaicos guardados — $3"
+  },
+  "nGrupNKartYuklendi": {
+    "message": "$1 grupos, $2 mosaicos importados"
+  },
+  "yedekAlindiDosya": {
+    "message": "Copia guardada — $1"
+  },
+  "geriAlindiAd": {
+    "message": "«$1» restaurado"
+  },
+  "tutarlilikKontrolu": {
+    "message": "Comprobación de coherencia"
+  },
+  "kapat": {
+    "message": "Cerrar"
+  },
+  "yinelenenKartlar": {
+    "message": "Mosaicos duplicados"
+  },
+  "yinelenenKartYok": {
+    "message": "No hay mosaicos duplicados"
+  },
+  "sinirsiz": {
+    "message": "ilimitado"
+  },
+  "gorsellerYaziliyor": {
+    "message": "Escribiendo imágenes"
+  },
+  "gorsellerVeAyarlarSiliniyor": {
+    "message": "Eliminando imágenes y ajustes"
+  },
+  "tamamlandi": {
+    "message": "Hecho"
+  },
+  "sayilamadi": {
+    "message": "no se pudo contar"
+  },
+  "silOnayKelimesi": {
+    "message": "ELIMINAR"
+  },
+  "copKutusuBos": {
+    "message": "La papelera está vacía"
+  },
+  "iceriginiGor": {
+    "message": "ver contenido"
+  },
+  "kartiNereyeAlalim": {
+    "message": "¿Dónde va el mosaico?"
+  },
+  "iceriginiGoster": {
+    "message": "Mostrar contenido"
+  },
+  "henuzAcilmadi": {
+    "message": "Aún no abierto"
+  },
+  "gorselDegil": {
+    "message": "no es una imagen"
+  },
+  "gorselYuklenemedi": {
+    "message": "no se pudo cargar la imagen"
+  },
+  "azOnce": {
+    "message": "hace un momento"
+  },
+  "dun": {
+    "message": "ayer"
+  },
+  "kartGorseli": {
+    "message": "imagen del mosaico"
+  },
+  "yedegiYukle": {
+    "message": "Importar copia"
+  },
+  "gecersizYedekDosyasi": {
+    "message": "Archivo de copia no válido"
+  },
+  "onceEnAzBirGrupOlusturun": {
+    "message": "Crea al menos un grupo primero"
+  },
+  "simgeRenkleriSifirlandi": {
+    "message": "Colores de iconos restablecidos"
+  },
+  "kopyalandi": {
+    "message": "Copiado"
+  },
+  "kopyalanamadiElleSecin": {
+    "message": "No se pudo copiar — selecciona la dirección manualmente"
+  },
+  "kapatilmisOnaySorusuYok": {
+    "message": "No hay avisos de confirmación desactivados"
+  },
+  "notuDuzenle": {
+    "message": "Editar nota"
+  },
+  "tamam": {
+    "message": "Aceptar"
+  },
+  "denetimYapilamadi": {
+    "message": "La comprobación falló"
+  },
+  "nKartCizilmemis": {
+    "message": "$1 mosaicos no se dibujaron"
+  },
+  "sayfayiYenileyipDeneyin": {
+    "message": "Recarga la página e inténtalo de nuevo."
+  },
+  "nKartinGorseliYok": {
+    "message": "$1 mosaicos sin imagen"
+  },
+  "grupMenusundenYenilenebilir": {
+    "message": "Captúralas con «Actualizar imágenes del grupo» desde el menú del grupo."
+  },
+  "buKartlarPaylasir": {
+    "message": "Estos mosaicos comparten imagen, nota y color."
+  },
+  "yinelenenKartlariAc": {
+    "message": "Abrir mosaicos duplicados"
+  },
+  "nBosGrup": {
+    "message": "$1 grupos vacíos"
+  },
+  "cizimKontroluAtlandi": {
+    "message": "Comprobación de dibujo omitida"
+  },
+  "ozelEkranAcikNormaleDonun": {
+    "message": "Está abierta la búsqueda, la papelera o los duplicados. Vuelve a la vista normal y ejecuta de nuevo."
+  },
+  "sorunBulunamadi": {
+    "message": "No se encontraron problemas"
+  },
+  "nKezAcildi": {
+    "message": "abierto $1 veces"
+  },
+  "nSekmeAcilacakDevam": {
+    "message": "Se abrirán $1 pestañas. ¿Continuar?"
+  },
+  "nKartKuyrugaAlindi2": {
+    "message": "$1 mosaicos en cola"
+  },
+  "nDakikaOnce": {
+    "message": "hace $1 min"
+  },
+  "nSaatOnce": {
+    "message": "hace $1 h"
+  },
+  "nGunOnce": {
+    "message": "hace $1 días"
+  },
+  "nAyOnce": {
+    "message": "hace $1 meses"
+  },
+  "nYilOnce": {
+    "message": "hace $1 años"
+  },
+  "sizSilmediyseniz": {
+    "message": "Si no los eliminaste, puedes restaurar desde una copia."
+  },
+  "depoDolduYedekAlipTemizleyin": {
+    "message": "Almacenamiento lleno — haz una copia y limpia"
+  },
+  "anaSayfaGizlendiNKart": {
+    "message": "Inicio oculto — $1 mosaicos ya no están en la barra"
+  },
+  "nGorsel": {
+    "message": "$1 imágenes"
+  },
+  "ayrilanAlanDoldu": {
+    "message": "El almacenamiento está lleno. No se pueden guardar nuevas imágenes. Haz una copia primero y luego limpia los datos no usados o elimina mosaicos que no necesites."
+  },
+  "yedekAlipTemizlemenizOnerilir": {
+    "message": "Recomendamos hacer una copia y limpiar los datos no usados."
+  },
+  "kartlarinizaDokunulmaz": {
+    "message": "Tus mosaicos, grupos e imágenes no se tocan."
+  },
+  "kaliciSilinecekCopeGitmez": {
+    "message": "se eliminarán permanentemente. No van a la papelera y no se pueden recuperar."
+  },
+  "bos": {
+    "message": "vacío"
+  },
+  "nKayit": {
+    "message": "$1 entradas"
+  },
+  "nKartSilinmisGrup": {
+    "message": "$1 mosaicos · grupo eliminado"
+  },
+  "goruntuUrlsi": {
+    "message": "URL de imagen"
+  },
+  "oncekiSimdiKayip": {
+    "message": "Había $1 $2, ahora $3. "
+  },
+  "nGorselTemizlendi": {
+    "message": "$1 imágenes limpiadas"
+  },
+  "giris": {
+    "message": "Entrada"
+  },
+  "gorunum": {
+    "message": "Apariencia"
+  },
+  "kartlarBolum": {
+    "message": "Mosaicos"
+  },
+  "grupSeridi": {
+    "message": "Barra de grupos"
+  },
+  "goruntuYakalama": {
+    "message": "Capturas"
+  },
+  "yedeklemeBolum": {
+    "message": "Copia de seguridad"
+  },
+  "bakimBolum": {
+    "message": "Mantenimiento"
+  },
+  "anasayfaKurulumu": {
+    "message": "Página de inicio"
+  },
+  "kisayollarBolum": {
+    "message": "Atajos"
+  },
+  "uzantiSimgesi": {
+    "message": "Icono de la extensión"
+  },
+  "baslamakIcin": {
+    "message": "Empieza con"
+  },
+  "tonKaydir": {
+    "message": "Desplazar tono"
+  },
+  "ikiRenk": {
+    "message": "Dos colores"
+  },
+  "ipucuGrup": {
+    "message": "Organiza los mosaicos en grupos; usa + en la barra para añadir uno"
+  },
+  "ipucuKartEkle": {
+    "message": "O haz clic derecho en cualquier página y elige «Añadir a WSD Speed Dial»"
+  },
+  "nKartYenidenYakalanacak": {
+    "message": "Se volverán a capturar las imágenes de $1 mosaicos. Puede tardar unos minutos."
+  },
+  "yenile": {
+    "message": "Actualizar"
+  },
+  "notEkle": {
+    "message": "Añadir nota"
+  },
+  "urlYiKopyala": {
+    "message": "Copiar URL"
+  },
+  "colorizeTekTonaIndir": {
+    "message": "Colorizar (un tono)"
+  },
+  "doygunluk": {
+    "message": "Saturación"
+  },
+  "arkaPlanRengi": {
+    "message": "Color de fondo"
+  },
+  "metinRengi": {
+    "message": "Color de texto"
+  },
+  "kare": {
+    "message": "Cuadrado"
+  },
+  "sekmeZeminRengi": {
+    "message": "Fondo de pestañas"
+  },
+  "sekmeBoyutu": {
+    "message": "Tamaño de pestañas"
+  },
+  "yakalamaKipi": {
+    "message": "Modo de captura"
+  },
+  "bekleme": {
+    "message": "Espera"
+  },
+  "jpegKalitesi": {
+    "message": "Calidad JPEG"
+  },
+  "arama": {
+    "message": "búsqueda"
+  },
+  "adres": {
+    "message": "Dirección"
+  },
+  "kaydet": {
+    "message": "Guardar"
+  },
+  "ad": {
+    "message": "Nombre"
+  },
+  "siteUrl": {
+    "message": "URL del sitio"
+  },
+  "enSonEklenen": {
+    "message": "Más recientes"
+  },
+  "not": {
+    "message": "Nota"
+  },
+  "onay": {
+    "message": "Confirmar"
+  },
+  "oranDengeli": {
+    "message": "16:10 — equilibrado"
+  },
+  "veya": {
+    "message": "o"
+  },
+  "zeminRenklendirme": {
+    "message": "Tinte del fondo"
+  },
+  "kurulumAciklama": {
+    "message": "Para abrir WSD con el botón de inicio, copia la dirección de abajo en Ajustes → Al iniciar → Página de inicio."
+  },
+  "gruplar": {
+    "message": "Grupos"
+  },
+  "araclar": {
+    "message": "Herramientas"
+  },
+  "kartlardaAra": {
+    "message": "Buscar mosaicos..."
+  },
+  "onceki": {
+    "message": "Anterior"
+  },
+  "sonraki": {
+    "message": "Siguiente"
+  },
+  "nKart": {
+    "message": "$1 mosaicos"
+  },
+  "silindiTarih": {
+    "message": "eliminado $1"
+  },
+  "sonYedekBilgisi": {
+    "message": "Última copia: $1 · $2 · $3 mosaicos · $4"
+  },
+  "nGrupNKart": {
+    "message": "$1 grupos · $2 mosaicos"
+  },
+  "nAdresNKart": {
+    "message": "$1 direcciones · $2 mosaicos"
+  },
+  "grubaEklendi": {
+    "message": "Añadido a «$1»"
+  },
+  "speedDialeEklendi": {
+    "message": "Añadido a Speed Dial"
+  },
+  "sonAcilis": {
+    "message": "último: $1"
+  },
+  "grupNeIcin": {
+    "message": "¿Para qué es este grupo?"
+  },
+  "aciklamaIstege": {
+    "message": "Descripción (opcional)"
+  },
+  "gorselYerlesim": {
+    "message": "Ajuste de imagen"
+  },
+  "yerlesimKirp": {
+    "message": "Recortar (llenar)"
+  },
+  "yerlesimSigdir": {
+    "message": "Ajustar (mostrar todo)"
+  },
+  "sahneYakala": {
+    "message": "Capturar escena"
+  },
+  "onceAdresGirin": {
+    "message": "Introduce primero una dirección"
+  },
+  "sahneEklendi": {
+    "message": "Escena añadida"
+  },
+  "yakalanamadi": {
+    "message": "No se pudo capturar"
+  },
+  "grupKaliciSilMetin": {
+    "message": "El grupo «$1» y sus $2 mosaicos se eliminarán permanentemente."
+  },
+  "sifirlaKucuk": {
+    "message": "restablecer"
+  },
+  "copeTasinacak": {
+    "message": "«$1» se moverá a la papelera."
+  },
+  "sonucBulunamadi": {
+    "message": "Sin resultados para «$1»"
+  },
+  "depoDoluUyari": {
+    "message": "Se usa el $1% del espacio asignado. "
+  },
+  "depoDoluBildirim": {
+    "message": "Almacenamiento al $1% — se recomienda una copia"
+  },
+  "grupVeKartSilinecek": {
+    "message": "«$1» y los $2 mosaicos que contiene se eliminarán."
+  },
+  "grupAdiZatenVar": {
+    "message": "Ya existe un grupo llamado «$1»"
+  },
+  "htmlAltBilgi": {
+    "message": "Creado con WSD Speed Dial"
+  },
+  "elleSahne": {
+    "message": "Prepara la escena y luego:"
+  },
+  "cek": {
+    "message": "Capturar"
+  },
+  "sayfaZatenEkli": {
+    "message": "Esta página ya está añadida"
+  },
+  "sayfaZatenEkliMetin": {
+    "message": "Esta dirección ya existe en el grupo $1. ¿Añadirla igualmente?"
+  },
+  "yineDeEkle": {
+    "message": "Añadir igualmente"
+  },
+  "alanSec": {
+    "message": "Seleccionar área"
+  },
+  "uzunCekim": {
+    "message": "Captura larga"
+  },
+  "logoYakala": {
+    "message": "Capturar logo"
+  },
+  "logoEklendi": {
+    "message": "Logo añadido"
+  },
+  "logoBulunamadi": {
+    "message": "No se encontró el logo del sitio"
+  },
+  "logoSecin": {
+    "message": "Haz clic en el logo que quieras añadir:"
+  },
+  "grubaGit": {
+    "message": "Ir a este grupo"
+  },
+  "kartlarVeGruplar": {
+    "message": "Grupos y mosaicos"
+  },
+  "nGrup": {
+    "message": "$1 grupos"
+  },
+  "nKartZatenVardi": {
+    "message": "$1 ya existían"
+  },
+  "kirikBaglantilariTara": {
+    "message": "Buscar enlaces rotos"
+  },
+  "kirikBaglantilar": {
+    "message": "Enlaces rotos"
+  },
+  "taraniyor": {
+    "message": "Buscando..."
+  },
+  "durdur": {
+    "message": "Detener"
+  },
+  "isaretleriTemizle": {
+    "message": "Borrar marcas"
+  },
+  "isaretlerTemizlendi": {
+    "message": "Marcas borradas"
+  },
+  "nKirik": {
+    "message": "$1 rotos"
+  },
+  "nSupheli": {
+    "message": "$1 dudosos"
+  },
+  "taramaDurduruldu": {
+    "message": "Búsqueda detenida; los resultados están incompletos."
+  },
+  "kirikBaglantiYok": {
+    "message": "Se revisaron $1 direcciones; no se encontraron enlaces rotos."
+  },
+  "kirikAciklama": {
+    "message": "Estas direcciones devolvieron 404/410; la página ya no existe."
+  },
+  "supheliAciklama": {
+    "message": "No se pudo acceder a estas direcciones, pero el resultado no es concluyente (tiempo de espera, error de red o protección antibots). No se marcaron."
+  },
+  "kirikKartlariGoster": {
+    "message": "Mostrar mosaicos rotos"
+  },
+  "tekrarTara": {
+    "message": "Volver a buscar"
+  },
+  "nKartDuzelmis": {
+    "message": "$1 mosaicos vuelven a funcionar, quitados de la lista"
+  },
+  "degisiklikYok": {
+    "message": "Sin cambios, todos siguen rotos"
+  },
+  "kirikKartYokTara": {
+    "message": "No hay mosaicos marcados como rotos. Usa «Volver a buscar» para revisar todos."
+  },
+  "nKartEklendi": {
+    "message": "$1 mosaicos añadidos"
+  },
+  "yerimlerindenIctar": {
+    "message": "Importar desde marcadores"
+  },
+  "htmlDosyasindanIctar": {
+    "message": "Importar desde archivo HTML"
+  },
+  "yerImleriniIceAktar": {
+    "message": "Importar marcadores"
+  },
+  "ictarAciklama": {
+    "message": "Cada carpeta que elijas se convierte en un grupo. Si ya existe un grupo con ese nombre, los mosaicos se añaden a él."
+  },
+  "ictarKlasorYok": {
+    "message": "No se encontraron carpetas de marcadores para importar."
+  },
+  "ictarSecimYok": {
+    "message": "No se eligió ninguna carpeta."
+  },
+  "ictarBasarisiz": {
+    "message": "No se pudo completar la importación."
+  },
+  "nKlasorNBaglanti": {
+    "message": "$1 carpetas · $2 enlaces"
+  },
+  "hepsiniSec": {
+    "message": "Seleccionar / quitar todo"
+  },
+  "yerImleri": {
+    "message": "Marcadores"
+  },
+  "grubaEklenecek": {
+    "message": "se añadirá al grupo existente"
+  },
+  "ipucuYerimiSurukle": {
+    "message": "Arrastra un enlace de la barra de marcadores y suéltalo aquí para crear un mosaico"
+  },
+  "ipucuYerimiIctar": {
+    "message": "Importa los marcadores del navegador; cada carpeta será un grupo"
+  },
+  "silmeyiGeriAl": {
+    "message": "Deshacer eliminar todo"
+  },
+  "klasorSurukleme": {
+    "message": "No se pueden soltar carpetas. Usa Ajustes → Importar desde marcadores"
+  },
+  "kartEklenemedi": {
+    "message": "No se pudo añadir el mosaico"
+  },
+  "hepsiniSil": {
+    "message": "Eliminar todo"
+  },
+  "nKirikKartCopeTasinacak": {
+    "message": "$1 mosaicos rotos se moverán a la papelera. Puedes restaurarlos."
+  },
+  "nKartCopeTasindi": {
+    "message": "$1 mosaicos movidos a la papelera"
+  },
+  "tekleDusur": {
+    "message": "Dejar uno de cada"
+  },
+  "tekleDusurOnay": {
+    "message": "Se conservará un mosaico por cada dirección duplicada; el resto irá a la papelera. Puedes restaurarlos."
+  }
+}
