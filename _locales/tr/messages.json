@@ -522,7 +522,7 @@
     "message": "Dosya okunamadı"
   },
   "goruntuAlinamadi": {
-    "message": "Görüntü alınamadı"
+    "message": "görüntü alınamadı"
   },
   "indirilecekGorselYok": {
     "message": "İndirilecek görsel yok"
@@ -1228,5 +1228,92 @@
   },
   "tekleDusurOnay": {
     "message": "Her yinelenen adresten bir kart kalacak, diğerleri çöp kutusuna taşınacak. Geri alabilirsiniz."
+  },
+  "nKartGorseliAlinamadi": {
+    "message": "$1 kartın görseli alınamadı"
+  },
+  "ulasilamadi": {
+    "message": "ulaşılamadı"
+  },
+  "grupAra": {
+    "message": "Grup ara..."
+  },
+  "altKlasorleriKoru": {
+    "message": "Alt klasörleri koru (işaretli değilse her klasör ayrı grup olur)"
+  },
+  "baskaGrubaTasi": {
+    "message": "Başka gruba taşı..."
+  },
+  "buKlasordeKartYok": {
+    "message": "Bu klasörde kart yok"
+  },
+  "klasorGrupOldu": {
+    "message": "Klasör artık bir grup"
+  },
+  "klasorSilMetin": {
+    "message": "\"$1\" klasörü, içindeki $2 kart ve $3 alt klasörle birlikte çöp kutusuna taşınacak."
+  },
+  "klasorSilindiNKart": {
+    "message": "Klasör silindi ($1 kart)"
+  },
+  "klasorTasindi": {
+    "message": "Klasör taşındı"
+  },
+  "klasoruSil": {
+    "message": "Klasörü sil"
+  },
+  "klasoruTasi": {
+    "message": "Klasörü taşı"
+  },
+  "nAltKlasor": {
+    "message": "$1 alt klasör"
+  },
+  "olustur": {
+    "message": "Oluştur"
+  },
+  "ustDuzeyGrupOlarak": {
+    "message": "⬆ Üst düzey grup olarak"
+  },
+  "ustKlasor": {
+    "message": "Üst klasör (Backspace)"
+  },
+  "yeniKlasor": {
+    "message": "Yeni Klasör"
+  },
+  "klasorKendiIcine": {
+    "message": "Klasör kendi içine ya da alt klasörüne taşınamaz"
+  },
+  "klasoruDuzenle": {
+    "message": "Klasörü Düzenle"
+  },
+  "buKlasordeNKart": {
+    "message": "Bu klasörde <b>$1</b> kart var"
+  },
+  "klasorAdiZatenVar": {
+    "message": "Bu klasörde \"$1\" adlı bir klasör zaten var"
+  },
+  "bekleyenYenilemeler": {
+    "message": "Bekleyen yenilemeler"
+  },
+  "nBekleyenIptalEdilsinMi": {
+    "message": "Kuyrukta daha önce başlatılmış $1 yenileme bekliyor. Önce onlar iptal edilsin mi? İptal edilmezse onlar da sırayla yenilenir."
+  },
+  "iptalEt": {
+    "message": "İptal et"
+  },
+  "kalsin": {
+    "message": "Kalsın"
+  },
+  "nBekleyenIptalEdildi": {
+    "message": "$1 bekleyen yenileme iptal edildi"
+  },
+  "aktarimGorselsizN": {
+    "message": "İçe aktarılan $1 kartın görseli yok. Otomatik başlatılmadı; görselleri almak için grup menüsünden \"Grubun görsellerini yenile\"yi kullanın."
+  },
+  "iceAktarmaTamamlandi": {
+    "message": "İçe aktarma tamamlandı"
+  },
+  "nYeniGrup": {
+    "message": "$1 yeni grup"
   }
 }

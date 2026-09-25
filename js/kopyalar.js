@@ -19,7 +19,7 @@
 // burada kartlari GORSELIYLE yan yana koyup hangisini tutacagina
 // bakarak karar verebiliyorsun.
 
-import { gruplariAl, kartlariAl, kartSil, urlNormalle } from './yerimi.js';
+import { gruplariAl, grubunTumKartlari, kartSil, urlNormalle } from './yerimi.js';
 import { kartAraclariOlustur } from './cizim.js';
 import { aktifGrup, grubuAc } from './cizim.js';
 import { bildir, ekranSinifiniVer } from './arayuz.js';
@@ -56,7 +56,7 @@ async function kumeleriBul() {
     const harita = new Map();          // url -> [{kart, grup}]
 
     for (const g of await gruplariAl()) {
-        for (const k of await kartlariAl(g.id)) {
+        for (const k of await grubunTumKartlari(g)) {
             const a = urlNormalle(k.url);
             if (!harita.has(a)) harita.set(a, []);
             harita.get(a).push({ kart: k, grup: g });

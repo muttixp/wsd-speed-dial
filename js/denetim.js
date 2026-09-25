@@ -14,7 +14,7 @@
 // "Kart var ama gorunmuyor" gibi sorunlari tek seferde ortaya cikarir.
 // Elle konsol komutu yazmak yerine Bakim bolumunden calistiriliyor.
 
-import { gruplariAl, kartlariAl, urlNormalle } from './yerimi.js';
+import { gruplariAl, grubunTumKartlari, urlNormalle } from './yerimi.js';
 import { c } from './dil.js';
 
 export async function denetle() {
@@ -37,7 +37,7 @@ export async function denetle() {
         const kartHaritasi = new Map();     // grupId -> kartlar
 
         for (const g of gruplar) {
-            const kartlar = await kartlariAl(g.id);
+            const kartlar = await grubunTumKartlari(g);
             kartHaritasi.set(g.id, kartlar);
             rapor.kart += kartlar.length;
             if (!kartlar.length) rapor.bosGrup.push(g.baslik);
@@ -77,14 +77,18 @@ export async function denetle() {
         rapor.ekranAtlandi = ozelEkran;
 
         if (!ozelEkran) {
+            // Ekrandaki KLASORUN dogrudan kartlari: grup haritasi alt
+            // klasorleri de iceriyor, onlar bu ekranda cizilmiyor.
             const { aktifGrup } = await import('./cizim.js');
-            const acik = gruplar.find(g => g.id === aktifGrup());
-            if (acik) {
+            const acikId = aktifGrup();
+            if (acikId) {
                 const dom = new Set([...document.querySelectorAll('#kartKabi .kart:not(.ekleKart)')]
                     .map(a => a.dataset.kartId));
-                for (const k of kartHaritasi.get(acik.id)) {
+                let ad = '';
+                try { ad = (await chrome.bookmarks.get(acikId))[0].title; } catch (e) { /* */ }
+                for (const k of (await chrome.bookmarks.getChildren(acikId)).filter(x => x.url)) {
                     if (!dom.has(k.id)) {
-                        rapor.cizilmeyen.push({ baslik: k.baslik, grup: acik.baslik });
+                        rapor.cizilmeyen.push({ baslik: k.title, grup: ad });
                     }
                 }
             }

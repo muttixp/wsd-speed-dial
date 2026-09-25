@@ -17,9 +17,10 @@ import { aktifGrup, grubuAc } from './cizim.js';
 import { bildir } from './arayuz.js';
 import { c } from './dil.js';
 import { icSuruklemeVarMi } from './kartsurukle.js';
+import { klasorSuruklemeVarMi } from './klasorsurukle.js';
 
-/** Kendi kartimizi tasirken bu modul devreye girmiyor. */
-const icSurukleme = () => icSuruklemeVarMi();
+/** Kendi kartimizi ya da klasorumuzu tasirken bu modul devreye girmiyor. */
+const icSurukleme = () => icSuruklemeVarMi() || klasorSuruklemeVarMi();
 
 export function disBirakmayiKur() {
     const kap = document.getElementById('kartKabi');

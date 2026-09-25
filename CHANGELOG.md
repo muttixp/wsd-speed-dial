@@ -3,6 +3,140 @@
 Sürüm numaraları [Semantic Versioning](https://semver.org/lang/tr/)
 kurallarına uyar.
 
+## [1.5.0] — 2026-09-25
+
+### Yeni
+- **İç içe klasörler**: grubun içindeki yer imi klasörleri ızgarada klasör
+  kutusu olarak görünüyor (kart sayısı, alt klasör sayısı ve ilk dört
+  kartın önizlemesi). Tıklayınca içine giriliyor; üstte yol şeridi
+  (`elfinder › template`) ve bir üst klasöre dönüş düğmesi var,
+  `Backspace` de bir üst klasöre çıkarıyor. Grup şeridi değişmedi
+- **İleri / geri**: dosya gezgini gibi farenin yan tuşları, `Alt+←/→`
+  ve tarayıcının geri/ileri düğmeleri klasörler ve gruplar arasında
+  gezdiriyor
+- Boş alan menüsünde **Yeni Klasör**; klasör kutusunun sağ tık menüsünde
+  Aç / Hepsini aç / Görselleri yenile / Düzenle / Taşı / Sil
+- **Klasör düzenleme** grup penceresiyle aynı: ad, açıklama (ipucunda),
+  ikon (22 ikon, emoji ya da site favicon'u) ve ikon rengi. Özel ikonlu
+  klasörde önizleme mozaiği yerine ikon büyük görünüyor; başlıkta da
+  küçük hâli var. Aynı klasörde aynı adlı iki alt klasör engelleniyor.
+  Klasör ikonları yedeğe ve çöp kutusuna giriyor
+- Klasör kutusunun üzerine gelince kartlardaki gibi **araç şeridi**:
+  Düzenle / Not / Görselleri yenile / Taşı / Sil
+- Klasöre **not** (köşede sarı işaret) ve **renk etiketi** (alt şerit,
+  Düzenle penceresinden). İkisi de yedeğe ve çöp kutusuna giriyor
+- Kart, **klasör kutusuna** ya da **yol şeridindeki** bir üst klasöre
+  sürüklenerek taşınıyor
+- **Klasör sürükle-bırak**: klasör kutusu başka bir klasörün kenarına
+  bırakılınca sıralanıyor (mavi çizgi), ortasına bırakılınca içine
+  giriyor. Yol şeridine ya da bir grup sekmesine bırakılınca oraya
+  taşınıyor; Ana Sayfa sekmesine bırakılan klasör grup oluyor
+- Klasör **taşınabiliyor**: başka bir gruba/klasöre ya da "üst düzey grup
+  olarak" şeride. Grup menüsünde **Başka gruba taşı**: bir grubu başka
+  grubun içine alt klasör olarak alıyor (düzleşmiş eski aktarımları
+  toparlamak için)
+- Kart taşıma listesinde ve Düzenle penceresinin Grup alanında alt
+  klasörler tam yollarıyla (`elfinder › config`) yer alıyor
+- **Yer imi içe aktarma alt klasörleri koruyor**: her üst klasör bir grup,
+  içindeki klasörler onun alt klasörleri oluyor. "Alt klasörleri koru"
+  kutusu kaldırılırsa eski davranış (her klasör ayrı grup)
+
+### Düzeltmeler
+- **Alt klasördeki kartların görselleri "kullanılmayan veri" sayılıp
+  siliniyordu**: öksüz taraması yalnızca grupların ilk seviyesine
+  bakıyordu. Artık bütün ağaç geziliyor
+- Alt klasördeki kartlar yedeğe girmiyor, aramada, kırık bağlantı
+  taramasında, yinelenen kartlarda ve tutarlılık denetiminde çıkmıyordu.
+  Hepsi artık alt klasörleri de kapsıyor; yedek klasör yapısını ve
+  sırasını koruyor (eski sürümler bu yedeği açınca kartları grubun kendisine koyar)
+- Grup silinince alt klasörleri çöp kutusuna girmiyordu; artık tüm ağaç
+  yedekleniyor ve Geri Al ile aynı yapıda, aynı sırayla dönüyor.
+  Alt klasör silinirse eski yerine, üst klasörü de silinmişse grup olarak dönüyor
+- Grupları Yönet'te silinen gruplar çöp kutusuna gitmeden yok oluyordu
+- Alt klasöre yer imi çubuğundan eklenen sayfanın görseli yakalanmıyordu
+- Sağ tık menüsünden eklerken "zaten ekli" kontrolü alt klasörleri görmüyordu
+- Aramadan açılan bir kartı Düzenle'de kaydetmek, grubu değişmese de onu
+  açık gruba taşıyabiliyordu
+- Başka bir WSD sekmesindeki değişiklik, bu sekmeyi o sekmede son açılan
+  gruba atlatıyordu; "Son grubu hatırla" kapalıyken her değişiklikte ilk
+  gruba dönülüyordu. Artık ekrandaki klasörde kalınıyor
+- Grup sekmesindeki kart sayısı alt klasörleri de sayıyor
+- **Grup yenilemede önce başka kartlar yenileniyordu**: alt klasörlerin
+  kartları ağaç sırasında öne düşüyordu ve kuyrukta bekleyen arka plan
+  işleri (yeni eklenen yer imleri) kullanıcının isteğinden önce
+  işleniyordu. Artık ekrandaki kartlar ızgara sırasıyla önce, alt
+  klasörlerdekiler sonra geliyor; elle istenen her yenileme (kart,
+  grup, klasör, Hepsini Yenile) bekleyen arka plan işlerinin önüne geçiyor
+- **İçe aktarma sırasında yakalama çalışıp işlemi kasıyordu**: her yeni
+  yer imi arka planda görsel yakalamayı başlatıyordu. Artık aktarma
+  (yedekten yükleme, yer imi aktarma) sürerken yakalama, sağ tık menüsü
+  kurulumu ve ekran tazelemesi bekliyor; bitince yalnızca görseli
+  olmayan kartlar tek seferde kuyruğa alınıyor. 300'den fazlaysa
+  kendiliğinden başlamıyor, bildirimle grup yenilemesi öneriliyor
+- **Aktarma sessiz bitiyordu**: sonuç bildirimi sayfa yenilenmeden hemen
+  önce gösterilip kayboluyordu. Artık "✓ İçe aktarma tamamlandı: …"
+  yenilenen sayfada 8 saniye görünüyor (yedekten yükleme, silme
+  yedeğini geri alma, tüm verileri silme, ayarları sıfırlama, yer imi
+  aktarma)
+- Toplu yenileme başlarken kuyrukta önceki yenilemelerden kalan iş
+  varsa soruluyor: "Önce onlar iptal edilsin mi?" (İptal et / Kalsın)
+- **Yavaş açılan sitelerde "görüntü alınamadı"**: yakalama sekmesi önce
+  boş sayfayla "yüklendi" durumuna geçiyor ve site geç yanıt verince boş
+  sekme yakalanmaya çalışılıyordu (`Cannot access contents of url ""`).
+  Artık gerçek adres gelmeden sayfa hazır sayılmıyor; bu hata yine de
+  gelirse bir kez daha bekleyip deneniyor
+
+## [1.4.3] — 2026-09-24
+
+### Yeni
+- **Kart taşımada grup arama**: açılır liste yerine aranabilir grup
+  listesi. Grupları Yönet'teki aramayla aynı mantık: yazdıkça eşleşen
+  gruba kaydırıp seçiyor, Enter sonraki eşleşmeye atlıyor; tıklama
+  seçer, çift tıklama taşır
+- **Görseli alınamayan kartlar boş kalmıyor**: sitenin alan adını ve
+  "görüntü alınamadı" satırını taşıyan, üstü çizili görsel simgeli bir
+  yer tutucu üretiliyor. Toplu yenileme bitince kaç kartın alınamadığı
+  da bildiriliyor
+- **Grupları Yönet'te grup arama**: yazdıkça eşleşen satıra kaydırıp
+  vurguluyor, liste bütün kalıyor; Enter sonraki eşleşmeye atlıyor.
+  Çok gruplu kurulumlarda kaldığın yeri bulup aşağı doğru devam etmek
+  için
+- **Grupları Yönet satırlarına yenile düğmesi**: o grubun tüm
+  kartlarının görselini yeniden yakalatıyor, pencere açık kalıyor
+- Kırık bağlantılar ekranı artık **ulaşılamayan** adresleri de gösteriyor
+  ("ulaşılamadı" rozetiyle, kırıkların ardında). DNS hatası, zaman aşımı
+  ya da SSL sorunu olan kartlar 404 sayılmıyor ama görünür oluyor;
+  "Tekrar tara" ikisini birden yokluyor
+
+### Düzeltmeler
+- **Kırık bağlantılar ekranı "ulaşılamadı" kartında çöküyordu**: `kirik.js`
+  çeviri işlevini içe aktarmıyordu (`c is not defined`)
+- **Gizli kipte toplu yenilemede kartlar "görüntü alınamadı" kalıyordu**:
+  arka plan sekmesinde `Page.captureScreenshot` bazı sitelerde hiç
+  dönmüyordu. Gizli yakalama başarısız olursa kart bir kez pencere
+  kipiyle yeniden deneniyor; `captureScreenshot` zaman aşımı 20 sn'den
+  10 sn'ye indi
+- **Sahne Yakala bazı sitelerde hiç görünmüyordu**: çubuk `innerHTML` ve
+  satır içi `style` öznitelikleriyle kuruluyordu, katı CSP uygulayan
+  siteler bunları engelliyordu. Artık DOM ile kurulup stiller CSSOM'dan
+  veriliyor
+- Sayfadaki çerez/onay ve reklam katmanları çubuğun tıklamasını
+  yutabiliyordu: çubuk tarayıcının üst katmanına alındı, üstünde kalan
+  öğeler yakalama süresince etkisizleştiriliyor. Yine de engellenirse
+  aynı işlemler klavyeden yapılabiliyor (Enter çek, A alan seç,
+  U uzun çekim, Esc vazgeç)
+- Sahne Yakala bazen tıklamaya yanıt vermiyor, ancak sayfa yenilenince
+  çalışıyordu: askıda kalan önceki yakalama yeni istekte kapatılıyor ve
+  düğme her durumda geri açılıyor
+- **Yumuşak 404**: sunucu 200 dönüp boş sayfa verdiğinde kart bomboş
+  kalıyordu. Yakalanan kare renk çeşitliliği ve parlaklık sapmasıyla
+  ölçülüyor; boşsa yer tutucuya çevriliyor
+- **Toplu yenileme tek bir kartta takılıp kalıyordu**: yanıt vermeyen
+  sayfalarda `Page.captureScreenshot` ve `captureVisibleTab` hiç
+  dönmüyordu. Tüm yakalama çağrıları zaman aşımına bağlandı, iş başına
+  45 saniyelik tavan kondu; süre aşılırsa o kart atlanıp kuyruk devam
+  ediyor ve açılan sekme/pencere kapanıyor
+
 ## [1.4.2] — 2026-09-24
 
 ### Yeni

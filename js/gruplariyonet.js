@@ -26,7 +26,48 @@ const el = id => document.getElementById(id);
 let silinecekler = new Set();
 let bitince = null;
 
+/**
+ * Grup ARAMA: cok gruplu kurulumlarda (100+) aradigin grubu gozle
+ * bulmak zor. Satirlari GIZLEMIYORUZ - liste butun kalsin ki arkasini
+ * gormeye devam edebilesin; eslesen satira kaydirip vurguluyoruz.
+ * Enter sonraki eslesmeye atliyor.
+ */
+function suzmeyiKur() {
+    const alan = document.getElementById('yonetSuz');
+    const liste = document.getElementById('yonetListe');
+    if (!alan || !liste) return;
+
+    let sira = 0;
+
+    const eslesenler = () => {
+        const t = alan.value.trim().toLocaleLowerCase('tr');
+        if (!t) return [];
+        return [...liste.children].filter(li =>
+            (li.querySelector('input')?.value || '').toLocaleLowerCase('tr').includes(t));
+    };
+
+    const goster = liste2 => {
+        for (const li of liste.children) li.classList.remove('vurgulu');
+        if (!liste2.length) return;
+        if (sira >= liste2.length) sira = 0;
+        const hedef = liste2[sira];
+        hedef.classList.add('vurgulu');
+        hedef.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    };
+
+    alan.addEventListener('input', () => { sira = 0; goster(eslesenler()); });
+
+    alan.addEventListener('keydown', e => {
+        if (e.key !== 'Enter') return;
+        e.preventDefault();
+        const l = eslesenler();
+        sira = l.length ? (sira + 1) % l.length : 0;     // sonraki eslesme
+        goster(l);
+    });
+}
+
 export function yonetPenceresiniKur() {
+    suzmeyiKur();
     el('yonetIptal')?.addEventListener('click', () => kapat(false));
     el('yonetKaydet')?.addEventListener('click', kaydet);
 
@@ -45,6 +86,8 @@ const ad   = li => li.querySelector('.yonetAd').value.toLocaleLowerCase('tr');
 const sayi = li => parseInt(li.querySelector('.yonetSayi').textContent, 10) || 0;
 
 export async function yonetPenceresiniAc(tamamlandi) {
+    const suz = document.getElementById('yonetSuz');
+    if (suz) suz.value = '';
     bitince = tamamlandi;
     silinecekler = new Set();
 
@@ -107,6 +150,22 @@ function satirOlustur(g, adet, ikonDeger) {
         await grupPenceresiniAc({ id: g.id, baslik: yeniAd || g.baslik });
     });
 
+    // YENILE: bu grubun tum kartlarinin gorselini yeniden yakalar.
+    // Pencere ACIK kaliyor - birkac grubu arka arkaya yenilemek icin.
+    const yenile = document.createElement('button');
+    yenile.className = 'yonetYenile';
+    yenile.type = 'button';
+    yenile.title = c('grubunGorselleriniYenile');
+    yenile.innerHTML = '<svg viewBox="0 0 16 16" width="14" height="14" fill="none" ' +
+        'stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">' +
+        '<path d="M14 8a6 6 0 1 1-1.8-4.3"/><path d="M14 2v4h-4"/></svg>';
+    yenile.addEventListener('click', async () => {
+        const { grubunGorselleriniYenile } = await import('./etkilesim.js');
+        yenile.disabled = true;
+        try { await grubunGorselleriniYenile(g.id); }
+        finally { yenile.disabled = false; }
+    });
+
     // GIT: yonet penceresini kapatip o grubu aciyor
     const git = document.createElement('button');
     git.className = 'yonetGit';
@@ -142,7 +201,7 @@ function satirOlustur(g, adet, ikonDeger) {
         li.remove();
     });
 
-    li.append(tut, ikon, adAlan, sayiEl, git, duzenle, sil);
+    li.append(tut, ikon, adAlan, sayiEl, yenile, git, duzenle, sil);
     return li;
 }
 
@@ -191,8 +250,15 @@ async function kaydet() {
     const kok = await kokKlasoruAl();
 
     try {
-        // Once silmeler
+        // Once silmeler - COPE yedekleyerek (alt klasorleriyle birlikte).
+        // Burada silinen gruplar dogrudan yok oluyordu.
+        const { grubuYedekle } = await import('./copekrani.js');
+        const { copeAt } = await import('./cop.js');
         for (const id of silinecekler) {
+            try {
+                const yedek = await grubuYedekle(id);
+                if (yedek) await copeAt(yedek);
+            } catch (e) { /* yedeklenemese de kullanici silmek istedi */ }
             await grupSil(id);
         }
 

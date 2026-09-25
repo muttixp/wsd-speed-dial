@@ -18,7 +18,7 @@
 // Gorseller data URI olarak GOMULUYOR - dis baglanti yok, dosya
 // tasindiginda da calisiyor. Bedeli: dosya buyuk olabiliyor.
 
-import { gruplariAl, kartlariAl, urlNormalle } from './yerimi.js';
+import { gruplariAl, grubunTumKartlari, urlNormalle } from './yerimi.js';
 import { c } from './dil.js';
 import { ayarlariAl } from './ayar.js';
 
@@ -40,7 +40,7 @@ export async function htmlUret() {
     let sira = 0;
 
     for (const g of gruplar) {
-        const kartlar = await kartlariAl(g.id);
+        const kartlar = await grubunTumKartlari(g);
         if (!kartlar.length) continue;
         toplamKart += kartlar.length;
 

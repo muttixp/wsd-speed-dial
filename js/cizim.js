@@ -12,7 +12,9 @@
 // WSD Speed Dial - cizim katmani
 // DOM kurulumu burada; veri erisimi yerimi.js'te.
 
-import { gruplariAl, gorunurGruplariAl, kartlariAl, kartSayilariAl, urlNormalle } from './yerimi.js';
+import { gruplariAl, gorunurGruplariAl, kartSayilariAl, urlNormalle,
+         kokKlasoruAl, klasorZinciri } from './yerimi.js';
+import { klasorKartiOlustur, klasorOzetleriniUygula, yolSeridiniCiz } from './klasor.js';
 import { c } from './dil.js';
 import { gorselAl, kucult, SISKIN_ESIK } from './gorsel.js';
 import { renkleriAl } from './renk.js';
@@ -21,7 +23,11 @@ import { notlariAl } from './not.js';
 import { ikonlariAl, gorunumleriAl } from './grupikon.js';
 import { ikonHTML } from './ikon.js';
 
+// aktifGrupId: EKRANDAKI klasor - grubun kendisi ya da icindeki bir alt
+// klasor. Kart ekleme, siralama, tasima hep bunu kullaniyor.
+// aktifSekmeId: seritte vurgulanan GRUP (alt klasordeyken de ust grup).
 let aktifGrupId = null;
+let aktifSekmeId = null;
 const grupSeridi = () => document.getElementById('grupSeridi');
 const kartKabi   = () => document.getElementById('kartKabi');
 
@@ -29,7 +35,46 @@ export function aktifGrup() {
     return aktifGrupId;
 }
 
+/** Seritte secili grup (alt klasordeyken onun ust grubu). */
+export function aktifSekme() {
+    return aktifSekmeId || aktifGrupId;
+}
+
+/* ---------- Ileri / geri (1.5.0) ----------
+ *
+ * Dosya gezgini gibi: farenin yan tuslari, Alt+Sol/Sag ve tarayicinin
+ * geri/ileri dugmeleri klasorler ve gruplar arasinda gezdiriyor.
+ * Tarayicinin KENDI gecmisini kullaniyoruz (pushState): yan tuslari
+ * tarayici zaten geri/ileri olarak isliyor, ayrica dinlemeye gerek yok;
+ * dinlesek her basis iki adim giderdi.
+ */
+function gecmiseYaz(id, degisti, gecmistenGeldi) {
+    if (gecmistenGeldi) return;
+    try {
+        const durum = { wsdKlasor: id };
+        if (!history.state || !history.state.wsdKlasor) history.replaceState(durum, '');
+        else if (degisti && history.state.wsdKlasor !== id) history.pushState(durum, '');
+    } catch (e) { /* gecmis kullanilamiyor - gezinme yine calisir */ }
+}
+
+let gecmisBagli = false;
+function gecmisiDinle() {
+    if (gecmisBagli) return;
+    gecmisBagli = true;
+    window.addEventListener('popstate', async e => {
+        const id = e.state && e.state.wsdKlasor;
+        if (!id) return;
+        // Arama/cop gibi bir ekran aciksa kapat: geri tusu normal izgaraya donsun
+        try {
+            const { ekranSinifiniVer } = await import('./arayuz.js');
+            ekranSinifiniVer('');
+        } catch (err) { /* onemli degil */ }
+        grubuAc(id, { gecmistenGeldi: true });
+    });
+}
+
 export async function arayuzuKur() {
+    gecmisiDinle();
     let gruplar = await gorunurGruplariAl();
 
     // Ana Sayfa gizlenip tum gruplar silinmisse liste bos kalabiliyor.
@@ -42,6 +87,17 @@ export async function arayuzuKur() {
 
     grupSeridiCiz(gruplar, sayilar, ikonlar, gorunumler);
 
+    // YENIDEN CIZIM (canli senkron, grup islemleri): ekrandaki klasorde
+    // kal. localStorage TUM WSD sekmelerinde ortak; ona bakinca bir
+    // sekmedeki tazeleme, baska sekmede acilan klasore atliyordu.
+    if (aktifGrupId) {
+        const zincir = await klasorZinciri(aktifGrupId).catch(() => null);
+        if (zincir && gruplar.some(g => g.id === zincir[0].id)) {
+            await grubuAc(aktifGrupId);
+            return;
+        }
+    }
+
     // Son grubu hatirlama kapaliysa her acilista Ana Sayfa'dan basla
     const ayar = await ayarlariAl();
     if (ayar.grubuHatirla === false) {
@@ -49,9 +105,15 @@ export async function arayuzuKur() {
         return;
     }
 
+    // Son acilan yer bir ALT KLASOR olabilir: zincirinin basi gorunur
+    // bir grupsa oraya donuyoruz
     const sonGrup = localStorage.getItem('wsdSonGrup');
-    const gecerli = gruplar.find(g => g.id === sonGrup);
-    await grubuAc(gecerli ? sonGrup : gruplar[0].id);
+    let hedef = gruplar[0].id;
+    if (sonGrup) {
+        const zincir = await klasorZinciri(sonGrup).catch(() => null);
+        if (zincir && gruplar.some(g => g.id === zincir[0].id)) hedef = sonGrup;
+    }
+    await grubuAc(hedef);
 }
 
 function grupSeridiCiz(gruplar, sayilar, ikonlar = {}, gorunumler = {}) {
@@ -183,18 +245,35 @@ function oklariTazele() {
     sag.hidden = serit.scrollLeft >= tasma - 2;
 }
 
-export async function grubuAc(grupId) {
+/**
+ * Bir grubu YA DA grubun icindeki bir alt klasoru acar.
+ * Alt klasorde seritte ust grup vurgulanir, ustte yol seridi cikar.
+ */
+export async function grubuAc(grupId, { gecmistenGeldi = false } = {}) {
+    // Klasor silinmis/tasinmis olabilir: WSD agacinda yoksa ilk gruba don
+    let zincir = grupId ? await klasorZinciri(grupId).catch(() => null) : null;
+    if (!zincir) {
+        const gs = await gorunurGruplariAl();
+        const yedek = gs.find(g => g.id === aktifSekmeId) || gs[0];
+        if (!yedek) return;
+        grupId = yedek.id;
+        zincir = await klasorZinciri(grupId).catch(() => null) || [{ id: grupId, baslik: yedek.baslik }];
+    }
+    const sekmeId = zincir[0].id;
+
     // Grup DEGISTIYSE sayfayi basa al: onceki grupta asagidaysan yeni
     // grupta da asagida basliyordun ve ustteki kartlari kacirıyordun.
     // Ayni grup yeniden ciziliyorsa (tazeleme) kaydirma korunuyor.
     const grupDegisti = aktifGrupId !== null && aktifGrupId !== grupId;
 
     aktifGrupId = grupId;
+    aktifSekmeId = sekmeId;
     localStorage.setItem('wsdSonGrup', grupId);
+    gecmiseYaz(grupId, grupDegisti, gecmistenGeldi);
 
     let aktifSekme = null;
     for (const s of grupSeridi().children) {
-        const aktifMi = s.dataset.grupId === grupId;
+        const aktifMi = s.dataset.grupId === sekmeId;
         s.classList.toggle('aktif', aktifMi);
         if (aktifMi) aktifSekme = s;
     }
@@ -210,27 +289,48 @@ export async function grubuAc(grupId) {
 
     if (grupDegisti) window.scrollTo({ top: 0, behavior: 'instant' });
 
-    const kartlar = await kartlariAl(grupId);
+    // Kartlar ve ALT KLASORLER tek okumada. Kokun (Ana Sayfa) klasorleri
+    // zaten seritteki gruplar - orada klasor kutusu cizilmiyor.
+    const kok = await kokKlasoruAl();
+    let cocuklar = [];
+    try { cocuklar = await chrome.bookmarks.getChildren(grupId); } catch (e) { /* silinmis */ }
+    const kartlar = cocuklar.filter(x => x.url)
+        .map(x => ({ id: x.id, baslik: x.title, url: x.url, sira: x.index }));
+    const klasorler = grupId === kok ? [] : cocuklar.filter(x => !x.url)
+        .map(x => ({ id: x.id, baslik: x.title }));
+    // Klasorlerin ikon/renk/aciklamasi gruplarla ayni depoda
+    const klasorIkonlari = klasorler.length ? await ikonlariAl() : {};
+    const klasorGorunumleri = klasorler.length ? await gorunumleriAl() : {};
+
+    yolSeridiniCiz(zincir);
 
     // Karsilama: HIC kart yoksa ve tek grup varsa (yani daha hicbir sey
     // eklenmemis). Kullanici gruba girip bosaltmissa gostermiyoruz -
     // orada "+" karti yeterli, karsilama metni yer kaplar.
     const gruplar = await gorunurGruplariAl();
-    const bosDurum = kartlar.length === 0 && gruplar.length <= 1;
+    const bosDurum = kartlar.length === 0 && klasorler.length === 0 && gruplar.length <= 1;
     document.body.classList.toggle('bosDurum', bosDurum);
     const kars = document.getElementById('karsilama');
     if (kars) kars.hidden = !bosDurum;
 
-    kartlariCiz(kartlar);
+    kartlariCiz(kartlar, klasorler, klasorIkonlari, klasorGorunumleri);
     gorselleriUygula(kartlar);
     renkleriUygula(kartlar);
     notlariUygula(kartlar);
+    if (klasorler.length) {
+        klasorOzetleriniUygula([...kartKabi().querySelectorAll('.klasorKart')]).catch(() => {});
+    }
 }
 
-function kartlariCiz(kartlar) {
+function kartlariCiz(kartlar, klasorler = [], ikonlar = {}, gorunumler = {}) {
     const kap = kartKabi();
     kap.textContent = '';
 
+    // Klasorler ONCE: yer imindeki siralari ne olursa olsun kartlarla
+    // karismiyorlar. Kart siralamasi yalnizca kartlar arasinda.
+    for (const k of klasorler) {
+        kap.appendChild(klasorKartiOlustur(k, ikonlar[k.id], gorunumler[k.id] || {}));
+    }
     for (const k of kartlar) {
         kap.appendChild(kartOlustur(k));
     }

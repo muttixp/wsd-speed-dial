@@ -15,8 +15,9 @@
  * kartta rozet cikmiyor.
  */
 
-import { gruplariAl, kartlariAl, urlNormalle } from './yerimi.js';
+import { gruplariAl, grubunTumKartlari, urlNormalle } from './yerimi.js';
 import { ekranSinifiniVer } from './arayuz.js';
+import { c } from './dil.js';
 
 const ES_ZAMANLI   = 6;         // ayni anda kac istek
 const ZAMAN_ASIMI  = 9000;      // ms
@@ -40,11 +41,11 @@ export async function kirikTara(ilerleme) {
 
     const kartlar = [];
     for (const g of await gruplariAl()) {
-        for (const k of await kartlariAl(g.id)) {
+        for (const k of await grubunTumKartlari(g)) {
             // Yalnizca http(s): chrome:// ve file:// yoklanamiyor
             if (!/^https?:/i.test(k.url)) continue;
             kartlar.push({ url: k.url, anahtar: urlNormalle(k.url),
-                           baslik: k.baslik || k.url, grup: g.baslik });
+                           baslik: k.baslik || k.url, grup: [g.baslik, ...(k.yol || [])].join(' › ') });
         }
     }
 
@@ -80,7 +81,11 @@ export async function kirikTara(ilerleme) {
     try {
         await chrome.storage.local.set({ kirikSonuc: {
             tarih: sonuc.tarih,
-            anahtarlar: sonuc.kirik.map(k => k.anahtar)
+            anahtarlar: sonuc.kirik.map(k => k.anahtar),
+            // SUPHELI: 404 degil ama ulasilamayan adresler (DNS hatasi,
+            // zaman asimi, bot korumasi). Kirik sayilmiyorlar ama
+            // kullanici gorup kendi karar verebilsin diye listeleniyorlar.
+            supheliler: sonuc.supheli.map(k => k.anahtar)
         }});
     } catch (e) { /* onemli degil */ }
 
@@ -114,6 +119,16 @@ async function adresiYokla(url) {
         }
     }
     return { tamam: false, kod: 0, sebep: 'ag' };
+}
+
+/** Ulasilamayan ama kirik sayilmayan adresler. */
+export async function supheliAnahtarlar() {
+    try {
+        const d = await chrome.storage.local.get('kirikSonuc');
+        return new Set(d.kirikSonuc?.supheliler || []);
+    } catch (e) {
+        return new Set();
+    }
 }
 
 /** Kadranda rozet cizmek icin kirik anahtar kumesi. */
@@ -153,8 +168,9 @@ export async function kirikDugmesiniTazele() {
     const btn = document.getElementById('kirikBtn');
     if (!btn) return;
     const kume = await kirikAnahtarlar();
-    btn.hidden = kume.size === 0;
-    btn.dataset.adet = kume.size;
+    const supheli = await supheliAnahtarlar();
+    btn.hidden = kume.size === 0 && supheli.size === 0;
+    btn.dataset.adet = kume.size + supheli.size;
 }
 
 /** Isaretleri temizler (kullanici duzeltince). */
@@ -192,10 +208,12 @@ export function kirikEkraniniKapat() {
  */
 export async function kirikleriYenidenTara(ilerleme) {
     const kume = await kirikAnahtarlar();
-    if (!kume.size) return { toplam: 0, duzelen: 0, kalan: 0 };
+    const supheli = await supheliAnahtarlar();
+    if (!kume.size && !supheli.size) return { toplam: 0, duzelen: 0, kalan: 0 };
 
-    const anahtarlar = [...kume];
+    const anahtarlar = [...new Set([...kume, ...supheli])];
     const kalanlar = [];
+    const kalanSupheliler = [];
     let yapilan = 0;
 
     iptalIstendi = false;
@@ -208,6 +226,7 @@ export async function kirikleriYenidenTara(ilerleme) {
             // Hala 404/410 ise listede kaliyor; digerleri (duzeldi ya da
             // belirsiz) isaretten cikiyor - yanlis alarmda israr etmeyelim
             if (d.kod && KIRIK_KODLAR.includes(d.kod)) kalanlar.push(a);
+            else if (!d.tamam) kalanSupheliler.push(a);      // hala ulasilamiyor
             yapilan++;
             if (ilerleme) ilerleme({ yapilan, toplam: anahtarlar.length });
         }
@@ -215,17 +234,20 @@ export async function kirikleriYenidenTara(ilerleme) {
     await Promise.all(Array.from({ length: ES_ZAMANLI }, isci));
 
     try {
-        if (kalanlar.length) {
+        if (kalanlar.length || kalanSupheliler.length) {
             await chrome.storage.local.set({ kirikSonuc: {
-                tarih: new Date().toISOString(), anahtarlar: kalanlar }});
+                tarih: new Date().toISOString(),
+                anahtarlar: kalanlar,
+                supheliler: kalanSupheliler }});
         } else {
             await chrome.storage.local.remove('kirikSonuc');
         }
     } catch (e) { /* onemli degil */ }
 
+    const kalanToplam = kalanlar.length + kalanSupheliler.length;
     return { toplam: anahtarlar.length,
-             duzelen: anahtarlar.length - kalanlar.length,
-             kalan: kalanlar.length };
+             duzelen: anahtarlar.length - kalanToplam,
+             kalan: kalanToplam };
 }
 
 /**
@@ -267,7 +289,7 @@ export async function kirikleriTumdenSil(ilerleme) {
 
     const silinecek = [];
     for (const g of await gruplariAl()) {
-        for (const k of await kartlariAl(g.id)) {
+        for (const k of await grubunTumKartlari(g)) {
             if (kume.has(urlNormalle(k.url))) silinecek.push(k);
         }
     }
@@ -321,6 +343,15 @@ function kirikKartiOlustur(k) {
     etiket.className = 'kartGrupEtiketi';
     etiket.textContent = k.grup || '';
     a.appendChild(etiket);
+
+    // Supheli kartlar ayirt edilsin: 404 degil, ulasilamadi
+    if (k.supheliMi) {
+        a.classList.add('supheliKart');
+        const r = document.createElement('span');
+        r.className = 'supheliRozet';
+        r.textContent = c('ulasilamadi');
+        a.appendChild(r);
+    }
     return a;
 }
 
@@ -346,13 +377,17 @@ async function kirikEkraniniCiz() {
 
     kap.textContent = '';
     const kume = await kirikAnahtarlar();
+    const supheli = await supheliAnahtarlar();
 
     const liste = [];
     for (const g of await gruplariAl()) {
-        for (const k of await kartlariAl(g.id)) {
-            if (kume.has(urlNormalle(k.url))) liste.push({ kart: k, grup: g.baslik });
+        for (const k of await grubunTumKartlari(g)) {
+            const a = urlNormalle(k.url);
+            if (kume.has(a)) liste.push({ kart: k, grup: [g.baslik, ...(k.yol || [])].join(' › '), supheliMi: false });
+            else if (supheli.has(a)) liste.push({ kart: k, grup: [g.baslik, ...(k.yol || [])].join(' › '), supheliMi: true });
         }
     }
+    liste.sort((a, b) => (a.supheliMi ? 1 : 0) - (b.supheliMi ? 1 : 0));
 
     el('kirikSayi').textContent = liste.length ? String(liste.length) : '';
 
@@ -365,10 +400,10 @@ async function kirikEkraniniCiz() {
         return;
     }
 
-    for (const { kart, grup } of liste) {
+    for (const { kart, grup, supheliMi } of liste) {
         kap.appendChild(kirikKartiOlustur({
             url: kart.url, baslik: kart.baslik, grup, id: kart.id,
-            anahtar: urlNormalle(kart.url)
+            anahtar: urlNormalle(kart.url), supheliMi
         }));
     }
 

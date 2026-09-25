@@ -29,6 +29,7 @@ export function icSuruklemeVarMi() { return surukKart !== null; }
 let surukHedefi = null;        // { kart, sonrasina } - araya girilecek yer
 let hayalet = null;            // imleci takip eden kopya
 let hedefGrupId = null;        // grup sekmesi uzerindeysek
+let klasorHedefId = null;      // klasor kutusu / yol seridi uzerindeysek (1.5.0)
 let kaynakUzerinde = false;    // imlec kendi yerinin uzerinde mi (vazgecme)
 
 const GHOST_OFSET = { x: 0, y: 0 };
@@ -51,6 +52,7 @@ export function kartSuruklemeKur({ aktifGrup, yenile, bildir }) {
         surukKart = kart;
         surukHedefi = null;
         hedefGrupId = null;
+        klasorHedefId = null;
         kaynakUzerinde = false;
 
         kart.classList.add('surukKaynak');
@@ -151,7 +153,7 @@ async function birak({ aktifGrup, yenile, bildir }, konum = null) {
     const kart = surukKart;
     // Hedef kaydini YEREL degiskene aliyoruz: temizlik globali sifirliyor
     let hedefKaydi = surukHedefi;
-    const grupHedefi = hedefGrupId;
+    const grupHedefi = hedefGrupId || klasorHedefId;
 
     // YEDEK YOL: kayit bos ama imlec bir kartin uzerindeyse hedefi
     // son konumdan hesapla. Kayit, hizli harekette ya da olay sirasi
@@ -172,7 +174,7 @@ async function birak({ aktifGrup, yenile, bildir }, konum = null) {
             return;
         }
 
-        // 2) Ayni grupta siralama
+        // 2) Ayni klasorde siralama
         const kap = document.getElementById('kartKabi');
         const eskiIndex = [...kap.querySelectorAll('.kart:not(.ekleKart)')].indexOf(kart);
 
@@ -201,12 +203,16 @@ async function birak({ aktifGrup, yenile, bildir }, konum = null) {
         const grupId = aktifGrup();
         const kartId = kart.dataset.kartId;
 
-        await chrome.bookmarks.move(kartId, { parentId: grupId, index: yeniIndex });
+        // KART SIRASI -> YER IMI SIRASI. Klasorde alt klasorler de varsa
+        // yer imi indeksi kart sirasiyla ayni degil (klasorler ekranda
+        // once ciziliyor ama yer iminde araya karisik olabilir).
+        const hedefIndex = await gercekIndeks(grupId, kartId, yeniIndex);
+        await chrome.bookmarks.move(kartId, { parentId: grupId, index: hedefIndex });
 
         const gercek = await sirayiOku(grupId, kartId);
         if (gercek !== yeniIndex && gercek >= 0) {
             // Sapma yonune gore telafi et
-            const duzeltme = yeniIndex + (yeniIndex - gercek);
+            const duzeltme = hedefIndex + (yeniIndex - gercek);
             await chrome.bookmarks.move(kartId, {
                 parentId: grupId,
                 index: Math.max(0, duzeltme)
@@ -226,6 +232,26 @@ function hedefiTazele(x, y) {
     if (hedefGrupId) return;           // sekme kendi isaretini yonetiyor
 
     const altindaki = document.elementFromPoint(x, y);
+
+    // KLASOR KUTUSU ya da YOL SERIDI: kart o klasore tasinacak
+    const klasor = altindaki && altindaki.closest
+        ? altindaki.closest('[data-birak-klasor]')
+        : null;
+    if (klasor) {
+        if (klasorHedefId !== klasor.dataset.birakKlasor) {
+            klasorHedefId = klasor.dataset.birakKlasor;
+            isaretiTemizle();
+            sekmeIsaretle(klasor);
+        }
+        hayaletiHedefteIsaretle(true);
+        surukHedefi = null;
+        kaynakUzerinde = false;
+        return;
+    }
+    if (klasorHedefId) {
+        klasorHedefId = null;
+        sekmeIsaretiniTemizle();
+    }
     const ustKart = altindaki && altindaki.closest
         ? altindaki.closest('.kart:not(.ekleKart)')
         : null;
@@ -254,6 +280,23 @@ function hedefiTazele(x, y) {
 
     surukHedefi = { kart: ustKart, sonrasina };
     hedefiIsaretle(ustKart);
+}
+
+/**
+ * Kart sirasindaki `kartSira` konumunun yer imi indeksi: o konumdaki
+ * kartin (kendisi haric) yer imi indeksi; sona konuyorsa son kartin
+ * hemen ardi.
+ */
+async function gercekIndeks(grupId, kartId, kartSira) {
+    try {
+        const cocuklar = await chrome.bookmarks.getChildren(grupId);
+        const kartlar = cocuklar.filter(c => c.url && c.id !== kartId);
+        if (!kartlar.length) return 0;
+        if (kartSira >= kartlar.length) return kartlar[kartlar.length - 1].index + 1;
+        return kartlar[Math.max(0, kartSira)].index;
+    } catch (e) {
+        return kartSira;
+    }
 }
 
 /** Kartin gruptaki GERCEK sirasini dondurur (yalnizca yer imleri sayilir). */
@@ -357,5 +400,6 @@ function temizle() {
     surukKart = null;
     surukHedefi = null;
     hedefGrupId = null;
+    klasorHedefId = null;
     kaynakUzerinde = false;
 }

@@ -130,12 +130,13 @@ export async function depoDurumu() {
 export async function wsdUrlleri() {
     const kume = new Set();
     try {
-        const { gruplariAl, kartlariAl } = await import('./yerimi.js');
-        for (const g of await gruplariAl()) {
-            for (const k of await kartlariAl(g.id)) {
-                kume.add(k.url);
-                try { kume.add(new URL(k.url).href); } catch (e) { /* atla */ }
-            }
+        // TUM AGAC: alt klasordeki kartlar da yasiyor. Yalnizca ilk
+        // seviyeye bakildiginda onlarin gorselleri "oksuz" sayilip
+        // temizlikte siliniyordu.
+        const { tumKartlariAl } = await import('./yerimi.js');
+        for (const k of await tumKartlariAl()) {
+            kume.add(k.url);
+            try { kume.add(new URL(k.url).href); } catch (e) { /* atla */ }
         }
     } catch (e) {
         console.log('[WSD] wsd url listesi alinamadi:', e);

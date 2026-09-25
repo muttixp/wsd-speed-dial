@@ -15,8 +15,9 @@
 import { grupEkle, grupSil, kartEkle, kartGuncelle, kartSil, kartGuncelleBaslik,
          urlNormalle } from './yerimi.js';
 import { c } from './dil.js';
-import { aktifGrup, arayuzuKur, grubuAc, kartGorseliniTazele } from './cizim.js';
-import { gruplariAl, gorunurGruplariAl, kokKlasoruAl } from './yerimi.js';
+import { aktifGrup, aktifSekme, arayuzuKur, grubuAc, kartGorseliniTazele } from './cizim.js';
+import { klasorleriKur, klasorIsaretiniTemizle, yeniKlasor, klasoruTasi } from './klasor.js';
+import { gruplariAl, gorunurGruplariAl, kokKlasoruAl, tumKlasorleriAl } from './yerimi.js';
 import { RENKLER, renkleriAl, renkYaz } from './renk.js';
 import { karuseliKur, karuseliYukle, adayEkle, zeminAyarla, secimDurumu } from './karusel.js';
 import { adaylariYaz } from './gorsel.js';
@@ -55,6 +56,12 @@ export function etkilesimiKur() {
     pencereIzleyiciyiKur();
     kartPenceresiniKur();
     menuleriKur();
+    klasorleriKur({
+        grubuAc, aktifGrup, menuyuAc, menuleriKapat, bildir, onaySor, metinSor,
+        klasorHedefiSec, grubunGorselleriniYenile, grubuYedekle, grubuGeriAl, notPenceresiniAc,
+        copeAt, tazelemeyiBastir,
+        seritTazele: async () => { await arayuzuKur(); menuTazele(); }
+    });
 
 
     // "+" karti ve arac seridi - kap uzerinden dinliyoruz cunku kartlar
@@ -302,6 +309,43 @@ function yanAraclariKur() {
     });
 }
 
+/**
+ * Bir grubun TUM kartlarinin gorselini yeniden yakalatir.
+ * Hem grup menusunden hem Gruplari Yonet penceresinden cagriliyor.
+ */
+export async function grubunGorselleriniYenile(grupId) {
+    // Alt klasorler DAHIL
+    const { grubunTumKartlari } = await import('./yerimi.js');
+    const kartlar = await grubunTumKartlari(grupId);
+    if (!kartlar.length) { bildir(c('buGrupBos')); return; }
+
+    if (!await onaySor({
+        baslik: c('gorselleriYenile'),
+        metin: c('nKartGorseliYenilenecek', kartlar.length),
+        evet: c('baslat')
+    })) return;
+    await bekleyenleriSor();
+
+    // SIRA: once EKRANDA gorunen kartlar (izgara sirasiyla), sonra alt
+    // klasorlerdekiler. Agac sirasinda alt klasorlerin kartlari one
+    // dusebiliyordu; kullanici donenceyi goruyor ama baska kartlar
+    // yenileniyordu.
+    const ekran = [...document.querySelectorAll('#kartKabi .kart[data-kart-id]')].map(a => a.dataset.kartId);
+    const sira = new Map(ekran.map((id, i) => [id, i]));
+    kartlar.sort((a, b) => (sira.has(a.id) ? sira.get(a.id) : 1e9) - (sira.has(b.id) ? sira.get(b.id) : 1e9));
+
+    // Aktif grupta degilsek de calisir: kartlarin DOM karsiligi
+    // olmayabilir, o yuzden dogrudan URL uzerinden istiyoruz.
+    for (const k of kartlar) {
+        const temiz = urlNormalle(k.url);
+        try { await chrome.storage.local.remove(temiz); } catch (e) { /* yoktu */ }
+        gorselIste(temiz);
+        const a = document.querySelector(`[data-kart-id="${k.id}"]`);
+        a?.classList.add('yenileniyor');
+    }
+    bildir(c('nKartKuyrugaAlindi', kartlar.length));
+}
+
 /** Kisayollardan cagrilan sarmalayicilar. */
 export function kartEklePenceresi() { kartPenceresiniAc(null); }
 export function grupEklePenceresiDis() { grupEklePenceresi(); }
@@ -371,18 +415,28 @@ async function grupListesiniDoldur(seciliId) {
     sec.textContent = '';
     // Gizli Ana Sayfa listede YOK: gizlenmis bir grubu secenek olarak
     // sunmak celiskili olurdu.
-    const gruplar = await gorunurGruplariAl();
-    const hedefId = gruplar.some(g => g.id === (seciliId || aktifGrup()))
-        ? (seciliId || aktifGrup())
+    // Alt klasorler de listede: yoksa alt klasordeki bir karti
+    // duzenleyip kaydedince secenek bulunamiyor ve kart ILK GRUBA
+    // tasiniyordu.
+    const gruplar = await tumKlasorleriAl();
+    const istenen = seciliId || aktifGrup();
+    const hedefId = gruplar.some(g => g.id === istenen)
+        ? istenen
         : (gruplar[0]?.id || aktifGrup());
     for (const g of gruplar) {
         const o = document.createElement('option');
         o.value = g.id;
-        o.textContent = g.baslik;
+        o.textContent = (g.derinlik ? '\u00a0\u00a0'.repeat(g.derinlik) : '') + g.yol;
         sec.appendChild(o);
     }
     sec.value = hedefId;
+    kpIlkGrup = sec.value;
 }
+
+// Pencere acildigindaki grup: kaydederken "grup degisti mi" buna gore.
+// Once aktif gruba bakiliyordu; aramadan duzenlenen kart baska gruptan
+// geldiginde grubu degismese de aktif gruba tasiniyordu.
+let kpIlkGrup = null;
 
 function kartPenceresiniKur() {
     renkSeciciyiKur();
@@ -522,7 +576,7 @@ async function kartiKaydet() {
             await kartGuncelle(duzenlenenKartId, { title: baslik || url, url });
             // Grup degistiyse tasi
             const a = document.querySelector(`[data-kart-id="${duzenlenenKartId}"]`);
-            if (a && hedefGrup !== aktifGrup()) {
+            if (a && hedefGrup !== kpIlkGrup) {
                 await chrome.bookmarks.move(duzenlenenKartId, { parentId: hedefGrup });
             }
             // URL degistiyse eski renk kaydi oksuz kalmasin
@@ -673,15 +727,18 @@ async function siralamayiUygula(grupId, olcut) {
 
 let notUrl = null;
 
+let notHedefi = null;
+
 function notPenceresiniKur() {
+    const yaz = m => notHedefi ? notHedefi.yaz(m) : notYaz(notUrl, m);
     el('notKaydet')?.addEventListener('click', async () => {
-        await notYaz(notUrl, el('notAlan').value);
+        await yaz(el('notAlan').value);
         pencereKapat('notPencere');
         await grubuAc(aktifGrup());
         bildir(c('notKaydedildi'));
     });
     el('notSil')?.addEventListener('click', async () => {
-        await notYaz(notUrl, '');
+        await yaz('');
         pencereKapat('notPencere');
         await grubuAc(aktifGrup());
         bildir(c('notSilindi'));
@@ -691,9 +748,14 @@ function notPenceresiniKur() {
     });
 }
 
-async function notPenceresiniAc(url, baslik) {
+/**
+ * @param hedef  { oku, yaz } verilirse not ONA okunup yaziliyor (klasor
+ *               notlari gruplarin gorunum deposunda). Yoksa kart notu.
+ */
+export async function notPenceresiniAc(url, baslik, hedef = null) {
     notUrl = url;
-    const mevcut = await notAl(url);
+    notHedefi = hedef;
+    const mevcut = hedef ? await hedef.oku() : await notAl(url);
     el('notBaslik').textContent = mevcut ? c('notuDuzenle') : 'Not Ekle';
     el('notKartAdi').innerHTML = baslik ? `<b>${kacisliMetin(baslik)}</b>` : '';
     el('notKartAdi').hidden = !baslik;
@@ -734,22 +796,29 @@ let grupSecCozucu = null;
  * @returns Promise<grupId|null>
  */
 export async function grupSec(haric = null, baslik = 'Hedef Grup') {
-    const sec = el('tasiGrup');
-    sec.textContent = '';
+    if (!await tasiListesiniDoldur(haric)) { bildir(c('baskaGrupYok')); return null; }
+    return grupSecimiBekle(baslik);
+}
 
-    const gruplar = await gorunurGruplariAl();
-    for (const g of gruplar) {
-        if (g.id === haric) continue;
-        const o = document.createElement('option');
-        o.value = g.id;
-        o.textContent = g.baslik;
-        sec.appendChild(o);
+/**
+ * Klasor/grup tasimak icin hedef sectirir. Kok secenegi "ust duzey grup
+ * olarak" etiketiyle gosteriliyor: klasor koke tasininca GRUP oluyor.
+ * @param haric Set - hedef olamayacak klasorler (kendisi, alt klasorleri)
+ */
+export async function klasorHedefiSec(haric, baslik) {
+    const kok = await kokKlasoruAl();
+    if (!await tasiListesiniDoldur(haric, { kokEtiketi: c('ustDuzeyGrupOlarak'), kokHer: kok })) {
+        bildir(c('baskaGrupYok'));
+        return null;
     }
-    if (!sec.children.length) { bildir(c('baskaGrupYok')); return null; }
+    return grupSecimiBekle(baslik);
+}
 
+function grupSecimiBekle(baslik) {
     el('tasiPencere').querySelector('h2').textContent = baslik;
     el('tasiPencere').hidden = false;
     el('perde').classList.add('acik');
+    el('tasiSuz').focus();
 
     return new Promise(coz => { grupSecCozucu = coz; });
 }
@@ -765,6 +834,7 @@ function grupSecKapat(sonuc) {
 }
 
 function tasiPenceresiniKur() {
+    tasiAramasiniKur();
     el('tasiIptal')?.addEventListener('click', () => {
         if (grupSecCozucu) return grupSecKapat(null);
         el('tasiPencere').hidden = true;
@@ -777,9 +847,10 @@ function tasiPenceresiniKur() {
     // bile golgeyi kaldiriyordu.
     el('tasiOnay')?.addEventListener('click', async () => {
         // Grup secici kipindeysek Promise'i coz, tasima yapma
-        if (grupSecCozucu) return grupSecKapat(el('tasiGrup').value);
+        if (grupSecCozucu) return grupSecKapat(el('tasiGrup').value || null);
 
         const hedef = el('tasiGrup').value;
+        if (!hedef) return;
         el('tasiPencere').hidden = true;
         if (!el('ayarPanel').classList.contains('acik')) el('perde').classList.remove('acik');
         try {
@@ -794,19 +865,99 @@ function tasiPenceresiniKur() {
 
 async function tasiPenceresiniAc(kartId) {
     tasinanKartId = kartId;
-    const sec = el('tasiGrup');
-    sec.textContent = '';
-    const gruplar = await gorunurGruplariAl();
-    for (const g of gruplar) {
-        if (g.id === aktifGrup()) continue;      // zaten bu gruptayiz
-        const o = document.createElement('option');
-        o.value = g.id;
-        o.textContent = g.baslik;
-        sec.appendChild(o);
-    }
-    if (!sec.children.length) return bildir(c('baskaGrupYok'));
+    // zaten bu klasordeyiz - listeden cikar
+    if (!await tasiListesiniDoldur(aktifGrup())) return bildir(c('baskaGrupYok'));
+    el('tasiPencere').querySelector('h2').textContent = c('kartiTasi');
     el('tasiPencere').hidden = false;
     el('perde').classList.add('acik');
+    el('tasiSuz').focus();
+}
+
+/**
+ * Tasima penceresinin grup listesi. 450 grupluk kurulumda acilir liste
+ * (select) ile hedef bulunamiyordu. Gruplari Yonet'teki aramanin AYNISI:
+ * satirlar gizlenmiyor, eslesen satira kaydirilip vurgulaniyor ve SECILIYOR;
+ * Enter sonraki eslesmeye atliyor. Tiklama secer, cift tiklama tasir.
+ * Secilen grup id'si gizli `tasiGrup` alaninda - onay kodu degismedi.
+ * @returns listedeki grup sayisi
+ */
+async function tasiListesiniDoldur(haric, { kokEtiketi = null, kokHer = null } = {}) {
+    const liste = el('tasiListe');
+    liste.textContent = '';
+    el('tasiSuz').value = '';
+    el('tasiGrup').value = '';
+    const haricMi = id => haric instanceof Set ? haric.has(id) : id === haric;
+
+    // ALT KLASORLER DE hedef: tam yoluyla ("elfinder › config"),
+    // girintili. Arama yolun tamaminda yapiliyor.
+    let klasorler = await tumKlasorleriAl();
+    // Klasor tasirken kok hep secenek olmali (Ana Sayfa gizli olsa da):
+    // koke tasinan klasor grup oluyor
+    if (kokHer && !klasorler.some(k => k.id === kokHer)) {
+        klasorler = [{ id: kokHer, baslik: '', yol: '', derinlik: 0, kokMu: true }, ...klasorler];
+    }
+    for (const k of klasorler) {
+        if (haricMi(k.id)) continue;
+        const li = document.createElement('li');
+        li.dataset.id = k.id;
+        li.textContent = (k.kokMu && kokEtiketi) ? kokEtiketi : k.yol;
+        if (k.derinlik) {
+            li.classList.add('altKlasor');
+            li.style.paddingLeft = `calc(var(--b3) + ${k.derinlik * 14}px)`;
+        }
+        liste.appendChild(li);
+    }
+    if (liste.firstElementChild) tasiSec(liste.firstElementChild, false);
+    liste.scrollTop = 0;
+    return liste.children.length;
+}
+
+function tasiSec(li, kaydir = true) {
+    for (const x of el('tasiListe').querySelectorAll('.secili')) x.classList.remove('secili');
+    li.classList.add('secili');
+    el('tasiGrup').value = li.dataset.id;
+    if (kaydir) li.scrollIntoView({ block: 'center', behavior: 'smooth' });
+}
+
+function tasiAramasiniKur() {
+    const alan = el('tasiSuz');
+    const liste = el('tasiListe');
+    if (!alan || !liste) return;
+    let sira = 0;
+
+    const eslesenler = () => {
+        const t = alan.value.trim().toLocaleLowerCase('tr');
+        if (!t) return [];
+        return [...liste.children].filter(li =>
+            li.textContent.toLocaleLowerCase('tr').includes(t));
+    };
+    const goster = l => {
+        for (const li of liste.querySelectorAll('.vurgulu')) li.classList.remove('vurgulu');
+        if (!l.length) return;
+        if (sira >= l.length) sira = 0;
+        l[sira].classList.add('vurgulu');
+        tasiSec(l[sira]);
+    };
+
+    alan.addEventListener('input', () => { sira = 0; goster(eslesenler()); });
+    alan.addEventListener('keydown', e => {
+        if (e.key !== 'Enter') return;
+        e.preventDefault();
+        const l = eslesenler();
+        sira = l.length ? (sira + 1) % l.length : 0;     // sonraki eslesme
+        goster(l);
+    });
+
+    liste.addEventListener('click', e => {
+        const li = e.target.closest('li');
+        if (li) tasiSec(li, false);
+    });
+    liste.addEventListener('dblclick', e => {
+        const li = e.target.closest('li');
+        if (!li) return;
+        tasiSec(li, false);
+        el('tasiOnay').click();
+    });
 }
 
 /* ---------- Gorsel araclari ---------- */
@@ -857,6 +1008,9 @@ function gorselAraclariniKur() {
 
         const btn = el('kpSahne');
         btn.disabled = true;
+        // EMNIYET: yakalama bir sekilde asili kalirsa dugme kilitli
+        // kalmasin; sayfa yenilemeden tekrar denenebilsin
+        const kilitSayaci = setTimeout(() => { btn.disabled = false; }, 6 * 60 * 1000);
         try {
             const { elleYakala } = await import('./yakalama.js');
             const veri = await elleYakala(url);
@@ -868,6 +1022,7 @@ function gorselAraclariniKur() {
             console.log('[WSD] sahne yakalanamadi:', e);
             bildir(c('yakalanamadi'));
         } finally {
+            clearTimeout(kilitSayaci);
             btn.disabled = false;
         }
     });
@@ -1130,7 +1285,7 @@ function menuleriKur() {
 
         for (const li of el('grupMenu').children) {
             const eylem = li.dataset.eylem;
-            li.hidden = kokMu && (eylem === 'grupYenidenAdlandir' || eylem === 'grupSil');
+            li.hidden = kokMu && (eylem === 'grupYenidenAdlandir' || eylem === 'grupSil' || eylem === 'grupTasi');
         }
 
         menuyuAc(el('grupMenu'), e.clientX, e.clientY);
@@ -1144,7 +1299,7 @@ function menuleriKur() {
         // "+" karti .kart sinifini tasiyor ama BOS ALAN sayilmali:
         // uzerinde tarayici menusu cikiyordu.
         if (e.target.closest('.kart:not(.ekleKart)')) return;
-        if (e.target.closest('.grupSekme, .menu, .pencere, #ayarPanel')) return;
+        if (e.target.closest('.grupSekme, .klasorKart, .menu, .pencere, #ayarPanel')) return;
 
         // Metin secimi / form alani varsa tarayici menusu isine yarar
         if (e.target.closest('input, textarea, select')) return;
@@ -1157,12 +1312,18 @@ function menuleriKur() {
         if (document.body.classList.contains('copAcik')) return;
         if (document.body.classList.contains('kopyaAcik')) return;
 
+        // Ana Sayfa'da (kok) klasor = grup: "Yeni Klasor" soluk
+        kokKlasoruAl().then(kok => {
+            el('bosMenu').querySelector('[data-eylem="yeniKlasor"]')
+                ?.classList.toggle('pasif', aktifGrup() === kok);
+        }).catch(() => {});
         menuyuAc(el('bosMenu'), e.clientX, e.clientY);
     });
 
     el('kartMenu')?.addEventListener('click', e => kartMenuEylemi(e));
     el('grupMenu')?.addEventListener('click', e => grupMenuEylemi(e));
     el('bosMenu')?.addEventListener('click',  e => bosMenuEylemi(e));
+    // klasorMenu kendi dinleyicisini klasor.js'te kuruyor
 
     // Perdeye tiklama: ACIK PENCERE varsa onu, yoksa menuleri kapatir.
     // Pencerelere `pointer-events: none` verdigimiz icin bosluk tiklamasi
@@ -1201,7 +1362,7 @@ function menuleriKur() {
     // uygulaniyor ve sayfa kaydirilmissa tarayici bir scroll olayi
     // uretiyor - o da perdeyi kaldiriyordu.
     window.addEventListener('scroll', () => {
-        const menuAcik = ['kartMenu', 'grupMenu', 'bosMenu']
+        const menuAcik = ['kartMenu', 'grupMenu', 'bosMenu', 'klasorMenu']
             .some(id => el(id) && !el(id).hidden);
         if (menuAcik) menuleriKapat();
     }, { capture: true, passive: true });
@@ -1221,6 +1382,8 @@ function menuleriKapat(perdeyiDeKapat = true) {
     el('kartMenu').hidden = true;
     el('grupMenu').hidden = true;
     el('bosMenu').hidden = true;
+    if (el('klasorMenu')) el('klasorMenu').hidden = true;
+    klasorIsaretiniTemizle();
 
     // ACIK PENCERE VARSA perde kalir.
     //
@@ -1293,7 +1456,7 @@ async function kartMenuEylemi(e) {
             await tasiPenceresiniAc(menuKartId);
             break;
         case 'duzenle':
-            kartPenceresiniAc({ id: menuKartId, baslik, url, grupId: aktifGrup() });
+            kartPenceresiniAc({ id: menuKartId, baslik, url, grupId: await kartinGrubu(menuKartId) });
             break;
         case 'sil':
             if (!await onaySor({
@@ -1354,26 +1517,13 @@ async function grupMenuEylemi(e) {
     }
 
     if (eylem === 'grupYenile') {
-        const { kartlariAl } = await import('./yerimi.js');
-        const kartlar = await kartlariAl(id);
-        if (!kartlar.length) return bildir(c('buGrupBos'));
+        await grubunGorselleriniYenile(id);
+        return;
+    }
 
-        if (!await onaySor({
-            baslik: c('gorselleriYenile'),
-            metin: c('nKartGorseliYenilenecek', kartlar.length),
-            evet: c('baslat')
-        })) return;
-
-        // Aktif grupta degilsek de calisir: kartlarin DOM karsiligi
-        // olmayabilir, o yuzden dogrudan URL uzerinden istiyoruz.
-        for (const k of kartlar) {
-            const temiz = urlNormalle(k.url);
-            try { await chrome.storage.local.remove(temiz); } catch (e) { /* yoktu */ }
-            gorselIste(temiz);
-            const a = document.querySelector(`[data-kart-id="${k.id}"]`);
-            a?.classList.add('yenileniyor');
-        }
-        bildir(c('nKartKuyrugaAlindi', kartlar.length));
+    // Grubu baska bir grubun ICINE tasi (alt klasor olur)
+    if (eylem === 'grupTasi') {
+        await klasoruTasi(id);
         return;
     }
 
@@ -1423,7 +1573,7 @@ async function grupMenuEylemi(e) {
             // Silinen grup aktifse KOMSUSUNA don (solundaki, yoksa
             // sagindaki). Eskiden hep ilk gruba gidiyordu; uzaktaki bir
             // grubu silince kullanici bastaki gruba firliyordu.
-            if (aktifGrup() === id) {
+            if (aktifSekme() === id) {
                 const kalanlar = await gruplariAl();
                 const hedef = kalanlar[Math.max(0, Math.min(sira - 1, kalanlar.length - 1))];
                 await grubuAc((hedef || kalanlar[0]).id);
@@ -1460,6 +1610,13 @@ async function bosMenuEylemi(e) {
             await grupEklePenceresi();
             break;
 
+        case 'yeniKlasor': {
+            const kok = await kokKlasoruAl();
+            if (aktifGrup() === kok) return;          // kokte klasor = grup
+            await yeniKlasor(aktifGrup());
+            break;
+        }
+
         case 'hepsiniAc': {
             const kartlar = [...document.querySelectorAll('.kart:not(.ekleKart)')];
             if (!kartlar.length) return bildir(c('acilacakKartYok'));
@@ -1480,6 +1637,7 @@ async function bosMenuEylemi(e) {
                 metin: c('nKartYenidenYakalanacak', kartlar.length),
                 evet: c('baslat')
             })) return;
+            await bekleyenleriSor();
             for (const k of kartlar) {
                 await gorseliYenile(k.dataset.kartId, k.dataset.anahtar);
             }
@@ -1535,8 +1693,42 @@ function donenceyiKaldir(url) {
 }
 
 
+/**
+ * Toplu yenileme baslarken kuyrukta ONCEKI islerden kalan varsa sorar.
+ * Kalan isler yeni istegin arkasinda islenmeye devam ediyordu ve
+ * kullanici "Klasor 2'yi yeniledim, butun grup yenileniyor" saniyordu.
+ * "Kalsin" (ya da Escape): bekleyenler de sirayla yenilenir.
+ */
+async function bekleyenleriSor() {
+    let bekleyen = 0;
+    try {
+        const d = await chrome.storage.local.get('yakalamaKuyrugu');
+        bekleyen = Array.isArray(d.yakalamaKuyrugu) ? d.yakalamaKuyrugu.length : 0;
+    } catch (e) { /* okunamadi - sormadan devam */ }
+    if (!bekleyen) return;
+
+    if (!await onaySor({
+        baslik: c('bekleyenYenilemeler'),
+        metin: c('nBekleyenIptalEdilsinMi', bekleyen),
+        evet: c('iptalEt'),
+        hayir: c('kalsin')
+    })) return;
+
+    // Temizlendi mesajini BEKLE: sonradan gelirse yeni kartlarin
+    // donencelerini de kaldiriyordu
+    await new Promise(coz => {
+        const zaman = setTimeout(bitir, 2000);
+        function bitir() { clearTimeout(zaman); chrome.runtime.onMessage.removeListener(dinle); coz(); }
+        function dinle(m) { if (m && m.hedef === 'sayfa' && m.tur === 'kuyrukTemizlendi') setTimeout(bitir, 0); }
+        chrome.runtime.onMessage.addListener(dinle);
+        chrome.runtime.sendMessage({ hedef: 'arkaplan', tur: 'kuyrugaTemizle' }).catch(bitir);
+    });
+    bildir(c('nBekleyenIptalEdildi', bekleyen));
+}
+
+/** Kullanicinin istedigi yenileme: kuyrukta arka plan islerinin onune gecer. */
 function gorselIste(url) {
-    chrome.runtime.sendMessage({ hedef: 'arkaplan', tur: 'gorselIste', url })
+    chrome.runtime.sendMessage({ hedef: 'arkaplan', tur: 'gorselIste', url, oncelik: true })
         .catch(() => {});
 }
 

@@ -435,13 +435,16 @@ export async function kartiGeriAl(y, tazele = true) {
  */
 export async function grubuYedekle(grupId) {
     try {
-        const { kartlariAl } = await import('./yerimi.js');
-        const { ikonlariAl, gorunumleriAl } = await import('./grupikon.js');
-
+        // ALT KLASORLER DAHIL (1.5.0): kartlar `yol` ile, bos klasorler
+        // `klasorler` listesiyle. Grup silme `removeTree` ile her seyi
+        // goturuyordu ama cope yalnizca ilk seviye giriyordu.
+        const { klasorIcerigi } = await import('./yerimi.js');
         const [dugum] = await chrome.bookmarks.get(grupId);
-        const kartlar = await kartlariAl(grupId);
-        const ikonlar = await ikonlariAl();
-        const gorunumler = await gorunumleriAl();
+        const { kartlar, klasorler } = await klasorIcerigi(grupId);
+        // Dogrudan depodan: onbellek bayat olabilir (yedek yukleme depoya
+        // dogrudan yaziyor), silinecek seyin ikonunu kaybetmeyelim
+        const { grupIkonlari: ikonlar = {}, grupGorunumleri: gorunumler = {} } =
+            await chrome.storage.local.get(['grupIkonlari', 'grupGorunumleri']);
 
         const depo = await chrome.storage.local.get([
             ...kartlar.map(k => urlNormalle(k.url)),
@@ -452,6 +455,9 @@ export async function grubuYedekle(grupId) {
             tur: 'grup',
             baslik: dugum.title,
             index: dugum.index,
+            ustId: dugum.parentId,           // alt klasorse eski yerine donsun
+            klasorler: klasorler.map(k => ({ yol: k.yol, n: k.n,
+                ikon: ikonlar[k.id] || null, gorunum: gorunumler[k.id] || null })),
             ikon: ikonlar[grupId] || null,
             gorunum: gorunumler[grupId] || null,
             kartlar: kartlar.map(k => {
@@ -459,6 +465,8 @@ export async function grubuYedekle(grupId) {
                 return {
                     baslik: k.baslik,
                     url: k.url,
+                    yol: k.yol && k.yol.length ? k.yol : undefined,
+                    n: k.n,
                     gorsel: depo[a] || null,
                     not: (depo.kartNotlari || {})[a] || null,
                     renk: (depo.kartRenkleri || {})[a] || null,
@@ -479,10 +487,37 @@ export async function grubuGeriAl(y) {
         const { kokKlasoruAl } = await import('./yerimi.js');
         const { ikonYaz, gorunumYaz } = await import('./grupikon.js');
 
+        // Alt klasorse ESKI UST KLASORUNE don; o da silinmisse koke (grup olur)
         const kok = await kokKlasoruAl();
-        const grup = await chrome.bookmarks.create({
-            parentId: kok, index: y.index, title: y.baslik
-        });
+        let ust = kok;
+        if (y.ustId && y.ustId !== kok) {
+            const { klasorZinciri } = await import('./yerimi.js');
+            if (await klasorZinciri(y.ustId).catch(() => null)) ust = y.ustId;
+        }
+        let grup;
+        try {
+            grup = await chrome.bookmarks.create({ parentId: ust, index: y.index, title: y.baslik });
+        } catch (e) {
+            // index artik gecersiz olabilir (ust klasor kuculmus)
+            grup = await chrome.bookmarks.create({ parentId: ust, title: y.baslik });
+        }
+
+        // Alt klasor zinciri - yol -> id
+        const klasorIdleri = new Map([['', grup.id]]);
+        const klasorBul = async yol => {
+            let anahtar = '', ustId = grup.id;
+            for (const ad of yol) {
+                anahtar += '\u0000' + ad;
+                if (!klasorIdleri.has(anahtar)) {
+                    klasorIdleri.set(anahtar, (await chrome.bookmarks.create({ parentId: ustId, title: ad })).id);
+                }
+                ustId = klasorIdleri.get(anahtar);
+            }
+            return ustId;
+        };
+        // Klasorler ve kartlar ESKI SIRAYLA: once klasorleri toplu
+        // olusturunca "a, b, derin" sirasi "derin, a, b" oluyordu
+        const siraliKlasorler = (y.klasorler || []).map(k => Array.isArray(k) ? { yol: k } : k);
 
         if (y.ikon) await ikonYaz(grup.id, y.ikon);
         if (y.gorunum) await gorunumYaz(grup.id, y.gorunum);
@@ -497,9 +532,22 @@ export async function grubuGeriAl(y) {
             kartSayaclari: { ...(mevcut.kartSayaclari || {}) }
         };
 
-        for (const k of y.kartlar) {
+        const ogeler = [
+            ...siraliKlasorler.map(k => ({ klasor: k, n: k.n })),
+            ...y.kartlar.map(k => ({ kart: k, n: k.n }))
+        ];
+        if (ogeler.every(o => typeof o.n === 'number')) ogeler.sort((a, b) => a.n - b.n);
+        for (const o of ogeler) {
+            if (o.klasor) {
+                const kid = await klasorBul(o.klasor.yol);
+                if (o.klasor.ikon) await ikonYaz(kid, o.klasor.ikon);
+                if (o.klasor.gorunum) await gorunumYaz(kid, o.klasor.gorunum);
+                continue;
+            }
+            const k = o.kart;
+            const hedef = Array.isArray(k.yol) && k.yol.length ? await klasorBul(k.yol) : grup.id;
             await chrome.bookmarks.create({
-                parentId: grup.id, title: k.baslik, url: k.url
+                parentId: hedef, title: k.baslik, url: k.url
             }).catch(() => {});
 
             const a = urlNormalle(k.url);
@@ -512,6 +560,7 @@ export async function grubuGeriAl(y) {
         await chrome.storage.local.set(yaz);
         await arayuzuKur();
         menuTazele();
+        if (ust !== kok) await grubuAc(aktifGrup());
     } catch (e) {
         console.log('[WSD] grup geri alinamadi:', e);
         bildir(c('geriAlinamadi'));

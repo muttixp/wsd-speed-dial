@@ -80,6 +80,16 @@ başlangıç sayfası ayarına yapıştırın.
 - 22 ikon, özel emoji veya sitenin favicon'u
 - Gruba özel gösterim (yalnızca ikon / ikon+yazı / yalnızca yazı) ve ikon rengi
 - **Grupları Yönet** ile toplu sıralama, yeniden adlandırma, silme
+- **Alt klasörler**: grubun içindeki klasörler ızgarada klasör kutusu olarak
+  görünür (ilk dört kartın önizlemesiyle); tıklayınca içine girilir, üstte
+  yol şeridi çıkar. Kartı klasör kutusuna ya da yol şeridine sürükleyerek
+  taşıyabilirsiniz. Klasör kutusunu başka bir klasörün kenarına bırakınca
+  sıralanır, ortasına bırakınca içine girer; grup sekmesine bırakınca o
+  gruba taşınır. Klasörler de gruplar gibi düzenlenir: ad, açıklama, ikon,
+  ikon rengi ve renk etiketi; not eklenebilir. Üzerine gelince kartlardaki
+  gibi araç şeridi çıkar. Klasörler yeniden adlandırılabilir, taşınabilir (üst
+  düzey grup da yapılabilir) ve çöp kutusuna silinebilir. Bir grubu başka
+  bir grubun içine taşımak için grup menüsünde "Başka gruba taşı"
 
 ### Yerel dosyalar
 
@@ -173,6 +183,8 @@ tarayıcı üstte "hata ayıklıyor" çubuğu gösterir.
 | `N` | yeni kart |
 | `G` | yeni grup |
 | `Y` | grupları yönet |
+| `Backspace` | alt klasördeyken bir üst klasöre çık |
+| Fare yan tuşları / `Alt+←` `Alt+→` | klasör ve gruplar arasında geri / ileri |
 | `Esc` | pencereyi/aramayı kapat |
 | `Enter` (aramada) | ilk sonucu aç |
 

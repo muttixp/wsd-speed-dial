@@ -60,10 +60,15 @@ export async function gorunumleriAl() {
 
 export async function gorunumYaz(grupId, gorunum) {
     const hepsi = await gorunumleriAl();
+    // BIRLESTIRME: verilmeyen alan eski degerini korur. Klasorlerin
+    // `not` ve `etiket` alanlari da burada; grup penceresi yalnizca
+    // kendi alanlarini gonderiyor ve digerlerini silmemeli.
+    const eski = hepsi[grupId] || {};
     const temiz = {};
-    if (gorunum && gorunum.gosterim) temiz.gosterim = gorunum.gosterim;
-    if (gorunum && gorunum.renk)     temiz.renk = gorunum.renk;
-    if (gorunum && gorunum.aciklama) temiz.aciklama = gorunum.aciklama;
+    for (const alan of ['gosterim', 'renk', 'aciklama', 'not', 'etiket']) {
+        const deger = gorunum && alan in gorunum ? gorunum[alan] : eski[alan];
+        if (deger) temiz[alan] = deger;
+    }
 
     if (Object.keys(temiz).length) hepsi[grupId] = temiz;
     else delete hepsi[grupId];        // hepsi varsayilansa kayit tutma

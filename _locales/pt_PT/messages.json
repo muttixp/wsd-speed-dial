@@ -522,7 +522,7 @@
     "message": "Não foi possível ler o ficheiro"
   },
   "goruntuAlinamadi": {
-    "message": "Não foi possível obter a imagem"
+    "message": "captura falhou"
   },
   "indirilecekGorselYok": {
     "message": "Nenhuma imagem para transferir"
@@ -1228,5 +1228,14 @@
   },
   "tekleDusurOnay": {
     "message": "Um bloco por endereço duplicado será mantido; o resto irá para a reciclagem. Pode restaurá-los."
+  },
+  "nKartGorseliAlinamadi": {
+    "message": "Não foi possível capturar $1 blocos"
+  },
+  "ulasilamadi": {
+    "message": "sem acesso"
+  },
+  "grupAra": {
+    "message": "Pesquisar grupos..."
   }
 }

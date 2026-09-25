@@ -522,7 +522,7 @@
     "message": "Could not read file"
   },
   "goruntuAlinamadi": {
-    "message": "Could not fetch image"
+    "message": "capture failed"
   },
   "indirilecekGorselYok": {
     "message": "No image to download"
@@ -1228,5 +1228,92 @@
   },
   "tekleDusurOnay": {
     "message": "One tile per duplicated address will be kept, the rest move to the trash. You can restore them."
+  },
+  "nKartGorseliAlinamadi": {
+    "message": "Could not capture $1 tiles"
+  },
+  "ulasilamadi": {
+    "message": "unreachable"
+  },
+  "grupAra": {
+    "message": "Search groups..."
+  },
+  "altKlasorleriKoru": {
+    "message": "Keep subfolders (if unchecked, every folder becomes a separate group)"
+  },
+  "baskaGrubaTasi": {
+    "message": "Move into another group..."
+  },
+  "buKlasordeKartYok": {
+    "message": "This folder has no cards"
+  },
+  "klasorGrupOldu": {
+    "message": "The folder is now a group"
+  },
+  "klasorSilMetin": {
+    "message": "Folder \"$1\" will be moved to the trash with its $2 cards and $3 subfolders."
+  },
+  "klasorSilindiNKart": {
+    "message": "Folder deleted ($1 cards)"
+  },
+  "klasorTasindi": {
+    "message": "Folder moved"
+  },
+  "klasoruSil": {
+    "message": "Delete folder"
+  },
+  "klasoruTasi": {
+    "message": "Move folder"
+  },
+  "nAltKlasor": {
+    "message": "$1 subfolders"
+  },
+  "olustur": {
+    "message": "Create"
+  },
+  "ustDuzeyGrupOlarak": {
+    "message": "⬆ As a top-level group"
+  },
+  "ustKlasor": {
+    "message": "Parent folder (Backspace)"
+  },
+  "yeniKlasor": {
+    "message": "New Folder"
+  },
+  "klasorKendiIcine": {
+    "message": "A folder cannot be moved into itself or its subfolder"
+  },
+  "klasoruDuzenle": {
+    "message": "Edit Folder"
+  },
+  "buKlasordeNKart": {
+    "message": "This folder has <b>$1</b> cards"
+  },
+  "klasorAdiZatenVar": {
+    "message": "A folder named \"$1\" already exists here"
+  },
+  "bekleyenYenilemeler": {
+    "message": "Pending refreshes"
+  },
+  "nBekleyenIptalEdilsinMi": {
+    "message": "$1 earlier refreshes are still waiting in the queue. Cancel them first? If not, they will also be refreshed in turn."
+  },
+  "iptalEt": {
+    "message": "Cancel them"
+  },
+  "kalsin": {
+    "message": "Keep"
+  },
+  "nBekleyenIptalEdildi": {
+    "message": "$1 pending refreshes cancelled"
+  },
+  "aktarimGorselsizN": {
+    "message": "$1 imported cards have no image. Capture was not started automatically; use \"Refresh group images\" from the group menu."
+  },
+  "iceAktarmaTamamlandi": {
+    "message": "Import complete"
+  },
+  "nYeniGrup": {
+    "message": "$1 new groups"
   }
 }

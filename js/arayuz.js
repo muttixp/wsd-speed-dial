@@ -34,7 +34,7 @@ export function bildir(metin, eylem = null) {
     b.textContent = '';
     b.append(document.createTextNode(metin));
 
-    if (eylem) {
+    if (eylem && eylem.etiket) {       // yalnizca sure verilebilir, dugmesiz
         const d = document.createElement('button');
         d.className = 'bildirimDugme';
         d.type = 'button';
@@ -53,6 +53,27 @@ export function bildir(metin, eylem = null) {
     // Eylem kendi suresini de verebiliyor (siralama gibi buyuk degisiklikler).
     const sure = eylem ? (eylem.sure || 8000) : 2600;
     bildirimZaman = setTimeout(() => b.classList.remove('gorunur'), sure);
+}
+
+/**
+ * Sayfayi yeniden yukler; bildirimi YENI sayfada gosterir.
+ * Once bildirim gosterilip 1 saniye sonra sayfa yenileniyordu: mesaj
+ * okunamadan kayboluyor, aktarma sessizce bitmis gibi gorunuyordu.
+ */
+export function yenileVeBildir(metin, sure = 8000) {
+    try { localStorage.setItem('wsdBekleyenBildirim', JSON.stringify({ metin, sure })); } catch (e) { /* */ }
+    location.reload();
+}
+
+/** Acilista: yenilemeden once birakilan bildirim varsa goster. */
+export function bekleyenBildirimiGoster() {
+    try {
+        const ham = localStorage.getItem('wsdBekleyenBildirim');
+        if (!ham) return;
+        localStorage.removeItem('wsdBekleyenBildirim');
+        const { metin, sure } = JSON.parse(ham);
+        if (metin) bildir(metin, { sure: sure || 8000 });
+    } catch (e) { /* bozuk kayit - onemli degil */ }
 }
 
 /** Pencereyi acar: perde + kart isareti birlikte yonetiliyor. */

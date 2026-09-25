@@ -11,7 +11,7 @@
 
 // WSD Speed Dial - servis iscisi
 
-import { kokKlasoruAl, gruplariAl, gorunurGruplariAl, urlNormalle } from './yerimi.js';
+import { kokKlasoruAl, gruplariAl, gorunurGruplariAl, urlNormalle, klasorZinciri } from './yerimi.js';
 import { c } from './dil.js';
 import { yakalamayaEkle, kuyrugaDevamEt, kuyrugaTemizle, sonBasliklar } from './yakalama.js';
 import { simgeyiUygula } from './simge.js';
@@ -236,13 +236,69 @@ chrome.runtime.onStartup.addListener(() => kuyrugaDevamEt(gorseliKaydet));
 kuyrugaDevamEt(gorseliKaydet);
 
 // Grup eklenince/silinince/adi degisince menu guncellensin
-chrome.bookmarks.onCreated.addListener(menuyuTazele);
+chrome.bookmarks.onCreated.addListener(() => { if (!iceAktarimBayragi) menuyuTazele(); });
 chrome.bookmarks.onRemoved.addListener(menuyuTazele);
 chrome.bookmarks.onChanged.addListener(menuyuTazele);
 chrome.bookmarks.onMoved.addListener(menuyuTazele);
 
+/* --- Ice aktarma sirasinda yakalama bekler (bkz. iceaktarim.js) ---
+   Bayrak depoda da tutuluyor: isci aktarma sirasinda yeniden baslarsa
+   bellekteki bayrak kaybolur. 30 dakikadan eski bayrak gecersiz -
+   aktarma yarida kalirsa yakalama sonsuza kadar kapali kalmasin. */
+let iceAktarimBayragi = false;
+const ICE_AKTARIM_SURESI = 30 * 60 * 1000;
+
+async function iceAktarimSuruyor() {
+    if (iceAktarimBayragi) return true;
+    try {
+        const { iceAktarim } = await chrome.storage.local.get('iceAktarim');
+        return !!iceAktarim && Date.now() - iceAktarim < ICE_AKTARIM_SURESI;
+    } catch (e) { return false; }
+}
+
+/** Aktarilan adreslerden gorseli olmayanlari kuyruga alir. */
+async function aktarilanlariYakala(urller) {
+    const anahtarlar = urller.map(urlNormalle);
+    let varolan;
+    try {
+        // Yalnizca ANAHTARLAR: gorselleri bellege almadan (binlerce data URI)
+        if (chrome.storage.local.getKeys) {
+            varolan = new Set(await chrome.storage.local.getKeys());
+        } else {
+            varolan = new Set();
+            for (let i = 0; i < anahtarlar.length; i += 50) {
+                const d = await chrome.storage.local.get(anahtarlar.slice(i, i + 50));
+                for (const k of Object.keys(d)) varolan.add(k);
+            }
+        }
+    } catch (e) { return; }
+
+    const eksik = [...new Set(anahtarlar)].filter(a => !varolan.has(a));
+    if (!eksik.length) return;
+    // Cok fazlaysa KENDILIGINDEN baslatmiyoruz: yuzlerce pencere dakikalarca
+    // acilip kapanir. Kullaniciya haber verip gruptan yenilemeyi birakiyoruz.
+    if (eksik.length > 300) {
+        chrome.runtime.sendMessage({ hedef: 'sayfa', tur: 'aktarimGorselsiz', adet: eksik.length })
+            .catch(() => {});
+        return;
+    }
+    for (const a of eksik) yakalamayaEkle(a, gorseliKaydet);
+}
+
 // On yuzden gelen istekler
 chrome.runtime.onMessage.addListener((mesaj) => {
+    if (mesaj && mesaj.hedef === 'arkaplan' && mesaj.tur === 'iceAktarimBasladi') {
+        iceAktarimBayragi = true;
+        chrome.storage.local.set({ iceAktarim: Date.now() }).catch(() => {});
+        return;
+    }
+    if (mesaj && mesaj.hedef === 'arkaplan' && mesaj.tur === 'iceAktarimBitti') {
+        iceAktarimBayragi = false;
+        chrome.storage.local.remove('iceAktarim').catch(() => {});
+        menuyuTazele();
+        aktarilanlariYakala(Array.isArray(mesaj.urller) ? mesaj.urller : []);
+        return;
+    }
     if (mesaj && mesaj.hedef === 'arkaplan' && mesaj.tur === 'kuyrugaTemizle') {
         kuyrugaTemizle().then(n => {
             chrome.runtime.sendMessage({ hedef: 'sayfa', tur: 'kuyrukTemizlendi', adet: n })
@@ -260,7 +316,7 @@ chrome.runtime.onMessage.addListener((mesaj) => {
         return;
     }
     if (mesaj && mesaj.hedef === 'arkaplan' && mesaj.tur === 'gorselIste' && mesaj.url) {
-        yakalamayaEkle(mesaj.url, gorseliKaydet);
+        yakalamayaEkle(mesaj.url, gorseliKaydet, mesaj.oncelik !== false);
     }
 });
 
@@ -330,12 +386,21 @@ chrome.contextMenus.onClicked.addListener(async (bilgi, sekme) => {
 /** URL WSD agacinda var mi? Varsa hangi grupta oldugunu dondurur. */
 async function kopyaAra(url) {
     try {
-        const gruplar = await gruplariAl();
-        for (const g of gruplar) {
-            const cocuklar = await chrome.bookmarks.getChildren(g.id);
-            const bulunan = cocuklar.find(c => c.url && urlNormalle(c.url) === url);
-            if (bulunan) return { grupAdi: g.baslik, id: bulunan.id };
-        }
+        // Alt klasorler dahil: kart bir alt klasorde olabilir
+        const kok = await kokKlasoruAl();
+        const [agac] = await chrome.bookmarks.getSubTree(kok);
+        const gez = (d, ad) => {
+            for (const c of d.children || []) {
+                if (c.url) { if (urlNormalle(c.url) === url) return { grupAdi: ad, id: c.id }; }
+                else {
+                    const b = gez(c, ad ? ad + ' › ' + c.title : c.title);
+                    if (b) return b;
+                }
+            }
+            return null;
+        };
+        const bulunan = gez(agac, '');
+        if (bulunan) return { ...bulunan, grupAdi: bulunan.grupAdi || (chrome.i18n.getMessage('anaSayfa') || 'Ana Sayfa') };
     } catch (e) { /* aranamadi - kopya yok say */ }
     return null;
 }
@@ -441,11 +506,10 @@ async function gorseliKaydet(url, adaylar) {
 // Yer imi WSD agacina eklendiginde de gorsel cek (yer imi cubugundan eklenenler)
 chrome.bookmarks.onCreated.addListener(async (id, dugum) => {
     if (!dugum.url) return;
+    if (await iceAktarimSuruyor()) return;      // bitince toplu alinacak
     try {
-        const kok = await kokKlasoruAl();
-        const gruplar = await gruplariAl();
-        const wsdIcinde = gruplar.some(g => g.id === dugum.parentId);
-        if (!wsdIcinde && dugum.parentId !== kok) return;
+        // Alt klasorler dahil WSD agacinda mi?
+        if (!await klasorZinciri(dugum.parentId)) return;
 
         // Normallestirilmis anahtarla bakiyoruz - depoda oyle duruyor
         const anahtar = urlNormalle(dugum.url);

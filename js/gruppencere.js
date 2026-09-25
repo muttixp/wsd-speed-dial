@@ -15,11 +15,14 @@ import { IKONLAR, ikonAl, faviconUrl } from './ikon.js';
 import { c } from './dil.js';
 import { kartSayilariAl } from './yerimi.js';
 import { ikonlariAl, ikonYaz, gorunumleriAl, gorunumYaz } from './grupikon.js';
+import { RENKLER } from './renk.js';
 
 const el = id => document.getElementById(id);
 
 let secilenIkon = 'folder';       // 'ad' | 'emoji:X' | 'favicon:URL'
 let duzenlenenGrup = null;        // null ise yeni grup
+let klasorKipi = null;            // { ustId } - alt klasor ekle/duzenle (1.5.0)
+let secilenEtiket = null;         // klasor renk etiketi (kartlardaki alt serit gibi)
 let cozucu = null;                // Promise resolve
 
 /** Pencere icinde kisa uyari - alanin altinda beliriyor. */
@@ -35,6 +38,7 @@ function uyarGoster(metin) {
 
 export function grupPenceresiniKur() {
     ikonIzgarasiniKur();
+    etiketleriKur();
 
     el('gpIptal')?.addEventListener('click', () => kapat(null));
     el('gpKaydet')?.addEventListener('click', kaydet);
@@ -98,6 +102,28 @@ function ikonIzgarasiniKur() {
     }
 }
 
+/** Klasor renk etiketi - kart Duzenle penceresindeki renk sirasiyla ayni */
+function etiketleriKur() {
+    const kap = el('gpEtiketler');
+    if (!kap || kap.children.length) return;
+    for (const r of RENKLER) {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'renkNokta' + (r.deger ? '' : ' bos');
+        b.dataset.renk = r.deger || '';
+        b.title = r.ad;
+        if (r.deger) b.style.backgroundColor = r.deger;
+        else b.textContent = '\u2715';
+        b.addEventListener('click', () => { secilenEtiket = r.deger; etiketiGoster(); });
+        kap.appendChild(b);
+    }
+}
+function etiketiGoster() {
+    for (const b of el('gpEtiketler').children) {
+        b.classList.toggle('secili', (b.dataset.renk || null) === secilenEtiket);
+    }
+}
+
 function secimiGoster() {
     for (const b of el('gpIkonlar').children) {
         b.classList.toggle('secili', b.dataset.ikon === secilenIkon);
@@ -120,19 +146,28 @@ function secimiGoster() {
 
 /**
  * Pencereyi acar.
+ * @param secenek.klasor  { ustId } verilirse ALT KLASOR kipinde calisir:
+ *   baslik/metinler klasore gore, "Gosterim" (yalnizca seritte anlamli)
+ *   gizli, ayni ad kontrolu kardes klasorlerde.
  * @returns {Promise<{ad, ikon}|null>}  iptal edilirse null
  */
-export async function grupPenceresiniAc(grup = null) {
+export async function grupPenceresiniAc(grup = null, { klasor = null } = {}) {
     duzenlenenGrup = grup;
+    klasorKipi = klasor;
 
-    el('grupPencereBaslik').textContent = grup ? c('grubuDuzenle') : 'Yeni Grup';
-    el('gpKaydet').textContent = grup ? 'Kaydet' : c('grupOlustur');
+    el('grupPencereBaslik').textContent = klasor
+        ? (grup ? c('klasoruDuzenle') : c('yeniKlasor'))
+        : (grup ? c('grubuDuzenle') : 'Yeni Grup');
+    el('gpKaydet').textContent = grup ? c('kaydet') : (klasor ? c('olustur') : c('grupOlustur'));
+    el('gpGosterimSatir').hidden = !!klasor;
+    el('gpEtiketSatir').hidden = !klasor;
     el('gpAd').value = grup ? grup.baslik : '';
     // Kart sayisi - yalnizca duzenlemede anlamli
     const bilgi = el('gpKartSayisi');
     if (grup) {
         const sayilar = await kartSayilariAl([grup.id]);
-        bilgi.innerHTML = `Bu grupta <b>${sayilar[grup.id] || 0}</b> kart var`;
+        bilgi.innerHTML = (klasor ? c('buKlasordeNKart', sayilar[grup.id] || 0)
+                                  : `Bu grupta <b>${sayilar[grup.id] || 0}</b> kart var`);
         bilgi.hidden = false;
     } else {
         bilgi.hidden = true;
@@ -142,6 +177,8 @@ export async function grupPenceresiniAc(grup = null) {
     const gorunumler = await gorunumleriAl();
     const g = (grup && gorunumler[grup.id]) || {};
     el('gpGosterim').value = g.gosterim || '';
+    secilenEtiket = g.etiket || null;
+    etiketiGoster();
     el('gpAciklama').value = g.aciklama || '';
     if (g.renk) {
         el('gpIkonRengi').value = g.renk;
@@ -174,8 +211,9 @@ async function kaydet() {
     // AYNI AD KONTROLU - buyuk/kucuk harf ve bosluk farki onemsiz.
     // Iki "Haber" grubu varken kullanici hangisine kart ekledigini
     // anlayamiyor; tasima listesinde de ayirt edilemiyorlar.
-    const { gruplariAl } = await import('./yerimi.js');
-    const hepsi = await gruplariAl();
+    // Klasorde KARDES klasorlerle, grupta gruplarla karsilastiriyoruz
+    const { gruplariAl, klasorleriAl } = await import('./yerimi.js');
+    const hepsi = klasorKipi ? await klasorleriAl(klasorKipi.ustId) : await gruplariAl();
     const karsilastir = m => m.trim().toLocaleLowerCase('tr').replace(/\s+/g, ' ');
 
     const cakisan = hepsi.find(g =>
@@ -184,7 +222,7 @@ async function kaydet() {
     );
 
     if (cakisan) {
-        uyarGoster(c('grupAdiZatenVar', cakisan.baslik));
+        uyarGoster(klasorKipi ? c('klasorAdiZatenVar', cakisan.baslik) : c('grupAdiZatenVar', cakisan.baslik));
         el('gpAd').focus();
         el('gpAd').select();
         return;
@@ -196,7 +234,9 @@ async function kaydet() {
         ikon: secilenIkon,
         gosterim: el('gpGosterim').value || '',
         renk: renkEl.dataset.bos ? null : renkEl.value,
-        aciklama: el('gpAciklama').value.trim() || null
+        aciklama: el('gpAciklama').value.trim() || null,
+        // Yalnizca klasor kipinde anlamli; grupta alan hic gonderilmiyor
+        ...(klasorKipi ? { etiket: secilenEtiket } : {})
     });
 }
 

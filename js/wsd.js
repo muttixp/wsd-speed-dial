@@ -24,7 +24,7 @@ import { kisayollariKur } from './kisayol.js';
 import { copuSuz } from './cop.js';
 import { kayipDenetle } from './depo.js';
 import { tazelemeBastirildiMi, seritGozcusunuKur, yanSeridiKur } from './arayuz.js';
-import { aktifGrup, grubuAc } from './cizim.js';
+import { aktifGrup, aktifSekme, grubuAc } from './cizim.js';
 import { bildir } from './etkilesim.js';
 
 /**
@@ -141,9 +141,8 @@ function bakimBolumunuAc() {
  */
 async function kayipDenetimi() {
     try {
-        const { gruplariAl, kartlariAl } = await import('./yerimi.js');
-        let kart = 0;
-        for (const g of await gruplariAl()) kart += (await kartlariAl(g.id)).length;
+        const { tumKartlariAl } = await import('./yerimi.js');
+        const kart = (await tumKartlariAl()).length;
 
         const kayip = await kayipDenetle(kart);
         if (!kayip) return;
@@ -207,7 +206,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             bildir
         });
         aramayiKur({ aktifGrup, grubuAc });
-        kisayollariKur({ aktifGrup, grubuAc,
+        kisayollariKur({ aktifGrup, aktifSekme, grubuAc,
                          kartEkle: kartEklePenceresi,
                          grupEkle: grupEklePenceresiDis,
                          gruplariYonet: gruplariYonetDis });
@@ -248,6 +247,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         }, 3000);
         copuSuz();
+        import('./arayuz.js').then(m => m.bekleyenBildirimiGoster()).catch(() => {});
         seritGozcusunuKur();       // ust serit kart basliklarini kapatmasin
         yanSeridiKur();            // yan serit yakinlikla aciliyor
         disBirakmayiKur();         // yer imi surukleyip birakma
@@ -273,6 +273,20 @@ chrome.runtime.onMessage.addListener(mesaj => {
         for (const a of document.querySelectorAll('.kart[data-anahtar]')) {
             if (a.dataset.anahtar === mesaj.url) a.classList.add('yenileniyor');
         }
+        return;
+    }
+    // Ice aktarmada cok sayida gorselsiz kart: kendiliginden baslatilmadi
+    if (mesaj && mesaj.hedef === 'sayfa' && mesaj.tur === 'aktarimGorselsiz') {
+        import('./etkilesim.js')
+            .then(m => m.bildir(c('aktarimGorselsizN', mesaj.adet), { sure: 15000 }))
+            .catch(() => {});
+        return;
+    }
+    // Kuyruk bitti: gorseli alinamayan kart varsa sessiz gecmesin
+    if (mesaj && mesaj.hedef === 'sayfa' && mesaj.tur === 'yakalamaBitti') {
+        import('./etkilesim.js')
+            .then(m => m.bildir(c('nKartGorseliAlinamadi', mesaj.basarisiz)))
+            .catch(() => {});
         return;
     }
     if (mesaj && mesaj.hedef === 'sayfa' && mesaj.tur === 'gorselHazir') {

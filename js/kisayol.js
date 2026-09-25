@@ -28,7 +28,7 @@ function ayarlariAcKapat() {
     document.body.classList.toggle('ayarAcik', !acik);
 }
 
-export function kisayollariKur({ aktifGrup, grubuAc, kartEkle, grupEkle, gruplariYonet }) {
+export function kisayollariKur({ aktifGrup, aktifSekme, grubuAc, kartEkle, grupEkle, gruplariYonet }) {
     document.addEventListener('keydown', async e => {
         // Metin alanindaysak karisma
         if (/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) return;
@@ -57,10 +57,18 @@ export function kisayollariKur({ aktifGrup, grubuAc, kartEkle, grupEkle, gruplar
         if (harf === 'g') { e.preventDefault(); grupEkle && grupEkle(); return; }
         if (harf === 'y') { e.preventDefault(); gruplariYonet && gruplariYonet(); return; }
 
+        // Backspace: alt klasordeyken bir ust klasore cik
+        if (e.key === 'Backspace') {
+            const yukari = document.querySelector('#klasorYolu:not([hidden]) .yolYukari');
+            if (yukari) { e.preventDefault(); grubuAc(yukari.dataset.klasorId); }
+            return;
+        }
+
         const gruplar = await gorunurGruplariAl();
         if (!gruplar.length) return;
 
-        const su = gruplar.findIndex(g => g.id === aktifGrup());
+        // Alt klasordeyken seritteki UST GRUP esas alinir
+        const su = gruplar.findIndex(g => g.id === (aktifSekme ? aktifSekme() : aktifGrup()));
 
         // 1-9: dogrudan gruba git
         if (/^[1-9]$/.test(e.key) && !e.ctrlKey) {

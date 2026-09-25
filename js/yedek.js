@@ -24,7 +24,7 @@
 //     bir kez 295 MB'a ulasmisti.
 //   - Tek seferlik bayraklar (ornek: sikistirma surumu)
 
-import { kokKlasoruAl, gruplariAl, kartlariAl, urlNormalle } from './yerimi.js';
+import { kokKlasoruAl, gruplariAl, kartlariAl, klasorIcerigi, urlNormalle } from './yerimi.js';
 import { c } from './dil.js';
 import { ayarlariAl } from './ayar.js';
 
@@ -51,18 +51,39 @@ export async function yedekIskeleti() {
 
     const disaGruplar = [];
     const yasayanUrlIer = new Set();
+    // Alt klasorlerin ikon/gorunumu - id ile degil YOLLA saklaniyor
+    const { grupIkonlari: klasorIkonlari = {}, grupGorunumleri: klasorGorunumleri = {} } =
+        await chrome.storage.local.get(['grupIkonlari', 'grupGorunumleri']);
 
     for (const g of gruplar) {
-        const kartlar = await kartlariAl(g.id);
-        for (const k of kartlar) yasayanUrlIer.add(urlNormalle(k.url));
+        // ALT KLASORLER (1.5.0): kartlar `yol` ile, bos klasorler de
+        // `klasorler` listesiyle saklaniyor. Eski surumler `yol`u tanimaz,
+        // kartlari grubun kendisine koyar - veri kaybolmaz.
+        const kokMu = g.id === kok;
+        const icerik = kokMu ? { kartlar: await kartlariAl(g.id), klasorler: [] }
+                             : await klasorIcerigi(g.id);
+        for (const k of icerik.kartlar) yasayanUrlIer.add(urlNormalle(k.url));
 
-        disaGruplar.push({
-            kokMu: g.id === kok,
+        const grup = {
+            kokMu,
             baslik: g.baslik,
-            kartlar: kartlar.map(k => ({ baslik: k.baslik, url: urlNormalle(k.url) })),
+            kartlar: icerik.kartlar.map(k => (k.yol && k.yol.length)
+                ? { baslik: k.baslik, url: urlNormalle(k.url), yol: k.yol, n: k.n }
+                : (icerik.klasorler.length
+                    ? { baslik: k.baslik, url: urlNormalle(k.url), n: k.n }
+                    : { baslik: k.baslik, url: urlNormalle(k.url) })),
             ikon: null,
             gorunum: null
+        };
+        // `n`: kart ve klasorlerin ORTAK sirasi - geri yuklemede yer imi
+        // sirasi aynen korunsun (klasor, kartlarin arasinda olabilir)
+        if (icerik.klasorler.length) grup.klasorler = icerik.klasorler.map(k => {
+            const o = { yol: k.yol, n: k.n };
+            if (klasorIkonlari[k.id]) o.ikon = klasorIkonlari[k.id];
+            if (klasorGorunumleri[k.id]) o.gorunum = klasorGorunumleri[k.id];
+            return o;
         });
+        disaGruplar.push(grup);
     }
 
     // Yalnizca KUCUK haritalar okunuyor
@@ -199,10 +220,23 @@ export async function yedegiIndir(ilerleme) {
  * @param ilerleme  ({asama, yapilan, toplam, ad}) seklinde cagriliyor
  */
 export async function yedegiYukle(veri, temizle = false, ilerleme = null) {
+    const { iceAktarimBaslat, iceAktarimBitir } = await import('./iceaktarim.js');
+    await iceAktarimBaslat();
+    let urller = [];
+    try {
+        const sonuc = await yedegiYukleIc(veri, temizle, ilerleme, urller);
+        return sonuc;
+    } finally {
+        await iceAktarimBitir(urller);
+    }
+}
+
+async function yedegiYukleIc(veri, temizle, ilerleme, urller) {
     // ESKI SURUM YEDEGI de kabul ediliyor: kullanicinin onceki eklentiden
     // birikmis verisi var ve bir tarayicidan digerine tasimasi gerekiyor.
     const y = bicimiCoz(veri);
     if (!y || !Array.isArray(y.gruplar)) throw new Error(c('gecersizYedekDosyasi'));
+    for (const g of y.gruplar) for (const k of g.kartlar || []) if (k && k.url) urller.push(k.url);
 
     const kok = await kokKlasoruAl();
 
@@ -254,6 +288,31 @@ export async function yedegiYukle(veri, temizle = false, ilerleme = null) {
         return kume;
     };
 
+    // ALT KLASOR BULUCU: yedekteki `yol`u grubun altinda klasor zinciri
+    // olarak bulur ya da olusturur. Ekle kipinde ayni adli alt klasor
+    // varsa onu kullaniyor (grup birlestirmesiyle ayni mantik).
+    const klasorOnbellek = new Map();
+    const klasorBul = async (grupId, yol) => {
+        let ust = grupId;
+        for (let i = 0; i < yol.length; i++) {
+            const anahtar = grupId + '\u0000' + yol.slice(0, i + 1).join('\u0000');
+            if (klasorOnbellek.has(anahtar)) { ust = klasorOnbellek.get(anahtar); continue; }
+            let bulunan = null;
+            if (!temizle) {
+                try {
+                    bulunan = (await chrome.bookmarks.getChildren(ust))
+                        .find(x => !x.url && adAnahtari(x.title) === adAnahtari(yol[i]));
+                } catch (e) { /* okunamadi */ }
+            }
+            const id = bulunan ? bulunan.id
+                : (await chrome.bookmarks.create({ parentId: ust, title: yol[i] })).id;
+            klasorOnbellek.set(anahtar, id);
+            ust = id;
+        }
+        return ust;
+    };
+    const klasorAdresleri = new Map();     // klasorId -> Set(adres)
+
     for (const g of y.gruplar) {
         let hedefId, yeniGrup = false;
         if (g.kokMu) {
@@ -279,11 +338,35 @@ export async function yedegiYukle(veri, temizle = false, ilerleme = null) {
             if (g.gorunum) yeniGorunumler[hedefId] = g.gorunum;
         }
 
-        const varolanAdresler = temizle ? new Set() : await adresleriAl(hedefId);
+        // Kartlar ve alt klasorler (bos olanlar dahil) ESKI SIRAYLA
+        const ogeler = g.kartlar.map(k => ({ kart: k, n: k.n }));
+        if (!g.kokMu && Array.isArray(g.klasorler)) {
+            for (const kl of g.klasorler) {
+                const yol = Array.isArray(kl) ? kl : kl && kl.yol;
+                if (Array.isArray(yol) && yol.length) ogeler.push({ yol, n: kl.n, ikon: kl.ikon, gorunum: kl.gorunum });
+            }
+            if (ogeler.every(o => typeof o.n === 'number')) ogeler.sort((a, b) => a.n - b.n);
+            else ogeler.sort((a, b) => (a.yol ? 0 : 1) - (b.yol ? 0 : 1));   // eski: klasorler once
+        }
 
-        for (const k of g.kartlar) {
+        for (const o of ogeler) {
+            if (o.yol) {
+                const kid = await klasorBul(hedefId, o.yol);
+                if (o.ikon) yeniIkonlar[kid] = o.ikon;
+                if (o.gorunum) yeniGorunumler[kid] = o.gorunum;
+                continue;
+            }
+            const k = o.kart;
+            const hedefKlasor = (!g.kokMu && Array.isArray(k.yol) && k.yol.length)
+                ? await klasorBul(hedefId, k.yol) : hedefId;
+
+            if (!klasorAdresleri.has(hedefKlasor)) {
+                klasorAdresleri.set(hedefKlasor, temizle ? new Set() : await adresleriAl(hedefKlasor));
+            }
+            const varolanAdresler = klasorAdresleri.get(hedefKlasor);
+
             const anahtar = urlNormalle(k.url);
-            if (varolanAdresler.has(anahtar)) {     // bu grupta zaten var
+            if (varolanAdresler.has(anahtar)) {     // bu klasorde zaten var
                 atlanan++;
                 eklenen++;
                 continue;
@@ -291,7 +374,7 @@ export async function yedegiYukle(veri, temizle = false, ilerleme = null) {
             varolanAdresler.add(anahtar);
 
             await chrome.bookmarks.create({
-                parentId: hedefId, title: k.baslik, url: k.url
+                parentId: hedefKlasor, title: k.baslik, url: k.url
             }).catch(() => {});
 
             eklenen++;
@@ -846,8 +929,7 @@ export async function herSeyiSil(ilerleme = null) {
         if (c.url) toplam++;
         else {
             try {
-                const icerik = await chrome.bookmarks.getChildren(c.id);
-                toplam += icerik.filter(x => x.url).length;
+                toplam += (await klasorIcerigi(c.id)).kartlar.length;
             } catch (e) { /* atla */ }
         }
     }
@@ -864,8 +946,7 @@ export async function herSeyiSil(ilerleme = null) {
                 await chrome.bookmarks.remove(c.id);
                 silinenKart++;
             } else {
-                const icerik = await chrome.bookmarks.getChildren(c.id);
-                const adet = icerik.filter(x => x.url).length;
+                const adet = (await klasorIcerigi(c.id)).kartlar.length;
                 await chrome.bookmarks.removeTree(c.id);
                 silinenKart += adet;
                 silinenGrup++;

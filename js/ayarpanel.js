@@ -680,9 +680,10 @@ function yedekAraclariniKur() {
             const s = await yedegiYukle(JSON.parse(metin), temizle, ilerlemeCiz);
 
             // Birlestirme yapildiysa atlanan kart sayisini da soyle
-            bildir(c('nGrupNKartYuklendi', s.grup, s.eklenen ?? s.kart) +
+            const { yenileVeBildir } = await import('./arayuz.js');
+            yenileVeBildir('✓ ' + c('iceAktarmaTamamlandi') + ': ' +
+                   c('nGrupNKartYuklendi', s.grup, s.eklenen ?? s.kart) +
                    (s.atlanan ? ' · ' + c('nKartZatenVardi', s.atlanan) : ''));
-            setTimeout(() => location.reload(), 900);
         } catch (err) {
             pencere.hidden = true;
             document.getElementById('perde')?.classList.remove('acik');
@@ -729,8 +730,8 @@ function yedekAraclariniKur() {
             const s = await silmeYedeginiGeriAl(ilerlemeCiz);
             ilerlemeCiz({ asama: 'bitti', yapilan: 1, toplam: 1, ad: '' });
 
-            bildir(c('nGrupNKartYuklendi', s.grup, s.eklenen ?? s.kart));
-            setTimeout(() => location.reload(), 1200);
+            const { yenileVeBildir } = await import('./arayuz.js');
+            yenileVeBildir('✓ ' + c('nGrupNKartYuklendi', s.grup, s.eklenen ?? s.kart));
         } catch (e) {
             pencere.hidden = true;
             document.getElementById('perde')?.classList.remove('acik');
@@ -849,8 +850,8 @@ function yedekAraclariniKur() {
 
         try {
             await ayarlariSifirla();
-            bildir(c('ayarlarSifirlandi'));
-            setTimeout(() => location.reload(), 800);
+            const { yenileVeBildir } = await import('./arayuz.js');
+            yenileVeBildir(c('ayarlarSifirlandi'), 4000);
         } catch (e) {
             console.log('[WSD] ayarlar sifirlanamadi:', e);
             bildir(c('sifirlanamadi'));
@@ -901,8 +902,8 @@ function yedekAraclariniKur() {
             const s = await herSeyiSil(ilerlemeCiz);
             ilerlemeCiz({ asama: 'bitti', yapilan: 1, toplam: 1, ad: '' });
 
-            bildir(c('nGrupNKartSilindi', s.grup, s.kart));
-            setTimeout(() => location.reload(), 1200);
+            const { yenileVeBildir } = await import('./arayuz.js');
+            yenileVeBildir(c('nGrupNKartSilindi', s.grup, s.kart));
         } catch (e) {
             pencere.hidden = true;
             document.getElementById('perde')?.classList.remove('acik');

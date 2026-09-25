@@ -15,6 +15,7 @@
 //   "WSD" adli kok klasor  -> tum icerik burada
 //   kok altindaki klasorler -> gruplar (sekmeler)
 //   kok altindaki yer imleri -> "Ana Sayfa" grubunun kartlari
+//   grup icindeki klasorler -> alt klasorler (izgarada klasor kutusu)
 //
 // Karar: veriyi ayri bir veritabaninda DEGIL, tarayicinin kendi yer imlerinde
 // tutuyoruz. Boylece tarayici senkronu bedava geliyor, kullanici verisi bize
@@ -125,13 +126,128 @@ export async function kartlariAl(grupId) {
         .map(c => ({ id: c.id, baslik: c.title, url: c.url, sira: c.index }));
 }
 
+/* ---------- Ic ice klasorler (1.5.0) ----------
+ *
+ * Grup = kokun dogrudan altindaki klasor. Grubun ICINDEKI klasorler
+ * "alt klasor": izgarada klasor kutusu olarak gorunuyor ve tiklayinca
+ * iceri giriliyor. Tarayicinin yer imi yapisiyla birebir ayni.
+ *
+ * Toplu islemler (arama, yedek, denetim, oksuz temizligi, gorsel
+ * yenileme) ARTIK BUTUN AGACI geziyor. Once yalnizca ilk seviyeye
+ * bakiliyordu: alt klasordeki kartlar aramada cikmiyor, yedege
+ * girmiyor ve - en tehlikelisi - gorselleri "oksuz" sayilip
+ * temizlikte siliniyordu.
+ */
+
+/** Bir klasorun dogrudan alt klasorleri. */
+export async function klasorleriAl(klasorId) {
+    const cocuklar = await chrome.bookmarks.getChildren(klasorId);
+    return cocuklar
+        .filter(c => !c.url)
+        .map(c => ({ id: c.id, baslik: c.title, sira: c.index }));
+}
+
+/**
+ * Bir klasorun TUM icerigi, alt klasorler dahil, duz liste olarak.
+ * `yol`: klasorun kendisine gore alt klasor ADLARI ([] = dogrudan icinde).
+ * Sira yer imi sirasini koruyor (derinlik oncelikli).
+ * @returns {{kartlar: Array, klasorler: Array}}
+ */
+export async function klasorIcerigi(klasorId) {
+    const kartlar = [], klasorler = [];
+    let n = 0;                            // kart+klasor ORTAK sirasi (geri yuklemede)
+    let kok;
+    try { [kok] = await chrome.bookmarks.getSubTree(klasorId); } catch (e) { return { kartlar, klasorler }; }
+
+    const gez = (dugum, yol) => {
+        for (const c of dugum.children || []) {
+            if (c.url) {
+                kartlar.push({ id: c.id, baslik: c.title, url: c.url, sira: c.index,
+                               parentId: c.parentId, yol, n: n++ });
+            } else {
+                const altYol = [...yol, c.title];
+                klasorler.push({ id: c.id, baslik: c.title, parentId: c.parentId, yol: altYol, n: n++ });
+                gez(c, altYol);
+            }
+        }
+    };
+    gez(kok, []);
+    return { kartlar, klasorler };
+}
+
+/**
+ * Bir GRUBUN tum kartlari. Kok (Ana Sayfa) icin yalnizca dogrudan
+ * kartlar: kokun alt klasorleri zaten ayri gruplar, onlari katarsak
+ * her kart iki kez sayilir.
+ */
+export async function grubunTumKartlari(grup) {
+    const kok = await kokKlasoruAl();
+    if (grup === kok || (grup && grup.kokMu)) return kartlariAl(kok);
+    const id = typeof grup === 'string' ? grup : grup.id;
+    return (await klasorIcerigi(id)).kartlar;
+}
+
+/** WSD agacindaki TUM kartlar (her grup, her alt klasor). */
+export async function tumKartlariAl() {
+    const kok = await kokKlasoruAl();
+    return (await klasorIcerigi(kok)).kartlar;
+}
+
+/**
+ * Klasorden koke kadar olan zincir: [grup, alt, alt-alt, ..., kendisi].
+ * Kok (Ana Sayfa) icin [kok]. WSD disindaysa ya da silinmisse null.
+ */
+export async function klasorZinciri(klasorId) {
+    const kok = await kokKlasoruAl();
+    if (klasorId === kok) return [{ id: kok, baslik: chrome.i18n.getMessage('anaSayfa') || 'Ana Sayfa', kokMu: true }];
+    const zincir = [];
+    let id = klasorId;
+    for (let adim = 0; adim < 64 && id; adim++) {
+        let d;
+        try { [d] = await chrome.bookmarks.get(id); } catch (e) { return null; }
+        if (!d || d.url) return null;
+        zincir.unshift({ id: d.id, baslik: d.title });
+        if (d.parentId === kok) return zincir;
+        id = d.parentId;
+    }
+    return null;                         // WSD agacinda degil
+}
+
+/**
+ * Tasima hedefleri: tum gruplar ve alt klasorleri, AGAC SIRASIYLA.
+ * `yol` gorunen ad ("elfinder › config"), `derinlik` 0 = grup.
+ */
+export async function tumKlasorleriAl() {
+    const gruplar = await gorunurGruplariAl();
+    const cikti = [];
+    for (const g of gruplar) {
+        cikti.push({ id: g.id, baslik: g.baslik, yol: g.baslik, derinlik: 0, kokMu: !!g.kokMu });
+        if (g.kokMu) continue;
+        for (const k of (await klasorIcerigi(g.id)).klasorler) {
+            cikti.push({ id: k.id, baslik: k.baslik, yol: [g.baslik, ...k.yol].join(' › '),
+                         derinlik: k.yol.length });
+        }
+    }
+    return cikti;
+}
+
+export async function klasorEkle(ustId, baslik) {
+    return chrome.bookmarks.create({ parentId: ustId, title: baslik });
+}
+
 /** Kart sayilari - grup sekmelerinde "(n)" gostermek icin. */
 export async function kartSayilariAl(grupIdler) {
     const sonuc = {};
+    const kok = await kokKlasoruAl();
     await Promise.all(grupIdler.map(async id => {
         try {
-            const c = await chrome.bookmarks.getChildren(id);
-            sonuc[id] = c.filter(x => x.url).length;
+            // Kok icin yalnizca dogrudan kartlar; gruplarda alt klasorler dahil
+            if (id === kok) {
+                const c = await chrome.bookmarks.getChildren(id);
+                sonuc[id] = c.filter(x => x.url).length;
+            } else {
+                sonuc[id] = (await klasorIcerigi(id)).kartlar.length;
+            }
         } catch (e) {
             sonuc[id] = 0;
         }

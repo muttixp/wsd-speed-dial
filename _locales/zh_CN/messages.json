@@ -522,7 +522,7 @@
     "message": "无法读取文件"
   },
   "goruntuAlinamadi": {
-    "message": "无法获取图片"
+    "message": "截图失败"
   },
   "indirilecekGorselYok": {
     "message": "没有可下载的图片"
@@ -1228,5 +1228,14 @@
   },
   "tekleDusurOnay": {
     "message": "每个重复地址只保留一个磁贴，其余移至回收站，可以恢复。"
+  },
+  "nKartGorseliAlinamadi": {
+    "message": "$1 个磁贴截图失败"
+  },
+  "ulasilamadi": {
+    "message": "无法访问"
+  },
+  "grupAra": {
+    "message": "搜索分组..."
   }
 }

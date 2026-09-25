@@ -27,6 +27,21 @@ import { c } from './dil.js';
 const YAKALAMA_ARASI_MS = 700;
 const ZAMAN_ASIMI_MS = 15000;
 
+/** Tek bir yakalama isinin en fazla suresi. Asilirsa is atlaniyor. */
+const YAKALAMA_TAVANI_MS = 45000;
+
+/**
+ * Sozu zaman asimina baglar. chrome.debugger komutlari ve
+ * captureVisibleTab bazi sayfalarda HIC yanit vermiyor; kuyruk orada
+ * duruyor, acilan sekme/pencere kapanmiyordu.
+ */
+function zamanAsimli(soz, ms, etiket = 'islem') {
+    return Promise.race([
+        soz,
+        new Promise((_, at) => setTimeout(() => at(new Error(etiket + ' zaman asimi')), ms))
+    ]);
+}
+
 // KUYRUK DEPODA da tutuluyor.
 //
 // MV3'te servis iscisi kalici degil: bosta kalinca tarayici sonlandiriyor
@@ -51,13 +66,33 @@ let biterken = null;        // depodan devam ederken kullanilacak geri cagirma
 const islenenler = new Set();
 
 /** Kuyruga ekler. Ayni url bekliyorsa ya da isleniyorsa tekrar girmez. */
-export function yakalamayaEkle(url, bitince) {
+/**
+ * @param oncelik  KULLANICININ istedigi yenileme (kart/grup "Yenile").
+ *   Arka plandaki birikmis islerin (yeni eklenen yer imleri, onceki
+ *   toplu yenilemenin kalani) ONUNE geciyor; kendi aralarinda istek
+ *   sirasini koruyor. Once hep sona ekleniyordu: X grubunu yenileyince
+ *   donenceler X'te donuyor ama kuyruk once baska kartlari isliyordu.
+ */
+export function yakalamayaEkle(url, bitince, oncelik = false) {
     if (!url) return;
     if (islenenler.has(url)) return;
-    if (kuyruk.some(i => i.url === url)) return;
+
+    const mevcut = kuyruk.findIndex(i => i.url === url);
+    if (mevcut >= 0) {
+        // Zaten bekliyor: oncelikli istendiyse one al
+        if (!oncelik || kuyruk[mevcut].oncelik) return;
+        kuyruk.splice(mevcut, 1);
+    }
 
     iptal = false;             // yeni is geldi - iptal bayragi sifirlansin
-    kuyruk.push({ url, bitince });
+    const is = { url, bitince, oncelik };
+    if (oncelik) {
+        const ilkSiradan = kuyruk.findIndex(i => !i.oncelik);
+        if (ilkSiradan < 0) kuyruk.push(is);
+        else kuyruk.splice(ilkSiradan, 0, is);
+    } else {
+        kuyruk.push(is);
+    }
     biterken = bitince || biterken;
     kuyrugaYaz();
     alarmiKur();
@@ -176,8 +211,112 @@ function semaKarti(url) {
     return tuval.convertToBlob({ type: 'image/png' }).then(blobDanDataUri);
 }
 
+/**
+ * GORSEL ALINAMADIGINDA kart bomboş/siyah kaliyor ve kullanici
+ * yakalamanin basarisiz oldugunu anlamiyordu. Adresi yazan sade bir
+ * yer tutucu uretiyoruz; ekran goruntusuyle karismasin diye
+ * "goruntu alinamadi" satiri da var.
+ */
+/**
+ * YUMUSAK 404: sunucu 200 donuyor ama sayfa bombos (icerik silinmis,
+ * yonlendirme yarim kalmis). HTTP koduna bakan tarama bunu goremiyor;
+ * tek ipucu yakalanan karenin tek renk olmasi.
+ *
+ * Kare kucuk bir tuvale indirilip iki olcu birlikte araniyor:
+ *   - farkli renk sayisi cok az
+ *   - piksellerin ortalamadan sapmasi cok kucuk
+ * Ikisi birden saglanmazsa dokunulmuyor; sade tasarimli siteler yanlis
+ * yere bos sayilmasin.
+ */
+async function kareBosMu(dataUri) {
+    try {
+        const blob = await (await fetch(dataUri)).blob();
+        const bmp = await createImageBitmap(blob);
+
+        const N = 32;
+        const t = new OffscreenCanvas(N, N);
+        const x = t.getContext('2d', { willReadFrequently: true });
+        x.drawImage(bmp, 0, 0, N, N);
+        bmp.close();
+
+        const p = x.getImageData(0, 0, N, N).data;
+        const renkler = new Set();
+        let toplam = 0;
+        const parlaklik = [];
+
+        for (let i = 0; i < p.length; i += 4) {
+            // 16'sar basamak grupla: sikistirma gurultusu renk saymasin
+            renkler.add((p[i] >> 4) + ',' + (p[i + 1] >> 4) + ',' + (p[i + 2] >> 4));
+            const l = 0.2126 * p[i] + 0.7152 * p[i + 1] + 0.0722 * p[i + 2];
+            parlaklik.push(l);
+            toplam += l;
+        }
+
+        const ort = toplam / parlaklik.length;
+        const sapma = Math.sqrt(
+            parlaklik.reduce((a, l) => a + (l - ort) * (l - ort), 0) / parlaklik.length);
+
+        return renkler.size <= 3 && sapma < 6;
+    } catch (e) {
+        return false;                 // olcemedik - dokunma
+    }
+}
+
+async function yerTutucuKart(url) {
+    let alan = url;
+    try { alan = new URL(url).hostname.replace(/^www\./, ''); } catch (e) { /* ham metin */ }
+
+    const EN = 800, BOY = 500;
+    const tuval = new OffscreenCanvas(EN, BOY);
+    const ctx = tuval.getContext('2d');
+
+    ctx.fillStyle = '#23262c';
+    ctx.fillRect(0, 0, EN, BOY);
+    ctx.strokeStyle = 'rgba(255,255,255,.08)';
+    ctx.lineWidth = 6;
+    ctx.strokeRect(3, 3, EN - 6, BOY - 6);
+
+    // SIMGE: ustu cizili gorsel cercevesi. Metne ek olarak bir bakista
+    // "burada goruntu yok" isareti veriyor.
+    const sx = EN / 2, sy = BOY / 2 - 96, g = 54, y = 42;
+    ctx.strokeStyle = '#7d8590';
+    ctx.lineWidth = 5;
+    ctx.lineJoin = 'round';
+    ctx.beginPath();
+    ctx.roundRect(sx - g, sy - y, g * 2, y * 2, 8);       // cerceve
+    ctx.stroke();
+    ctx.beginPath();                                       // icindeki dag ve gunes
+    ctx.moveTo(sx - g + 12, sy + y - 14);
+    ctx.lineTo(sx - 8, sy - 2);
+    ctx.lineTo(sx + 16, sy + y - 26);
+    ctx.lineTo(sx + g - 12, sy + y - 14);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(sx + 20, sy - 14, 8, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.beginPath();                                       // ustu cizik
+    ctx.moveTo(sx - g - 10, sy + y + 10);
+    ctx.lineTo(sx + g + 10, sy - y - 10);
+    ctx.stroke();
+
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+
+    ctx.fillStyle = '#c9d1d9';
+    ctx.font = 'bold 52px system-ui, sans-serif';
+    const kisa = alan.length > 26 ? alan.slice(0, 25) + '…' : alan;
+    ctx.fillText(kisa, EN / 2, BOY / 2 + 40);
+
+    ctx.fillStyle = '#7d8590';
+    ctx.font = '28px system-ui, sans-serif';
+    ctx.fillText(c('goruntuAlinamadi'), EN / 2, BOY / 2 + 100);
+
+    return tuval.convertToBlob({ type: 'image/png' }).then(blobDanDataUri);
+}
+
 async function kuyruguIsle() {
     calisiyor = true;
+    let basarisiz = 0;
     while (kuyruk.length) {
         if (iptal) {           // temizleme istendi - hemen cik
             kuyruk.length = 0;
@@ -224,17 +363,43 @@ async function kuyruguIsle() {
 
             // Yakalanamayan semalarda sekme acip goruntu alinamiyor -
             // adresi yazan duz bir kart uretiyoruz
-            const ekran = YAKALANAMAZ_SEMA.test(is.url)
+            // TAVAN: tek bir kart yuzunden kuyruk sonsuza kadar
+            // beklemesin; asilirsa o is atlanip digerlerine geciliyor
+            let ekran = YAKALANAMAZ_SEMA.test(is.url)
                 ? await semaKarti(is.url)
-                : (ayar.yakalamaKipi === 'gizli'
-                    ? await gizliYakala(is.url, ayar)
-                    : await ekranGoruntusuAl(is.url, ayar));
+                : await zamanAsimli(
+                    ayar.yakalamaKipi === 'gizli'
+                        ? gizliYakala(is.url, ayar)
+                        : ekranGoruntusuAl(is.url, ayar),
+                    YAKALAMA_TAVANI_MS, 'yakalama').catch(e => {
+                        console.log('[WSD] yakalama atlandi:', is.url, e.message);
+                        return null;
+                    });
 
+            // GIZLI KIP YEDEGI: arka plan sekmesinde Page.captureScreenshot
+            // bazi sitelerde kare gelmedigi icin hic donmuyor (zaman asimi).
+            // Tek kart yenilemede tutuyor, toplu yenilemede takiliyordu.
+            // Basarisizsa ayni kart pencere kipiyle bir kez daha deneniyor.
+            if (!ekran && ayar.yakalamaKipi === 'gizli' && !YAKALANAMAZ_SEMA.test(is.url)) {
+                console.log('[WSD] gizli olmadi, pencere kipiyle deneniyor:', is.url);
+                ekran = await zamanAsimli(ekranGoruntusuAl(is.url, ayar),
+                    YAKALAMA_TAVANI_MS, 'yakalama').catch(() => null);
+            }
+
+            // Bombos kare (yumusak 404) kart olmasin
+            const ekranGecerli = ekran && !(await kareBosMu(ekran));
             adaylar = sayfadan.slice();
-            if (ekran) adaylar.push(ekran);
+            if (ekranGecerli) adaylar.push(ekran);
+            else if (ekran) console.log('[WSD] bos kare atlandi:', is.url);
 
         } catch (e) {
             console.log('[WSD] yakalama hatasi:', is.url, e.message);
+        }
+
+        // Hicbir gorsel alinamadiysa kart siyah kalmasin
+        if (!adaylar.length) {
+            basarisiz++;
+            try { adaylar = [await yerTutucuKart(is.url)]; } catch (e) { /* tuval yok */ }
         }
         try {
             if (is.bitince) await is.bitince(is.url, adaylar);
@@ -246,6 +411,13 @@ async function kuyruguIsle() {
     }
     calisiyor = false;
     alarmiKapat();                    // is bitti - bekciye gerek yok
+
+    // Sessizce gecmesin: kac kartin gorseli alinamadi soylensin
+    if (basarisiz) {
+        chrome.runtime.sendMessage({
+            hedef: 'sayfa', tur: 'yakalamaBitti', basarisiz
+        }).catch(() => {});
+    }
 }
 
 const bekle = ms => new Promise(r => setTimeout(r, ms));
@@ -506,7 +678,18 @@ async function ekranGoruntusuAl(url, ayar) {
 
         let veri = null;
         try {
-            veri = await chrome.tabs.captureVisibleTab(pencere.id, secenek);
+            try {
+                veri = await zamanAsimli(
+                    chrome.tabs.captureVisibleTab(pencere.id, secenek), 15000, 'captureVisibleTab');
+            } catch (e0) {
+                // Sayfa henuz gelmemis (adres bos): bir kez daha bekleyip dene
+                if (!/Cannot access contents of url/i.test(e0.message)) throw e0;
+                console.log('[WSD] sayfa henuz yuklenmemis, tekrar bekleniyor:', url);
+                await sayfaStabilOlsun(sekmeId);
+                await bekle(1000);
+                veri = await zamanAsimli(
+                    chrome.tabs.captureVisibleTab(pencere.id, secenek), 15000, 'captureVisibleTab');
+            }
         } catch (e) {
             // Odaksiz pencerede yakalama reddedilebiliyor.
             // One almak calisiyor ama ekranda goz kirpmaya yol aciyor,
@@ -553,7 +736,17 @@ async function ekranGoruntusuAl(url, ayar) {
  * Islem bitince WSD SEKMESINE geri donuluyor - tarayici normalde
  * onceki sekmeye doner, WSD'ye degil.
  */
+/**
+ * Devam eden elle yakalamayi iptal etmek icin. Onceki cagri bir sekilde
+ * asili kaldiysa (sekme kapanmis, mesaj gelmemis) dugme kilitli kaliyor
+ * ve ancak sayfa yenilenince acilıyordu; yeni istek gelince eskisini
+ * kapatiyoruz.
+ */
+let elleIptal = null;
+
 export function elleYakala(url) {
+    if (elleIptal) { try { elleIptal(); } catch (e) { /* zaten bitmis */ } }
+
     return new Promise(async (coz) => {
         let sekme = null;
         // Su an WSD sekmesi - islem sonunda buraya donecegiz
@@ -579,6 +772,7 @@ export function elleYakala(url) {
                 const temizle = () => {
                     if (bitti) return;
                     bitti = true;
+                    elleIptal = null;
                     chrome.runtime.onMessage.removeListener(dinle);
                     chrome.tabs.onRemoved.removeListener(kapandi);
                     chrome.tabs.onUpdated.removeListener(guncellendi);
@@ -613,6 +807,9 @@ export function elleYakala(url) {
                 chrome.runtime.onMessage.addListener(dinle);
                 chrome.tabs.onRemoved.addListener(kapandi);
                 chrome.tabs.onUpdated.addListener(guncellendi);
+
+                // Yeni bir elle yakalama baslarsa bu cagri temiz kapansin
+                elleIptal = () => { temizle(); kararCoz({ karar: 'vazgec' }); };
             });
             const karar = mesajKarari.karar;
 
@@ -1478,49 +1675,199 @@ function renkParlakligi(renk) {
  */
 function elleCubukEnjekte(mSahne, mCek, mAlan, mUzun, mVazgec) {
     if (document.getElementById('wsdElleCubuk')) return;
+
+    // NOT: ogeler DOM ile kuruluyor ve stiller CSSOM'dan (el.style.x)
+    // veriliyor. Once innerHTML + style="..." kullaniliyordu; KATI CSP
+    // uygulayan sitelerde (or. base64encode.org) satir ici stil
+    // oznitelikleri engellendigi icin cubuk gorunmez oluyordu.
+    // CSSOM ile atanan stiller CSP'ye takilmiyor.
+    const stil = (el, tanim) => { for (const a in tanim) el.style[a] = tanim[a]; };
+
     const cubuk = document.createElement('div');
     cubuk.id = 'wsdElleCubuk';
-    const k = s => String(s).replace(/[<>&]/g, '');
-    cubuk.style.cssText = 'position:fixed;top:12px;left:50%;transform:translateX(-50%);' +
-        'z-index:2147483647;display:flex;gap:8px;align-items:center;padding:8px 12px;' +
-        'background:rgba(20,22,26,.96);border:1px solid rgba(255,255,255,.15);' +
-        'border-radius:10px;box-shadow:0 4px 20px rgba(0,0,0,.5);' +
-        'font:14px system-ui,sans-serif;color:#e8eaed';
-    const ikincil = 'border:1px solid rgba(255,255,255,.2);border-radius:7px;' +
-        'padding:7px 12px;background:transparent;color:#e8eaed;font:inherit;cursor:pointer';
-    cubuk.innerHTML =
-        '<span style="opacity:.85">' + k(mSahne) + '</span>' +
-        '<button id="wsdCek" style="border:0;border-radius:7px;padding:7px 14px;' +
-        'background:#5d93c2;color:#fff;font:inherit;font-weight:600;cursor:pointer">' + k(mCek) + '</button>' +
-        '<button id="wsdAlan" style="' + ikincil + '">' + k(mAlan) + '</button>' +
-        '<button id="wsdUzun" style="' + ikincil + '">' + k(mUzun) + '</button>' +
-        '<button id="wsdVazgec" style="' + ikincil + '">' + k(mVazgec) + '</button>';
+    stil(cubuk, {
+        position: 'fixed', top: '12px', left: '50%', transform: 'translateX(-50%)',
+        zIndex: '2147483647', display: 'flex', gap: '8px', alignItems: 'center',
+        padding: '8px 12px', background: 'rgba(20,22,26,.96)',
+        border: '1px solid rgba(255,255,255,.15)', borderRadius: '10px',
+        boxShadow: '0 4px 20px rgba(0,0,0,.5)', font: '14px system-ui,sans-serif',
+        color: '#e8eaed', margin: '0', width: 'auto', height: 'auto',
+        visibility: 'visible', opacity: '1'
+    });
+
+    const etiket = document.createElement('span');
+    etiket.textContent = mSahne;
+    stil(etiket, { opacity: '.85', color: '#e8eaed', font: 'inherit' });
+    cubuk.appendChild(etiket);
+
+    const dugmeYap = (kimlik, metin, birincil) => {
+        const b = document.createElement('button');
+        b.id = kimlik;
+        b.type = 'button';
+        b.textContent = metin;
+        stil(b, {
+            borderRadius: '7px', font: 'inherit', cursor: 'pointer',
+            padding: birincil ? '7px 14px' : '7px 12px',
+            border: birincil ? '0' : '1px solid rgba(255,255,255,.2)',
+            background: birincil ? '#5d93c2' : 'transparent',
+            color: birincil ? '#fff' : '#e8eaed',
+            fontWeight: birincil ? '600' : 'normal',
+            margin: '0', minWidth: '0', lineHeight: 'normal'
+        });
+        cubuk.appendChild(b);
+        return b;
+    };
+
+    dugmeYap('wsdCek', mCek, true);
+    dugmeYap('wsdAlan', mAlan, false);
+    dugmeYap('wsdUzun', mUzun, false);
+    dugmeYap('wsdVazgec', mVazgec, false);
+
     document.body.appendChild(cubuk);
 
-    const gonder = (karar, ek) =>
-        chrome.runtime.sendMessage(Object.assign({ tur: 'elleKarar', karar }, ek || {}));
+    // UST KATMAN: sayfadaki onay/reklam katmanlari da z-index 2147483647
+    // kullaniyor ve bizden sonra eklendikleri icin ustte kaliyorlar;
+    // cubuk gorunuyor ama tiklamayi onlar yutuyordu. Popover ust katmana
+    // ciktigi icin hicbir sayfa katmani onune gecemiyor.
+    try {
+        if (typeof cubuk.showPopover === 'function') {
+            cubuk.setAttribute('popover', 'manual');
+            cubuk.style.inset = 'auto';
+            cubuk.style.top = '12px';
+            cubuk.style.left = '50%';
+            cubuk.showPopover();
+        }
+    } catch (e) { /* eski tarayici - z-index ile idare */ }
+
+    /**
+     * CUBUGUN USTUNDEKI ORTULER
+     *
+     * Bazi sitelerde (cerez/onay katmanlari, reklam cerceveleri) ekrani
+     * kaplayan SAYDAM bir oge duruyor ve cubugun tiklamasini yutuyor:
+     * cubuk gorunuyor ama basilamiyor. Boyut/konum tahmini yerine
+     * DOGRUDAN noktadan soruyoruz - her dugmenin merkezinde bizden
+     * once hangi ogeler varsa onlarin fare olaylarini kapatiyoruz.
+     * Cubuk kalkarken hepsi geri aciliyor.
+     */
+    const kapatilanlar = new Map();
+
+    const ortuleriEtkisizlestir = () => {
+        const dugmeler = [...cubuk.querySelectorAll('button'), cubuk];
+        for (const hedef of dugmeler) {
+            const r = hedef.getBoundingClientRect();
+            if (!r.width) continue;
+            const x = r.left + r.width / 2;
+            const y = r.top + r.height / 2;
+
+            for (const el of document.elementsFromPoint(x, y)) {
+                if (el === cubuk || cubuk.contains(el)) break;   // bize ulastik, ustu bitti
+                if (el === document.documentElement || el === document.body) continue;
+                if (kapatilanlar.has(el)) continue;
+                kapatilanlar.set(el, el.style.pointerEvents);
+                el.style.setProperty('pointer-events', 'none', 'important');
+            }
+        }
+    };
+
+    /**
+     * MODAL DIALOG: showModal() ile acilan bir <dialog> varsa sayfanin
+     * geri kalani INERT oluyor; pointer-events ile asilamiyor, klavye
+     * calisirken fare calismiyor. Cubuk acikken kapatip, is bitince
+     * geri aciyoruz.
+     */
+    const kapatilanDialoglar = [];
+    const modallariKapat = () => {
+        for (const d of document.querySelectorAll('dialog[open]')) {
+            try {
+                if (d.matches(':modal')) { d.close(); kapatilanDialoglar.push(d); }
+            } catch (e) { /* eski tarayici */ }
+        }
+        // Bazi siteler body'ye pointer-events:none koyuyor
+        if (getComputedStyle(document.body).pointerEvents === 'none') {
+            kapatilanlar.set(document.body, document.body.style.pointerEvents);
+            document.body.style.setProperty('pointer-events', 'auto', 'important');
+        }
+    };
+
+    const ortuleriGeriAc = () => {
+        for (const [el, eski] of kapatilanlar) el.style.pointerEvents = eski || '';
+        kapatilanlar.clear();
+        for (const d of kapatilanDialoglar) { try { d.showModal(); } catch (e) { /* kapanmis */ } }
+        kapatilanDialoglar.length = 0;
+        clearInterval(sayac);
+    };
+
+    ortuleriEtkisizlestir();
+    modallariKapat();
+    // Onay katmani sonradan da yukleniyor - kisa sure boyunca tekrar bak
+    let tur = 0;
+    const sayac = setInterval(() => {
+        ortuleriEtkisizlestir();
+        modallariKapat();
+        if (++tur > 10) clearInterval(sayac);      // ~5 saniye
+    }, 500);
+
+    const gonder = (karar, ek) => {
+        ortuleriGeriAc();
+
+        try {
+            const p = chrome.runtime.sendMessage(Object.assign({ tur: 'elleKarar', karar }, ek || {}));
+            if (p && p.catch) p.catch(() => { /* sekme kapanmis olabilir */ });
+        } catch (e) { /* baglanti kopmus */ }
+    };
     const cubuguKaldir = () => { const e = document.getElementById('wsdElleCubuk'); if (e) e.remove(); };
 
-    document.getElementById('wsdCek').onclick    = () => gonder('cek');
-    document.getElementById('wsdUzun').onclick   = () => { cubuguKaldir(); gonder('uzun'); };
-    document.getElementById('wsdVazgec').onclick = () => { cubuguKaldir(); gonder('vazgec'); };
+    // KLAVYE: bazi sayfalarda reklam/onay katmanlari tum ekrani kaplayan
+    // saydam bir ortu koyuyor ve FARE tiklamasini yutuyor (or. Quantcast
+    // CMP). Klavye olaylari bu ortulerden etkilenmedigi icin ayni
+    // eylemler tuslarla da yapilabiliyor.
+    const tus = e => {
+        if (e.key === 'Enter')       { e.preventDefault(); temizleTus(); gonder('cek'); }
+        else if (e.key === 'Escape') { e.preventDefault(); temizleTus(); cubuguKaldir(); gonder('vazgec'); }
+        else if (e.key === 'a' || e.key === 'A' || e.key === 'ф') { e.preventDefault(); alanSecimiBaslat(); }
+        else if (e.key === 'u' || e.key === 'U') { e.preventDefault(); temizleTus(); cubuguKaldir(); gonder('uzun'); }
+    };
+    const temizleTus = () => document.removeEventListener('keydown', tus, true);
+    document.addEventListener('keydown', tus, true);
+
+    document.getElementById('wsdCek').onclick    = () => { temizleTus(); gonder('cek'); };
+    document.getElementById('wsdUzun').onclick   = () => { temizleTus(); cubuguKaldir(); gonder('uzun'); };
+    document.getElementById('wsdVazgec').onclick = () => { temizleTus(); cubuguKaldir(); gonder('vazgec'); };
 
     // ALAN SEC: seffaf katman uzerinde surukleyerek dikdortgen. Shift ile
     // 16:10 kart oranina kilitlenir, ESC iptal eder. Olculer CSS pikselinden
     // FIZIKSEL piksele cevrilip gonderiliyor - captureVisibleTab fiziksel doner.
-    document.getElementById('wsdAlan').onclick = () => {
+    document.getElementById('wsdAlan').onclick = () => alanSecimiBaslat();
+
+    function alanSecimiBaslat() {
+        temizleTus();
+        ortuleriGeriAc();          // katman kendi ust katmaninda calisiyor
         cubuk.style.display = 'none';
         const oy = window.devicePixelRatio || 1;
 
         const katman = document.createElement('div');
         katman.id = 'wsdAlanKatman';
-        katman.style.cssText = 'position:fixed;inset:0;z-index:2147483647;' +
-            'cursor:crosshair;background:rgba(0,0,0,.25)';
+        stil(katman, { position: 'fixed', inset: '0', zIndex: '2147483647',
+                       cursor: 'crosshair', background: 'rgba(0,0,0,.25)' });
         const secim = document.createElement('div');
-        secim.style.cssText = 'position:fixed;border:2px solid #5d93c2;display:none;' +
-            'background:rgba(93,147,194,.15);pointer-events:none;z-index:2147483647';
+        stil(secim, { position: 'fixed', border: '2px solid #5d93c2', display: 'none',
+                      background: 'rgba(93,147,194,.15)', pointerEvents: 'none',
+                      zIndex: '2147483647' });
         document.body.appendChild(katman);
         document.body.appendChild(secim);
+
+        for (const el of [katman, secim]) {
+            try {
+                if (typeof el.showPopover === 'function') {
+                    el.setAttribute('popover', 'manual');
+                    el.showPopover();
+                }
+            } catch (e) { /* eski tarayici */ }
+        }
+        // Popover varsayilan kenarlik/dolgusunu temizle
+        stil(katman, { margin: '0', padding: '0', border: '0', background: 'rgba(0,0,0,.25)',
+                       inset: '0', width: '100%', height: '100%' });
+        stil(secim, { margin: '0', padding: '0' });
 
         let x0 = 0, y0 = 0, ciziyor = false;
         const olc = e => {
@@ -1557,7 +1904,7 @@ function elleCubukEnjekte(mSahne, mCek, mAlan, mUzun, mVazgec) {
                 }
             });
         };
-    };
+    }
 }
 
 /**
@@ -1587,17 +1934,17 @@ async function gizliYakala(url, ayar) {
         }
 
         const hedef = { tabId: sekme.id };
-        await chrome.debugger.attach(hedef, '1.3');
+        await zamanAsimli(chrome.debugger.attach(hedef, '1.3'), 10000, 'debugger.attach');
         baglandi = true;
 
         // Gorunum olcusunu ayardan zorla: arka plan sekmesi kullanicinin
         // pencere olcusunu miras aliyor, biz sabit kare istiyoruz
-        await chrome.debugger.sendCommand(hedef, 'Emulation.setDeviceMetricsOverride', {
+        await zamanAsimli(chrome.debugger.sendCommand(hedef, 'Emulation.setDeviceMetricsOverride', {
             width: ayar.yakalamaEn,
             height: ayar.yakalamaBoy,
             deviceScaleFactor: 1,
             mobile: false
-        });
+        }), 10000, 'setDeviceMetricsOverride');
 
         const bicim = ayar.gorselBicimi === 'png' ? 'png' : 'jpeg';
         const secenek = {
@@ -1623,7 +1970,9 @@ async function gizliYakala(url, ayar) {
             secenek.captureBeyondViewport = false;
         }
 
-        const sonuc = await chrome.debugger.sendCommand(hedef, 'Page.captureScreenshot', secenek);
+        const sonuc = await zamanAsimli(
+            chrome.debugger.sendCommand(hedef, 'Page.captureScreenshot', secenek),
+            10000, 'captureScreenshot');
 
         return sonuc && sonuc.data
             ? `data:image/${bicim};base64,${sonuc.data}`
@@ -1655,7 +2004,13 @@ function sayfaStabilOlsun(sekmeId) {
         const sayac = setInterval(async () => {
             try {
                 const s = await chrome.tabs.get(sekmeId);
-                if (s.status === 'complete') {
+                // Sekme once BOS SAYFAYLA (about:blank / "") "complete"
+                // oluyor; site yavas yanit verince iki kontrol de ona denk
+                // geliyordu ve bos sekme yakalanmaya calisiliyordu
+                // ("Cannot access contents of url ''"). Gercek adres
+                // gelmeden ve bekleyen gezinme bitmeden hazir sayilmaz.
+                const gercekAdres = s.url && !/^about:blank/i.test(s.url) && !s.pendingUrl;
+                if (s.status === 'complete' && gercekAdres) {
                     if (++ustUste >= 2) bitir();
                 } else {
                     ustUste = 0;

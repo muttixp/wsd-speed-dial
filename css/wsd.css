@@ -1279,6 +1279,13 @@ select option:hover {
     background: rgba(255,255,255,.04);
     margin-bottom: 4px;
 }
+/* display:flex, [hidden] ozniteligini eziyordu: suzmede satirlar
+   gizlenmis gorunuyor ama ekranda kaliyordu. */
+/* Aramada eslesen satir: gizleme yok, vurgu var */
+.yonetSatir.vurgulu {
+    background: rgba(93, 147, 194, .22);
+    box-shadow: inset 0 0 0 1px var(--vurgu);
+}
 .yonetSatir:hover { background: rgba(255,255,255,.08); }
 .yonetSatir.tasiniyor { opacity: .4; }
 
@@ -1329,6 +1336,7 @@ select option:hover {
 .yonetSil:hover { color: #ff8b87; }
 
 /* Satirdaki "git" ve "duzenle" dugmeleri */
+.yonetYenile,
 .yonetGit,
 .yonetDuzenle {
     display: inline-flex;
@@ -1343,8 +1351,10 @@ select option:hover {
     flex-shrink: 0;
     transition: color var(--gecis);
 }
+.yonetYenile:hover,
 .yonetGit:hover,
 .yonetDuzenle:hover { color: var(--vurgu-parlak); }
+.yonetYenile:disabled { opacity: .4; cursor: default; }
 
 /* --- Grup seridinde surukleme --- */
 .grupSekme.tasiniyor { opacity: .4; }
@@ -2356,3 +2366,206 @@ body.disBirakma #kartAlani::after {
 .kartGrupGit { border: 0; font: inherit; cursor: pointer; }
 .kartGrupGit:hover { background: var(--vurgu); color: #fff; }
 .kartGrupGit:focus-visible { outline: 2px solid var(--vurgu-parlak); outline-offset: 1px; }
+
+/* Kirik ekraninda SUPHELI kartlar: 404 degil, ulasilamadi */
+.kart.supheliKart { opacity: .92; }
+.supheliRozet {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    z-index: 3;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: rgba(216, 164, 74, .9);
+    color: #1a1c20;
+    font-size: 10.5px;
+    font-weight: 600;
+    pointer-events: none;
+}
+
+/* Gruplari Yonet: grup suzme kutusu */
+.yonetSuz {
+    width: 100%;
+    margin: var(--b3) 0 var(--b2);
+    padding: 8px var(--b3);
+    border: 1px solid var(--cerceve);
+    border-radius: var(--k1);
+    background: rgba(0, 0, 0, .2);
+    color: var(--metin);
+    font: inherit;
+    font-size: 13px;
+}
+.yonetSuz:focus { outline: none; border-color: var(--vurgu); }
+
+/* Kart tasima: aranabilir grup listesi (Gruplari Yonet ile ayni mantik) */
+.tasiListe {
+    list-style: none;
+    margin: 0 0 var(--b3);
+    padding: 0;
+    max-height: 320px;
+    overflow-y: auto;
+    border: 1px solid var(--cerceve);
+    border-radius: var(--k1);
+}
+.tasiListe li {
+    padding: 6px var(--b3);
+    font-size: 13px;
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.tasiListe li:nth-child(even) { background: rgba(255,255,255,.03); }
+.tasiListe li:hover { background: rgba(255,255,255,.08); }
+.tasiListe li.vurgulu { box-shadow: inset 0 0 0 1px var(--vurgu); }
+.tasiListe li.secili { background: rgba(93, 147, 194, .22); color: #fff; }
+
+.ictarKoru { display: flex; gap: 8px; align-items: center; font-size: 13px; margin: 0 0 var(--b2); cursor: pointer; }
+
+/* ================= ALT KLASORLER (1.5.0) ================= */
+
+/* Yol seridi: "‹ Grup › elfinder › template" */
+.klasorYolu {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4px;
+    max-width: var(--izgara-en);
+    margin: 0 auto var(--b3);
+    padding: 0 var(--b1);
+    font-size: 13px;
+    color: var(--metin-sonuk);
+}
+.klasorYolu[hidden] { display: none; }
+.yolYukari, .yolParca {
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    padding: 4px 8px;
+    border-radius: var(--k1);
+    cursor: pointer;
+    max-width: 260px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.yolYukari { display: inline-flex; padding: 4px; }
+.yolYukari svg { width: 18px; height: 18px; }
+.yolYukari:hover, button.yolParca:hover { background: rgba(255,255,255,.08); color: var(--metin); }
+.yolSon { color: var(--metin); font-weight: 600; cursor: default; }
+.yolAyrac { opacity: .5; }
+.yolYukari.surukSekmeHedef, .yolParca.surukSekmeHedef {
+    background: rgba(255, 152, 0, .25);
+    box-shadow: 0 1px 8px 2px rgba(255, 160, 71, .63);
+}
+
+/* Klasor kutusu - kartla ayni iskelet, ayri sinif (.kart DEGIL) */
+.klasorKart {
+    display: block;
+    position: relative;
+    border-radius: var(--kart-kose);
+    cursor: pointer;
+    outline: none;
+}
+.klasorKart:hover .kartBaslik, .klasorKart:focus-visible .kartBaslik { color: var(--metin); }
+.klasorKart .kartBaslik::before {
+    content: '';
+    display: inline-block;
+    width: 1em; height: .8em;
+    margin-right: 5px;
+    vertical-align: -1px;
+    border-radius: 2px;
+    background: currentColor;
+    opacity: .55;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'%3E%3Cpath d='M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h240l80 80h320q33 0 56.5 23.5T880-640v400q0 33-23.5 56.5T800-160H160Z'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+.klasorKart:hover .kartGorsel, .klasorKart:focus-visible .kartGorsel {
+    box-shadow: inset 0 0 0 var(--kart-cerceve) var(--kart-cerceve-hover), var(--golge-2);
+}
+.klasorGorsel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background-color: rgba(255,255,255,.04);
+}
+.klasorIkon { display: inline-flex; color: var(--vurgu); opacity: .8; }
+.klasorIkon svg { width: 56px; height: 56px; }
+.klasorMozaik {
+    position: absolute;
+    inset: 6px 6px 26px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: 1fr;
+    gap: 4px;
+}
+.klasorMozaik > span {
+    border-radius: 4px;
+    background-size: cover;
+    background-position: 50% 0;
+    opacity: .9;
+}
+.klasorKart.onizlemeli .klasorIkon { display: none; }
+.klasorSayi {
+    position: absolute;
+    left: 0; right: 0; bottom: 5px;
+    text-align: center;
+    font-size: 11px;
+    color: var(--metin-sonuk);
+}
+.klasorKart.menuHedef .kartGorsel { box-shadow: inset 0 0 0 100vmax rgba(0,0,0,.6); }
+.klasorKart.surukSekmeHedef .kartGorsel {
+    box-shadow:
+        0 1px 8px 2px rgba(255, 160, 71, .63),
+        inset 0 0 0 100vmax rgba(255, 152, 0, .25) !important;
+}
+body.aramaAcik #klasorYolu, body.copAcik #klasorYolu,
+body.kopyaAcik #klasorYolu, body.kirikAcik #klasorYolu { display: none; }
+
+/* Tasima listesi: alt klasorler girintili, yol tam adiyla */
+.tasiListe li.altKlasor { color: var(--metin-sonuk); }
+.tasiListe li.secili { color: #fff; }
+
+/* Klasor surukleme: kaynak soluk, siralama yeri mavi cizgi */
+.klasorKart.surukKaynak { opacity: .4; }
+.klasorKart.klasorBirakOnce::before,
+.klasorKart.klasorBirakSonra::after {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 3px;
+    border-radius: 2px;
+    background: var(--vurgu);
+    box-shadow: 0 0 8px var(--vurgu);
+    z-index: 2;
+}
+.klasorKart.klasorBirakOnce::before  { left: -6px; }
+.klasorKart.klasorBirakSonra::after  { right: -6px; }
+
+/* Klasorde OZEL IKON: mozaik yerine ikon, baslikta kucuk ikon */
+.klasorKart.ozelIkon .klasorMozaik { display: none; }
+.klasorKart.ozelIkon .klasorIkon { display: inline-flex; }
+.klasorKart.ozelIkon .kartBaslik::before { display: none; }
+.klasorIkon .ikonEmoji { font-size: 48px; line-height: 1; }
+.klasorIkon .ikonFavicon { width: 52px; height: 52px; border-radius: 10px; }
+.klasorKucukIkon { display: inline-flex; vertical-align: -2px; margin-right: 5px; }
+.klasorKucukIkon svg, .klasorKucukIkon .ikonFavicon { width: 1em; height: 1em; border-radius: 2px; }
+.klasorKucukIkon .ikonEmoji { font-size: 1em; }
+.alan.ikiSutun[hidden] { display: none; }
+
+/* Klasor: kart gibi arac seridi, not kosesi */
+.klasorKart:hover .kartAraclari { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0);
+    transition: opacity var(--gecis), transform var(--gecis), visibility 0s; }
+.klasorKart.surukKaynak .kartAraclari { display: none !important; }
+.klasorKart.notlu .kartGorsel::after {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 0; height: 0;
+    border-style: solid;
+    border-width: 0 18px 18px 0;
+    border-color: transparent #e8c53a transparent transparent;
+    border-top-right-radius: var(--kart-kose);
+    z-index: 1;
+}

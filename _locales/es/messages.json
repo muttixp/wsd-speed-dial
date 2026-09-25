@@ -522,7 +522,7 @@
     "message": "No se pudo leer el archivo"
   },
   "goruntuAlinamadi": {
-    "message": "No se pudo obtener la imagen"
+    "message": "captura fallida"
   },
   "indirilecekGorselYok": {
     "message": "No hay imagen para descargar"
@@ -1228,5 +1228,14 @@
   },
   "tekleDusurOnay": {
     "message": "Se conservará un mosaico por cada dirección duplicada; el resto irá a la papelera. Puedes restaurarlos."
+  },
+  "nKartGorseliAlinamadi": {
+    "message": "No se pudieron capturar $1 mosaicos"
+  },
+  "ulasilamadi": {
+    "message": "sin acceso"
+  },
+  "grupAra": {
+    "message": "Buscar grupos..."
   }
 }

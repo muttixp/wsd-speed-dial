@@ -19,7 +19,7 @@
 // gosterilmiyor. Sebep: ayni kart iki grupta olabiliyor ve gizle/goster
 // yaklasimi sirayi ve surukleme durumunu bozuyor.
 
-import { gruplariAl, kartlariAl, urlNormalle } from './yerimi.js';
+import { gruplariAl, grubunTumKartlari, urlNormalle } from './yerimi.js';
 import { kartAraclariOlustur, gorselleriGozle } from './cizim.js';
 import { renkleriAl } from './renk.js';
 import { notlariAl } from './not.js';
@@ -123,14 +123,14 @@ async function dizinOlustur() {
     const liste = [];
     tumGruplar = [];
     for (const g of await gruplariAl()) {
-        const kartlar = await kartlariAl(g.id);
+        const kartlar = await grubunTumKartlari(g);
         tumGruplar.push({ id: g.id, baslik: g.baslik, adet: kartlar.length });
         for (const k of kartlar) {
             liste.push({
                 url: urlNormalle(k.url),
                 baslik: k.baslik || k.url,
-                grupAdi: g.baslik,
-                grupId: g.id,
+                grupAdi: [g.baslik, ...(k.yol || [])].join(' › '),
+                grupId: k.parentId || g.id,
                 id: k.id
             });
         }
