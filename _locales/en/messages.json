@@ -3,7 +3,7 @@
     "message": "WSD Speed Dial"
   },
   "extDesc": {
-    "message": "A fast-access page that shows your bookmarks as visual tiles."
+    "message": "Visual speed dial for your new tab: groups, nested folders, screenshots. Stored in your own bookmarks — no account, no tracking."
   },
   "actionTitle": {
     "message": "Add to WSD Speed Dial"
@@ -77,9 +77,6 @@
   "duzenle": {
     "message": "Edit"
   },
-  "duzenlemekIcinKartaSagTiklayinSiralamak": {
-    "message": "Right-click a tile to edit it; drag and drop to reorder"
-  },
   "eklemeKarti": {
     "message": "\"+\" Add Tile"
   },
@@ -106,9 +103,6 @@
   },
   "gizliHataAyiklamaCubuguCikar": {
     "message": "Hidden (shows debug bar)"
-  },
-  "gizliSekmedeAc": {
-    "message": "Open in Private Tab"
   },
   "golgeRengi": {
     "message": "Shadow Color"
@@ -139,12 +133,6 @@
   },
   "hazirBoyutlar": {
     "message": "Presets"
-  },
-  "hedefGrup": {
-    "message": "Target Group"
-  },
-  "hepsiniAc": {
-    "message": "Open all"
   },
   "herSeyiGizle": {
     "message": "Hide everything"
@@ -196,9 +184,6 @@
   },
   "kartCercevesi": {
     "message": "Tile Border"
-  },
-  "kartKoseYuvarlakligi": {
-    "message": "Tile Corner Radius"
   },
   "kartOrani": {
     "message": "Tile Ratio"
@@ -261,7 +246,7 @@
     "message": "close dialog / search"
   },
   "renkEtiketi": {
-    "message": "Color Label"
+    "message": "Color label"
   },
   "renkTonu": {
     "message": "Hue"
@@ -275,14 +260,8 @@
   "resmiIndir": {
     "message": "Download Image"
   },
-  "sekmeKoseYuvarlakligi": {
-    "message": "Tab Corner Radius"
-  },
   "sekmeZeminSaydamligi": {
     "message": "Tab Background Opacity"
-  },
-  "sekmedeAc": {
-    "message": "Open in tab"
   },
   "sil": {
     "message": "Delete"
@@ -308,9 +287,6 @@
   "tumunuSil": {
     "message": "Delete All"
   },
-  "tumunuYeniSekmeGrubundaAc": {
-    "message": "Open all in a new window"
-  },
   "varsayilan": {
     "message": "Default"
   },
@@ -328,9 +304,6 @@
   },
   "yalnizcaYazi": {
     "message": "Text only"
-  },
-  "yanAracPaneli": {
-    "message": "Side Toolbar"
   },
   "yazi": {
     "message": "Text"
@@ -352,9 +325,6 @@
   },
   "yeniSekmeArkaPlan": {
     "message": "New Tab (Background)"
-  },
-  "yeniSekmedeAc": {
-    "message": "Open in new tab"
   },
   "yontem": {
     "message": "Method"
@@ -735,7 +705,7 @@
     "message": "Create at least one group first"
   },
   "simgeRenkleriSifirlandi": {
-    "message": "Icon colours reset"
+    "message": "Icon colors reset"
   },
   "kopyalandi": {
     "message": "Copied"
@@ -768,7 +738,7 @@
     "message": "Capture them with \"Refresh group images\" from the group menu."
   },
   "buKartlarPaylasir": {
-    "message": "These tiles share their image, note and colour."
+    "message": "These tiles share their image, note and color."
   },
   "yinelenenKartlariAc": {
     "message": "Open Duplicate Tiles"
@@ -866,9 +836,6 @@
   "goruntuYakalama": {
     "message": "Screenshot"
   },
-  "yedeklemeBolum": {
-    "message": "Backup"
-  },
   "bakimBolum": {
     "message": "Maintenance"
   },
@@ -888,25 +855,13 @@
     "message": "Hue Shift"
   },
   "ikiRenk": {
-    "message": "Two Colours"
-  },
-  "ipucuGrup": {
-    "message": "Organise tiles into groups; use + in the bar to add one"
+    "message": "Two Colors"
   },
   "ipucuKartEkle": {
     "message": "Or right-click any page and choose \"Add to WSD Speed Dial\""
   },
   "nKartYenidenYakalanacak": {
     "message": "Images for $1 tiles will be captured again. This may take a few minutes."
-  },
-  "yenile": {
-    "message": "Refresh"
-  },
-  "notEkle": {
-    "message": "Add note"
-  },
-  "urlYiKopyala": {
-    "message": "Copy URL"
   },
   "colorizeTekTonaIndir": {
     "message": "Colorize (single tone)"
@@ -915,10 +870,10 @@
     "message": "Saturation"
   },
   "arkaPlanRengi": {
-    "message": "Background Colour"
+    "message": "Background Color"
   },
   "metinRengi": {
-    "message": "Text Colour"
+    "message": "Text Color"
   },
   "kare": {
     "message": "Square"
@@ -1146,10 +1101,10 @@
     "message": "These addresses returned 404/410; the page no longer exists. Their tiles are marked with a red exclamation."
   },
   "supheliAciklama": {
-    "message": "These addresses could not be reached, but the result is inconclusive (timeout, network error or bot protection). Tiles were not marked."
+    "message": "These addresses could not be reached at all (no such domain, timeout or server error). Tiles were not deleted; check them one by one."
   },
   "kirikKartlariGoster": {
-    "message": "Show broken tiles"
+    "message": "Show tiles"
   },
   "tekrarTara": {
     "message": "Rescan"
@@ -1241,9 +1196,6 @@
   "altKlasorleriKoru": {
     "message": "Keep subfolders (if unchecked, every folder becomes a separate group)"
   },
-  "baskaGrubaTasi": {
-    "message": "Move into another group..."
-  },
   "buKlasordeKartYok": {
     "message": "This folder has no cards"
   },
@@ -1315,5 +1267,197 @@
   },
   "nYeniGrup": {
     "message": "$1 new groups"
+  },
+  "yaziVePanel": {
+    "message": "Text and Panel"
+  },
+  "davranis": {
+    "message": "Behaviour"
+  },
+  "boyutVeYerlesim": {
+    "message": "Size and Layout"
+  },
+  "renkVeCerceve": {
+    "message": "Color and Border"
+  },
+  "gorunumAlt": {
+    "message": "Appearance"
+  },
+  "yakalamaYontemi": {
+    "message": "Method"
+  },
+  "goruntuAlt": {
+    "message": "Image"
+  },
+  "yedekAlt": {
+    "message": "Backup"
+  },
+  "iceAktarAlt": {
+    "message": "Import"
+  },
+  "yedeklemeVeAktarma": {
+    "message": "Backup and Import"
+  },
+  "tehlikeliIslemler": {
+    "message": "Danger Zone"
+  },
+  "tehlikeliAciklama": {
+    "message": "These actions change your data or settings in bulk. Taking a backup first is recommended."
+  },
+  "ustKlasoreCik": {
+    "message": "go to parent folder"
+  },
+  "geriIleri": {
+    "message": "back / forward (mouse side buttons)"
+  },
+  "mSekmedeAc": {
+    "message": "Open in tab"
+  },
+  "mYeniSekmedeAc": {
+    "message": "Open in new tab"
+  },
+  "mGizliSekmedeAc": {
+    "message": "Open in incognito"
+  },
+  "mAdresiKopyala": {
+    "message": "Copy address"
+  },
+  "mGorseliYenile": {
+    "message": "Refresh image"
+  },
+  "mDuzenle": {
+    "message": "Edit…"
+  },
+  "mNotEkle": {
+    "message": "Add note…"
+  },
+  "mTasi": {
+    "message": "Move…"
+  },
+  "mSil": {
+    "message": "Delete"
+  },
+  "mAc": {
+    "message": "Open"
+  },
+  "mHepsiniAc": {
+    "message": "Open all"
+  },
+  "mYeniPencerede": {
+    "message": "Open all in new window"
+  },
+  "mGorselleriYenile": {
+    "message": "Refresh images"
+  },
+  "mKartlariSirala": {
+    "message": "Sort cards…"
+  },
+  "mGrubuDuzenle": {
+    "message": "Edit group…"
+  },
+  "mBaskaGrubaTasi": {
+    "message": "Move into another group…"
+  },
+  "mGruplariYonet": {
+    "message": "Manage groups…"
+  },
+  "mKartEkle": {
+    "message": "Add card…"
+  },
+  "mYeniKlasor": {
+    "message": "New folder…"
+  },
+  "mYeniGrup": {
+    "message": "New group…"
+  },
+  "mYinelenenKartlar": {
+    "message": "Duplicate cards"
+  },
+  "mCopKutusu": {
+    "message": "Trash"
+  },
+  "mAyarlar": {
+    "message": "Settings"
+  },
+  "gorseliYenile": {
+    "message": "Refresh image"
+  },
+  "kapakResmi": {
+    "message": "Cover image"
+  },
+  "resimSec": {
+    "message": "Choose image…"
+  },
+  "kapakIpucu": {
+    "message": "Drag an image here or paste with Ctrl+V"
+  },
+  "etiketler": {
+    "message": "Tags"
+  },
+  "yeniEtiket": {
+    "message": "New tag…"
+  },
+  "etiketiSil": {
+    "message": "Delete tag"
+  },
+  "etiketiSilSoru": {
+    "message": "The \"$1\" tag will be removed from $2 cards. The cards are not deleted."
+  },
+  "renk_kirmizi": {
+    "message": "Red"
+  },
+  "renk_turuncu": {
+    "message": "Orange"
+  },
+  "renk_sari": {
+    "message": "Yellow"
+  },
+  "renk_yesil": {
+    "message": "Green"
+  },
+  "renk_mavi": {
+    "message": "Blue"
+  },
+  "renk_mor": {
+    "message": "Purple"
+  },
+  "renk_gri": {
+    "message": "Gray"
+  },
+  "renk_yok": {
+    "message": "None"
+  },
+  "koseYuvarlakligi": {
+    "message": "Corner Roundness"
+  },
+  "koseYuvarlakligiIpucu": {
+    "message": "Cards, tabs, windows, menus and buttons"
+  },
+  "yanPaneliGizle": {
+    "message": "Auto-hide Side Toolbar"
+  },
+  "buGruptaNKart": {
+    "message": "This group has <b>$1</b> cards"
+  },
+  "dIkonRengi": {
+    "message": "Icon color"
+  },
+  "dArkaPlanRengi": {
+    "message": "Background color"
+  },
+  "kirikDegil": {
+    "message": "Not broken"
+  },
+  "kirikDegilIpucu": {
+    "message": "The page opens: skip this address in future scans"
+  },
+  "kirikDegilBildir": {
+    "message": "This address will be skipped in future broken link scans"
+  },
+  "nUlasilamadi": {
+    "message": "$1 unreachable"
+  },
+  "silinecekKirikYok": {
+    "message": "No broken tiles to delete; check unreachable ones one by one"
   }
 }

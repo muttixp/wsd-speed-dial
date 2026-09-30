@@ -221,11 +221,11 @@ export async function tumKlasorleriAl() {
     const gruplar = await gorunurGruplariAl();
     const cikti = [];
     for (const g of gruplar) {
-        cikti.push({ id: g.id, baslik: g.baslik, yol: g.baslik, derinlik: 0, kokMu: !!g.kokMu });
+        cikti.push({ id: g.id, baslik: g.baslik, yol: g.baslik, derinlik: 0, kokMu: !!g.kokMu, ustId: null });
         if (g.kokMu) continue;
         for (const k of (await klasorIcerigi(g.id)).klasorler) {
             cikti.push({ id: k.id, baslik: k.baslik, yol: [g.baslik, ...k.yol].join(' › '),
-                         derinlik: k.yol.length });
+                         derinlik: k.yol.length, ustId: k.parentId });
         }
     }
     return cikti;

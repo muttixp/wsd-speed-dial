@@ -19,9 +19,10 @@
 // gosterilmiyor. Sebep: ayni kart iki grupta olabiliyor ve gizle/goster
 // yaklasimi sirayi ve surukleme durumunu bozuyor.
 
-import { gruplariAl, grubunTumKartlari, urlNormalle } from './yerimi.js';
+import { gruplariAl, grubunTumKartlari, klasorIcerigi, urlNormalle } from './yerimi.js';
 import { kartAraclariOlustur, gorselleriGozle } from './cizim.js';
-import { renkleriAl } from './renk.js';
+import { renkleriAl, RENKLER } from './renk.js';
+import { etiketTanimlariAl, kartEtiketleriAl, etiketNoktalari, etiketSil } from './etiket.js';
 import { notlariAl } from './not.js';
 import { c } from './dil.js';
 import { seritBoslugunuAyarla, ekranSinifiniVer } from './arayuz.js';
@@ -37,6 +38,7 @@ let zamanlayici = null;
 const el = id => document.getElementById(id);
 
 export function aramayiKur({ aktifGrup, grubuAc }) {
+    sonBaglam = { aktifGrup, grubuAc };
     // Durum GOVDE SINIFINDAN okunuyor: baska bir ekran acilinca arama
     // disaridan kapatiliyor ve yerel `acik` degiskeni bayatliyordu
     el('araBtn')?.addEventListener('click', () =>
@@ -85,6 +87,117 @@ async function ac() {
 
     // Kart dizinini bir kez topla
     if (!tumKartlar) tumKartlar = await dizinOlustur();
+    if (!el('aramaAlan')?.value.trim()) await etiketleriGoster();
+}
+
+/* ============ ETIKET LISTESI (1.5.1) ============
+   Arama bos acikken kutunun altinda: kullanilan RENK etiketleri ve ADLI
+   etiketler, yanlarinda kart sayisi. Tiklayinca tum gruplardaki o
+   etiketli kartlar arama sonucu gibi geliyor; tekrar tiklayinca kalkiyor.
+   Adli etiketin x'i etiketi tum kartlardan kaldiriyor. */
+let etiketCizildi = false;
+let seciliEtiket = null;           // { tur: 'renk'|'ad', deger }
+
+async function etiketVerisi() {
+    if (!tumKartlar) tumKartlar = await dizinOlustur();
+    const [renkler, kartEt, tanimlar] = await Promise.all([renkleriAl(), kartEtiketleriAl(), etiketTanimlariAl()]);
+    return { renkler, kartEt, tanimlar };
+}
+
+function etiketUyar(k, sec, v) {
+    if (sec.tur === 'renk') return v.renkler[k.url] === sec.deger;
+    return (v.kartEt[k.url] || []).includes(sec.deger);
+}
+
+async function etiketleriGoster(secili = seciliEtiket) {
+    const v = await etiketVerisi();
+    const kap = el('kartKabi');
+    const renkSay = new Map(), adSay = new Map();
+    const gorulen = new Set();
+    for (const k of tumKartlar) {
+        if (gorulen.has(k.id)) continue;
+        gorulen.add(k.id);
+        const r = v.renkler[k.url];
+        if (r) renkSay.set(r, (renkSay.get(r) || 0) + 1);
+        for (const id of v.kartEt[k.url] || []) {
+            if (v.tanimlar[id]) adSay.set(id, (adSay.get(id) || 0) + 1);
+        }
+    }
+    if (!renkSay.size && !adSay.size) {
+        seciliEtiket = null;
+        if (etiketCizildi) { kap.textContent = ''; etiketCizildi = false; }
+        document.body.classList.add('aramaBekliyor');
+        return;
+    }
+    if (secili && !(secili.tur === 'renk' ? renkSay.has(secili.deger) : adSay.has(secili.deger))) secili = null;
+    seciliEtiket = secili;
+
+    const serit = document.createElement('div');
+    serit.id = 'aramaEtiketSerit';
+    const baslik = document.createElement('span');
+    baslik.className = 'aramaEtiketBaslik';
+    baslik.textContent = c('etiketler');
+    serit.appendChild(baslik);
+
+    const cip = (tur, deger, ad, renk, adet, silinir) => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'aramaEtiket' + (secili && secili.tur === tur && secili.deger === deger ? ' secili' : '');
+        const n = document.createElement('i');
+        n.style.backgroundColor = renk;
+        const s = document.createElement('span');
+        s.textContent = ad;
+        const say = document.createElement('small');
+        say.textContent = adet;
+        b.append(n, s, say);
+        if (silinir) {
+            const x = document.createElement('span');
+            x.className = 'aramaEtiketSil';
+            x.textContent = '\u00d7';
+            x.title = c('etiketiSil');
+            x.addEventListener('click', async e => {
+                e.stopPropagation();
+                const { onaySor } = await import('./onay.js');
+                if (!await onaySor({ baslik: c('etiketiSil'), metin: c('etiketiSilSoru', ad, String(adet)),
+                                     evet: c('sil'), tehlikeli: true })) return;
+                await etiketSil(deger);
+                if (seciliEtiket && seciliEtiket.deger === deger) seciliEtiket = null;
+                await etiketleriGoster();
+            });
+            b.appendChild(x);
+        }
+        b.addEventListener('click', () => {
+            const ayni = secili && secili.tur === tur && secili.deger === deger;
+            etiketleriGoster(ayni ? null : { tur, deger });
+        });
+        serit.appendChild(b);
+    };
+    for (const r of RENKLER) {
+        if (r.deger && renkSay.has(r.deger)) cip('renk', r.deger, c('renk_' + r.ad) || r.ad, r.deger, renkSay.get(r.deger), false);
+    }
+    const adlilar = [...adSay.keys()].sort((a, b) => v.tanimlar[a].ad.localeCompare(v.tanimlar[b].ad, 'tr'));
+    if (renkSay.size && adlilar.length) {
+        const ayrac = document.createElement('span');
+        ayrac.className = 'aramaEtiketAyrac';
+        serit.appendChild(ayrac);
+    }
+    for (const id of adlilar) cip('ad', id, v.tanimlar[id].ad, v.tanimlar[id].renk, adSay.get(id), true);
+
+    document.body.classList.remove('aramaBekliyor');
+    etiketCizildi = true;
+    if (secili) {
+        const gorulen2 = new Set();
+        const kartlar = tumKartlar.filter(k => {
+            if (gorulen2.has(k.id) || !etiketUyar(k, secili, v)) return false;
+            gorulen2.add(k.id);
+            return true;
+        });
+        await ciz(kartlar, sonBaglam, '', []);
+        kap.prepend(serit);
+    } else {
+        kap.textContent = '';
+        kap.appendChild(serit);
+    }
 }
 
 /**
@@ -96,6 +209,8 @@ async function grubaGit(grupId, baglam) {
     if (!ac) return;
 
     acik = false;
+    etiketCizildi = false;
+    seciliEtiket = null;
     document.body.classList.remove('aramaAcik', 'aramaBekliyor');
     const alan = el('aramaAlan');
     if (alan) { alan.value = ''; alan.blur(); }
@@ -109,9 +224,11 @@ function kapat(baglam) {
     document.body.classList.remove('aramaAcik', 'aramaBekliyor');
     const alan = el('aramaAlan');
     if (alan) {
-        const doluydu = !!alan.value;
+        const doluydu = !!alan.value || etiketCizildi;
         alan.value = '';
         alan.blur();
+        etiketCizildi = false;
+        seciliEtiket = null;
         // Yalnizca arama yapilmissa normale don - bosuna yeniden cizme
         if (doluydu && baglam) baglam.grubuAc(baglam.aktifGrup());
     }
@@ -124,7 +241,22 @@ async function dizinOlustur() {
     tumGruplar = [];
     for (const g of await gruplariAl()) {
         const kartlar = await grubunTumKartlari(g);
-        tumGruplar.push({ id: g.id, baslik: g.baslik, adet: kartlar.length });
+        tumGruplar.push({ id: g.id, baslik: g.baslik, gorunen: g.baslik, adet: kartlar.length });
+        // ALT KLASORLER de grup aramasina giriyor (1.5.1): "ltbs" yazinca
+        // Os › Windows › Ltbs klasoru de rozet olarak cikiyor. Sayi, klasorun
+        // alt klasorleri dahil kart sayisi.
+        if (!g.kokMu) {
+            const { klasorler } = await klasorIcerigi(g.id);
+            const ust = new Map(klasorler.map(k => [k.id, k.parentId]));
+            const adet = new Map();
+            for (const k of kartlar) {
+                for (let id = k.parentId; ust.has(id); id = ust.get(id)) adet.set(id, (adet.get(id) || 0) + 1);
+            }
+            for (const k of klasorler) {
+                tumGruplar.push({ id: k.id, baslik: k.baslik, gorunen: [g.baslik, ...k.yol].join(' › '),
+                                  adet: adet.get(k.id) || 0 });
+            }
+        }
         for (const k of kartlar) {
             liste.push({
                 url: urlNormalle(k.url),
@@ -164,18 +296,25 @@ async function suz(terim, baglam) {
     const t = (terim || '').trim().toLocaleLowerCase('tr');
 
     if (!t) {
-        // Terim silindi - yine bos ekran, arama kutusu hala acik
-        document.body.classList.add('aramaBekliyor');
+        // Terim silindi - etiket listesi (yoksa bos ekran), kutu hala acik
+        seciliEtiket = null;
+        await etiketleriGoster(null);
         return;
     }
+    etiketCizildi = false;
 
     document.body.classList.remove('aramaBekliyor');
 
     if (!tumKartlar) tumKartlar = await dizinOlustur();
 
+    // Adli etiketin ADI da araniyor: "is" yazinca "İş" etiketli kartlar
+    const kartEt = await kartEtiketleriAl();
+    const tanimlar = await etiketTanimlariAl();
+    const etiketAdlari = u => (kartEt[u] || []).map(id => tanimlar[id]?.ad || '').join(' ').toLocaleLowerCase('tr');
     const eslesen = tumKartlar.filter(k =>
         k.baslik.toLocaleLowerCase('tr').includes(t) ||
-        k.url.toLocaleLowerCase('tr').includes(t)
+        k.url.toLocaleLowerCase('tr').includes(t) ||
+        etiketAdlari(k.url).includes(t)
     );
 
     // GRUP ARAMASI: ayni kutudan, ayri kip yok. Eslesen gruplar
@@ -215,7 +354,7 @@ async function ciz(kartlar, baglam, terim, gruplar = []) {
                 'stroke-linejoin="round"><path d="M1.8 12.7V4.4c0-.6.5-1.1 1.1-1.1h3l1.5 1.8h6.8c.6 0 ' +
                 '1.1.5 1.1 1.1v6.5c0 .6-.5 1.1-1.1 1.1H2.9c-.6 0-1.1-.5-1.1-1.1z"/></svg>' +
                 '<span></span>';
-            d.querySelector('span').textContent = `${g.baslik} (${g.adet})`;
+            d.querySelector('span').textContent = `${g.gorunen || g.baslik} (${g.adet})`;
             d.addEventListener('click', () => grubaGit(g.id, baglam));
             serit.appendChild(d);
         }
@@ -232,6 +371,8 @@ async function ciz(kartlar, baglam, terim, gruplar = []) {
 
     const renkler = await renkleriAl();
     const notlar = await notlariAl();
+    const kartEt = await kartEtiketleriAl();
+    const tanimlar = await etiketTanimlariAl();
 
     for (const k of kartlar) {
         const a = document.createElement('a');
@@ -250,6 +391,9 @@ async function ciz(kartlar, baglam, terim, gruplar = []) {
         const gorsel = document.createElement('span');
         gorsel.className = 'kartGorsel';
         // Gorsel tembel yukleniyor - dongu sonunda gozetlemeye aliniyor
+
+        const noktalar = etiketNoktalari(kartEt[k.url], tanimlar);
+        if (noktalar) gorsel.appendChild(noktalar);
 
         govde.append(baslik, gorsel);
         a.appendChild(govde);

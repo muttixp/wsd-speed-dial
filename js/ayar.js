@@ -62,7 +62,7 @@ export const VARSAYILAN = {
     otomatikYedek: false,       // gunde 1 kez yedek dosyasi indir
     kartAraclariGoster: true,   // kart uzerine gelince cikan buton seridi
     ekleKartiGoster: true,      // izgaradaki "+" karti
-    yanPanelGoster: true,       // sagdaki goz/arama/ayar seridi
+    yanPanelGizle: true,        // sagdaki serit kenara cekili, fare yaklasinca acilir (1.5.1)
 
     // Grup seridi
     grupGosterim: 'ikon_yazi',  // 'ikon' | 'ikon_yazi' | 'yazi'

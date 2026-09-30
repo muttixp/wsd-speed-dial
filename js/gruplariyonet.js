@@ -42,12 +42,27 @@ function suzmeyiKur() {
     const eslesenler = () => {
         const t = alan.value.trim().toLocaleLowerCase('tr');
         if (!t) return [];
-        return [...liste.children].filter(li =>
-            (li.querySelector('input')?.value || '').toLocaleLowerCase('tr').includes(t));
+        // SIRALAMA (1.5.1): tam eslesen once, sonra adi terimle baslayan,
+        // en son icinde gecen. "os" yazinca once "Bios"a gidiyordu.
+        const derece = li => {
+            const a = (li.querySelector('input')?.value || '').trim().toLocaleLowerCase('tr');
+            return a === t ? 0 : a.startsWith(t) ? 1 : a.includes(t) ? 2 : -1;
+        };
+        return [...liste.children]
+            .map((li, i) => ({ li, i, d: derece(li) }))
+            .filter(x => x.d >= 0)
+            .sort((a, b) => a.d - b.d || a.i - b.i)
+            .map(x => x.li);
     };
 
     const goster = liste2 => {
-        for (const li of liste.children) li.classList.remove('vurgulu');
+        const dolu = !!alan.value.trim();
+        const kume = new Set(liste2);
+        for (const li of liste.children) {
+            li.classList.remove('vurgulu');
+            // Eslesmeyenler soluk: hangi satirlarin tuttugu bir bakista gorunsun
+            li.classList.toggle('eslesmez', dolu && !kume.has(li));
+        }
         if (!liste2.length) return;
         if (sira >= liste2.length) sira = 0;
         const hedef = liste2[sira];

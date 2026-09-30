@@ -343,6 +343,7 @@ async function tekKartiGeriAl(g, k) {
         if (k.renk)  yaz.kartRenkleri  = { ...(mevcut.kartRenkleri || {}),  [a]: k.renk };
         if (k.sayac) yaz.kartSayaclari = { ...(mevcut.kartSayaclari || {}), [a]: k.sayac };
         if (Object.keys(yaz).length) await chrome.storage.local.set(yaz);
+        if (k.etiketler) await (await import('./etiket.js')).etiketleriGeriYaz(a, k.etiketler);
 
         await kartiGruptanCikar(g, k, false);
         bildir(c('kartGeriAlindi'));
@@ -388,7 +389,8 @@ export async function kartiYedekle(kartId, url) {
             gorsel: depo[url] || null,
             not: (depo.kartNotlari || {})[url] || null,
             renk: (depo.kartRenkleri || {})[url] || null,
-            sayac: (depo.kartSayaclari || {})[url] || null
+            sayac: (depo.kartSayaclari || {})[url] || null,
+            etiketler: await (await import('./etiket.js')).etiketleriPaketle(url)
         };
     } catch (e) {
         return null;
@@ -418,6 +420,7 @@ export async function kartiGeriAl(y, tazele = true) {
         if (y.sayac) yaz.kartSayaclari = { ...(mevcut.kartSayaclari || {}), [anahtar]: y.sayac };
 
         if (Object.keys(yaz).length) await chrome.storage.local.set(yaz);
+        if (y.etiketler) await (await import('./etiket.js')).etiketleriGeriYaz(anahtar, y.etiketler);
 
         if (tazele) {
             await grubuAc(aktifGrup());
@@ -450,6 +453,13 @@ export async function grubuYedekle(grupId) {
             ...kartlar.map(k => urlNormalle(k.url)),
             'kartNotlari', 'kartRenkleri', 'kartSayaclari'
         ]);
+        const { etiketleriPaketle } = await import('./etiket.js');
+        const etiketler = {};
+        for (const k of kartlar) {
+            const a = urlNormalle(k.url);
+            const e = await etiketleriPaketle(a);
+            if (e) etiketler[a] = e;
+        }
 
         return {
             tur: 'grup',
@@ -470,7 +480,8 @@ export async function grubuYedekle(grupId) {
                     gorsel: depo[a] || null,
                     not: (depo.kartNotlari || {})[a] || null,
                     renk: (depo.kartRenkleri || {})[a] || null,
-                    sayac: (depo.kartSayaclari || {})[a] || null
+                    sayac: (depo.kartSayaclari || {})[a] || null,
+                    etiketler: etiketler[a] || null
                 };
             })
         };
@@ -558,6 +569,10 @@ export async function grubuGeriAl(y) {
         }
 
         await chrome.storage.local.set(yaz);
+        {
+            const { etiketleriGeriYaz } = await import('./etiket.js');
+            for (const k of y.kartlar) if (k.etiketler) await etiketleriGeriYaz(urlNormalle(k.url), k.etiketler);
+        }
         await arayuzuKur();
         menuTazele();
         if (ust !== kok) await grubuAc(aktifGrup());

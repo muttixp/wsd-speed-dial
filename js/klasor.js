@@ -65,6 +65,13 @@ export function klasorKartiOlustur(k, ikon = null, gorunum = {}) {
 
     const kutu = document.createElement('span');
     kutu.className = 'kartGorsel klasorGorsel';
+    // Arka plan rengi ve KAPAK RESMI (1.5.1): kapak varsa mozaik ve buyuk
+    // ikon gizleniyor, resim kutuyu dolduruyor
+    if (gorunum.zemin) kutu.style.backgroundColor = gorunum.zemin;
+    if (gorunum.kapak) {
+        d.classList.add('kapakli');
+        kutu.style.backgroundImage = `url('${gorunum.kapak}')`;
+    }
 
     // Onizleme: ilk dort kartin gorseli 2x2. Gorsel yoksa buyuk klasor ikonu.
     const mozaik = document.createElement('span');
@@ -293,6 +300,20 @@ async function klasorEylemi(eylem, id) {
             return;
         }
 
+        case 'klasorYeniPencere': {
+            const kartlar = await kartlariAl(id);
+            if (!kartlar.length) return bag.bildir(c('buKlasordeKartYok'));
+            if (kartlar.length > 8 && !await bag.onaySor({
+                baslik: c('hepsiniAcBd'),
+                metin: c('nSekmeAcilacak', kartlar.length),
+                evet: c('ac')
+            })) return;
+            // Grup menusundekiyle ayni: ayri pencere her tarayicida calisiyor
+            chrome.windows.create({ url: kartlar.map(k => k.url) })
+                .catch(() => bag.bildir(c('pencereAcilamadi')));
+            return;
+        }
+
         case 'klasorYenile':
             return bag.grubunGorselleriniYenile(id);
 
@@ -383,7 +404,8 @@ async function klasoruDuzenle(id) {
 
 async function klasorGorunumunuYaz(id, sonuc) {
     await ikonYaz(id, sonuc.ikon && sonuc.ikon !== 'folder' ? sonuc.ikon : null);
-    await gorunumYaz(id, { renk: sonuc.renk, aciklama: sonuc.aciklama, etiket: sonuc.etiket || null });
+    await gorunumYaz(id, { renk: sonuc.renk, aciklama: sonuc.aciklama, etiket: sonuc.etiket || null,
+                           zemin: sonuc.zemin || null, kapak: sonuc.kapak || null });
 }
 
 /** Klasor notu - gorunum deposunda, klasorle birlikte yedeklenip cope gidiyor */

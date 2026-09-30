@@ -71,6 +71,9 @@ başlangıç sayfası ayarına yapıştırın.
 - Görsel beğenmediyseniz karuselden başka aday seçin, dosyadan yükleyin
   veya bir görsel adresi verin
 - Renk etiketi, not, ziyaret sayacı
+- **Adlı etiketler**: Kart Düzenle'de ad + renk ile; bir karta birden çok
+  etiket. Aramayı boş açınca renk ve adlı etiketler sayılarıyla listelenir,
+  tıklayınca tüm gruplardaki o etiketli kartlar gelir
 - Sürükleyerek sıralama, başka gruba taşıma
 - Kart üzerine gelince: düzenle, not, yenile, taşı, sil
 
@@ -86,7 +89,7 @@ başlangıç sayfası ayarına yapıştırın.
   taşıyabilirsiniz. Klasör kutusunu başka bir klasörün kenarına bırakınca
   sıralanır, ortasına bırakınca içine girer; grup sekmesine bırakınca o
   gruba taşınır. Klasörler de gruplar gibi düzenlenir: ad, açıklama, ikon,
-  ikon rengi ve renk etiketi; not eklenebilir. Üzerine gelince kartlardaki
+  ikon rengi, renk etiketi, arka plan rengi ve kapak resmi; not eklenebilir. Üzerine gelince kartlardaki
   gibi araç şeridi çıkar. Klasörler yeniden adlandırılabilir, taşınabilir (üst
   düzey grup da yapılabilir) ve çöp kutusuna silinebilir. Bir grubu başka
   bir grubun içine taşımak için grup menüsünde "Başka gruba taşı"
@@ -109,12 +112,17 @@ Bunun için tarayıcıya izin vermeniz gerekir:
 ### Arama
 
 Büyüteç simgesi veya `/` tuşu. Tüm gruplarda arar, sonuçta kartın hangi
-gruptan geldiğini yazar.
+gruptan geldiğini yazar. Adı eşleşen grup ve alt klasörler üstte rozet
+olarak çıkar; kelime etiket adlarında da aranır. Arama boşken etiket
+listesi görünür.
 
 ### Görünüm
 
 Duvar kâğıdı, zemin renklendirme (ton kaydırma veya iki renk), kart oranı,
-boyut, köşe yuvarlaklığı, çerçeve, sütun sınırı, grup şeridi renkleri.
+boyut, çerçeve, sütun sınırı, grup şeridi renkleri. Tek **Köşe
+Yuvarlaklığı** ayarı kartları, sekmeleri, menüleri, pencereleri ve
+düğmeleri birlikte değiştirir. Yan araç paneli kenara çekilip fare
+yaklaşınca açılabilir ya da hep açık durabilir.
 
 Sağdaki göz simgesi her şeyi gizler, yalnızca duvar kâğıdı kalır.
 
@@ -152,14 +160,16 @@ kaçırdıysanız boş alan menüsünden **Çöp Kutusu**'na girin.
 
 | Bölüm | İçerik |
 |---|---|
-| Görünüm | duvar kâğıdı, zemin renklendirme, metin rengi |
-| Kartlar | başlık, açılış şekli, oran, boyut, boşluk, çerçeve |
-| Grup Şeridi | gösterim, renkler, boyut, Ana Sayfa görünürlüğü |
-| Görüntü Yakalama | yöntem, kip, çözünürlük, kaydırma, kalite |
-| Yedekleme | yedek al/yükle, otomatik yedek, çöp kutusu |
-| Bakım | kullanılmayan veriler, ayarları sıfırla, tüm verileri sil |
-| Anasayfa Kurulumu | ev butonu için adres |
+| Görünüm | Arka Plan (duvar kâğıdı, arka plan rengi, zemin renklendirme) · Yazı ve Panel (köşe yuvarlaklığı, metin rengi, yan paneli gizle) |
+| Kartlar | Davranış · Boyut ve Yerleşim · Renk ve Çerçeve |
+| Grup Şeridi | Davranış · Görünüm |
+| Görüntü Yakalama | Yöntem · Görüntü |
+| Yedekleme ve Aktarma | Yedek (al/yükle, otomatik, HTML dışa aktar) · İçe Aktar (yer imleri, HTML) |
+| Bakım | depo durumu, kullanılmayan veriler, kırık bağlantı taraması, tutarlılık kontrolü, çöp kutusu, bekleyen yakalamaları iptal et |
 | Uzantı Simgesi | simge renkleri |
+| Anasayfa Kurulumu | ev butonu için adres |
+| Kısayollar | klavye kısayolları listesi |
+| Tehlikeli İşlemler | ayarları sıfırla, silmeyi geri al, tüm verileri sil |
 
 ### Görüntü yakalama kipleri
 

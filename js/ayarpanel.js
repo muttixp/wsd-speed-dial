@@ -37,7 +37,7 @@ const ALANLAR = [
     ['yakalamaKipi',     'ayYakalamaKipi', el => el.value],
     ['kartAraclariGoster','ayKartAraclari', el => el.checked],
     ['ekleKartiGoster',  'ayEkleKarti',     el => el.checked],
-    ['yanPanelGoster',   'ayYanPanel',      el => el.checked],
+    ['yanPanelGizle',    'ayYanPanel',      el => el.checked],
     ['baslikGoster',     'ayBaslikGoster',  el => el.checked],
     ['kartAcilis',       'ayKartAcilis',    el => el.value],
     ['otomatikYedek',    'ayOtoYedek',      el => el.checked],
@@ -68,7 +68,6 @@ const ALANLAR = [
     ['maxSutun',         'ayMaxSutun',         el => +el.value],
     ['kartZeminRengi',   'ayKartZemin',        el => el.value],
     ['kartEn',           'ayKartEn',           el => +el.value],
-    ['kartKose',         'ayKartKose',         el => +el.value],
     ['kartBoslukYatay',  'ayBoslukYatay',      el => +el.value],
     ['kartBoslukDikey',  'ayBoslukDikey',      el => +el.value],
     ['kartCerceve',      'ayKartCerceve',      el => +el.value],
@@ -88,7 +87,6 @@ const CIKTILAR = {
     aySiddet:    ['aySiddetDeger',    v => v + '%'],
     ayKartEn:       ['ayKartEnDeger',       v => v + 'px'],
     ayMaxSutun:     ['ayMaxSutunDeger',     v => (v ? v : c('sinirsiz'))],
-    ayKartKose:     ['ayKartKoseDeger',     v => v + 'px'],
     ayBoslukYatay:  ['ayBoslukYatayDeger',  v => v + 'px'],
     ayBoslukDikey:  ['ayBoslukDikeyDeger',  v => v + 'px'],
     ayKartCerceve:  ['ayKartCerceveDeger',  v => v + 'px'],
@@ -226,7 +224,8 @@ function gorunumuUygula(ayar) {
     const basliklarKapali = ayar.baslikGoster === false;
     document.body.classList.toggle('basliklarKapali', basliklarKapali);
     document.body.classList.toggle('ekleKartiKapali', ayar.ekleKartiGoster === false);
-    document.body.classList.toggle('yanPanelKapali', ayar.yanPanelGoster === false);
+    // 1.5.1: "kapat" kalkti; anahtar artik OTOMATIK GIZLEME. Kapaliyken serit hep acik
+    document.body.classList.toggle('yanPanelSabit', ayar.yanPanelGizle === false);
     // Ipucu basliklarin gorunurluguyle ters calisiyor - anahtar degisince tazele
     for (const a of document.querySelectorAll('.kart:not(.ekleKart)')) {
         const ad = a.querySelector('.kartBaslik')?.textContent || '';
@@ -246,7 +245,6 @@ function gorunumuUygula(ayar) {
     const oranCss = { o1610: '16 / 10', o169: '16 / 9', o43: '4 / 3', okare: '1 / 1' };
     kok.setProperty('--kart-oran', oranCss[ayar.kartOrani] || '16 / 10');
     kok.setProperty('--gorsel-yerlesim', ayar.gorselYerlesim === 'contain' ? 'contain' : 'cover');
-    kok.setProperty('--kart-kose', (ayar.kartKose ?? 7) + 'px');
     kok.setProperty('--kart-bosluk-yatay', (ayar.kartBoslukYatay ?? 3) + 'px');
     kok.setProperty('--kart-bosluk-dikey', (ayar.kartBoslukDikey ?? 12) + 'px');
     kok.setProperty('--kart-cerceve', (ayar.kartCerceve ?? 1) + 'px');
@@ -283,7 +281,21 @@ function gorunumuUygula(ayar) {
     const vurgu = ayar.grupAktifRengi || '#576a80';
     document.documentElement.style.setProperty('--vurgu', vurgu);
     document.documentElement.style.setProperty('--vurgu-parlak', acikTon(vurgu, 18));
-    document.documentElement.style.setProperty('--grup-kose', (ayar.grupKose ?? 9) + 'px');
+    // GENEL KOSE YUVARLAKLIGI (1.5.1): eskiden yalnizca sekmeler icindi.
+    // Artik kartlar, sekmeler, pencereler, menuler ve dugmeler hep buradan.
+    // --k1/--k3 kucuk/buyuk ogeler icin ayni orandan turetiliyor (9 -> 6/9/14,
+    // eski sabit degerler). 0'da hap bicimli ogeler de kose oluyor.
+    {
+        const r = ayar.grupKose ?? 9;
+        const s = document.documentElement.style;
+        s.setProperty('--grup-kose', r + 'px');
+        s.setProperty('--kart-kose', r + 'px');
+        s.setProperty('--k1', Math.round(r * 2 / 3) + 'px');
+        s.setProperty('--k2', r + 'px');
+        s.setProperty('--k3', Math.round(r * 14 / 9) + 'px');
+        // Etiket/rozet gibi hap ogeler de ayni yaricapi aliyor; 20'de hap gibi
+        s.setProperty('--k-hap', r + 'px');
+    }
     // Tek olcek: yazi, ikon ve dolgu birlikte buyuyup kuculuyor
     document.documentElement.style.setProperty('--grup-olcek', (ayar.grupBoyut ?? 100) / 100);
 
@@ -776,7 +788,8 @@ function yedekAraclariniKur() {
         const { kirikEkraninaEkle } = await import('./kirik.js');
         const sonuc = await kirikTara(d => {
             kutu.innerHTML = `<p class="dnKutu bilgi">${d.yapilan} / ${d.toplam}` +
-                             ` · ${c('nKirik', d.kirik)}</p>`;
+                             ` · ${c('nKirik', d.kirik)}` +
+                             (d.supheli ? ` · ${c('nUlasilamadi', d.supheli)}` : '') + '</p>';
             // Bulunan kart ekran aciksa aninda listeye dussun
             if (d.yeni) kirikEkraninaEkle(d.yeni);
         });
@@ -784,7 +797,7 @@ function yedekAraclariniKur() {
         durdur.hidden = true;
         isaret.hidden = !sonuc.kirik.length;
         const goster = document.getElementById('kirikGoster');
-        if (goster) goster.hidden = !sonuc.kirik.length;
+        if (goster) goster.hidden = !sonuc.kirik.length && !sonuc.supheli.length;
         kutu.innerHTML = kirikRaporHTML(sonuc);
 
         // Yan serit dugmesi gorunur olsun

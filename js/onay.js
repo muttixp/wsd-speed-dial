@@ -54,7 +54,7 @@ const ATLANAN = 'atlananOnaylar';
  *                 cope gidiyor); kalici silmelerde ASLA.
  * @returns {Promise<boolean>}
  */
-export async function onaySor({ baslik = 'Onay', metin = '', evet = c('tamam'),
+export async function onaySor({ baslik = c('onay'), metin = '', evet = c('tamam'),
                                 hayir = c('vazgec'), tehlikeli = false,
                                 hatirla = null } = {}) {
     if (hatirla && await onayAtlaniyorMu(hatirla)) return true;

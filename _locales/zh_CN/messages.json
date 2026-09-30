@@ -77,9 +77,6 @@
   "duzenle": {
     "message": "编辑"
   },
-  "duzenlemekIcinKartaSagTiklayinSiralamak": {
-    "message": "右键点击磁贴进行编辑；拖放可调整顺序"
-  },
   "eklemeKarti": {
     "message": "“+”磁贴"
   },
@@ -106,9 +103,6 @@
   },
   "gizliHataAyiklamaCubuguCikar": {
     "message": "隐藏（会显示调试栏）"
-  },
-  "gizliSekmedeAc": {
-    "message": "在隐私标签页中打开"
   },
   "golgeRengi": {
     "message": "阴影颜色"
@@ -139,12 +133,6 @@
   },
   "hazirBoyutlar": {
     "message": "预设尺寸"
-  },
-  "hedefGrup": {
-    "message": "目标分组"
-  },
-  "hepsiniAc": {
-    "message": "全部打开"
   },
   "herSeyiGizle": {
     "message": "全部隐藏"
@@ -196,9 +184,6 @@
   },
   "kartCercevesi": {
     "message": "磁贴边框"
-  },
-  "kartKoseYuvarlakligi": {
-    "message": "磁贴圆角"
   },
   "kartOrani": {
     "message": "磁贴比例"
@@ -275,14 +260,8 @@
   "resmiIndir": {
     "message": "下载图片"
   },
-  "sekmeKoseYuvarlakligi": {
-    "message": "标签圆角"
-  },
   "sekmeZeminSaydamligi": {
     "message": "标签背景不透明度"
-  },
-  "sekmedeAc": {
-    "message": "在标签页中打开"
   },
   "sil": {
     "message": "删除"
@@ -308,9 +287,6 @@
   "tumunuSil": {
     "message": "全部删除"
   },
-  "tumunuYeniSekmeGrubundaAc": {
-    "message": "在新窗口中全部打开"
-  },
   "varsayilan": {
     "message": "默认"
   },
@@ -328,9 +304,6 @@
   },
   "yalnizcaYazi": {
     "message": "仅文字"
-  },
-  "yanAracPaneli": {
-    "message": "侧边工具栏"
   },
   "yazi": {
     "message": "文字"
@@ -352,9 +325,6 @@
   },
   "yeniSekmeArkaPlan": {
     "message": "新标签页（后台）"
-  },
-  "yeniSekmedeAc": {
-    "message": "在新标签页中打开"
   },
   "yontem": {
     "message": "方式"
@@ -866,9 +836,6 @@
   "goruntuYakalama": {
     "message": "截图"
   },
-  "yedeklemeBolum": {
-    "message": "备份"
-  },
   "bakimBolum": {
     "message": "维护"
   },
@@ -890,23 +857,11 @@
   "ikiRenk": {
     "message": "双色"
   },
-  "ipucuGrup": {
-    "message": "将磁贴整理到分组中；点击栏中的 + 新建分组"
-  },
   "ipucuKartEkle": {
     "message": "或在任意页面右键点击，选择“添加到 WSD Speed Dial”"
   },
   "nKartYenidenYakalanacak": {
     "message": "将重新截取 $1 个磁贴的图片，可能需要几分钟。"
-  },
-  "yenile": {
-    "message": "刷新"
-  },
-  "notEkle": {
-    "message": "添加备注"
-  },
-  "urlYiKopyala": {
-    "message": "复制网址"
   },
   "colorizeTekTonaIndir": {
     "message": "着色（单色调）"

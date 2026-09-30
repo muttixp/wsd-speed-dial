@@ -77,9 +77,6 @@
   "duzenle": {
     "message": "Editar"
   },
-  "duzenlemekIcinKartaSagTiklayinSiralamak": {
-    "message": "Clique com o botão direito do rato num bloco para editar; arraste para reordenar"
-  },
   "eklemeKarti": {
     "message": "Bloco \"+\""
   },
@@ -106,9 +103,6 @@
   },
   "gizliHataAyiklamaCubuguCikar": {
     "message": "Oculto (mostra barra de depuração)"
-  },
-  "gizliSekmedeAc": {
-    "message": "Abrir em separador anónimo"
   },
   "golgeRengi": {
     "message": "Cor da sombra"
@@ -139,12 +133,6 @@
   },
   "hazirBoyutlar": {
     "message": "Tamanhos prontos"
-  },
-  "hedefGrup": {
-    "message": "Grupo de destino"
-  },
-  "hepsiniAc": {
-    "message": "Abrir todos"
   },
   "herSeyiGizle": {
     "message": "Ocultar tudo"
@@ -196,9 +184,6 @@
   },
   "kartCercevesi": {
     "message": "Borda do bloco"
-  },
-  "kartKoseYuvarlakligi": {
-    "message": "Arredondamento dos cantos"
   },
   "kartOrani": {
     "message": "Proporção do bloco"
@@ -275,14 +260,8 @@
   "resmiIndir": {
     "message": "Transferir imagem"
   },
-  "sekmeKoseYuvarlakligi": {
-    "message": "Arredondamento dos separadores"
-  },
   "sekmeZeminSaydamligi": {
     "message": "Opacidade do fundo dos separadores"
-  },
-  "sekmedeAc": {
-    "message": "Abrir num separador"
   },
   "sil": {
     "message": "Eliminar"
@@ -308,9 +287,6 @@
   "tumunuSil": {
     "message": "Eliminar tudo"
   },
-  "tumunuYeniSekmeGrubundaAc": {
-    "message": "Abrir todos numa nova janela"
-  },
   "varsayilan": {
     "message": "Padrão"
   },
@@ -328,9 +304,6 @@
   },
   "yalnizcaYazi": {
     "message": "Só texto"
-  },
-  "yanAracPaneli": {
-    "message": "Barra lateral"
   },
   "yazi": {
     "message": "Texto"
@@ -352,9 +325,6 @@
   },
   "yeniSekmeArkaPlan": {
     "message": "Novo separador (em segundo plano)"
-  },
-  "yeniSekmedeAc": {
-    "message": "Abrir em novo separador"
   },
   "yontem": {
     "message": "Método"
@@ -866,9 +836,6 @@
   "goruntuYakalama": {
     "message": "Capturas"
   },
-  "yedeklemeBolum": {
-    "message": "Cópia de segurança"
-  },
   "bakimBolum": {
     "message": "Manutenção"
   },
@@ -890,23 +857,11 @@
   "ikiRenk": {
     "message": "Duas cores"
   },
-  "ipucuGrup": {
-    "message": "Organize os blocos em grupos; use + na barra para criar um"
-  },
   "ipucuKartEkle": {
     "message": "Ou clique com o botão direito em qualquer página e escolha \"Adicionar ao WSD Speed Dial\""
   },
   "nKartYenidenYakalanacak": {
     "message": "As imagens de $1 blocos serão capturadas novamente. Isso pode levar alguns minutos."
-  },
-  "yenile": {
-    "message": "Atualizar"
-  },
-  "notEkle": {
-    "message": "Adicionar nota"
-  },
-  "urlYiKopyala": {
-    "message": "Copiar URL"
   },
   "colorizeTekTonaIndir": {
     "message": "Colorir (um tom)"

@@ -40,6 +40,7 @@ let menuGrupId = null;
 let duzenlenenKartId = null;      // null ise "ekle", doluysa "duzenle"
 let duzenlenenUrl = null;         // renk kaydinda kullaniliyor
 let secilenRenk = null;
+let kpEtiketler = [];              // pencerede secili adli etiket id'leri (1.5.1)
 
 const el = id => document.getElementById(id);
 
@@ -129,8 +130,9 @@ export function etkilesimiKur() {
     });
 
     el('kirikHepsiniSil')?.addEventListener('click', async () => {
-        const sayi = el('kartKabi').querySelectorAll('.kart[data-anahtar]').length;
-        if (!sayi) return;
+        // Yalnizca KIRIK kartlar siliniyor; "ulasilamadi" olanlar sayilmasin
+        const sayi = el('kartKabi').querySelectorAll('.kart[data-anahtar]:not(.supheliKart)').length;
+        if (!sayi) return bildir(c('silinecekKirikYok'));
 
         if (!await onaySor({
             baslik: c('hepsiniSil'),
@@ -390,7 +392,7 @@ function renkSeciciyiKur() {
         b.type = 'button';
         b.className = 'renkNokta' + (r.deger ? '' : ' bos');
         b.dataset.renk = r.deger || '';
-        b.title = r.ad;
+        b.title = c('renk_' + r.ad) || r.ad;
         if (r.deger) b.style.backgroundColor = r.deger;
         else b.textContent = '\u2715';
 
@@ -400,6 +402,70 @@ function renkSeciciyiKur() {
         });
         kap.appendChild(b);
     }
+}
+
+/* ---- Adli etiketler (1.5.1) ---- */
+async function etiketCipleriniCiz() {
+    const kap = el('kpEtiketler');
+    if (!kap) return;
+    const { etiketTanimlariAl } = await import('./etiket.js');
+    const t = await etiketTanimlariAl();
+    kap.textContent = '';
+    for (const id of kpEtiketler) {
+        if (!t[id]) continue;
+        const cip = document.createElement('span');
+        cip.className = 'etiketCip';
+        const n = document.createElement('i');
+        n.style.backgroundColor = t[id].renk;
+        const ad = document.createElement('span');
+        ad.textContent = t[id].ad;
+        const x = document.createElement('button');
+        x.type = 'button';
+        x.className = 'etiketCipSil';
+        x.textContent = '\u00d7';
+        x.title = c('kaldir');
+        x.addEventListener('click', () => {
+            kpEtiketler = kpEtiketler.filter(e => e !== id);
+            etiketCipleriniCiz();
+        });
+        cip.append(n, ad, x);
+        kap.appendChild(cip);
+    }
+    kap.hidden = !kap.children.length;
+    // Oneri listesi: var olan etiket adlari
+    const dl = el('kpEtiketOneri');
+    dl.textContent = '';
+    for (const id of Object.keys(t)) {
+        if (kpEtiketler.includes(id)) continue;
+        const o = document.createElement('option');
+        o.value = t[id].ad;
+        dl.appendChild(o);
+    }
+}
+
+function etiketGirisiniKur() {
+    const ad = el('kpEtiketAd');
+    if (!ad || ad.dataset.kuruldu) return;
+    ad.dataset.kuruldu = '1';
+    const ekle = async () => {
+        const { etiketHazirla } = await import('./etiket.js');
+        const e = await etiketHazirla(ad.value, el('kpEtiketRenk').value);
+        if (!e) return ad.focus();
+        if (!kpEtiketler.includes(e.id)) kpEtiketler.push(e.id);
+        ad.value = '';
+        await etiketCipleriniCiz();
+        ad.focus();
+    };
+    el('kpEtiketEkle').addEventListener('click', ekle);
+    ad.addEventListener('keydown', e => {
+        if (e.key === 'Enter') { e.preventDefault(); e.stopPropagation(); ekle(); }
+    });
+    // Var olan bir etiketin adi yazilinca rengi de onunki olsun
+    ad.addEventListener('input', async () => {
+        const { etiketBul } = await import('./etiket.js');
+        const v = await etiketBul(ad.value);
+        if (v) el('kpEtiketRenk').value = v.renk;
+    });
 }
 
 function renkSeciminiGoster() {
@@ -546,6 +612,14 @@ async function kartPenceresiniAc(kart) {
     secilenRenk = kart ? (renkler[kart.url] || null) : null;
     renkSeciminiGoster();
 
+    etiketGirisiniKur();
+    {
+        const { kartEtiketleriAl } = await import('./etiket.js');
+        kpEtiketler = kart ? [...((await kartEtiketleriAl())[kart.url] || [])] : [];
+        el('kpEtiketAd').value = '';
+        await etiketCipleriniCiz();
+    }
+
     await karuseliYukle(kart ? kart.url : null);
     logoAdaylariniGizle();          // onceki kartin logo adaylari duruyordu
 
@@ -594,6 +668,18 @@ async function kartiKaydet() {
         }
 
         await renkYaz(url, secilenRenk);
+        {
+            const { kartEtiketleriniYaz, etiketleriTasi } = await import('./etiket.js');
+            if (duzenlenenKartId && duzenlenenUrl && duzenlenenUrl !== url) await etiketleriTasi(duzenlenenUrl, url);
+            // Kutuda yazili kalan ad Ekle'ye basilmadan kaydedildiyse de eklensin
+            const bekleyen = el('kpEtiketAd')?.value.trim();
+            if (bekleyen) {
+                const { etiketHazirla } = await import('./etiket.js');
+                const e = await etiketHazirla(bekleyen, el('kpEtiketRenk').value);
+                if (e && !kpEtiketler.includes(e.id)) kpEtiketler.push(e.id);
+            }
+            await kartEtiketleriniYaz(url, kpEtiketler);
+        }
 
         // Karuseldeki secim ve varsa kullanicinin ekledigi gorseller
         const { adaylar: kAdaylar, secim: kSecim, zemin: kZemin } = secimDurumu();
@@ -881,6 +967,23 @@ async function tasiPenceresiniAc(kartId) {
  * Secilen grup id'si gizli `tasiGrup` alaninda - onay kodu degismedi.
  * @returns listedeki grup sayisi
  */
+/*
+ * TASIMA HEDEFI - AGAC (1.5.1)
+ *
+ * Alt klasoru olan gruplar/klasorler RENKLI ve oklu; tiklayinca
+ * icindekiler acilir. Alt klasoru olmayan bir satira TEK TIKLAMA karti
+ * oraya tasir. Alt klasoru olanin kendisine tasimak icin cift tiklama
+ * ya da secip "Tasi". Arama eslesen satirin ust klasorlerini acar.
+ *
+ * HATIRLAMA: acik dallar ve son secilen hedef localStorage'da; pencere
+ * bir dahaki acilista ayni yerde aciliyor.
+ */
+const TASI_ACIK = 'wsdTasiAcik';
+const TASI_SON = 'wsdTasiSon';
+let tasiAcik = new Set();
+try { tasiAcik = new Set(JSON.parse(localStorage.getItem(TASI_ACIK) || '[]')); } catch (e) { /* bozuk */ }
+const tasiAcikYaz = () => { try { localStorage.setItem(TASI_ACIK, JSON.stringify([...tasiAcik].slice(-300))); } catch (e) { /* */ } };
+
 async function tasiListesiniDoldur(haric, { kokEtiketi = null, kokHer = null } = {}) {
     const liste = el('tasiListe');
     liste.textContent = '';
@@ -888,34 +991,96 @@ async function tasiListesiniDoldur(haric, { kokEtiketi = null, kokHer = null } =
     el('tasiGrup').value = '';
     const haricMi = id => haric instanceof Set ? haric.has(id) : id === haric;
 
-    // ALT KLASORLER DE hedef: tam yoluyla ("elfinder › config"),
-    // girintili. Arama yolun tamaminda yapiliyor.
     let klasorler = await tumKlasorleriAl();
     // Klasor tasirken kok hep secenek olmali (Ana Sayfa gizli olsa da):
     // koke tasinan klasor grup oluyor
     if (kokHer && !klasorler.some(k => k.id === kokHer)) {
-        klasorler = [{ id: kokHer, baslik: '', yol: '', derinlik: 0, kokMu: true }, ...klasorler];
+        klasorler = [{ id: kokHer, baslik: '', yol: '', derinlik: 0, kokMu: true, ustId: null }, ...klasorler];
     }
+    const cocukluId = new Set(klasorler.filter(k => k.ustId).map(k => k.ustId));
+
+    let secilebilir = 0;
     for (const k of klasorler) {
-        if (haricMi(k.id)) continue;
         const li = document.createElement('li');
         li.dataset.id = k.id;
-        li.textContent = (k.kokMu && kokEtiketi) ? kokEtiketi : k.yol;
-        if (k.derinlik) {
-            li.classList.add('altKlasor');
-            li.style.paddingLeft = `calc(var(--b3) + ${k.derinlik * 14}px)`;
+        if (k.ustId) li.dataset.ust = k.ustId;
+        li.dataset.yol = k.yol;
+        li.title = k.yol;
+        li.style.paddingLeft = `calc(var(--b2) + ${k.derinlik * 18}px)`;
+
+        const ok = document.createElement('span');
+        ok.className = 'tasiOk';
+        if (cocukluId.has(k.id)) {
+            li.classList.add('dalli');
+            ok.textContent = '▸';
         }
+        const ad = document.createElement('span');
+        ad.className = 'tasiAd';
+        ad.textContent = (k.kokMu && kokEtiketi) ? kokEtiketi : (k.baslik || '—');
+        li.append(ok, ad);
+
+        // Haric (su anki yer / kendisi) GIZLENMIYOR, pasif: agac bozulmasin,
+        // altindaki klasorlere yine ulasilabilsin
+        if (haricMi(k.id)) li.classList.add('pasif');
+        else secilebilir++;
         liste.appendChild(li);
     }
-    if (liste.firstElementChild) tasiSec(liste.firstElementChild, false);
-    liste.scrollTop = 0;
-    return liste.children.length;
+    tasiGorunurlugu();
+
+    // Son hedef: hala listede ve secilebilirse orada ac
+    let son = null;
+    try { son = localStorage.getItem(TASI_SON); } catch (e) { /* */ }
+    const sonLi = son && liste.querySelector(`li[data-id="${son}"]:not(.pasif)`);
+    if (sonLi) {
+        tasiUstleriniAc(sonLi);
+        tasiSec(sonLi, false);
+        requestAnimationFrame(() => sonLi.scrollIntoView({ block: 'center' }));
+    } else {
+        const ilk = liste.querySelector('li:not(.pasif)');
+        if (ilk) tasiSec(ilk, false);
+        liste.scrollTop = 0;
+    }
+    return secilebilir;
+}
+
+/** Kapali bir dalin altindaki satirlari gizler, oklari gunceller. */
+function tasiGorunurlugu() {
+    const liste = el('tasiListe');
+    const harita = new Map([...liste.children].map(li => [li.dataset.id, li]));
+    for (const li of liste.children) {
+        let gizli = false;
+        for (let u = li.dataset.ust; u; u = harita.get(u)?.dataset.ust) {
+            if (!tasiAcik.has(u)) { gizli = true; break; }
+        }
+        li.hidden = gizli;
+        if (li.classList.contains('dalli')) {
+            const acik = tasiAcik.has(li.dataset.id);
+            li.classList.toggle('acik', acik);
+            li.querySelector('.tasiOk').textContent = acik ? '▾' : '▸';
+        }
+    }
+}
+
+function tasiUstleriniAc(li) {
+    const liste = el('tasiListe');
+    for (let u = li.dataset.ust; u; u = liste.querySelector(`li[data-id="${u}"]`)?.dataset.ust) tasiAcik.add(u);
+    tasiAcikYaz();
+    tasiGorunurlugu();
+}
+
+function tasiDalDegistir(li) {
+    const id = li.dataset.id;
+    if (tasiAcik.has(id)) tasiAcik.delete(id); else tasiAcik.add(id);
+    tasiAcikYaz();
+    tasiGorunurlugu();
 }
 
 function tasiSec(li, kaydir = true) {
+    if (!li || li.classList.contains('pasif')) return;
     for (const x of el('tasiListe').querySelectorAll('.secili')) x.classList.remove('secili');
     li.classList.add('secili');
     el('tasiGrup').value = li.dataset.id;
+    try { localStorage.setItem(TASI_SON, li.dataset.id); } catch (e) { /* */ }
     if (kaydir) li.scrollIntoView({ block: 'center', behavior: 'smooth' });
 }
 
@@ -928,14 +1093,25 @@ function tasiAramasiniKur() {
     const eslesenler = () => {
         const t = alan.value.trim().toLocaleLowerCase('tr');
         if (!t) return [];
-        return [...liste.children].filter(li =>
-            li.textContent.toLocaleLowerCase('tr').includes(t));
+        // Kendi adi tam eslesen > adi terimle baslayan > adinda gecen > yolunda gecen
+        const derece = li => {
+            const ad = (li.querySelector('.tasiAd')?.textContent || '').trim().toLocaleLowerCase('tr');
+            const yol = (li.dataset.yol || li.textContent).toLocaleLowerCase('tr');
+            return ad === t ? 0 : ad.startsWith(t) ? 1 : ad.includes(t) ? 2 : yol.includes(t) ? 3 : -1;
+        };
+        return [...liste.children]
+            .filter(li => !li.classList.contains('pasif'))
+            .map((li, i) => ({ li, i, d: derece(li) }))
+            .filter(x => x.d >= 0)
+            .sort((a, b) => a.d - b.d || a.i - b.i)
+            .map(x => x.li);
     };
     const goster = l => {
         for (const li of liste.querySelectorAll('.vurgulu')) li.classList.remove('vurgulu');
         if (!l.length) return;
         if (sira >= l.length) sira = 0;
         l[sira].classList.add('vurgulu');
+        tasiUstleriniAc(l[sira]);            // kapali daldaysa gorunsun
         tasiSec(l[sira]);
     };
 
@@ -948,13 +1124,25 @@ function tasiAramasiniKur() {
         goster(l);
     });
 
+    // TEK TIKLAMA: dalli satir acilir/kapanir (ve secilir); yaprak satir
+    // secilip HEMEN tasinir. Ok isaretine basmak yalnizca acar/kapatir.
     liste.addEventListener('click', e => {
         const li = e.target.closest('li');
-        if (li) tasiSec(li, false);
+        if (!li) return;
+        if (li.classList.contains('dalli')) {
+            tasiDalDegistir(li);
+            if (!e.target.closest('.tasiOk')) tasiSec(li, false);
+            return;
+        }
+        if (li.classList.contains('pasif')) return;
+        tasiSec(li, false);
+        el('tasiOnay').click();
     });
+    // CIFT TIKLAMA: dalli satirin KENDISINE tasi
     liste.addEventListener('dblclick', e => {
         const li = e.target.closest('li');
-        if (!li) return;
+        if (!li || li.classList.contains('pasif') || !li.classList.contains('dalli')) return;
+        tasiDalDegistir(li);                  // ilk tiklamanin actigini geri al
         tasiSec(li, false);
         el('tasiOnay').click();
     });
@@ -1264,6 +1452,11 @@ function menuleriKur() {
         // Tek grup varsa "Tasi" anlamsiz - devre disi birak.
         // Gizlemek yerine soluk gostermek daha iyi: menu duzeni sabit kaliyor
         // ve kullanici ogenin var oldugunu biliyor.
+        // "Kirik degil" yalnizca kirik baglantilar ekraninda (1.5.1):
+        // arac seridi ayardan kapatilmissa tek yol bu menu
+        const kirikOge = el('kartMenu').querySelector('[data-eylem="kirikDegil"]');
+        if (kirikOge) kirikOge.hidden = !document.body.classList.contains('kirikAcik');
+
         const gruplar = await gruplariAl();
         const tasiOge = el('kartMenu').querySelector('[data-eylem="tasi"]');
         if (tasiOge) tasiOge.classList.toggle('pasif', gruplar.length < 2);
@@ -1309,8 +1502,10 @@ function menuleriKur() {
         // COP ve YINELENEN KARTLAR ekranlarinda "Ekle" / "Yeni Grup"
         // anlamsiz: kullanici o an bir listeyi inceliyor, kart eklemiyor.
         // Tarayici menusu de cikmasin diye preventDefault ustte.
-        if (document.body.classList.contains('copAcik')) return;
-        if (document.body.classList.contains('kopyaAcik')) return;
+        // KIRIK BAGLANTILAR ve ARAMA sonuclari da ayni (1.5.1): ekranda
+        // tek bir grup yok, "Kart ekle" nereye ekleyecegi belirsizdi.
+        if (['copAcik', 'kopyaAcik', 'kirikAcik', 'aramaAcik']
+            .some(s => document.body.classList.contains(s))) return;
 
         // Ana Sayfa'da (kok) klasor = grup: "Yeni Klasor" soluk
         kokKlasoruAl().then(kok => {
@@ -1368,8 +1563,30 @@ function menuleriKur() {
     }, { capture: true, passive: true });
 }
 
+/**
+ * Ayraclari duzenler: bazi ogeler gizlendiginde (or. Ana Sayfa grubunda
+ * Duzenle/Tasi/Sil) iki ayrac yan yana, ya da menunun basinda/sonunda
+ * kaliyordu.
+ */
+function ayraclariDuzenle(menu) {
+    let oncekiAyrac = true;            // bastaki ayrac gorunmesin
+    let sonAyrac = null;
+    for (const li of menu.children) {
+        if (li.classList.contains('menuAyrac')) {
+            li.hidden = oncekiAyrac;
+            if (!li.hidden) { oncekiAyrac = true; sonAyrac = li; }
+            continue;
+        }
+        if (li.hidden) continue;
+        oncekiAyrac = false;
+        sonAyrac = null;
+    }
+    if (sonAyrac) sonAyrac.hidden = true;  // sondaki ayrac
+}
+
 function menuyuAc(menu, x, y) {
     menuleriKapat(false);
+    ayraclariDuzenle(menu);
     menu.hidden = false;
     // Ekran disina tasmasin
     const k = menu.getBoundingClientRect();
@@ -1420,6 +1637,13 @@ async function kartMenuEylemi(e) {
     menuleriKapat();
 
     switch (eylem) {
+        case 'kirikDegil': {
+            const k = await import('./kirik.js');
+            await k.kirikDegil(url);
+            await k.kirikEkraniniYenile();
+            bildir(c('kirikDegilBildir'));
+            break;
+        }
         case 'ac':
             if (OZEL_SEMA.test(url)) ozelSemaAc(url, 'ayni');
             else location.href = url;

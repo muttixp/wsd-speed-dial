@@ -85,7 +85,7 @@ export async function htmlUret() {
         tarih,
         toplamKart,
         kartEn: ayar.kartEn || 250,
-        kose: ayar.kartKose ?? 7,
+        kose: ayar.grupKose ?? 9,
         zemin
     });
 }

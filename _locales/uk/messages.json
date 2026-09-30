@@ -77,9 +77,6 @@
   "duzenle": {
     "message": "Змінити"
   },
-  "duzenlemekIcinKartaSagTiklayinSiralamak": {
-    "message": "Правий клік по плитці — змінити; перетягування — змінити порядок"
-  },
   "eklemeKarti": {
     "message": "Плитка «+»"
   },
@@ -106,9 +103,6 @@
   },
   "gizliHataAyiklamaCubuguCikar": {
     "message": "Прихований (показує панель налагодження)"
-  },
-  "gizliSekmedeAc": {
-    "message": "Відкрити в приватній вкладці"
   },
   "golgeRengi": {
     "message": "Колір тіні"
@@ -139,12 +133,6 @@
   },
   "hazirBoyutlar": {
     "message": "Готові розміри"
-  },
-  "hedefGrup": {
-    "message": "Цільова група"
-  },
-  "hepsiniAc": {
-    "message": "Відкрити всі"
   },
   "herSeyiGizle": {
     "message": "Приховати все"
@@ -196,9 +184,6 @@
   },
   "kartCercevesi": {
     "message": "Рамка плитки"
-  },
-  "kartKoseYuvarlakligi": {
-    "message": "Заокруглення кутів плитки"
   },
   "kartOrani": {
     "message": "Пропорції плитки"
@@ -275,14 +260,8 @@
   "resmiIndir": {
     "message": "Завантажити зображення"
   },
-  "sekmeKoseYuvarlakligi": {
-    "message": "Заокруглення кутів вкладок"
-  },
   "sekmeZeminSaydamligi": {
     "message": "Прозорість фону вкладок"
-  },
-  "sekmedeAc": {
-    "message": "Відкрити у вкладці"
   },
   "sil": {
     "message": "Видалити"
@@ -308,9 +287,6 @@
   "tumunuSil": {
     "message": "Видалити все"
   },
-  "tumunuYeniSekmeGrubundaAc": {
-    "message": "Відкрити всі в новому вікні"
-  },
   "varsayilan": {
     "message": "За замовчуванням"
   },
@@ -328,9 +304,6 @@
   },
   "yalnizcaYazi": {
     "message": "Лише текст"
-  },
-  "yanAracPaneli": {
-    "message": "Бічна панель"
   },
   "yazi": {
     "message": "Текст"
@@ -352,9 +325,6 @@
   },
   "yeniSekmeArkaPlan": {
     "message": "Нова вкладка (у фоні)"
-  },
-  "yeniSekmedeAc": {
-    "message": "Відкрити в новій вкладці"
   },
   "yontem": {
     "message": "Спосіб"
@@ -866,9 +836,6 @@
   "goruntuYakalama": {
     "message": "Знімки"
   },
-  "yedeklemeBolum": {
-    "message": "Резервне копіювання"
-  },
   "bakimBolum": {
     "message": "Обслуговування"
   },
@@ -890,23 +857,11 @@
   "ikiRenk": {
     "message": "Два кольори"
   },
-  "ipucuGrup": {
-    "message": "Розподіляйте плитки за групами; нова група — кнопка + на панелі"
-  },
   "ipucuKartEkle": {
     "message": "Або клацніть правою кнопкою на будь-якій сторінці й виберіть «Додати до WSD Speed Dial»"
   },
   "nKartYenidenYakalanacak": {
     "message": "Зображення $1 плиток буде знято заново. Це може зайняти кілька хвилин."
-  },
-  "yenile": {
-    "message": "Оновити"
-  },
-  "notEkle": {
-    "message": "Додати нотатку"
-  },
-  "urlYiKopyala": {
-    "message": "Копіювати URL"
   },
   "colorizeTekTonaIndir": {
     "message": "Colorize (один тон)"

@@ -3,6 +3,111 @@
 Sürüm numaraları [Semantic Versioning](https://semver.org/lang/tr/)
 kurallarına uyar.
 
+## [1.5.1] — 2026-09-30
+
+### Yeni
+- **Adlı etiketler**: Kart Düzenle penceresinde renk etiketinin altında
+  "Etiketler" alanı: ad + renk yazıp Ekle ile karta etiket veriliyor, bir
+  kart birden çok etiket alabiliyor, × ile karttan kaldırılıyor. Aynı ad
+  (büyük/küçük harf farkı önemsiz) yeni etiket açmıyor, var olanı
+  kullanıyor; yazarken var olan adlar öneriliyor. Etiketli kartın görsel
+  köşesinde renkli noktalar, üstüne gelince adları
+- **Etiket listesi aramada**: Arama boş açılınca kullanılan renk etiketleri
+  ve adlı etiketler sayılarıyla listeleniyor; tıklayınca tüm gruplardaki o
+  etiketli kartlar geliyor, tekrar tıklayınca kalkıyor. Adlı etiketin ×'i
+  etiketi tüm kartlardan kaldırıyor (onay sorulur, kartlar silinmez).
+  Aramaya yazılan kelime etiket adlarında da aranıyor
+- **Taşıma penceresi ağaç görünümünde**: alt klasörü olan gruplar ve
+  klasörler renkli ve ▸ işaretli; tıklayınca açılıp içindeki klasörler
+  görünüyor. Alt klasörü olmayan hedefe tek tıkla taşınıyor, dalın
+  kendisine taşımak için çift tık. Açık bıraktığınız dallar ve son
+  seçtiğiniz hedef hatırlanıyor; aramada eşleşen klasörün üstleri
+  kendiliğinden açılıyor. Bulunulan yer soluk gösteriliyor
+- **Aramada alt klasörler de çıkıyor**: yalnızca gruplar değil, adı
+  eşleşen alt klasörler de sonuçların üstünde yoluyla birlikte rozet olarak
+  görünüyor (ör. "Os › Windows › Ltbs (2)"); tıklayınca o klasör açılıyor
+- **Klasöre arka plan rengi ve kapak resmi**: Klasörü düzenle penceresinde
+  kutunun arka plan rengi seçilebiliyor ve kapak resmi eklenebiliyor
+  (Resim seç…, önizlemeye sürükle-bırak ya da Ctrl+V ile yapıştır). Kapak
+  varsa kart önizleme mozaiğinin yerine o görünüyor; resim kart ölçüsüne
+  küçültülüp klasörün görünüm kaydında tutuluyor, yedeğe ve çöpe onunla
+  birlikte gidiyor
+- **"Kırık değil"**: kırık bağlantılar ekranında kartın araç şeridinde
+  ilk simge (yeşil sağlam bağlantı simgesi) ve kartın sağ tık menüsünde
+  (araç şeridi ayardan kapalıyken de kullanılabilsin); adres listeden
+  düşer ve sonraki taramalarda atlanır
+- Etiketler yedeğe (elle, otomatik ve silme öncesi yedek) giriyor ve geri
+  yükleniyor; çöpe giden kart ve gruplar etiketleriyle gidip etiketleriyle
+  geri geliyor (etiket bu arada silinmişse adıyla yeniden kuruluyor);
+  renk adları çevrildi
+
+### Değişiklikler
+- **Yan araç paneli: "kapat" yerine "gizle"**: Ayar artık "Yan Araç Panelini
+  Gizle". Açıkken (varsayılan) panel kenara çekili durur, fare yaklaşınca
+  açılır; kapatınca eskisi gibi hep açık kalır. Paneli tamamen kapatma
+  seçeneği kaldırıldı
+- **Tek köşe yuvarlaklığı ayarı**: "Sekme Köşe Yuvarlaklığı" genel ayar oldu
+  (Görünüm › Yazı ve Panel › Köşe Yuvarlaklığı). Kartlar, klasörler, sekmeler,
+  pencereler, menüler, düğmeler ve etiketler köşesini buradan alıyor; 0'da her
+  şey köşeli. Ayrı "Kart Köşe Yuvarlaklığı" kaldırıldı, sekme için seçtiğiniz
+  değer korunuyor
+- **Ayar paneli yeniden düzenlendi**: bölümlerin içinde alt başlıklar
+  (Kartlar: Davranış / Boyut ve Yerleşim / Renk ve Çerçeve; Grup Şeridi:
+  Davranış / Görünüm; Görünüm: Arka Plan / Yazı ve Panel; Görüntü
+  Yakalama: Yöntem / Görüntü). "Yedekleme" → "Yedekleme ve Aktarma":
+  içe aktarma araçları Bakım'dan buraya taşındı. Ayarları sıfırlama ve
+  tüm verileri silme ayrı, kırmızı başlıklı **Tehlikeli İşlemler**
+  bölümünde. Kısayollar listesine Backspace ve Alt+←/→ eklendi.
+  İşlem düğmeleri yan araç şeridindeki gibi küçük kutular (simge + kısa
+  ad, satırda üç); Çöp Kutusu ve "Bekleyen yakalamaları iptal et" Bakım'a
+  alındı. Ayarların kendisi değişmedi
+- **Menüler tutarlı hâle getirildi**: tek yazım düzeni ("Yeni sekmede aç",
+  "Grupları yönet…"), pencere açan öğelerde "…", "Url yi kopyala" →
+  "Adresi kopyala", grupta "Kaldır" → "Sil", yenileme her yerde "Görseli /
+  Görselleri yenile". Sil her menüde en altta ve kırmızı; menüler ince
+  ayraçlarla Aç / Düzenle / Sil kümelerine ayrıldı. Klasör menüsüne
+  "Tümünü yeni pencerede aç" eklendi. Kart araç şeridi ipuçları artık
+  çevriliyor (İngilizce arayüzde Türkçe görünüyordu)
+- Mağaza özet açıklaması (manifest) iç içe klasörleri de anlatıyor
+
+### Düzeltmeler
+- Kırık bağlantılar ve arama ekranında boş alana sağ tıklayınca "Kart
+  ekle / Yeni grup" menüsü çıkıyordu (ekranda tek grup yok, nereye
+  ekleneceği belirsiz). Artık çöp ve yinelenenler ekranı gibi menü çıkmıyor
+- Kırık bağlantı taraması var olan sayfaları kırık sayabiliyordu (ör.
+  XenForo forum sayfaları HEAD isteğine 404 dönüp GET'te açılıyor). Artık
+  HEAD yalnızca "sayfa var" dediğinde yeterli; karar GET'in. 404/410
+  kısa bir aradan sonra ikinci kez doğrulanıyor; aynı siteye aynı anda
+  tek istek gidiyor (hız sınırına takılıp yanlış sonuç vermesin); iki kez
+  "yok" denen adres son olarak tarayıcı çerezleriyle bir kez daha
+  deneniyor (oturum isteyen / bot korumalı siteler)
+- Kırık bağlantı sayıları tutarlı: tarama "1 kırık" derken ekran 40
+  gösteriyordu (kırık + ulaşılamayan toplamı). Ekran artık "1 kırık · 39
+  ulaşılamadı" yazıyor. Siteye ulaşılıp engellenen adresler (401/403/429,
+  bot koruması) artık "ulaşılamadı" sayılmıyor, sağlam kabul ediliyor;
+  listede yalnızca hiç cevap vermeyenler (alan adı yok, zaman aşımı,
+  sunucu hatası) kalıyor. "Hepsini sil" onayı ulaşılamayanları da sayıp
+  40 diyordu, ama yalnızca kırıkları siliyordu; artık doğru sayıyı
+  söylüyor ve ulaşılamayan listesini silmiyor. "Kartları göster" yalnızca
+  ulaşılamayan varken de çıkıyor
+- Grupları Yönet ve Taşı penceresinde arama önce içinde geçene
+  gidiyordu ("os" → Bios, Os en altta kalıyordu). Artık sıra: adı tam
+  eşleşen, adı terimle başlayan, adında geçen (Taşı'da en son yolunda
+  geçen); Enter sonrakine geçer. Grupları Yönet'te eşleşmeyen satırlar
+  soluk gösteriliyor
+- Tutarlılık: grup/klasör penceresinde "Özel emoji" ve "Site URL" ikon
+  seçiminin hemen altına alındı; pencere alanları küçük harfle ("İkon
+  rengi"), ayar satırları baş harfleri büyük ("İkon Rengi", "JPEG
+  Kalitesi") yazılıyor; İngilizcede "Colour/Color" karışıklığı "Color"
+  olarak birleştirildi; "Yeni Grup" başlığı, grup kart sayısı ve onay
+  penceresi başlığı artık çevriliyor; kullanılmayan 16 çeviri anahtarı
+  temizlendi
+- README ve mağaza açıklaması 1.5.1 özellikleriyle güncellendi (etiketler,
+  klasör kapak/arka plan, ağaç taşıma, tek köşe ayarı, yan panel gizleme);
+  README ayar tablosunda Çöp Kutusu ve bekleyen yakalamalar Bakım'da
+- Duvar kâğıdı kapalıyken "Arka Plan Rengi", "Metin Rengi" ve "Yan Araç
+  Paneli" ayarları görünmüyordu (renklendirme kutusunun içinde kalmışlardı)
+
 ## [1.5.0] — 2026-09-25
 
 ### Yeni

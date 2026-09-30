@@ -3,7 +3,7 @@
     "message": "WSD Speed Dial"
   },
   "extDesc": {
-    "message": "Yer imlerinizi görsel kartlar hâlinde gösteren hızlı erişim sayfası."
+    "message": "Yeni sekme için görsel hız kadranı: gruplar, iç içe klasörler, ekran görüntüleri. Kendi yer imlerinizde — hesap yok, izleme yok."
   },
   "actionTitle": {
     "message": "WSD Speed Dial'e ekle"
@@ -77,9 +77,6 @@
   "duzenle": {
     "message": "Düzenle"
   },
-  "duzenlemekIcinKartaSagTiklayinSiralamak": {
-    "message": "Düzenlemek için karta sağ tıklayın, sıralamak için sürükleyip bırakın"
-  },
   "eklemeKarti": {
     "message": "\"+\" Ekleme Kartı"
   },
@@ -106,9 +103,6 @@
   },
   "gizliHataAyiklamaCubuguCikar": {
     "message": "Gizli (hata ayıklama çubuğu çıkar)"
-  },
-  "gizliSekmedeAc": {
-    "message": "Gizli Sekmede aç"
   },
   "golgeRengi": {
     "message": "Gölge Rengi"
@@ -140,12 +134,6 @@
   "hazirBoyutlar": {
     "message": "Hazır Boyutlar"
   },
-  "hedefGrup": {
-    "message": "Hedef grup"
-  },
-  "hepsiniAc": {
-    "message": "Hepsini aç"
-  },
   "herSeyiGizle": {
     "message": "Her şeyi gizle"
   },
@@ -162,7 +150,7 @@
     "message": "İkon"
   },
   "ikonRengi": {
-    "message": "İkon rengi"
+    "message": "İkon Rengi"
   },
   "ikonYazi": {
     "message": "İkon + yazı"
@@ -196,9 +184,6 @@
   },
   "kartCercevesi": {
     "message": "Kart Çerçevesi"
-  },
-  "kartKoseYuvarlakligi": {
-    "message": "Kart Köşe Yuvarlaklığı"
   },
   "kartOrani": {
     "message": "Kart Oranı"
@@ -261,7 +246,7 @@
     "message": "pencereyi / aramayı kapat"
   },
   "renkEtiketi": {
-    "message": "Renk Etiketi"
+    "message": "Renk etiketi"
   },
   "renkTonu": {
     "message": "Renk Tonu"
@@ -275,14 +260,8 @@
   "resmiIndir": {
     "message": "Resmi İndir"
   },
-  "sekmeKoseYuvarlakligi": {
-    "message": "Sekme Köşe Yuvarlaklığı"
-  },
   "sekmeZeminSaydamligi": {
     "message": "Sekme Zemin Saydamlığı"
-  },
-  "sekmedeAc": {
-    "message": "Sekmede aç"
   },
   "sil": {
     "message": "Sil"
@@ -308,9 +287,6 @@
   "tumunuSil": {
     "message": "Tümünü Sil"
   },
-  "tumunuYeniSekmeGrubundaAc": {
-    "message": "Tümünü yeni sekme grubunda aç"
-  },
   "varsayilan": {
     "message": "Varsayılan"
   },
@@ -328,9 +304,6 @@
   },
   "yalnizcaYazi": {
     "message": "Yalnızca yazı"
-  },
-  "yanAracPaneli": {
-    "message": "Yan Araç Paneli"
   },
   "yazi": {
     "message": "Yazı"
@@ -352,9 +325,6 @@
   },
   "yeniSekmeArkaPlan": {
     "message": "Yeni Sekme (Arka Plan)"
-  },
-  "yeniSekmedeAc": {
-    "message": "Yeni Sekmede aç"
   },
   "yontem": {
     "message": "Yöntem"
@@ -866,9 +836,6 @@
   "goruntuYakalama": {
     "message": "Görüntü Yakalama"
   },
-  "yedeklemeBolum": {
-    "message": "Yedekleme"
-  },
   "bakimBolum": {
     "message": "Bakım"
   },
@@ -890,26 +857,14 @@
   "ikiRenk": {
     "message": "İki Renk"
   },
-  "ipucuGrup": {
-    "message": "Kartlarınızı gruplara ayırın, şeritteki + ile yeni grup açın"
-  },
   "ipucuKartEkle": {
     "message": "Ya da bir sayfada sağ tıklayıp \"WSD Speed Dial'e ekle\" deyin"
   },
   "nKartYenidenYakalanacak": {
     "message": "$1 kartın görseli yeniden yakalanacak. Bu işlem birkaç dakika sürebilir."
   },
-  "yenile": {
-    "message": "Yenile"
-  },
-  "notEkle": {
-    "message": "Not ekle"
-  },
-  "urlYiKopyala": {
-    "message": "Url yi kopyala"
-  },
   "colorizeTekTonaIndir": {
-    "message": "Colorize (tek tona indir)"
+    "message": "Colorize (Tek Tona İndir)"
   },
   "doygunluk": {
     "message": "Doygunluk"
@@ -936,7 +891,7 @@
     "message": "Bekleme"
   },
   "jpegKalitesi": {
-    "message": "JPEG kalitesi"
+    "message": "JPEG Kalitesi"
   },
   "arama": {
     "message": "arama"
@@ -1146,10 +1101,10 @@
     "message": "Bu adresler 404/410 döndü; sayfa artık yok. Kartları kadranda kırmızı ünlemle işaretlendi."
   },
   "supheliAciklama": {
-    "message": "Bu adreslere ulaşılamadı ama kesin sonuç alınamadı (zaman aşımı, ağ hatası ya da bot koruması). Kartlar işaretlenmedi."
+    "message": "Bu adreslere hiç ulaşılamadı (alan adı yok, zaman aşımı ya da sunucu hatası). Kartlar silinmedi; tek tek kontrol edin."
   },
   "kirikKartlariGoster": {
-    "message": "Kırık kartları göster"
+    "message": "Kartları göster"
   },
   "tekrarTara": {
     "message": "Tekrar tara"
@@ -1241,9 +1196,6 @@
   "altKlasorleriKoru": {
     "message": "Alt klasörleri koru (işaretli değilse her klasör ayrı grup olur)"
   },
-  "baskaGrubaTasi": {
-    "message": "Başka gruba taşı..."
-  },
   "buKlasordeKartYok": {
     "message": "Bu klasörde kart yok"
   },
@@ -1315,5 +1267,197 @@
   },
   "nYeniGrup": {
     "message": "$1 yeni grup"
+  },
+  "yaziVePanel": {
+    "message": "Yazı ve Panel"
+  },
+  "davranis": {
+    "message": "Davranış"
+  },
+  "boyutVeYerlesim": {
+    "message": "Boyut ve Yerleşim"
+  },
+  "renkVeCerceve": {
+    "message": "Renk ve Çerçeve"
+  },
+  "gorunumAlt": {
+    "message": "Görünüm"
+  },
+  "yakalamaYontemi": {
+    "message": "Yöntem"
+  },
+  "goruntuAlt": {
+    "message": "Görüntü"
+  },
+  "yedekAlt": {
+    "message": "Yedek"
+  },
+  "iceAktarAlt": {
+    "message": "İçe Aktar"
+  },
+  "yedeklemeVeAktarma": {
+    "message": "Yedekleme ve Aktarma"
+  },
+  "tehlikeliIslemler": {
+    "message": "Tehlikeli İşlemler"
+  },
+  "tehlikeliAciklama": {
+    "message": "Bu işlemler verilerinizi ya da ayarlarınızı toplu olarak değiştirir. Önce yedek almanız önerilir."
+  },
+  "ustKlasoreCik": {
+    "message": "üst klasöre çık"
+  },
+  "geriIleri": {
+    "message": "geri / ileri (fare yan tuşları)"
+  },
+  "mSekmedeAc": {
+    "message": "Sekmede aç"
+  },
+  "mYeniSekmedeAc": {
+    "message": "Yeni sekmede aç"
+  },
+  "mGizliSekmedeAc": {
+    "message": "Gizli sekmede aç"
+  },
+  "mAdresiKopyala": {
+    "message": "Adresi kopyala"
+  },
+  "mGorseliYenile": {
+    "message": "Görseli yenile"
+  },
+  "mDuzenle": {
+    "message": "Düzenle…"
+  },
+  "mNotEkle": {
+    "message": "Not ekle…"
+  },
+  "mTasi": {
+    "message": "Taşı…"
+  },
+  "mSil": {
+    "message": "Sil"
+  },
+  "mAc": {
+    "message": "Aç"
+  },
+  "mHepsiniAc": {
+    "message": "Hepsini aç"
+  },
+  "mYeniPencerede": {
+    "message": "Tümünü yeni pencerede aç"
+  },
+  "mGorselleriYenile": {
+    "message": "Görselleri yenile"
+  },
+  "mKartlariSirala": {
+    "message": "Kartları sırala…"
+  },
+  "mGrubuDuzenle": {
+    "message": "Grubu düzenle…"
+  },
+  "mBaskaGrubaTasi": {
+    "message": "Başka gruba taşı…"
+  },
+  "mGruplariYonet": {
+    "message": "Grupları yönet…"
+  },
+  "mKartEkle": {
+    "message": "Kart ekle…"
+  },
+  "mYeniKlasor": {
+    "message": "Yeni klasör…"
+  },
+  "mYeniGrup": {
+    "message": "Yeni grup…"
+  },
+  "mYinelenenKartlar": {
+    "message": "Yinelenen kartlar"
+  },
+  "mCopKutusu": {
+    "message": "Çöp kutusu"
+  },
+  "mAyarlar": {
+    "message": "Ayarlar"
+  },
+  "gorseliYenile": {
+    "message": "Görseli yenile"
+  },
+  "kapakResmi": {
+    "message": "Kapak resmi"
+  },
+  "resimSec": {
+    "message": "Resim seç…"
+  },
+  "kapakIpucu": {
+    "message": "Resmi buraya sürükleyin ya da Ctrl+V ile yapıştırın"
+  },
+  "etiketler": {
+    "message": "Etiketler"
+  },
+  "yeniEtiket": {
+    "message": "Yeni etiket…"
+  },
+  "etiketiSil": {
+    "message": "Etiketi sil"
+  },
+  "etiketiSilSoru": {
+    "message": "\"$1\" etiketi $2 karttan kaldırılacak. Kartlar silinmez."
+  },
+  "renk_kirmizi": {
+    "message": "Kırmızı"
+  },
+  "renk_turuncu": {
+    "message": "Turuncu"
+  },
+  "renk_sari": {
+    "message": "Sarı"
+  },
+  "renk_yesil": {
+    "message": "Yeşil"
+  },
+  "renk_mavi": {
+    "message": "Mavi"
+  },
+  "renk_mor": {
+    "message": "Mor"
+  },
+  "renk_gri": {
+    "message": "Gri"
+  },
+  "renk_yok": {
+    "message": "Yok"
+  },
+  "koseYuvarlakligi": {
+    "message": "Köşe Yuvarlaklığı"
+  },
+  "koseYuvarlakligiIpucu": {
+    "message": "Kartlar, sekmeler, pencereler, menüler ve düğmeler"
+  },
+  "yanPaneliGizle": {
+    "message": "Yan Araç Panelini Gizle"
+  },
+  "buGruptaNKart": {
+    "message": "Bu grupta <b>$1</b> kart var"
+  },
+  "dIkonRengi": {
+    "message": "İkon rengi"
+  },
+  "dArkaPlanRengi": {
+    "message": "Arka plan rengi"
+  },
+  "kirikDegil": {
+    "message": "Kırık değil"
+  },
+  "kirikDegilIpucu": {
+    "message": "Sayfa açılıyor: bu adresi bundan sonra taramada atla"
+  },
+  "kirikDegilBildir": {
+    "message": "Bu adres bundan sonra kırık bağlantı taramasında atlanacak"
+  },
+  "nUlasilamadi": {
+    "message": "$1 ulaşılamadı"
+  },
+  "silinecekKirikYok": {
+    "message": "Silinecek kırık kart yok; ulaşılamayanları tek tek kontrol edin"
   }
 }

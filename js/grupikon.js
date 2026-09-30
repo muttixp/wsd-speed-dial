@@ -65,7 +65,7 @@ export async function gorunumYaz(grupId, gorunum) {
     // kendi alanlarini gonderiyor ve digerlerini silmemeli.
     const eski = hepsi[grupId] || {};
     const temiz = {};
-    for (const alan of ['gosterim', 'renk', 'aciklama', 'not', 'etiket']) {
+    for (const alan of ['gosterim', 'renk', 'aciklama', 'not', 'etiket', 'zemin', 'kapak']) {
         const deger = gorunum && alan in gorunum ? gorunum[alan] : eski[alan];
         if (deger) temiz[alan] = deger;
     }

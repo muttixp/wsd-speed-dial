@@ -382,10 +382,10 @@ function kartOlustur(k) {
 // dinleyiciyle yakalaniyor (kart sayisi kadar dinleyici baglanmasin).
 const KART_ARACLARI = [
     ['duzenle', c('duzenle'), '<path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/>'],
-    ['not',     'Not',     '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/>'],
-    ['yenile',  'Yenile',  '<path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/>'],
+    ['not',     c('not'),  '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/>'],
+    ['yenile',  c('gorseliYenile'), '<path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/>'],
     ['tasi',    c('tasi'),    '<path d="M5 9l-3 3 3 3"/><path d="M9 5l3-3 3 3"/><path d="M15 19l-3 3-3-3"/><path d="M19 9l3 3-3 3"/><path d="M2 12h20M12 2v20"/>'],
-    ['sil',     'Sil',     '<path d="M3 6h18"/><path d="M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>'],
+    ['sil',     c('sil'),  '<path d="M3 6h18"/><path d="M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>'],
 ];
 
 export function kartAraclariOlustur() {
@@ -432,6 +432,19 @@ export async function notlariUygula(kartlar) {
 export async function renkleriUygula(kartlar) {
     const renkler = await renkleriAl();
     const harita = kartHaritasi();
+    // Adli etiketler (1.5.1): gorsel kutusunun sol altinda renkli noktalar
+    const { etiketTanimlariAl, kartEtiketleriAl, etiketNoktalari } = await import('./etiket.js');
+    const tanimlar = await etiketTanimlariAl();
+    const kartEt = await kartEtiketleriAl();
+    for (const k of kartlar) {
+        const a = harita.get(String(k.id));
+        const kutu = a?.querySelector('.kartGorsel');
+        if (kutu) {
+            kutu.querySelector('.kartEtiketNoktalari')?.remove();
+            const n = etiketNoktalari(kartEt[urlNormalle(k.url)], tanimlar);
+            if (n) kutu.appendChild(n);
+        }
+    }
     for (const k of kartlar) {
         const renk = renkler[urlNormalle(k.url)];
         const serit = harita.get(String(k.id))?.querySelector('.kartRenk');

@@ -16,7 +16,7 @@
  */
 
 import { gruplariAl, grubunTumKartlari, urlNormalle } from './yerimi.js';
-import { ekranSinifiniVer } from './arayuz.js';
+import { ekranSinifiniVer, bildir } from './arayuz.js';
 import { c } from './dil.js';
 
 const ES_ZAMANLI   = 6;         // ayni anda kac istek
@@ -40,10 +40,12 @@ export async function kirikTara(ilerleme) {
     await cizimAraclari();
 
     const kartlar = [];
+    const yoksay = await yoksayilanlar();
     for (const g of await gruplariAl()) {
         for (const k of await grubunTumKartlari(g)) {
             // Yalnizca http(s): chrome:// ve file:// yoklanamiyor
             if (!/^https?:/i.test(k.url)) continue;
+            if (yoksay.has(urlNormalle(k.url))) continue;   // "Kirik degil" denmis
             kartlar.push({ url: k.url, anahtar: urlNormalle(k.url),
                            baslik: k.baslik || k.url, grup: [g.baslik, ...(k.yol || [])].join(' › ') });
         }
@@ -53,30 +55,47 @@ export async function kirikTara(ilerleme) {
                     kirik: [], supheli: [], iptal: false };
     let yapilan = 0;
 
+    // AYNI SITEYE AYNI ANDA TEK ISTEK (1.5.1): bir forumun 20 sayfasi
+    // kartlardaysa 6 paralel istek hiz sinirina (429) ya da bot
+    // korumasina takilip yanlis sonuc veriyordu.
+    const mesgul = new Set();
+    const alanAdi = u => { try { return new URL(u).host; } catch (e) { return u; } };
+    const siradaki = () => {
+        for (let i = kartlar.length - 1; i >= 0; i--) {
+            if (!mesgul.has(alanAdi(kartlar[i].url))) return kartlar.splice(i, 1)[0];
+        }
+        return null;
+    };
+
     const isci = async () => {
         while (kartlar.length && !iptalIstendi) {
-            const kart = kartlar.pop();
-            const d = await adresiYokla(kart.url);
+            const kart = siradaki();
+            if (!kart) { await bekle(150); continue; }
+            const host = alanAdi(kart.url);
+            mesgul.add(host);
+            let d;
+            try { d = await adresiYokla(kart.url); } finally { mesgul.delete(host); }
 
             if (d.kod && KIRIK_KODLAR.includes(d.kod)) {
                 sonuc.kirik.push({ ...kart, kod: d.kod });
                 // Bulunani HEMEN bildir: kullanici taramanin bitmesini
                 // beklemeden sonuclari gormeye baslasin
                 if (ilerleme) ilerleme({ yapilan, toplam: sonuc.toplam,
-                                         kirik: sonuc.kirik.length, yeni: { ...kart, kod: d.kod } });
+                                         kirik: sonuc.kirik.length, supheli: sonuc.supheli.length, yeni: { ...kart, kod: d.kod } });
             } else if (!d.tamam) {
                 sonuc.supheli.push({ ...kart, kod: d.kod || 0, sebep: d.sebep });
             }
 
             yapilan++;
             if (ilerleme && (yapilan % 5 === 0 || !kartlar.length)) {
-                ilerleme({ yapilan, toplam: sonuc.toplam, kirik: sonuc.kirik.length });
+                ilerleme({ yapilan, toplam: sonuc.toplam, kirik: sonuc.kirik.length, supheli: sonuc.supheli.length });
             }
         }
     };
 
     await Promise.all(Array.from({ length: ES_ZAMANLI }, isci));
     sonuc.iptal = iptalIstendi;
+    if (ilerleme) ilerleme({ yapilan, toplam: sonuc.toplam, kirik: sonuc.kirik.length, supheli: sonuc.supheli.length });
 
     try {
         await chrome.storage.local.set({ kirikSonuc: {
@@ -92,33 +111,64 @@ export async function kirikTara(ilerleme) {
     return sonuc;
 }
 
-/** Tek adresi yoklar: { tamam, kod, sebep } */
-async function adresiYokla(url) {
-    for (const yontem of ['HEAD', 'GET']) {
-        const kontrol = new AbortController();
-        const sayac = setTimeout(() => kontrol.abort(), ZAMAN_ASIMI);
-        try {
-            const y = await fetch(url, {
-                method: yontem,
-                redirect: 'follow',
-                credentials: 'omit',
-                cache: 'no-store',
-                signal: kontrol.signal
-            });
-            clearTimeout(sayac);
+/** Tek istek: { kod } ya da { kod: 0, sebep } */
+async function istek(url, yontem, cerez = 'omit') {
+    const kontrol = new AbortController();
+    const sayac = setTimeout(() => kontrol.abort(), ZAMAN_ASIMI);
+    try {
+        const y = await fetch(url, {
+            method: yontem,
+            redirect: 'follow',
+            credentials: cerez,
+            cache: 'no-store',
+            signal: kontrol.signal
+        });
+        return { kod: y.status, tamam: y.ok };
+    } catch (e) {
+        return { kod: 0, tamam: false, sebep: e.name === 'AbortError' ? 'zamanAsimi' : 'ag' };
+    } finally {
+        clearTimeout(sayac);
+    }
+}
 
-            // HEAD desteklenmiyorsa GET'e devam
-            if (yontem === 'HEAD' && [405, 501, 403].includes(y.status)) continue;
-            return { tamam: y.ok, kod: y.status };
-        } catch (e) {
-            clearTimeout(sayac);
-            if (yontem === 'GET') {
-                return { tamam: false, kod: 0,
-                         sebep: e.name === 'AbortError' ? 'zamanAsimi' : 'ag' };
-            }
+const bekle = ms => new Promise(r => setTimeout(r, ms));
+
+/**
+ * Tek adresi yoklar: { tamam, kod, sebep }
+ *
+ * 1.5.1 YANLIS KIRIK DUZELTMESI: HEAD'in YALNIZCA olumlu cevabina
+ * guveniyoruz. Bircok forum/CDN (XenForo + Cloudflare gibi) HEAD'e 404
+ * donup GET'te sayfayi veriyor; eskiden HEAD 404'u dogrudan "kirik"
+ * sayiliyordu. Artik karar GET'in. GET de 404/410/429/5xx derse kisa
+ * bir aradan sonra BIR KEZ daha soruluyor: gecici hata ya da hiz
+ * siniri kalici kirik sayilmasin.
+ */
+async function adresiYokla(url) {
+    const h = await istek(url, 'HEAD');
+    if (h.tamam) return h;
+
+    let g = await istek(url, 'GET');
+    if (g.tamam) return g;
+    if (KIRIK_KODLAR.includes(g.kod) || g.kod === 429 || g.kod >= 500 || g.kod === 0) {
+        await bekle(g.kod === 429 ? 4000 : 1500);
+        const g2 = await istek(url, 'GET');
+        if (g2.tamam) return g2;
+        // Kirik sayilmasi icin IKINCI GET de 404/410 demeli; baska bir
+        // sey derse (zaman asimi, 5xx) supheli listesine dusuyor
+        g = g2;
+        // SON DENEME CEREZLE: bazi siteler (bot korumali, uyelik isteyen)
+        // cerezsiz istege 404 veriyor ama tarayicida acik oturumla sayfa
+        // aciliyor. Yalnizca iki kez "yok" denen adreslere, tek sefer.
+        if (KIRIK_KODLAR.includes(g.kod)) {
+            const g3 = await istek(url, 'GET', 'include');
+            if (g3.tamam) return g3;
         }
     }
-    return { tamam: false, kod: 0, sebep: 'ag' };
+    // SITE CEVAP VERDI AMA ENGELLEDI (401/403/429): sunucu ayakta, sayfa
+    // buyuk ihtimalle var - bot korumasi ya da uyelik. Bunlar eskiden
+    // "ulasilamadi" listesini dolduruyordu (211 kartta 39); artik saglam.
+    if ([401, 403, 429].includes(g.kod)) return { ...g, tamam: true, engelli: true };
+    return g;
 }
 
 /** Ulasilamayan ama kirik sayilmayan adresler. */
@@ -139,6 +189,29 @@ export async function kirikAnahtarlar() {
     } catch (e) {
         return new Set();
     }
+}
+
+/* ---- "KIRIK DEGIL" (1.5.1) ----
+   Hicbir yoklama yontemi her siteyi dogru okuyamiyor (bot korumasi,
+   bolge engeli). Kullanici "bu sayfa var" derse adres kalici olarak
+   taramadan cikariliyor. Liste: kirikYoksay = [anahtar, ...] */
+async function yoksayilanlar() {
+    try { return new Set((await chrome.storage.local.get('kirikYoksay')).kirikYoksay || []); }
+    catch (e) { return new Set(); }
+}
+
+export async function kirikDegil(anahtar) {
+    const y = await yoksayilanlar();
+    y.add(anahtar);
+    const d = await chrome.storage.local.get('kirikSonuc');
+    const s = d.kirikSonuc;
+    const yaz = { kirikYoksay: [...y] };
+    if (s) {
+        yaz.kirikSonuc = { ...s,
+            anahtarlar: (s.anahtarlar || []).filter(a => a !== anahtar),
+            supheliler: (s.supheliler || []).filter(a => a !== anahtar) };
+    }
+    await chrome.storage.local.set(yaz);
 }
 
 /**
@@ -307,7 +380,15 @@ export async function kirikleriTumdenSil(ilerleme) {
         if (ilerleme) ilerleme({ yapilan: silinen, toplam: silinecek.length });
     }
 
-    try { await chrome.storage.local.remove('kirikSonuc'); } catch (e) { /* yok */ }
+    // Yalnizca KIRIK isaretleri gidiyor; "ulasilamadi" listesi kaliyor
+    try {
+        const d = await chrome.storage.local.get('kirikSonuc');
+        if (d.kirikSonuc?.supheliler?.length) {
+            await chrome.storage.local.set({ kirikSonuc: { ...d.kirikSonuc, anahtarlar: [] } });
+        } else {
+            await chrome.storage.local.remove('kirikSonuc');
+        }
+    } catch (e) { /* yok */ }
     return { silinen };
 }
 
@@ -343,6 +424,28 @@ function kirikKartiOlustur(k) {
     etiket.className = 'kartGrupEtiketi';
     etiket.textContent = k.grup || '';
     a.appendChild(etiket);
+
+    // "Kirik degil": yanlis alarmi kalici olarak kapatir. Kartin ARAC
+    // SERIDINDE ilk simge (onay isareti) - ayri bir dugme olarak seridin
+    // altinda kaliyor ve tiklanamiyordu.
+    const degil = document.createElement('button');
+    degil.type = 'button';
+    degil.className = 'kartArac kirikDegilArac';
+    degil.title = `${c('kirikDegil')} \u2014 ${c('kirikDegilIpucu')}`;
+    degil.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" ' +
+        'stroke-linecap="round" stroke-linejoin="round">' +
+        // SAGLAM BAGLANTI simgesi (kirik bag. simgesinin kopuk olmayan hali)
+        '<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>' +
+        '<path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>';
+    degil.addEventListener('click', async e => {
+        e.preventDefault();
+        e.stopPropagation();
+        await kirikDegil(a.dataset.anahtar);
+        await kirikEkraniniYenile();
+        bildir(c('kirikDegilBildir'));
+    });
+    const serit = a.querySelector('.kartAraclari');
+    if (serit) serit.prepend(degil); else a.appendChild(degil);
 
     // Supheli kartlar ayirt edilsin: 404 degil, ulasilamadi
     if (k.supheliMi) {
@@ -389,7 +492,15 @@ async function kirikEkraniniCiz() {
     }
     liste.sort((a, b) => (a.supheliMi ? 1 : 0) - (b.supheliMi ? 1 : 0));
 
-    el('kirikSayi').textContent = liste.length ? String(liste.length) : '';
+    // Iki sayi AYRI: "1 kirik · 39 ulasilamadi". Tek toplam (40) tarama
+    // raporundaki "1 kirik" ile celisiyordu.
+    {
+        const nk = liste.filter(x => !x.supheliMi).length, ns = liste.length - nk;
+        const parca = [];
+        if (nk) parca.push(c('nKirik', nk));
+        if (ns) parca.push(c('nUlasilamadi', ns));
+        el('kirikSayi').textContent = parca.join(' · ');
+    }
 
     if (!liste.length) {
         const bos = document.createElement('p');

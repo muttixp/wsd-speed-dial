@@ -34,7 +34,7 @@ const SURUM = 1;
 // bunlar tek parca nesneler
 const NESNE_ANAHTARLARI = [
     'ayarlar', 'kartNotlari', 'kartRenkleri', 'kartSayaclari',
-    'grupIkonlari', 'grupGorunumleri'
+    'grupIkonlari', 'grupGorunumleri', 'etiketTanimlari', 'kartEtiketleri'
 ];
 
 /* ============ Disa aktarma ============ */
@@ -88,7 +88,8 @@ export async function yedekIskeleti() {
 
     // Yalnizca KUCUK haritalar okunuyor
     const kucukler = await chrome.storage.local.get(
-        ['grupIkonlari', 'grupGorunumleri', 'kartNotlari', 'kartRenkleri', 'kartSayaclari']);
+        ['grupIkonlari', 'grupGorunumleri', 'kartNotlari', 'kartRenkleri', 'kartSayaclari',
+         'etiketTanimlari', 'kartEtiketleri']);
 
     // Grup ikonlari/gorunumleri id yerine SIRAYLA eslestiriliyor:
     // geri yuklerken yer imi id'leri farkli olacak.
@@ -105,6 +106,9 @@ export async function yedekIskeleti() {
         notlar: suz(kucukler.kartNotlari, yasayanUrlIer),
         renkler: suz(kucukler.kartRenkleri, yasayanUrlIer),
         sayaclar: suz(kucukler.kartSayaclari, yasayanUrlIer),
+        // Adli etiketler (1.5.1)
+        etiketler: { tanimlar: kucukler.etiketTanimlari || {},
+                     kartlar: suz(kucukler.kartEtiketleri, yasayanUrlIer) },
         ayarlar: await ayarlariAl()
     };
 }
@@ -137,6 +141,7 @@ export async function yedegiIndir(ilerleme) {
     parcalar.push(`"notlar":${JSON.stringify(isk.notlar)},`);
     parcalar.push(`"renkler":${JSON.stringify(isk.renkler)},`);
     parcalar.push(`"sayaclar":${JSON.stringify(isk.sayaclar)},`);
+    parcalar.push(`"etiketler":${JSON.stringify(isk.etiketler)},`);
     parcalar.push(`"ayarlar":${JSON.stringify(isk.ayarlar)},`);
     parcalar.push('"gorseller":{');
 
@@ -392,7 +397,7 @@ async function yedegiYukleIc(veri, temizle, ilerleme, urller) {
     // bellege aliyor ve buyuk depolarda sekmeyi cokertiyordu.
     const mevcut = await chrome.storage.local.get(
         ['kartNotlari', 'kartRenkleri', 'kartSayaclari',
-         'grupIkonlari', 'grupGorunumleri', 'ayarlar']);
+         'grupIkonlari', 'grupGorunumleri', 'ayarlar', 'etiketTanimlari', 'kartEtiketleri']);
     const yazilacak = {
         kartNotlari:   { ...(mevcut.kartNotlari || {}),   ...(y.notlar || {}) },
         kartRenkleri:  { ...(mevcut.kartRenkleri || {}),  ...(y.renkler || {}) },
@@ -401,6 +406,15 @@ async function yedegiYukleIc(veri, temizle, ilerleme, urller) {
         grupGorunumleri: { ...(mevcut.grupGorunumleri || {}), ...yeniGorunumler }
     };
     if (y.ayarlar) yazilacak.ayarlar = { ...(mevcut.ayarlar || {}), ...y.ayarlar };
+    // Adli etiketler: tanimlar id ile birlesiyor; kart listeleri birlesim
+    if (y.etiketler && typeof y.etiketler === 'object') {
+        yazilacak.etiketTanimlari = { ...(mevcut.etiketTanimlari || {}), ...(y.etiketler.tanimlar || {}) };
+        const kartlar = { ...(mevcut.kartEtiketleri || {}) };
+        for (const [u, l] of Object.entries(y.etiketler.kartlar || {})) {
+            if (Array.isArray(l)) kartlar[u] = [...new Set([...(kartlar[u] || []), ...l])];
+        }
+        yazilacak.kartEtiketleri = kartlar;
+    }
 
     await chrome.storage.local.set(yazilacak);
 
@@ -776,10 +790,10 @@ export async function oksuzleriTemizle() {
         } catch (e) { /* onemli degil - yalnizca bilgi amacli */ }
 
         // Not/renk/sayac haritalari kucuk - bunlari okuyabiliriz
-        const kucukler = await chrome.storage.local.get(['kartNotlari', 'kartRenkleri', 'kartSayaclari']);
+        const kucukler = await chrome.storage.local.get(['kartNotlari', 'kartRenkleri', 'kartSayaclari', 'kartEtiketleri']);
 
         const guncelle = {};
-        for (const ad of ['kartNotlari', 'kartRenkleri', 'kartSayaclari']) {
+        for (const ad of ['kartNotlari', 'kartRenkleri', 'kartSayaclari', 'kartEtiketleri']) {
             const nesne = kucukler[ad];
             if (!nesne || typeof nesne !== 'object') continue;
             const kalan = {};
@@ -881,6 +895,7 @@ export async function silmeYedegiAl() {
                 notlar: isk.notlar,
                 renkler: isk.renkler,
                 sayaclar: isk.sayaclar,
+                etiketler: isk.etiketler,
                 ayarlar: isk.ayarlar
             },
             kart: isk.gruplar.reduce((t, g) => t + g.kartlar.length, 0),
@@ -968,7 +983,7 @@ export async function herSeyiSil(ilerleme = null) {
         : Object.keys(await chrome.storage.local.get(null));
     const silinecek = anahtarlar.filter(k =>
         urlAnahtariMi(k) || NESNE_ANAHTARLARI.includes(k) ||
-        ['copKutusu', 'yakalamaKuyrugu', 'sonOtomatikYedek', 'sonAcilYedek', 'depoIzi', 'sonYedekBilgi', 'atlananOnaylar'].includes(k)
+        ['copKutusu', 'yakalamaKuyrugu', 'sonOtomatikYedek', 'sonAcilYedek', 'depoIzi', 'sonYedekBilgi', 'atlananOnaylar', 'kirikSonuc', 'kirikYoksay'].includes(k)
     );
     if (silinecek.length) await chrome.storage.local.remove(silinecek);
 

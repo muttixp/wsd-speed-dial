@@ -23,6 +23,7 @@ let secilenIkon = 'folder';       // 'ad' | 'emoji:X' | 'favicon:URL'
 let duzenlenenGrup = null;        // null ise yeni grup
 let klasorKipi = null;            // { ustId } - alt klasor ekle/duzenle (1.5.0)
 let secilenEtiket = null;         // klasor renk etiketi (kartlardaki alt serit gibi)
+let secilenKapak = null;          // klasor kapak resmi (data URI, kucultulmus) - 1.5.1
 let cozucu = null;                // Promise resolve
 
 /** Pencere icinde kisa uyari - alanin altinda beliriyor. */
@@ -65,6 +66,39 @@ export function grupPenceresiniKur() {
     });
     el('gpIkonRengi')?.addEventListener('input', () => {
         delete el('gpIkonRengi').dataset.bos;
+    });
+
+    // KLASOR ARKA PLANI VE KAPAK RESMI (1.5.1)
+    el('gpZeminSifirla')?.addEventListener('click', () => {
+        el('gpZemin').dataset.bos = '1';
+        el('gpZemin').value = '#2a3340';
+    });
+    el('gpZemin')?.addEventListener('input', () => { delete el('gpZemin').dataset.bos; kapakGoster(); });
+    el('gpKapakSec')?.addEventListener('click', () => el('gpKapakDosya').click());
+    el('gpKapakOnizleme')?.addEventListener('click', () => el('gpKapakDosya').click());
+    el('gpKapakKaldir')?.addEventListener('click', () => { secilenKapak = null; kapakGoster(); });
+    el('gpKapakDosya')?.addEventListener('change', async e => {
+        const dosya = e.target.files && e.target.files[0];
+        e.target.value = '';
+        if (dosya) await kapakDosyasiniAl(dosya);
+    });
+    // Resmi onizleme kutusuna surukle-birak
+    const onz = el('gpKapakOnizleme');
+    onz?.addEventListener('dragover', e => { e.preventDefault(); e.stopPropagation(); onz.classList.add('ustunde'); });
+    onz?.addEventListener('dragleave', () => onz.classList.remove('ustunde'));
+    onz?.addEventListener('drop', async e => {
+        e.preventDefault(); e.stopPropagation();
+        onz.classList.remove('ustunde');
+        const dosya = [...(e.dataTransfer?.files || [])].find(f => f.type.startsWith('image/'));
+        if (dosya) await kapakDosyasiniAl(dosya);
+    });
+    // Pencere aciksa Ctrl+V ile resim yapistir
+    document.addEventListener('paste', async e => {
+        if (el('grupPencere').hidden || !klasorKipi) return;
+        const oge = [...(e.clipboardData?.items || [])].find(i => i.type.startsWith('image/'));
+        if (!oge) return;
+        e.preventDefault();
+        await kapakDosyasiniAl(oge.getAsFile());
     });
 
     el('gpEmoji')?.addEventListener('input', emojiUygula);
@@ -111,7 +145,7 @@ function etiketleriKur() {
         b.type = 'button';
         b.className = 'renkNokta' + (r.deger ? '' : ' bos');
         b.dataset.renk = r.deger || '';
-        b.title = r.ad;
+        b.title = c('renk_' + r.ad) || r.ad;
         if (r.deger) b.style.backgroundColor = r.deger;
         else b.textContent = '\u2715';
         b.addEventListener('click', () => { secilenEtiket = r.deger; etiketiGoster(); });
@@ -122,6 +156,33 @@ function etiketiGoster() {
     for (const b of el('gpEtiketler').children) {
         b.classList.toggle('secili', (b.dataset.renk || null) === secilenEtiket);
     }
+}
+
+/** Dosyayi okuyup kart olcusune kucultur (gorsel.js kucult). */
+async function kapakDosyasiniAl(dosya) {
+    try {
+        const ham = await new Promise((coz, red) => {
+            const o = new FileReader();
+            o.onload = () => coz(o.result);
+            o.onerror = red;
+            o.readAsDataURL(dosya);
+        });
+        const { kucult } = await import('./gorsel.js');
+        secilenKapak = (await kucult(ham)) || ham;
+        kapakGoster();
+    } catch (e) {
+        uyarGoster(c('dosyaOkunamadi'));
+    }
+}
+
+function kapakGoster() {
+    const onz = el('gpKapakOnizleme');
+    if (!onz) return;
+    onz.style.backgroundImage = secilenKapak ? `url('${secilenKapak}')` : '';
+    const zemin = el('gpZemin');
+    onz.style.backgroundColor = zemin && !zemin.dataset.bos ? zemin.value : '';
+    onz.classList.toggle('dolu', !!secilenKapak);
+    el('gpKapakKaldir').hidden = !secilenKapak;
 }
 
 function secimiGoster() {
@@ -157,17 +218,19 @@ export async function grupPenceresiniAc(grup = null, { klasor = null } = {}) {
 
     el('grupPencereBaslik').textContent = klasor
         ? (grup ? c('klasoruDuzenle') : c('yeniKlasor'))
-        : (grup ? c('grubuDuzenle') : 'Yeni Grup');
+        : (grup ? c('grubuDuzenle') : c('yeniGrup'));
     el('gpKaydet').textContent = grup ? c('kaydet') : (klasor ? c('olustur') : c('grupOlustur'));
     el('gpGosterimSatir').hidden = !!klasor;
     el('gpEtiketSatir').hidden = !klasor;
+    el('gpZeminSatir').hidden = !klasor;
+    el('gpKapakSatir').hidden = !klasor;
     el('gpAd').value = grup ? grup.baslik : '';
     // Kart sayisi - yalnizca duzenlemede anlamli
     const bilgi = el('gpKartSayisi');
     if (grup) {
         const sayilar = await kartSayilariAl([grup.id]);
         bilgi.innerHTML = (klasor ? c('buKlasordeNKart', sayilar[grup.id] || 0)
-                                  : `Bu grupta <b>${sayilar[grup.id] || 0}</b> kart var`);
+                                  : c('buGruptaNKart', sayilar[grup.id] || 0));
         bilgi.hidden = false;
     } else {
         bilgi.hidden = true;
@@ -179,6 +242,10 @@ export async function grupPenceresiniAc(grup = null, { klasor = null } = {}) {
     el('gpGosterim').value = g.gosterim || '';
     secilenEtiket = g.etiket || null;
     etiketiGoster();
+    secilenKapak = g.kapak || null;
+    if (g.zemin) { el('gpZemin').value = g.zemin; delete el('gpZemin').dataset.bos; }
+    else { el('gpZemin').value = '#2a3340'; el('gpZemin').dataset.bos = '1'; }
+    kapakGoster();
     el('gpAciklama').value = g.aciklama || '';
     if (g.renk) {
         el('gpIkonRengi').value = g.renk;
@@ -236,7 +303,11 @@ async function kaydet() {
         renk: renkEl.dataset.bos ? null : renkEl.value,
         aciklama: el('gpAciklama').value.trim() || null,
         // Yalnizca klasor kipinde anlamli; grupta alan hic gonderilmiyor
-        ...(klasorKipi ? { etiket: secilenEtiket } : {})
+        ...(klasorKipi ? {
+            etiket: secilenEtiket,
+            zemin: el('gpZemin').dataset.bos ? null : el('gpZemin').value,
+            kapak: secilenKapak
+        } : {})
     });
 }
 

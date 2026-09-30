@@ -77,9 +77,6 @@
   "duzenle": {
     "message": "Editar"
   },
-  "duzenlemekIcinKartaSagTiklayinSiralamak": {
-    "message": "Clic derecho en un mosaico para editarlo; arrastra para reordenar"
-  },
   "eklemeKarti": {
     "message": "Mosaico «+»"
   },
@@ -106,9 +103,6 @@
   },
   "gizliHataAyiklamaCubuguCikar": {
     "message": "Oculto (muestra barra de depuración)"
-  },
-  "gizliSekmedeAc": {
-    "message": "Abrir en pestaña privada"
   },
   "golgeRengi": {
     "message": "Color de sombra"
@@ -139,12 +133,6 @@
   },
   "hazirBoyutlar": {
     "message": "Tamaños predefinidos"
-  },
-  "hedefGrup": {
-    "message": "Grupo de destino"
-  },
-  "hepsiniAc": {
-    "message": "Abrir todos"
   },
   "herSeyiGizle": {
     "message": "Ocultar todo"
@@ -196,9 +184,6 @@
   },
   "kartCercevesi": {
     "message": "Borde del mosaico"
-  },
-  "kartKoseYuvarlakligi": {
-    "message": "Redondeo de esquinas"
   },
   "kartOrani": {
     "message": "Proporción del mosaico"
@@ -275,14 +260,8 @@
   "resmiIndir": {
     "message": "Descargar imagen"
   },
-  "sekmeKoseYuvarlakligi": {
-    "message": "Redondeo de esquinas de pestañas"
-  },
   "sekmeZeminSaydamligi": {
     "message": "Opacidad del fondo de pestañas"
-  },
-  "sekmedeAc": {
-    "message": "Abrir en pestaña"
   },
   "sil": {
     "message": "Eliminar"
@@ -308,9 +287,6 @@
   "tumunuSil": {
     "message": "Eliminar todo"
   },
-  "tumunuYeniSekmeGrubundaAc": {
-    "message": "Abrir todos en una ventana nueva"
-  },
   "varsayilan": {
     "message": "Predeterminado"
   },
@@ -328,9 +304,6 @@
   },
   "yalnizcaYazi": {
     "message": "Solo texto"
-  },
-  "yanAracPaneli": {
-    "message": "Barra lateral"
   },
   "yazi": {
     "message": "Texto"
@@ -352,9 +325,6 @@
   },
   "yeniSekmeArkaPlan": {
     "message": "Nueva pestaña (en segundo plano)"
-  },
-  "yeniSekmedeAc": {
-    "message": "Abrir en pestaña nueva"
   },
   "yontem": {
     "message": "Método"
@@ -866,9 +836,6 @@
   "goruntuYakalama": {
     "message": "Capturas"
   },
-  "yedeklemeBolum": {
-    "message": "Copia de seguridad"
-  },
   "bakimBolum": {
     "message": "Mantenimiento"
   },
@@ -890,23 +857,11 @@
   "ikiRenk": {
     "message": "Dos colores"
   },
-  "ipucuGrup": {
-    "message": "Organiza los mosaicos en grupos; usa + en la barra para añadir uno"
-  },
   "ipucuKartEkle": {
     "message": "O haz clic derecho en cualquier página y elige «Añadir a WSD Speed Dial»"
   },
   "nKartYenidenYakalanacak": {
     "message": "Se volverán a capturar las imágenes de $1 mosaicos. Puede tardar unos minutos."
-  },
-  "yenile": {
-    "message": "Actualizar"
-  },
-  "notEkle": {
-    "message": "Añadir nota"
-  },
-  "urlYiKopyala": {
-    "message": "Copiar URL"
   },
   "colorizeTekTonaIndir": {
     "message": "Colorizar (un tono)"

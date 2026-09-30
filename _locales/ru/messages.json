@@ -77,9 +77,6 @@
   "duzenle": {
     "message": "Изменить"
   },
-  "duzenlemekIcinKartaSagTiklayinSiralamak": {
-    "message": "Правый клик по плитке — изменить; перетаскивание — изменить порядок"
-  },
   "eklemeKarti": {
     "message": "Плитка «+»"
   },
@@ -106,9 +103,6 @@
   },
   "gizliHataAyiklamaCubuguCikar": {
     "message": "Скрытый (показывает панель отладки)"
-  },
-  "gizliSekmedeAc": {
-    "message": "Открыть в приватной вкладке"
   },
   "golgeRengi": {
     "message": "Цвет тени"
@@ -139,12 +133,6 @@
   },
   "hazirBoyutlar": {
     "message": "Готовые размеры"
-  },
-  "hedefGrup": {
-    "message": "Целевая группа"
-  },
-  "hepsiniAc": {
-    "message": "Открыть все"
   },
   "herSeyiGizle": {
     "message": "Скрыть всё"
@@ -196,9 +184,6 @@
   },
   "kartCercevesi": {
     "message": "Рамка плитки"
-  },
-  "kartKoseYuvarlakligi": {
-    "message": "Скругление углов плитки"
   },
   "kartOrani": {
     "message": "Пропорции плитки"
@@ -275,14 +260,8 @@
   "resmiIndir": {
     "message": "Скачать изображение"
   },
-  "sekmeKoseYuvarlakligi": {
-    "message": "Скругление углов вкладок"
-  },
   "sekmeZeminSaydamligi": {
     "message": "Прозрачность фона вкладок"
-  },
-  "sekmedeAc": {
-    "message": "Открыть во вкладке"
   },
   "sil": {
     "message": "Удалить"
@@ -308,9 +287,6 @@
   "tumunuSil": {
     "message": "Удалить всё"
   },
-  "tumunuYeniSekmeGrubundaAc": {
-    "message": "Открыть все в новом окне"
-  },
   "varsayilan": {
     "message": "По умолчанию"
   },
@@ -328,9 +304,6 @@
   },
   "yalnizcaYazi": {
     "message": "Только текст"
-  },
-  "yanAracPaneli": {
-    "message": "Боковая панель"
   },
   "yazi": {
     "message": "Текст"
@@ -352,9 +325,6 @@
   },
   "yeniSekmeArkaPlan": {
     "message": "Новая вкладка (в фоне)"
-  },
-  "yeniSekmedeAc": {
-    "message": "Открыть в новой вкладке"
   },
   "yontem": {
     "message": "Способ"
@@ -866,9 +836,6 @@
   "goruntuYakalama": {
     "message": "Снимки"
   },
-  "yedeklemeBolum": {
-    "message": "Резервное копирование"
-  },
   "bakimBolum": {
     "message": "Обслуживание"
   },
@@ -890,23 +857,11 @@
   "ikiRenk": {
     "message": "Два цвета"
   },
-  "ipucuGrup": {
-    "message": "Распределяйте плитки по группам; новая группа — кнопка + на панели"
-  },
   "ipucuKartEkle": {
     "message": "Или щёлкните правой кнопкой на любой странице и выберите «Добавить в WSD Speed Dial»"
   },
   "nKartYenidenYakalanacak": {
     "message": "Изображения $1 плиток будут сняты заново. Это может занять несколько минут."
-  },
-  "yenile": {
-    "message": "Обновить"
-  },
-  "notEkle": {
-    "message": "Добавить заметку"
-  },
-  "urlYiKopyala": {
-    "message": "Копировать URL"
   },
   "colorizeTekTonaIndir": {
     "message": "Colorize (один тон)"
