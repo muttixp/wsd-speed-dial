@@ -2778,3 +2778,7 @@ body.kopyaAcik #klasorYolu, body.kirikAcik #klasorYolu { display: none; }
 /* Panel kenar boslugu dar: zeminli basliklar kenara yakin dursun */
 #ayarPanel { padding-left: 6px; padding-right: 6px; }
 #ayarPanel .ayarBaslik { padding-left: var(--b3); padding-right: var(--b3); }
+/* Vurgu zeminli ogelerin yazisi zemine gore (acik vurguda koyu) */
+.dugme.birincil, .dugme.birincil:hover,
+.kartGrupGit:hover, .aramaGrupRozet:hover, .aramaEtiket.secili,
+select option:checked, select option:hover { color: var(--vurgu-yazi, #fff); }

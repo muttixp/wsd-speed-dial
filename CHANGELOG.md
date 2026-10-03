@@ -55,6 +55,10 @@ kurallarına uyar.
   Sıfırlama açık bırakılsa da sonraki açılışta kapalı geliyor
 
 ### Düzeltmeler
+- Aktif Grup Rengi açık seçilince o renkteki düğmelerin ("Başlat",
+  "Kaydet", seçili etiket…) beyaz yazısı okunmuyordu. Bu düğmelerin yazısı
+  artık Grup Menüsü'ndeki **Aktif Grup Yazı Rengi**'ni kullanıyor;
+  seçilmemişse zemine göre kendiliğinden koyu ya da beyaz oluyor
 - Aktif Grup Rengi beyaz (ya da çok açık) seçilince ayarlardaki açık/kapalı
   anahtarları bembeyaz görünüyor, açık mı kapalı mı anlaşılmıyordu.
   Anahtarlar artık seçilen renkten bağımsız, sabit mavi

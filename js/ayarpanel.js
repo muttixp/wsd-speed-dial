@@ -310,6 +310,15 @@ function gorunumuUygula(ayar) {
     const vurgu = ayar.grupAktifRengi || '#576a80';
     document.documentElement.style.setProperty('--vurgu', vurgu);
     document.documentElement.style.setProperty('--vurgu-parlak', acikTon(vurgu, 18));
+    // Vurgu zeminli dugmelerin YAZISI: acik vurguda (beyaz, sari) beyaz yazi
+    // okunmuyordu.
+    const vh = /^#?([0-9a-f]{6})$/i.exec(vurgu);
+    const vn = vh ? parseInt(vh[1], 16) : 0x576a80;
+    const parlaklik = (0.299 * (vn >> 16) + 0.587 * ((vn >> 8) & 255) + 0.114 * (vn & 255)) / 255;
+    // Aktif Grup Yazi Rengi secildiyse o (sekmeyle ayni cift); secilmediyse
+    // zemine gore kendiliginden.
+    document.documentElement.style.setProperty('--vurgu-yazi',
+        ayar.grupAktifYaziRengi || (parlaklik > 0.62 ? '#16191e' : '#ffffff'));
     // GENEL KOSE YUVARLAKLIGI (1.5.1): eskiden yalnizca sekmeler icindi.
     // Artik kartlar, sekmeler, pencereler, menuler ve dugmeler hep buradan.
     // --k1/--k3 kucuk/buyuk ogeler icin ayni orandan turetiliyor (9 -> 6/9/14,
