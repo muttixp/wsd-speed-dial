@@ -1169,9 +1169,6 @@
   "kartEklenemedi": {
     "message": "No se pudo añadir el mosaico"
   },
-  "hepsiniSil": {
-    "message": "Eliminar todo"
-  },
   "nKirikKartCopeTasinacak": {
     "message": "$1 mosaicos rotos se moverán a la papelera. Puedes restaurarlos."
   },

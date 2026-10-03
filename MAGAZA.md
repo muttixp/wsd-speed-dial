@@ -88,7 +88,7 @@ Looks
 - Wallpaper, background tinting (hue shift or duotone)
 - Tile ratio, size, spacing, borders
 - One corner setting for tiles, tabs, menus, windows and buttons
-- Group bar colors and size; side toolbar can auto-hide
+- Group menu colors (including text colors) and size; side toolbar can auto-hide
 
 PRIVACY
 
@@ -165,7 +165,7 @@ Görünüm
 - Duvar kâğıdı, zemin renklendirme (ton kaydırma ya da iki renk)
 - Kart oranı, boyutu, boşluğu, çerçevesi
 - Kart, sekme, menü, pencere ve düğmeler için tek köşe ayarı
-- Grup şeridi renkleri ve boyutu; yan araç paneli kendini gizleyebilir
+- Grup menüsü renkleri (yazı renkleri dahil) ve boyutu; yan araç paneli kendini gizleyebilir
 
 GİZLİLİK
 

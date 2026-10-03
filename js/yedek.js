@@ -230,6 +230,7 @@ export async function yedegiYukle(veri, temizle = false, ilerleme = null) {
     let urller = [];
     try {
         const sonuc = await yedegiYukleIc(veri, temizle, ilerleme, urller);
+        if (ilerleme) ilerleme({ asama: 'tamamla', yapilan: sonuc.kart, toplam: sonuc.kart, ad: '' });
         return sonuc;
     } finally {
         await iceAktarimBitir(urller);
@@ -416,6 +417,7 @@ async function yedegiYukleIc(veri, temizle, ilerleme, urller) {
         yazilacak.kartEtiketleri = kartlar;
     }
 
+    bildir('kaydet', toplamKart, '');
     await chrome.storage.local.set(yazilacak);
 
     bildir(c('bitti'), toplamKart, '');
@@ -704,7 +706,7 @@ function ayarlariCevir(a, duvar) {
         showCardActions: 'kartAraclariGoster',
         cardBorderWidth: 'kartCerceve',     cardBorderColor: 'kartCerceveRengi',
         cardBorderHoverColor: 'kartCerceveHoverRengi',
-        cardCornerStyle: 'kartKose',        dialCustomWidth: 'kartEn',
+        dialCustomWidth: 'kartEn',
         dialCustomGap: 'kartBoslukYatay',   dialCustomGapV: 'kartBoslukDikey',
         folderCornerStyle: 'grupKose',      folderActiveColor: 'grupAktifRengi',
         folderBgColor: 'grupZeminRengi',    folderBgOpacity: 'grupZeminOpaklik',

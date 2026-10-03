@@ -1169,9 +1169,6 @@
   "kartEklenemedi": {
     "message": "Не удалось добавить плитку"
   },
-  "hepsiniSil": {
-    "message": "Удалить все"
-  },
   "nKirikKartCopeTasinacak": {
     "message": "Битых плиток будет перемещено в корзину: $1. Их можно восстановить."
   },

@@ -353,8 +353,12 @@ export function kirikEkraninaEkle(kayit) {
  * Ekrandaki TUM kirik kartlari cop kutusuna tasir.
  * Cop kutusuna gidiyorlar, yani geri alinabilir.
  */
-export async function kirikleriTumdenSil(ilerleme) {
-    const kume = await kirikAnahtarlar();
+/**
+ * @param tur 'kirik' (404/410) ya da 'supheli' (ulasilamayanlar) - 1.5.2:
+ *            ikisi AYRI dugmelerle siliniyor, biri digerine dokunmuyor.
+ */
+export async function kirikleriTumdenSil(ilerleme, tur = 'kirik') {
+    const kume = tur === 'supheli' ? await supheliAnahtarlar() : await kirikAnahtarlar();
     if (!kume.size) return { silinen: 0 };
 
     const { kartiYedekle } = await import('./copekrani.js');
@@ -380,11 +384,13 @@ export async function kirikleriTumdenSil(ilerleme) {
         if (ilerleme) ilerleme({ yapilan: silinen, toplam: silinecek.length });
     }
 
-    // Yalnizca KIRIK isaretleri gidiyor; "ulasilamadi" listesi kaliyor
+    // Yalnizca SILINEN turun isaretleri gidiyor; diger liste kaliyor
     try {
         const d = await chrome.storage.local.get('kirikSonuc');
-        if (d.kirikSonuc?.supheliler?.length) {
-            await chrome.storage.local.set({ kirikSonuc: { ...d.kirikSonuc, anahtarlar: [] } });
+        const s = d.kirikSonuc || {};
+        const yeni = { ...s, [tur === 'supheli' ? 'supheliler' : 'anahtarlar']: [] };
+        if ((yeni.anahtarlar || []).length || (yeni.supheliler || []).length) {
+            await chrome.storage.local.set({ kirikSonuc: yeni });
         } else {
             await chrome.storage.local.remove('kirikSonuc');
         }
@@ -500,6 +506,9 @@ async function kirikEkraniniCiz() {
         if (nk) parca.push(c('nKirik', nk));
         if (ns) parca.push(c('nUlasilamadi', ns));
         el('kirikSayi').textContent = parca.join(' · ');
+        // Silme dugmeleri yalnizca silinecek bir sey varken
+        if (el('kirikHepsiniSil')) el('kirikHepsiniSil').hidden = !nk;
+        if (el('kirikSupheliSil')) el('kirikSupheliSil').hidden = !ns;
     }
 
     if (!liste.length) {

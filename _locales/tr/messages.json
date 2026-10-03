@@ -261,7 +261,7 @@
     "message": "Resmi İndir"
   },
   "sekmeZeminSaydamligi": {
-    "message": "Sekme Zemin Saydamlığı"
+    "message": "Menü Zemin Saydamlığı"
   },
   "sil": {
     "message": "Sil"
@@ -831,7 +831,7 @@
     "message": "Kartlar"
   },
   "grupSeridi": {
-    "message": "Grup Şeridi"
+    "message": "Grup Menüsü"
   },
   "goruntuYakalama": {
     "message": "Görüntü Yakalama"
@@ -879,10 +879,10 @@
     "message": "Kare"
   },
   "sekmeZeminRengi": {
-    "message": "Sekme Zemin Rengi"
+    "message": "Menü Zemin Rengi"
   },
   "sekmeBoyutu": {
-    "message": "Sekme Boyutu"
+    "message": "Menü Boyutu"
   },
   "yakalamaKipi": {
     "message": "Yakalama Kipi"
@@ -1169,9 +1169,6 @@
   "kartEklenemedi": {
     "message": "Kart eklenemedi"
   },
-  "hepsiniSil": {
-    "message": "Hepsini sil"
-  },
   "nKirikKartCopeTasinacak": {
     "message": "$1 kırık kart çöp kutusuna taşınacak. Geri alabilirsiniz."
   },
@@ -1284,7 +1281,7 @@
     "message": "Görünüm"
   },
   "yakalamaYontemi": {
-    "message": "Yöntem"
+    "message": "Yakalama"
   },
   "goruntuAlt": {
     "message": "Görüntü"
@@ -1299,7 +1296,7 @@
     "message": "Yedekleme ve Aktarma"
   },
   "tehlikeliIslemler": {
-    "message": "Tehlikeli İşlemler"
+    "message": "Sıfırlama"
   },
   "tehlikeliAciklama": {
     "message": "Bu işlemler verilerinizi ya da ayarlarınızı toplu olarak değiştirir. Önce yedek almanız önerilir."
@@ -1458,6 +1455,96 @@
     "message": "$1 ulaşılamadı"
   },
   "silinecekKirikYok": {
-    "message": "Silinecek kırık kart yok; ulaşılamayanları tek tek kontrol edin"
+    "message": "Silinecek kart yok"
+  },
+  "klasorSec": {
+    "message": "Klasör seç"
+  },
+  "klasorSecMenu": {
+    "message": "Klasör seç…"
+  },
+  "klasorSecIpucu": {
+    "message": "Ada tıklayınca oraya eklenir · ▸ dalı açar"
+  },
+  "sagTikMenusu": {
+    "message": "Sayfada Sağ Tık Menüsü"
+  },
+  "sagTikPencere": {
+    "message": "Gruplar + Klasör seç…"
+  },
+  "sagTikAgac": {
+    "message": "İç içe menüler"
+  },
+  "sagTikGruplar": {
+    "message": "Yalnızca gruplar"
+  },
+  "asamaDosyaOkunuyor": {
+    "message": "Dosya okunuyor"
+  },
+  "asamaMevcutSiliniyor": {
+    "message": "Mevcut veriler siliniyor"
+  },
+  "asamaKartlarEkleniyor": {
+    "message": "Kartlar ekleniyor"
+  },
+  "asamaKartlarSiliniyor": {
+    "message": "Kartlar siliniyor"
+  },
+  "asamaKaydediliyor": {
+    "message": "Notlar, renkler, etiketler ve ayarlar kaydediliyor…"
+  },
+  "asamaTamamlaniyor": {
+    "message": "Tamamlanıyor: eksik görseller sıraya alınıyor…"
+  },
+  "asamaYenileniyor": {
+    "message": "Sayfa yenileniyor…"
+  },
+  "kiriklariSil": {
+    "message": "Kırıkları sil"
+  },
+  "ulasilamayanlariSil": {
+    "message": "Ulaşılamayanları sil"
+  },
+  "nUlasilamayanCopeTasinacak": {
+    "message": "$1 ulaşılamayan kart çöp kutusuna taşınacak. Bunların bir kısmı yalnızca geçici olarak kapalı olabilir. Geri alabilirsiniz."
+  },
+  "baslikAlt": {
+    "message": "Başlık"
+  },
+  "baslikRengi": {
+    "message": "Başlık Rengi"
+  },
+  "baslikStili": {
+    "message": "Başlık Stili"
+  },
+  "stilNormal": {
+    "message": "Normal"
+  },
+  "stilKalin": {
+    "message": "Kalın"
+  },
+  "stilItalik": {
+    "message": "İtalik"
+  },
+  "stilKalinItalik": {
+    "message": "Kalın İtalik"
+  },
+  "baslikGolgesi": {
+    "message": "Başlık Gölgesi"
+  },
+  "baslikGolgeRengi": {
+    "message": "Gölge Rengi"
+  },
+  "menuYaziRengi": {
+    "message": "Menü Yazı Rengi"
+  },
+  "aktifGrupYaziRengi": {
+    "message": "Aktif Grup Yazı Rengi"
+  },
+  "sistemBolum": {
+    "message": "Sistem"
+  },
+  "sagTikBaslik": {
+    "message": "Sağ Tık Menüsü"
   }
 }

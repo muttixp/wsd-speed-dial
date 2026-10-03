@@ -45,13 +45,17 @@ export const VARSAYILAN = {
     siddet: 100,                // 0..100
     metinRengi: '#e8eaed',
     baslikBoyut: 13,
+    // Kart/klasor basligi (1.5.2). baslikRengi bos = genel metin rengi
+    baslikRengi: '',
+    baslikStili: 'normal',      // 'normal' | 'kalin' | 'italik' | 'kalinItalik'
+    baslikGolge: true,          // text-shadow: 1px 1px 2px <renk>
+    baslikGolgeRengi: '#4d4c4c',
     // Kartlar
     kartOrani: 'o1610',         // 'o43' | 'o1610' | 'o169'
     gorselYerlesim: 'cover',    // 'cover' (kırp) | 'contain' (sığdır)
     maxSutun: 0,                // 0 = sinir yok, ekrana sigan kadar
     kartZeminRengi: '#22262e',
     kartEn: 250,
-    kartKose: 7,
     kartBoslukYatay: 3,
     kartBoslukDikey: 12,
     kartCerceve: 1,
@@ -59,6 +63,7 @@ export const VARSAYILAN = {
     kartCerceveHoverRengi: '#576a80',
     baslikGoster: true,
     kartAcilis: 'ayni',         // 'ayni' | 'yeni' | 'arkaplan'
+    sagTikMenu: 'pencere',      // sayfada sag tik: 'pencere' | 'agac' | 'gruplar' (1.5.2)
     otomatikYedek: false,       // gunde 1 kez yedek dosyasi indir
     kartAraclariGoster: true,   // kart uzerine gelince cikan buton seridi
     ekleKartiGoster: true,      // izgaradaki "+" karti
@@ -71,6 +76,8 @@ export const VARSAYILAN = {
     grupZeminOpaklik: 6,        // % - pasif sekme zemini
     grupAktifRengi: '#576a80',
     grupAktifOpaklik: 100,      // % - aktif sekme zemini
+    grupYaziRengi: '',          // bos = genel metin rengi (soluk); 1.5.2
+    grupAktifYaziRengi: '',     // bos = genel metin rengi; acik renkli aktif sekmede okunmasi icin
     grupKose: 9,                // grup sekmesi kose yaricapi
     grupBoyut: 100,             // sekme olcegi (%) - yazi, ikon ve dolgu birlikte
     grubuHatirla: true,         // acilista son bakilan grup mu, Ana Sayfa mi
@@ -79,7 +86,6 @@ export const VARSAYILAN = {
     simgeRenkA: '#5d93c2',      // capraz 1 ve 4
     simgeRenkB: '#a8c8e4',      // capraz 2 ve 3
     anaSayfaGoster: true,       // kok grup seritte ve menulerde gorunsun mu
-    grupSayiGoster: true,
 };
 
 let onbellek = null;

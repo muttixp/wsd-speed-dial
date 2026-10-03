@@ -42,6 +42,21 @@ function zamanAsimli(soz, ms, etiket = 'islem') {
     ]);
 }
 
+/**
+ * fetch + ZAMAN ASIMI (1.5.2). Baglantiyi kabul edip hic yanit vermeyen
+ * sunucuda `fetch` sonsuza kadar bekliyor; "oto" yontemde sayfa gorseli
+ * aranirken kuyruk o kartta takilip kaliyordu.
+ */
+async function sureliFetch(adres, secenek = {}, ms = 12000) {
+    const kontrol = new AbortController();
+    const sayac = setTimeout(() => kontrol.abort(), ms);
+    try {
+        return await fetch(adres, { ...secenek, signal: kontrol.signal });
+    } finally {
+        clearTimeout(sayac);
+    }
+}
+
 // KUYRUK DEPODA da tutuluyor.
 //
 // MV3'te servis iscisi kalici degil: bosta kalinca tarayici sonlandiriyor
@@ -58,6 +73,28 @@ const kuyruk = [];
 let calisiyor = false;
 let iptal = false;
 let biterken = null;        // depodan devam ederken kullanilacak geri cagirma
+
+// TAKILMA BEKCISI (1.5.2). Dongu bir `await`te sonsuza kadar kalirsa
+// `calisiyor` hep true kaliyor ve kuyruk bir daha baslamiyordu. Her
+// kartta zaman damgasi basiliyor; alarm (dakikada bir) damga cok eskiyse
+// yeni bir dongu baslatiyor. Eski dongu sonradan uyanirsa `nesil`
+// tutmadigi icin kendiliginden cikiyor.
+let nesil = 0;
+let sonIlerleme = 0;
+const TAKILMA_MS = 3 * 60 * 1000;
+/** Bir kartin TUM islemi icin ust sinir (sayfa gorselleri + ekran + kayit). */
+const IS_TAVANI_MS = 150000;
+
+// ISCI UYUMASIN: MV3 iscisi 30 sn olay gelmezse sonlandiriliyor. Uzun
+// suren tek bir yakalamada (zaman asimi bekleyen kart) isci olup kuyruk
+// alarm gelene kadar duruyordu. Dongu surerken 20 sn'de bir ucuz bir
+// API cagrisi bosta sayacini sifirliyor.
+let canliTut = null;
+function canliTutmayiAc() {
+    if (canliTut) return;
+    canliTut = setInterval(() => { chrome.runtime.getPlatformInfo(() => void chrome.runtime.lastError); }, 20000);
+}
+function canliTutmayiKapat() { clearInterval(canliTut); canliTut = null; }
 
 // ISLENENLER: kuyruktan cikip su an islenen url'ler.
 // Sadece `kuyruk` kontrol edilirse, isleme baslamis bir url icin gelen
@@ -102,8 +139,10 @@ export function yakalamayaEkle(url, bitince, oncelik = false) {
 
 /** Kalan isleri depoya yazar - isci olurse buradan devam edilecek. */
 function kuyrugaYaz() {
-    const urlIer = kuyruk.map(i => i.url);
-    chrome.storage.local.set({ [KUYRUK_ANAHTARI]: urlIer }).catch(() => {});
+    // Oncelik de yaziliyor: kullanicinin baslattigi yenileme (o: 1) isci
+    // yeniden baslayinca "cok buyuk kuyruk" sinirina takilip iptal olmasin
+    const liste = kuyruk.map(i => (i.oncelik ? { u: i.url, o: 1 } : i.url));
+    chrome.storage.local.set({ [KUYRUK_ANAHTARI]: liste }).catch(() => {});
 }
 
 function alarmiKur() {
@@ -145,24 +184,43 @@ const KUYRUK_SINIRI = 300;
 export async function kuyrugaDevamEt(bitince) {
     try {
         const d = await chrome.storage.local.get(KUYRUK_ANAHTARI);
-        const kalan = d[KUYRUK_ANAHTARI];
-        if (!Array.isArray(kalan) || !kalan.length) {
-            alarmiKapat();
+        const ham = d[KUYRUK_ANAHTARI];
+        if (!Array.isArray(ham) || !ham.length) {
+            if (!calisiyor) alarmiKapat();
             return;
         }
+        // Eski bicim: duz url dizisi. Yeni: { u, o } (oncelikli) ya da url
+        const kalan = ham.map(x => (typeof x === 'string' ? { url: x, oncelik: false }
+                                                          : { url: x && x.u, oncelik: !!(x && x.o) }))
+                         .filter(x => x.url);
 
-        if (kalan.length > KUYRUK_SINIRI) {
-            console.log(`[WSD] kuyruk cok buyuk (${kalan.length}) - iptal edildi`);
-            await kuyrugaTemizle();
-            return;
+        // SINIR YALNIZCA ARKA PLAN ISLERINE: kullanicinin "Gorselleri
+        // yenile" dedigi kartlar (oncelikli) kac tane olursa olsun
+        // islenir. Eskiden 300'den buyuk bir grup yenilenirken isci
+        // yeniden baslarsa tum kuyruk sessizce iptal ediliyordu.
+        const siradan = kalan.filter(x => !x.oncelik);
+        let islenecek = kalan;
+        if (siradan.length > KUYRUK_SINIRI) {
+            console.log(`[WSD] arka plan kuyrugu cok buyuk (${siradan.length}) - o kisim iptal edildi`);
+            islenecek = kalan.filter(x => x.oncelik);
         }
 
-        console.log(`[WSD] kuyrukta ${kalan.length} is kaldi, devam ediliyor`);
-        for (const url of kalan) {
-            if (islenenler.has(url) || kuyruk.some(i => i.url === url)) continue;
-            kuyruk.push({ url, bitince: bitince || biterken });
+        for (const k of islenecek) {
+            if (islenenler.has(k.url) || kuyruk.some(i => i.url === k.url)) continue;
+            kuyruk.push({ url: k.url, bitince: bitince || biterken, oncelik: k.oncelik });
         }
-        if (!calisiyor) kuyruguIsle();
+        biterken = bitince || biterken;
+        if (!kuyruk.length) { if (!calisiyor) alarmiKapat(); return; }
+
+        if (!calisiyor) {
+            console.log(`[WSD] kuyrukta ${kuyruk.length} is kaldi, devam ediliyor`);
+            kuyruguIsle();
+        } else if (Date.now() - sonIlerleme > TAKILMA_MS) {
+            // Dongu calisiyor gorunuyor ama 3 dakikadir ilerlemedi: takildi
+            console.log('[WSD] yakalama dongusu takilmis - yeniden baslatiliyor');
+            islenenler.clear();
+            kuyruguIsle();
+        }
     } catch (e) {
         console.log('[WSD] kuyruk devami okunamadi:', e);
     }
@@ -315,21 +373,26 @@ async function yerTutucuKart(url) {
 }
 
 async function kuyruguIsle() {
+    const benimNeslim = ++nesil;
     calisiyor = true;
+    sonIlerleme = Date.now();
+    canliTutmayiAc();
     let basarisiz = 0;
     while (kuyruk.length) {
+        if (benimNeslim !== nesil) return;      // bekci yeni dongu baslatmis
         if (iptal) {           // temizleme istendi - hemen cik
             kuyruk.length = 0;
             break;
         }
         const is = kuyruk.shift();
+        sonIlerleme = Date.now();
 
         // KART HALA VAR MI? Kuyruk beklerken kart silinmis olabilir
         // ("her seyi sil" ya da tek kart silme). Yoksa sekme acip
         // gorsel yazmanin anlami yok; silinen kartin gorseli depoya
         // geri yaziliyordu.
         try {
-            const dugumler = await chrome.bookmarks.search({ url: is.url });
+            const dugumler = await zamanAsimli(chrome.bookmarks.search({ url: is.url }), 10000, 'yer imi arama');
             if (!dugumler.length) continue;
         } catch (e) { /* arama yapilamadi - islemeye devam */ }
 
@@ -343,73 +406,88 @@ async function kuyruguIsle() {
         }).catch(() => {});
         let adaylar = [];
         try {
-            const ayar = await ayarlariAl();
+            // IS TAVANI (1.5.2): kartin TUM islemi (sayfa gorselleri +
+            // ekran goruntusu + bos kare olcumu) tek sinir altinda. Icteki
+            // adimlardan biri hic donmezse kuyruk o kartta kalmiyor.
+            adaylar = await zamanAsimli((async () => {
+                const ayar = await ayarlariAl();
 
-            // YONTEM AYARI:
-            //   'ekran' -> yalnizca ekran goruntusu
-            //   'oto'   -> once sayfa gorselleri (og:image / twitter:image),
-            //              ardindan ekran goruntusu
-            // Ayar okunmuyordu ve secim ne olursa olsun sayfa gorselleri
-            // her zaman aliniyordu.
-            let sayfadan = [];
-            if (ayar.yakalamaYontemi === 'oto' && !YAKALANAMAZ_SEMA.test(is.url)) {
-                sayfadan = await sayfaGorselleriniAl(is.url);
+                // YONTEM AYARI:
+                //   'ekran' -> yalnizca ekran goruntusu
+                //   'oto'   -> once sayfa gorselleri (og:image / twitter:image),
+                //              ardindan ekran goruntusu
+                // Ayar okunmuyordu ve secim ne olursa olsun sayfa gorselleri
+                // her zaman aliniyordu.
+                let sayfadan = [];
+                if (ayar.yakalamaYontemi === 'oto' && !YAKALANAMAZ_SEMA.test(is.url)) {
+                    sayfadan = await sayfaGorselleriniAl(is.url);
 
-                // KART ORANINA EN YAKIN goruntu basa alinir. Film siteleri hem
-                // dikey afis hem yatay kapak sunuyor; kart yatay oldugu icin
-                // kapak dogru secim. Afis karuselde kalir, kullanici gecebilir.
-                sayfadan = await oranaGoreSirala(sayfadan, ayar);
-            }
+                    // KART ORANINA EN YAKIN goruntu basa alinir. Film siteleri hem
+                    // dikey afis hem yatay kapak sunuyor; kart yatay oldugu icin
+                    // kapak dogru secim. Afis karuselde kalir, kullanici gecebilir.
+                    sayfadan = await oranaGoreSirala(sayfadan, ayar);
+                }
 
-            // Yakalanamayan semalarda sekme acip goruntu alinamiyor -
-            // adresi yazan duz bir kart uretiyoruz
-            // TAVAN: tek bir kart yuzunden kuyruk sonsuza kadar
-            // beklemesin; asilirsa o is atlanip digerlerine geciliyor
-            let ekran = YAKALANAMAZ_SEMA.test(is.url)
-                ? await semaKarti(is.url)
-                : await zamanAsimli(
-                    ayar.yakalamaKipi === 'gizli'
-                        ? gizliYakala(is.url, ayar)
-                        : ekranGoruntusuAl(is.url, ayar),
-                    YAKALAMA_TAVANI_MS, 'yakalama').catch(e => {
-                        console.log('[WSD] yakalama atlandi:', is.url, e.message);
-                        return null;
-                    });
+                // Yakalanamayan semalarda sekme acip goruntu alinamiyor -
+                // adresi yazan duz bir kart uretiyoruz
+                // TAVAN: tek bir kart yuzunden kuyruk sonsuza kadar
+                // beklemesin; asilirsa o is atlanip digerlerine geciliyor
+                let ekran = YAKALANAMAZ_SEMA.test(is.url)
+                    ? await semaKarti(is.url)
+                    : await (() => {
+                        const durum = { iptal: false };
+                        return zamanAsimli(
+                            ayar.yakalamaKipi === 'gizli'
+                                ? gizliYakala(is.url, ayar)
+                                : ekranGoruntusuAl(is.url, ayar, durum),
+                            YAKALAMA_TAVANI_MS, 'yakalama').catch(e => {
+                                durum.iptal = true;      // arkada calismaya devam etmesin
+                                console.log('[WSD] yakalama atlandi:', is.url, e.message);
+                                return null;
+                            });
+                    })();
 
-            // GIZLI KIP YEDEGI: arka plan sekmesinde Page.captureScreenshot
-            // bazi sitelerde kare gelmedigi icin hic donmuyor (zaman asimi).
-            // Tek kart yenilemede tutuyor, toplu yenilemede takiliyordu.
-            // Basarisizsa ayni kart pencere kipiyle bir kez daha deneniyor.
-            if (!ekran && ayar.yakalamaKipi === 'gizli' && !YAKALANAMAZ_SEMA.test(is.url)) {
-                console.log('[WSD] gizli olmadi, pencere kipiyle deneniyor:', is.url);
-                ekran = await zamanAsimli(ekranGoruntusuAl(is.url, ayar),
-                    YAKALAMA_TAVANI_MS, 'yakalama').catch(() => null);
-            }
+                // GIZLI KIP YEDEGI: arka plan sekmesinde Page.captureScreenshot
+                // bazi sitelerde kare gelmedigi icin hic donmuyor (zaman asimi).
+                // Tek kart yenilemede tutuyor, toplu yenilemede takiliyordu.
+                // Basarisizsa ayni kart pencere kipiyle bir kez daha deneniyor.
+                if (!ekran && ayar.yakalamaKipi === 'gizli' && !YAKALANAMAZ_SEMA.test(is.url)) {
+                    console.log('[WSD] gizli olmadi, pencere kipiyle deneniyor:', is.url);
+                    const durum = { iptal: false };
+                    ekran = await zamanAsimli(ekranGoruntusuAl(is.url, ayar, durum),
+                        YAKALAMA_TAVANI_MS, 'yakalama').catch(() => { durum.iptal = true; return null; });
+                }
 
-            // Bombos kare (yumusak 404) kart olmasin
-            const ekranGecerli = ekran && !(await kareBosMu(ekran));
-            adaylar = sayfadan.slice();
-            if (ekranGecerli) adaylar.push(ekran);
-            else if (ekran) console.log('[WSD] bos kare atlandi:', is.url);
-
+                // Bombos kare (yumusak 404) kart olmasin
+                const ekranGecerli = ekran && !(await kareBosMu(ekran));
+                const liste = sayfadan.slice();
+                if (ekranGecerli) liste.push(ekran);
+                else if (ekran) console.log('[WSD] bos kare atlandi:', is.url);
+                return liste;
+            })(), IS_TAVANI_MS, 'kart islemi') || [];
         } catch (e) {
             console.log('[WSD] yakalama hatasi:', is.url, e.message);
         }
+        if (benimNeslim !== nesil) return;
 
         // Hicbir gorsel alinamadiysa kart siyah kalmasin
         if (!adaylar.length) {
             basarisiz++;
-            try { adaylar = [await yerTutucuKart(is.url)]; } catch (e) { /* tuval yok */ }
+            try { adaylar = [await zamanAsimli(yerTutucuKart(is.url), 10000, 'yer tutucu')]; } catch (e) { /* tuval yok */ }
         }
         try {
-            if (is.bitince) await is.bitince(is.url, adaylar);
+            // Kayit da sinirli: depo yazimi takilirsa kuyruk durmasin
+            if (is.bitince) await zamanAsimli(Promise.resolve(is.bitince(is.url, adaylar)), 30000, 'gorsel kaydi');
         } catch (e) { /* geri cagirma patlarsa kuyruk durmasin */ }
 
         islenenler.delete(is.url);
+        sonIlerleme = Date.now();
         kuyrugaYaz();                 // her adimdan sonra kalan liste guncel
         await bekle(YAKALAMA_ARASI_MS);
     }
+    if (benimNeslim !== nesil) return;
     calisiyor = false;
+    canliTutmayiKapat();
     alarmiKapat();                    // is bitti - bekciye gerek yok
 
     // Sessizce gecmesin: kac kartin gorseli alinamadi soylensin
@@ -521,11 +599,12 @@ async function gorselAdresleriniTopla(url) {
 
     let html;
     try {
-        const yanit = await fetch(url, { credentials: 'omit', redirect: 'follow' });
+        const yanit = await sureliFetch(url, { credentials: 'omit', redirect: 'follow' });
         if (!yanit.ok) return null;
         const tur = yanit.headers.get('content-type') || '';
         if (!tur.includes('text/html')) return null;
-        html = await yanit.text();
+        // Govde de sinirli: basligi yollayip govdeyi akitmayan sunucular var
+        html = await zamanAsimli(yanit.text(), 12000, 'sayfa govdesi');
     } catch (e) {
         return null;                       // CORS / ag hatasi - ekran goruntusune dus
     }
@@ -581,9 +660,9 @@ function mutlakla(adres, temel) {
 
 async function gorseliIndir(adres) {
     try {
-        const yanit = await fetch(adres, { credentials: 'omit' });
+        const yanit = await sureliFetch(adres, { credentials: 'omit' });
         if (!yanit.ok) return null;
-        const blob = await yanit.blob();
+        const blob = await zamanAsimli(yanit.blob(), 12000, 'gorsel govdesi');
         if (!blob.type.startsWith('image/')) return null;
         if (blob.size > 8 * 1024 * 1024) return null;   // asiri buyuk - atla
 
@@ -621,8 +700,16 @@ function blobDanDataUri(blob) {
  */
 export const sonBasliklar = new Map();
 
-async function ekranGoruntusuAl(url, ayar) {
+/**
+ * @param durum  { iptal } - disaridaki tavan (45 sn) asilinca `iptal`
+ *   true yapiliyor; islev bir sonraki adimda birakip penceresini kapatiyor.
+ *   Eskiden tavan asilinca kuyruk siradaki karta geciyor ama bu islev
+ *   arkada calismaya devam ediyordu: ayni anda iki yakalama penceresi.
+ */
+async function ekranGoruntusuAl(url, ayar, durum = null) {
+    const birak = () => { if (durum && durum.iptal) throw new Error('tavan asildi, birakildi'); };
     let pencere = null;
+    let sekmeId = null;
     // Kullanicinin AKTIF penceresini hatirliyoruz: yakalama sirasinda
     // odak kaymissa sonunda geri veriyoruz.
     let onceki = null;
@@ -641,7 +728,7 @@ async function ekranGoruntusuAl(url, ayar) {
             top: 0
         });
 
-        const sekmeId = pencere.tabs[0].id;
+        sekmeId = pencere.tabs[0].id;
 
         await chrome.windows.update(pencere.id, {
             focused: false,
@@ -652,6 +739,7 @@ async function ekranGoruntusuAl(url, ayar) {
         });
 
         await sayfaStabilOlsun(sekmeId);
+        birak();
 
         // Sayfa yuklendikten SONRA baslik dogru olanidir
         try {
@@ -675,20 +763,32 @@ async function ekranGoruntusuAl(url, ayar) {
 
         const secenek = { format: ayar.gorselBicimi };
         if (ayar.gorselBicimi === 'jpeg') secenek.quality = ayar.jpegKalitesi;
+        birak();
+
+        // SEKMENIN GERCEK PENCERESI (1.5.2). Bazi tarayicilar (Vivaldi'nin
+        // "acilir pencereleri sekmede ac" ayari gibi) actigimiz pencereyi
+        // baska bir pencereye SEKME olarak tasiyor; `pencere.id` artik yok
+        // ("No window with id"). Sekme hangi penceredeyse onu yakaliyoruz -
+        // ama yalnizca o pencerede ETKIN sekmeyse: degilse kullanicinin
+        // baktigi sayfa yakalanirdi.
+        const yakala = async () => {
+            const s = await chrome.tabs.get(sekmeId);
+            if (!s.active) throw new Error('yakalama sekmesi etkin degil');
+            return zamanAsimli(chrome.tabs.captureVisibleTab(s.windowId, secenek), 15000, 'captureVisibleTab');
+        };
 
         let veri = null;
         try {
             try {
-                veri = await zamanAsimli(
-                    chrome.tabs.captureVisibleTab(pencere.id, secenek), 15000, 'captureVisibleTab');
+                veri = await yakala();
             } catch (e0) {
                 // Sayfa henuz gelmemis (adres bos): bir kez daha bekleyip dene
                 if (!/Cannot access contents of url/i.test(e0.message)) throw e0;
                 console.log('[WSD] sayfa henuz yuklenmemis, tekrar bekleniyor:', url);
                 await sayfaStabilOlsun(sekmeId);
+                birak();
                 await bekle(1000);
-                veri = await zamanAsimli(
-                    chrome.tabs.captureVisibleTab(pencere.id, secenek), 15000, 'captureVisibleTab');
+                veri = await yakala();
             }
         } catch (e) {
             // Odaksiz pencerede yakalama reddedilebiliyor.
@@ -714,6 +814,11 @@ async function ekranGoruntusuAl(url, ayar) {
         console.log('[WSD] ekran goruntusu alinamadi:', url, e.message);
         return null;
     } finally {
+        // Once SEKME: pencere baska bir pencereye sekme olarak tasinmissa
+        // `windows.remove` onu bulamiyor ve acik bir sekme kaliyordu
+        if (sekmeId != null) {
+            try { await chrome.tabs.remove(sekmeId); } catch (e) { /* kapanmisti */ }
+        }
         if (pencere) {
             try { await chrome.windows.remove(pencere.id); } catch (e) { /* kapanmisti */ }
         }

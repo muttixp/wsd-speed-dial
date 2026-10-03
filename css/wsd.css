@@ -152,7 +152,7 @@ body {
     border: 1px solid transparent;
     border-radius: var(--grup-kose);
     background: transparent;
-    color: var(--metin-sonuk);
+    color: var(--grup-yazi, var(--metin-sonuk));
     font: inherit;
     font-weight: 500;
     cursor: pointer;
@@ -160,11 +160,11 @@ body {
     transition: background var(--gecis), color var(--gecis), border-color var(--gecis);
 }
 .grupSekme        { background: var(--grup-zemin); }
-.grupSekme:hover  { filter: brightness(1.5); color: var(--metin); }
+.grupSekme:hover  { filter: brightness(1.5); color: var(--grup-yazi-hover, var(--metin)); }
 .grupSekme.aktif  {
     background: var(--grup-aktif-rengi);
     border-color: var(--cerceve);
-    color: var(--metin);
+    color: var(--grup-aktif-yazi, var(--metin));
     filter: none;
 }
 
@@ -229,10 +229,14 @@ body {
     overflow: hidden;
     text-overflow: ellipsis;
     font-size: var(--baslik-boyut);
-    color: var(--metin-sonuk);
+    /* Renk / stil / golge ayarlardan (Kartlar > Baslik, 1.5.2) */
+    color: var(--baslik-renk, var(--metin-sonuk));
+    font-weight: var(--baslik-kalinlik, 400);
+    font-style: var(--baslik-egik, normal);
+    text-shadow: var(--baslik-golge, 1px 1px 2px #4d4c4c);
     transition: color var(--gecis);
 }
-.kart:hover .kartBaslik { color: var(--metin); }
+.kart:hover .kartBaslik { color: var(--baslik-renk-hover, var(--metin)); }
 
 .kartGorsel {
     position: relative;
@@ -2472,7 +2476,7 @@ body.disBirakma #kartAlani::after {
     cursor: pointer;
     outline: none;
 }
-.klasorKart:hover .kartBaslik, .klasorKart:focus-visible .kartBaslik { color: var(--metin); }
+.klasorKart:hover .kartBaslik, .klasorKart:focus-visible .kartBaslik { color: var(--baslik-renk-hover, var(--metin)); }
 .klasorKart .kartBaslik::before {
     content: '';
     display: inline-block;
@@ -2738,3 +2742,38 @@ body.kopyaAcik #klasorYolu, body.kirikAcik #klasorYolu { display: none; }
 /* Kirik ekrani: "Kirik degil" arac seridinde (1.5.1) */
 .kartArac.kirikDegilArac { color: #6fcf7f; }
 .kartArac.kirikDegilArac:hover { background: #3f9a52; color: #fff; }
+/* Yedekleme: neon mavi, Bakim: yesil baslik */
+.yedekBolum .bolumBaslik, .yedekBolum.acik .bolumBaslik,
+.yedekBolum .bolumSimge, .yedekBolum.acik .bolumSimge { color: #29c5ff; }
+.bakimBolumu .bolumBaslik, .bakimBolumu.acik .bolumBaslik,
+.bakimBolumu .bolumSimge, .bakimBolumu.acik .bolumSimge { color: #4cd07d; }
+.sistemBolum .bolumBaslik, .sistemBolum.acik .bolumBaslik,
+.sistemBolum .bolumSimge, .sistemBolum.acik .bolumSimge { color: #b48cff; }
+.sistemBolum .altBolum:first-child { border-top: 0; margin-top: 0; padding-top: 0; }
+/* --- Acilir alt bolum (Sistem'in icindekiler) --- */
+.altAcilir { margin: 0; padding: 0; }
+.sistemBolum .altAcilir:first-child { border-top: 0; }
+.altDugme {
+    width: 100%; justify-content: space-between;
+    margin: 0; padding: var(--b3) var(--b2);
+    border: 0; background: transparent; font-family: inherit;
+    cursor: pointer; transition: color var(--gecis);
+}
+.altDugme:hover, .altAcilir.acik .altDugme { color: var(--metin); opacity: 1; }
+.altAd { display: inline-flex; align-items: center; gap: var(--b2); }
+.altDugme .altOk { width: 14px; height: 14px; transition: transform var(--gecis); }
+.altAcilir.acik .altOk { transform: rotate(180deg); }
+.altIc { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 240ms cubic-bezier(.2,.8,.3,1); }
+.altAcilir.acik .altIc { grid-template-rows: 1fr; }
+.altIc > div { overflow: hidden; min-height: 0; }
+.altAcilir.acik .altIc > div { padding-bottom: var(--b3); }
+.altIc .ayarSatir:nth-child(odd) { background: rgba(255,255,255,.022); }
+/* --- Bolum basliklarinda donusumlu zemin: satirlar daha kolay seciliyor --- */
+.bolum { border-bottom: 0; }
+.bolumBaslik { padding: var(--b4) var(--b3); border-radius: var(--k1); margin-bottom: 2px; }
+.bolum:nth-of-type(odd) > .bolumBaslik { background: rgba(255,255,255,.045); }
+.bolum:nth-of-type(even) > .bolumBaslik { background: rgba(255,255,255,.015); }
+.bolumBaslik:hover { background: rgba(255,255,255,.07) !important; }
+/* Panel kenar boslugu dar: zeminli basliklar kenara yakin dursun */
+#ayarPanel { padding-left: 6px; padding-right: 6px; }
+#ayarPanel .ayarBaslik { padding-left: var(--b3); padding-right: var(--b3); }

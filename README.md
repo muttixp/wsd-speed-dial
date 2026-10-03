@@ -58,7 +58,7 @@ Vivaldi kendi hız kadranını varsayılan tutar. Yeni sekmede WSD çıkması i�
 
 ### Anasayfa (ev) butonu
 
-Ayarlar → **Anasayfa Kurulumu** bölümündeki adresi kopyalayıp tarayıcınızın
+Ayarlar → Sistem → **Anasayfa Kurulumu** bölümündeki adresi kopyalayıp tarayıcınızın
 başlangıç sayfası ayarına yapıştırın.
 
 ---
@@ -119,7 +119,7 @@ listesi görünür.
 ### Görünüm
 
 Duvar kâğıdı, zemin renklendirme (ton kaydırma veya iki renk), kart oranı,
-boyut, çerçeve, sütun sınırı, grup şeridi renkleri. Tek **Köşe
+boyut, çerçeve, sütun sınırı, grup menüsü renkleri. Tek **Köşe
 Yuvarlaklığı** ayarı kartları, sekmeleri, menüleri, pencereleri ve
 düğmeleri birlikte değiştirir. Yan araç paneli kenara çekilip fare
 yaklaşınca açılabilir ya da hep açık durabilir.
@@ -161,15 +161,15 @@ kaçırdıysanız boş alan menüsünden **Çöp Kutusu**'na girin.
 | Bölüm | İçerik |
 |---|---|
 | Görünüm | Arka Plan (duvar kâğıdı, arka plan rengi, zemin renklendirme) · Yazı ve Panel (köşe yuvarlaklığı, metin rengi, yan paneli gizle) |
-| Kartlar | Davranış · Boyut ve Yerleşim · Renk ve Çerçeve |
-| Grup Şeridi | Davranış · Görünüm |
-| Görüntü Yakalama | Yöntem · Görüntü |
+| Grup Menüsü | Davranış · Görünüm (sekme ve yazı renkleri) |
+| Kartlar | Davranış · Boyut ve Yerleşim · Başlık · Renk ve Çerçeve |
+| Görüntü Yakalama | Yakalama · Görüntü |
+| Sistem | Uzantı Simgesi (simge renkleri) · Anasayfa Kurulumu (ev butonu için adres) · Sağ Tık Menüsü · Kısayollar (klavye kısayolları listesi) |
 | Yedekleme ve Aktarma | Yedek (al/yükle, otomatik, HTML dışa aktar) · İçe Aktar (yer imleri, HTML) |
 | Bakım | depo durumu, kullanılmayan veriler, kırık bağlantı taraması, tutarlılık kontrolü, çöp kutusu, bekleyen yakalamaları iptal et |
-| Uzantı Simgesi | simge renkleri |
-| Anasayfa Kurulumu | ev butonu için adres |
-| Kısayollar | klavye kısayolları listesi |
-| Tehlikeli İşlemler | ayarları sıfırla, silmeyi geri al, tüm verileri sil |
+| Sıfırlama | ayarları sıfırla, silmeyi geri al, tüm verileri sil |
+
+Panel son açık bölümü hatırlar.
 
 ### Görüntü yakalama kipleri
 
@@ -186,7 +186,7 @@ tarayıcı üstte "hata ayıklıyor" çubuğu gösterir.
 |---|---|
 | `1` – `9` | o sıradaki gruba geç |
 | `Home` / `End` | ilk / son grup |
-| `PageUp` / `PageDown` | önceki / sonraki grup |
+| `←` / `→`, `-` / `+`, `PageUp` / `PageDown` | önceki / sonraki grup |
 | `/` veya `Ctrl+F` | arama |
 | `H` | her şeyi gizle / göster |
 | `Ctrl+,` | ayarları aç / kapat |

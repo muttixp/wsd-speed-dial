@@ -129,25 +129,26 @@ export function etkilesimiKur() {
         }
     });
 
-    el('kirikHepsiniSil')?.addEventListener('click', async () => {
-        // Yalnizca KIRIK kartlar siliniyor; "ulasilamadi" olanlar sayilmasin
-        const sayi = el('kartKabi').querySelectorAll('.kart[data-anahtar]:not(.supheliKart)').length;
+    // Kiriklar ve ulasilamayanlar AYRI dugmelerle siliniyor (1.5.2)
+    const kirikTopluSil = (dugmeId, tur) => el(dugmeId)?.addEventListener('click', async () => {
+        const secici = tur === 'supheli' ? '.kart[data-anahtar].supheliKart' : '.kart[data-anahtar]:not(.supheliKart)';
+        const sayi = el('kartKabi').querySelectorAll(secici).length;
         if (!sayi) return bildir(c('silinecekKirikYok'));
 
         if (!await onaySor({
-            baslik: c('hepsiniSil'),
-            metin: c('nKirikKartCopeTasinacak', sayi),
+            baslik: c(tur === 'supheli' ? 'ulasilamayanlariSil' : 'kiriklariSil'),
+            metin: c(tur === 'supheli' ? 'nUlasilamayanCopeTasinacak' : 'nKirikKartCopeTasinacak', sayi),
             evet: c('sil'), tehlikeli: true
         })) return;
 
-        const btn = el('kirikHepsiniSil');
+        const btn = el(dugmeId);
         const sayac = el('kirikSayi');
         btn.disabled = true;
         try {
             const { kirikleriTumdenSil, kirikEkraniniYenile } = await import('./kirik.js');
             const s = await kirikleriTumdenSil(d => {
                 sayac.textContent = `${d.yapilan} / ${d.toplam}`;
-            });
+            }, tur);
             await kirikEkraniniYenile();
             bildir(c('nKartCopeTasindi', s.silinen));
         } catch (e) {
@@ -157,6 +158,8 @@ export function etkilesimiKur() {
             btn.disabled = false;
         }
     });
+    kirikTopluSil('kirikHepsiniSil', 'kirik');
+    kirikTopluSil('kirikSupheliSil', 'supheli');
 
     el('kirikTekrarTara')?.addEventListener('click', async () => {
         const btn = el('kirikTekrarTara');
@@ -1854,6 +1857,15 @@ async function bosMenuEylemi(e) {
         }
 
         case 'hepsiniYenile': {
+            // ALT KLASORLER DAHIL (1.5.2): grup sekmesindeki "Gorselleri
+            // yenile" ile ayni is. Eskiden yalnizca ekrandaki kartlar
+            // yenileniyor, klasor kutularinin icindekiler atlaniyordu.
+            // Ozel ekranlarda (arama, kirik...) liste tek bir klasor
+            // degil: orada yalnizca gorunen kartlar yenilenir.
+            const ozelEkran = ['aramaAcik', 'kirikAcik', 'kopyaAcik', 'copAcik']
+                .some(x => document.body.classList.contains(x));
+            if (!ozelEkran) { await grubunGorselleriniYenile(aktifGrup()); break; }
+
             const kartlar = [...document.querySelectorAll('.kart:not(.ekleKart)')];
             if (!kartlar.length) return bildir(c('yenilenecekKartYok'));
             if (!await onaySor({

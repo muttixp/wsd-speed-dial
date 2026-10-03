@@ -11,6 +11,7 @@
 
 // WSD Speed Dial - ayar paneli baglantilari
 
+import { tazelemeBastirildiMi } from './arayuz.js';
 import { ayarlariAl, ayarYaz, ayarlariSifirla } from './ayar.js';
 import { c } from './dil.js';
 import { filtreZinciri, ikiRenkKatmanlari } from './filtre.js';
@@ -35,6 +36,7 @@ const ALANLAR = [
     ['jpegKalitesi',     'ayKalite',    el => +el.value],
     ['yakalamaOneAl',    'ayOneAl',     el => el.checked],
     ['yakalamaKipi',     'ayYakalamaKipi', el => el.value],
+    ['sagTikMenu',       'aySagTikMenu',     el => el.value],
     ['kartAraclariGoster','ayKartAraclari', el => el.checked],
     ['ekleKartiGoster',  'ayEkleKarti',     el => el.checked],
     ['yanPanelGizle',    'ayYanPanel',      el => el.checked],
@@ -45,6 +47,10 @@ const ALANLAR = [
     ['metinRengi',       'ayMetinRengi',   el => el.value],
     ['zeminRengi',       'ayZeminRengi',   el => el.value],
     ['baslikBoyut',      'ayBaslikBoyut',  el => +el.value],
+    ['baslikRengi',      'ayBaslikRengi',  el => el.value],
+    ['baslikStili',      'ayBaslikStili',  el => el.value],
+    ['baslikGolge',      'ayBaslikGolge',  el => el.checked],
+    ['baslikGolgeRengi', 'ayBaslikGolgeRengi', el => el.value],
     ['colorize',         'ayColorize',     el => el.checked],
     ['ton',              'ayTon',          el => +el.value],
     ['doygunluk',        'ayDoygunluk',    el => +el.value],
@@ -57,6 +63,8 @@ const ALANLAR = [
     ['grupZeminOpaklik', 'ayGrupZeminOpaklik', el => +el.value],
     ['grupAktifRengi',   'ayGrupAktifRengi',   el => el.value],
     ['grupAktifOpaklik', 'ayGrupAktifOpaklik', el => +el.value],
+    ['grupYaziRengi',    'ayGrupYaziRengi',    el => el.value],
+    ['grupAktifYaziRengi','ayGrupAktifYaziRengi', el => el.value],
     ['grupKose',         'ayGrupKose',       el => +el.value],
     ['grupBoyut',        'ayGrupBoyut',      el => +el.value],
     ['grubuHatirla',     'ayGrubuHatirla',   el => el.checked],
@@ -119,6 +127,13 @@ export async function ayarPaneliniKur() {
         if (el.type === 'checkbox') el.checked = !!ayar[anahtar];
         else el.value = ayar[anahtar];
         ciktiTazele(id);
+    }
+    // Baslik rengi secilmemisse kutu siyah gorunmesin: genel metin rengi
+    for (const [anahtar, id] of [['baslikRengi', 'ayBaslikRengi'], ['grupYaziRengi', 'ayGrupYaziRengi'],
+                                 ['grupAktifYaziRengi', 'ayGrupAktifYaziRengi']]) {
+        if (ayar[anahtar]) continue;
+        const kutu = document.getElementById(id);
+        if (kutu) kutu.value = ayar.metinRengi || '#e8eaed';
     }
     gorunumuUygula(ayar);
 
@@ -194,8 +209,22 @@ export async function ayarPaneliniKur() {
 
     // Panel acikken yer imi degisirse (kart silme, ekleme, cop kutusu)
     // tablo aninda guncellensin
+    //
+    // 1.5.2: TOPLA VE BEKLET. Eskiden her olayda dogrudan ciziliyordu;
+    // ayarlar aciikken 5000 kartlik bir ice aktarma 5000 kez depo olcumu
+    // (her biri tum yer imi agacini geziyor) baslatiyor, aktarma
+    // "5407 / 5407"de takiliyor ve sayfa yenilense bile tarayici bu
+    // kuyrugu bitirene kadar siyah ekran kaliyordu.
+    let yerimiZaman = null;
     const yerimiDegisti = () => {
-        if (panel.classList.contains('acik')) depoDurumunuCiz();
+        if (!panel.classList.contains('acik')) return;
+        clearTimeout(yerimiZaman);
+        const dene = () => {
+            // Ice aktarma / yedek yukleme suruyorsa bitene kadar bekle
+            if (tazelemeBastirildiMi()) { yerimiZaman = setTimeout(dene, 2000); return; }
+            if (panel.classList.contains('acik')) depoDurumunuCiz();
+        };
+        yerimiZaman = setTimeout(dene, 600);
     };
     chrome.bookmarks.onRemoved.addListener(yerimiDegisti);
     chrome.bookmarks.onCreated.addListener(yerimiDegisti);
@@ -311,6 +340,36 @@ function gorunumuUygula(ayar) {
     document.documentElement.style.setProperty('--metin', ayar.metinRengi || '#e8eaed');
     document.documentElement.style.setProperty('--baslik-boyut', (ayar.baslikBoyut || 13) + 'px');
 
+    // GRUP MENUSU YAZI RENKLERI (1.5.2). Aktif grup rengi acik (beyaz)
+    // secilince yazi okunmuyordu; aktif sekmenin yazisi ayri ayarlaniyor.
+    {
+        const s = document.documentElement.style;
+        const yaz = (ad, deger) => (deger ? s.setProperty(ad, deger) : s.removeProperty(ad));
+        yaz('--grup-yazi', ayar.grupYaziRengi);
+        yaz('--grup-yazi-hover', ayar.grupYaziRengi);
+        yaz('--grup-aktif-yazi', ayar.grupAktifYaziRengi);
+    }
+
+    // KART BASLIGI (1.5.2): renk, stil ve golge. Renk secilmemisse CSS
+    // varsayilani (soluk metin rengi, uzerine gelince parlak) gecerli.
+    {
+        const s = document.documentElement.style;
+        if (ayar.baslikRengi) {
+            s.setProperty('--baslik-renk', ayar.baslikRengi);
+            s.setProperty('--baslik-renk-hover', ayar.baslikRengi);
+        } else {
+            s.removeProperty('--baslik-renk');
+            s.removeProperty('--baslik-renk-hover');
+        }
+        const stil = ayar.baslikStili || 'normal';
+        s.setProperty('--baslik-kalinlik', stil === 'kalin' || stil === 'kalinItalik' ? '700' : '400');
+        s.setProperty('--baslik-egik', stil === 'italik' || stil === 'kalinItalik' ? 'italic' : 'normal');
+        const golge = ayar.baslikGolge !== false;
+        s.setProperty('--baslik-golge', golge ? `1px 1px 2px ${ayar.baslikGolgeRengi || '#4d4c4c'}` : 'none');
+        const satir = document.getElementById('ayBaslikGolgeRengiSatir');
+        if (satir) satir.hidden = !golge;
+    }
+
     // Duvar kagidi
     const katman = document.getElementById('zeminKatmani');
     const gorsel = document.getElementById('zeminGorsel');
@@ -413,6 +472,25 @@ function gorunumuUygula(ayar) {
 /** Duvar kagidi secimi. */
 /** Katlanabilir bolumler - ayni anda tek bolum acik. */
 function bolumleriKur() {
+    // Son acik bolum hatirlaniyor (yalnizca bu tarayicida; ayar degil).
+    // b: ana bolum sirasi, a: Sistem'deki alt bolum sirasi; -1 = hepsi kapali.
+    const ANAHTAR = 'wsdAyarBolum';
+    const bolumler = [...document.querySelectorAll('#ayarPanel .bolum')];
+    const altlar = [...document.querySelectorAll('#ayarPanel .altAcilir')];
+    let durum = null;
+    try { durum = JSON.parse(localStorage.getItem(ANAHTAR)); } catch (e) { /* yok */ }
+    const yaz = () => {
+        let b = bolumler.findIndex(x => x.classList.contains('acik'));
+        // Sifirlama acik birakilsa da sonraki acilista kapali gelsin.
+        if (b >= 0 && bolumler[b].classList.contains('tehlikeBolum')) b = -1;
+        const a = altlar.findIndex(x => x.classList.contains('acik'));
+        try { localStorage.setItem(ANAHTAR, JSON.stringify({ b, a })); } catch (e) { /* dolu/kapali */ }
+    };
+    if (durum && typeof durum.b === 'number') {
+        bolumler.forEach((x, i) => x.classList.toggle('acik', i === durum.b));
+        altlar.forEach((x, i) => x.classList.toggle('acik', i === durum.a));
+    }
+
     for (const bas of document.querySelectorAll('.bolumBaslik')) {
         bas.addEventListener('click', () => {
             const bolum = bas.closest('.bolum');
@@ -420,10 +498,20 @@ function bolumleriKur() {
 
             // Akordeon: digerlerini kapat. Panel uzun oldugu icin hepsi
             // acik kalinca aranan ayar kayboluyor.
-            for (const b of document.querySelectorAll('.bolum')) {
-                b.classList.remove('acik');
-            }
+            for (const b of bolumler) b.classList.remove('acik');
             if (!zatenAcik) bolum.classList.add('acik');
+            yaz();
+        });
+    }
+
+    // Alt bolumler (Sistem'in icindekiler): ayni mantik, kendi aralarinda.
+    for (const bas of document.querySelectorAll('.altDugme')) {
+        bas.addEventListener('click', () => {
+            const alt = bas.closest('.altAcilir');
+            const zatenAcik = alt.classList.contains('acik');
+            for (const a of altlar) a.classList.remove('acik');
+            if (!zatenAcik) alt.classList.add('acik');
+            yaz();
         });
     }
 }
@@ -434,12 +522,17 @@ function bolumleriKur() {
 /** Uzanti simgesi renkleri - varsayilana donus. */
 /** Hazir ekran goruntusu olculeri. */
 const ASAMA_ADI = {
-    baslangic: 'Dosya okunuyor',
-    temizlik:  'Mevcut veriler siliniyor',
+    baslangic: c('asamaDosyaOkunuyor'),
+    temizlik:  c('asamaMevcutSiliniyor'),
     gorseller: c('gorsellerYaziliyor'),
-    kartlar:   'Kartlar ekleniyor',
-    siliniyor: 'Kartlar siliniyor',
+    kartlar:   c('asamaKartlarEkleniyor'),
+    siliniyor: c('asamaKartlarSiliniyor'),
     depo:      c('gorsellerVeAyarlarSiliniyor'),
+    // 1.5.2: kartlar bittikten SONRAKI adimlar da gorunsun - eskiden
+    // "5407 / 5407"de sessizce bekliyordu
+    kaydet:    c('asamaKaydediliyor'),
+    tamamla:   c('asamaTamamlaniyor'),
+    yenile:    c('asamaYenileniyor'),
     bitti:     c('tamamlandi')
 };
 
@@ -459,7 +552,7 @@ function ilerlemeCiz({ asama, yapilan, toplam, ad }) {
     // Kart sayisi bilinmeyen asamalarda cubuk belirsiz kalmasin:
     // hazirlik adimlarina kucuk sabit paylar veriyoruz
     let oran;
-    if (asama === 'bitti') oran = 100;
+    if (asama === 'bitti' || asama === 'kaydet' || asama === 'tamamla' || asama === 'yenile') oran = 100;
     else if (!toplam) oran = asama === 'baslangic' ? 4 : 8;
     else oran = 10 + Math.round((yapilan / toplam) * 90);
 
@@ -690,6 +783,7 @@ function yedekAraclariniKur() {
             ilerlemeCiz({ asama: 'baslangic', yapilan: 0, toplam: 0, ad: 'Dosya okunuyor' });
 
             const s = await yedegiYukle(JSON.parse(metin), temizle, ilerlemeCiz);
+            ilerlemeCiz({ asama: 'yenile', yapilan: s.kart, toplam: s.kart, ad: '' });
 
             // Birlestirme yapildiysa atlanan kart sayisini da soyle
             const { yenileVeBildir } = await import('./arayuz.js');

@@ -261,7 +261,7 @@
     "message": "Download Image"
   },
   "sekmeZeminSaydamligi": {
-    "message": "Tab Background Opacity"
+    "message": "Menu Background Opacity"
   },
   "sil": {
     "message": "Delete"
@@ -831,7 +831,7 @@
     "message": "Tiles"
   },
   "grupSeridi": {
-    "message": "Group Bar"
+    "message": "Group Menu"
   },
   "goruntuYakalama": {
     "message": "Screenshot"
@@ -879,10 +879,10 @@
     "message": "Square"
   },
   "sekmeZeminRengi": {
-    "message": "Tab Background"
+    "message": "Menu Background Color"
   },
   "sekmeBoyutu": {
-    "message": "Tab Size"
+    "message": "Menu Size"
   },
   "yakalamaKipi": {
     "message": "Capture Mode"
@@ -1169,9 +1169,6 @@
   "kartEklenemedi": {
     "message": "Could not add tile"
   },
-  "hepsiniSil": {
-    "message": "Delete all"
-  },
   "nKirikKartCopeTasinacak": {
     "message": "$1 broken tiles will be moved to the trash. You can restore them."
   },
@@ -1284,7 +1281,7 @@
     "message": "Appearance"
   },
   "yakalamaYontemi": {
-    "message": "Method"
+    "message": "Capture"
   },
   "goruntuAlt": {
     "message": "Image"
@@ -1299,7 +1296,7 @@
     "message": "Backup and Import"
   },
   "tehlikeliIslemler": {
-    "message": "Danger Zone"
+    "message": "Reset"
   },
   "tehlikeliAciklama": {
     "message": "These actions change your data or settings in bulk. Taking a backup first is recommended."
@@ -1458,6 +1455,96 @@
     "message": "$1 unreachable"
   },
   "silinecekKirikYok": {
-    "message": "No broken tiles to delete; check unreachable ones one by one"
+    "message": "Nothing to delete"
+  },
+  "klasorSec": {
+    "message": "Choose folder"
+  },
+  "klasorSecMenu": {
+    "message": "Choose folder…"
+  },
+  "klasorSecIpucu": {
+    "message": "Click a name to add it there · ▸ opens the branch"
+  },
+  "sagTikMenusu": {
+    "message": "Page Right-Click Menu"
+  },
+  "sagTikPencere": {
+    "message": "Groups + Choose folder…"
+  },
+  "sagTikAgac": {
+    "message": "Nested menus"
+  },
+  "sagTikGruplar": {
+    "message": "Groups only"
+  },
+  "asamaDosyaOkunuyor": {
+    "message": "Reading file"
+  },
+  "asamaMevcutSiliniyor": {
+    "message": "Deleting existing data"
+  },
+  "asamaKartlarEkleniyor": {
+    "message": "Adding tiles"
+  },
+  "asamaKartlarSiliniyor": {
+    "message": "Deleting tiles"
+  },
+  "asamaKaydediliyor": {
+    "message": "Saving notes, colors, tags and settings…"
+  },
+  "asamaTamamlaniyor": {
+    "message": "Finishing: queueing missing images…"
+  },
+  "asamaYenileniyor": {
+    "message": "Reloading page…"
+  },
+  "kiriklariSil": {
+    "message": "Delete broken"
+  },
+  "ulasilamayanlariSil": {
+    "message": "Delete unreachable"
+  },
+  "nUlasilamayanCopeTasinacak": {
+    "message": "$1 unreachable tiles will be moved to the trash. Some of them may only be temporarily down. You can restore them."
+  },
+  "baslikAlt": {
+    "message": "Title"
+  },
+  "baslikRengi": {
+    "message": "Title Color"
+  },
+  "baslikStili": {
+    "message": "Title Style"
+  },
+  "stilNormal": {
+    "message": "Normal"
+  },
+  "stilKalin": {
+    "message": "Bold"
+  },
+  "stilItalik": {
+    "message": "Italic"
+  },
+  "stilKalinItalik": {
+    "message": "Bold Italic"
+  },
+  "baslikGolgesi": {
+    "message": "Title Shadow"
+  },
+  "baslikGolgeRengi": {
+    "message": "Shadow Color"
+  },
+  "menuYaziRengi": {
+    "message": "Menu Text Color"
+  },
+  "aktifGrupYaziRengi": {
+    "message": "Active Group Text Color"
+  },
+  "sistemBolum": {
+    "message": "System"
+  },
+  "sagTikBaslik": {
+    "message": "Right-Click Menu"
   }
 }

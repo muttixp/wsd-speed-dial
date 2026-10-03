@@ -177,30 +177,64 @@ async function menuyuKur() {
         await chrome.contextMenus.removeAll();
 
         const gruplar = await gorunurGruplariAl();
+        const kok = await kokKlasoruAl();
+        const baslik = chrome.i18n.getMessage('actionTitle') || "WSD Speed Dial'e ekle";
 
-        // Tek grup varsa alt menu gereksiz - tek tiklamada eklensin
-        if (gruplar.length <= 1) {
-            await menuOgesi({
-                id: 'wsdEkle',
-                title: chrome.i18n.getMessage('actionTitle') || "WSD Speed Dial'e ekle",
-                contexts: BAGLAMLAR
-            });
+        // ALT KLASORLER (1.5.1): her grubun klasor agaci. Tek getSubTree
+        // cagrisiyla tum agac; kok (Ana Sayfa) yaprak - alt klasorleri
+        // zaten gruplar.
+        let agac = new Map();
+        try {
+            const [k] = await chrome.bookmarks.getSubTree(kok);
+            for (const g of k.children || []) if (!g.url) agac.set(g.id, g);
+        } catch (e) { agac = new Map(); }
+        const altKlasorler = d => (d?.children || []).filter(x => !x.url);
+
+        // Tek grup ve alt klasoru yoksa alt menu gereksiz - tek tiklamada eklensin
+        if (gruplar.length <= 1 && !gruplar.some(g => !g.kokMu && altKlasorler(agac.get(g.id)).length)) {
+            await menuOgesi({ id: 'wsdEkle', title: baslik, contexts: BAGLAMLAR });
             return;
         }
 
-        // Birden fazla grup varsa: ust oge + her grup icin alt oge
-        await menuOgesi({
-            id: 'wsdKok',
-            title: chrome.i18n.getMessage('actionTitle') || "WSD Speed Dial'e ekle",
-            contexts: BAGLAMLAR
-        });
+        await menuOgesi({ id: 'wsdKok', title: baslik, contexts: BAGLAMLAR });
+
+        // UC KIP (1.5.2, Ayarlar > Kartlar > Davranis):
+        //  'pencere': gruplar dogrudan tiklanir + en altta "Klasor sec..."
+        //             (alt klasorler kucuk pencerede agac olarak)
+        //  'agac'   : alt klasoru olan grup/klasor alt menu aciyor; ilk
+        //             satir "＋ Ad" onun kendisi (alt menusu olan satira
+        //             Chrome tiklatmiyor)
+        //  'gruplar': yalnizca gruplar (1.5.1 ve oncesi)
+        let kip = 'pencere';
+        try { kip = (await chrome.storage.local.get('ayarlar')).ayarlar?.sagTikMenu || 'pencere'; } catch (e) { /* varsayilan */ }
+
+        if (kip === 'agac') {
+            const EN_DERIN = 6;
+            const ekle = async (id, ad, ustId, dugum, derinlik) => {
+                const altlar = derinlik < EN_DERIN ? altKlasorler(dugum) : [];
+                if (!altlar.length) {
+                    await menuOgesi({ id: 'wsdGrup:' + id, parentId: ustId, title: ad, contexts: BAGLAMLAR });
+                    return;
+                }
+                const dal = 'wsdDal:' + id;
+                await menuOgesi({ id: dal, parentId: ustId, title: ad, contexts: BAGLAMLAR });
+                await menuOgesi({ id: 'wsdGrup:' + id, parentId: dal, title: '\uFF0B ' + ad, contexts: BAGLAMLAR });
+                await menuOgesi({ id: 'wsdAyrac:' + id, parentId: dal, type: 'separator', contexts: BAGLAMLAR });
+                for (const a of altlar) await ekle(a.id, a.title || '\u2014', dal, a, derinlik + 1);
+            };
+            for (const g of gruplar) await ekle(g.id, g.baslik, 'wsdKok', g.kokMu ? null : agac.get(g.id), 0);
+            return;
+        }
+
+        // "Klasor sec..." EN USTTE: yuzlerce grupta en altta kaliyor ve
+        // listeyi sonuna kadar kaydirmak gerekiyordu
+        if (kip === 'pencere' && gruplar.some(g => !g.kokMu && altKlasorler(agac.get(g.id)).length)) {
+            await menuOgesi({ id: 'wsdSec', parentId: 'wsdKok',
+                              title: chrome.i18n.getMessage('klasorSecMenu') || 'Klasör seç…', contexts: BAGLAMLAR });
+            await menuOgesi({ id: 'wsdAyrac', parentId: 'wsdKok', type: 'separator', contexts: BAGLAMLAR });
+        }
         for (const g of gruplar) {
-            await menuOgesi({
-                id: 'wsdGrup:' + g.id,
-                parentId: 'wsdKok',
-                title: g.baslik,
-                contexts: BAGLAMLAR
-            });
+            await menuOgesi({ id: 'wsdGrup:' + g.id, parentId: 'wsdKok', title: g.baslik, contexts: BAGLAMLAR });
         }
     } catch (e) {
         console.log('[WSD] menu kurulamadi:', e);
@@ -220,7 +254,11 @@ chrome.runtime.onStartup.addListener(simgeyiUygula);
 chrome.tabs.onActivated.addListener(() => simgeyiUygula());
 
 chrome.storage.onChanged.addListener((d, alan) => {
-    if (alan === 'local' && d.ayarlar) simgeyiUygula();
+    if (alan === 'local' && d.ayarlar) {
+        simgeyiUygula();
+        // Sag tik menu kipi degistiyse menu yeniden kurulsun
+        if ((d.ayarlar.oldValue?.sagTikMenu || 'pencere') !== (d.ayarlar.newValue?.sagTikMenu || 'pencere')) menuyuTazele();
+    }
 });
 
 // Isci hic uyanmazsa alarm uyandirir
@@ -340,26 +378,35 @@ chrome.contextMenus.onClicked.addListener(async (bilgi, sekme) => {
     const id = String(bilgi.menuItemId);
     let hedef = null;
 
+    // Adres onceligi: ORTAM OGESI > baglanti > sayfa.
+    // Resmin uzerine sag tiklandiysa kullanici o resmi kastediyor,
+    // sayfayi degil.
+    const url = bilgi.srcUrl || bilgi.linkUrl || bilgi.pageUrl || (sekme && sekme.url);
+    if (!url) return;
+    const baslik = bilgi.srcUrl ? dosyaAdi(bilgi.srcUrl)
+                 : bilgi.linkUrl ? (bilgi.selectionText || bilgi.linkUrl)
+                 : ((sekme && sekme.title) || url);
+
     if (id === 'wsdEkle') {
         // Tek grup durumu - Ana Sayfa gizliyse o tek grup baska bir grup
         const gorunur = await gorunurGruplariAl();
         hedef = gorunur.length ? gorunur[0].id : await kokKlasoruAl();
     } else if (id.startsWith('wsdGrup:')) {
         hedef = id.slice('wsdGrup:'.length);       // secilen grup
+    } else if (id === 'wsdSec') {
+        // Klasor secme penceresi: eklenecek sayfa depoda bekliyor,
+        // pencere secimi 'seciciEkle' mesajiyla geri yolluyor
+        await chrome.storage.local.set({ bekleyenEkle: { url, baslik, sekmeId: sekme?.id ?? null, zaman: Date.now() } });
+        await chrome.windows.create({ url: chrome.runtime.getURL('secici.html'), type: 'popup', width: 420, height: 600 });
+        return;
     } else {
         return;
     }
+    await sayfayiEkle(hedef, url, baslik, sekme);
+});
 
-    // Adres onceligi: ORTAM OGESI > baglanti > sayfa.
-    // Resmin uzerine sag tiklandiysa kullanici o resmi kastediyor,
-    // sayfayi degil.
-    const url = bilgi.srcUrl || bilgi.linkUrl || bilgi.pageUrl || (sekme && sekme.url);
-    if (!url) return;
-
-    const baslik = bilgi.srcUrl ? dosyaAdi(bilgi.srcUrl)
-                 : bilgi.linkUrl ? (bilgi.selectionText || bilgi.linkUrl)
-                 : ((sekme && sekme.title) || url);
-
+/** Sag tiktan gelen sayfayi `hedef` klasore ekler, sayfada bildirir. */
+async function sayfayiEkle(hedef, url, baslik, sekme) {
     try {
         const temiz = urlNormalle(url);
 
@@ -374,13 +421,28 @@ chrome.contextMenus.onClicked.addListener(async (bilgi, sekme) => {
         // zaten tetikliyor. Ikisi birden calisinca iki popup aciliyordu.
         await chrome.bookmarks.create({ parentId: hedef, title: baslik, url: temiz });
 
-        // Ziyaret edilen sayfada geri bildirim
-        const grupAdi = (await gruplariAl()).find(g => g.id === hedef)?.baslik || '';
+        // Ziyaret edilen sayfada geri bildirim: alt klasorse tam yol
+        const zincir = await klasorZinciri(hedef).catch(() => null);
+        const grupAdi = zincir ? zincir.map(z => z.baslik).join(' › ')
+                      : ((await gruplariAl()).find(g => g.id === hedef)?.baslik || '');
         sayfadaBildir(sekme, grupAdi ? c('grubaEklendi', grupAdi) : c('speedDialeEklendi'), true);
     } catch (e) {
         console.log('[WSD] kart eklenemedi:', e);
         sayfadaBildir(sekme, 'Eklenemedi', false);
     }
+}
+
+// "Klasor sec..." penceresinden gelen secim
+chrome.runtime.onMessage.addListener(mesaj => {
+    if (!mesaj || mesaj.hedef !== 'arkaplan' || mesaj.tur !== 'seciciEkle' || !mesaj.klasorId) return;
+    (async () => {
+        const { bekleyenEkle: b } = await chrome.storage.local.get('bekleyenEkle');
+        await chrome.storage.local.remove('bekleyenEkle');
+        if (!b || !b.url || Date.now() - (b.zaman || 0) > 30 * 60 * 1000) return;
+        let sekme = null;
+        if (b.sekmeId != null) sekme = await chrome.tabs.get(b.sekmeId).catch(() => null);
+        await sayfayiEkle(mesaj.klasorId, b.url, b.baslik, sekme);
+    })();
 });
 
 /** URL WSD agacinda var mi? Varsa hangi grupta oldugunu dondurur. */

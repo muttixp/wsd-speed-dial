@@ -93,12 +93,18 @@ export function kisayollariKur({ aktifGrup, aktifSekme, grubuAc, kartEkle, grupE
                 break;
 
             // PageUp/PageDown: onceki ve sonraki grup, DAIRESEL
+            // 1.5.2: sol ok ve "-" de onceki grup
             case 'PageUp':
+            case 'ArrowLeft':
+            case '-':
                 e.preventDefault();
                 grubuAc(gruplar[(su - 1 + gruplar.length) % gruplar.length].id);
                 break;
 
+            // sag ok ve "+" da sonraki grup
             case 'PageDown':
+            case 'ArrowRight':
+            case '+':
                 e.preventDefault();
                 grubuAc(gruplar[(su + 1) % gruplar.length].id);
                 break;

@@ -624,7 +624,10 @@ async function gorselleriUygula(kartlar) {
     kuyruktakiler = [];
     try {
         const d = await chrome.storage.local.get('yakalamaKuyrugu');
-        if (Array.isArray(d.yakalamaKuyrugu)) kuyruktakiler = d.yakalamaKuyrugu;
+        // Kuyruk ogeleri duz url ya da { u, o } (oncelikli yenileme, 1.5.2)
+        if (Array.isArray(d.yakalamaKuyrugu)) {
+            kuyruktakiler = d.yakalamaKuyrugu.map(x => (typeof x === 'string' ? x : x && x.u)).filter(Boolean);
+        }
     } catch (e) { /* onemli degil */ }
 
     for (const kart of kartKabi().querySelectorAll('.kart[data-anahtar]')) {

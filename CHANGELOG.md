@@ -3,6 +3,91 @@
 Sürüm numaraları [Semantic Versioning](https://semver.org/lang/tr/)
 kurallarına uyar.
 
+## [1.5.2] — 2026-10-03
+
+### Yeni
+- Klavyeyle grup değiştirme: **←** / **→** ve **-** / **+** tuşları da
+  önceki / sonraki gruba geçiyor (PageUp / PageDown gibi, son gruptan
+  sonra başa dönüyor)
+- **Kart başlığı ayarları** (Ayarlar › Kartlar › Başlık): Başlık Rengi,
+  Başlık Stili (Normal / Kalın / İtalik / Kalın İtalik), Başlık Gölgesi
+  ve Gölge Rengi. Gölge varsayılan olarak açık (1px 1px 2px #4D4C4C):
+  açık ya da karışık duvar kâğıdında başlık okunaklı kalıyor. Başlık
+  Yazı Boyutu da bu alt başlığa taşındı; klasör başlıkları aynı ayarları
+  kullanıyor
+- **Sağ tık menüsünden alt klasöre ekleme, üç kip** (Ayarlar › Sistem ›
+  Sağ Tık Menüsü):
+  - **Gruplar + Klasör seç…** (varsayılan): gruplar tek tıkla ekler;
+    menünün en üstündeki "Klasör seç…" küçük bir pencere açar, Taşı
+    penceresindeki ağacın aynısı; adına tıklanan klasöre (hangi
+    derinlikte olursa) eklenir, ▸ yalnızca dalı açar. Arama, açık dallar
+    ve son seçilen yer hatırlanıyor
+  - **İç içe menüler**: alt klasörü olan grup/klasör kendi alt menüsünü
+    açar; ilk satır "＋ Ad" onun kendisi (alt menüsü olan satıra Chrome
+    tıklatmıyor), altında alt klasörler (6 seviyeye kadar)
+  - **Yalnızca gruplar**: 1.5.1'deki gibi
+  Sayfada çıkan bildirim tam yolu yazıyor ("Y › d")
+
+### Değişiklikler
+- Ayarlarda "Grup Şeridi" bölümünün adı **Grup Menüsü** oldu ve
+  Kartlar'ın üstüne alındı. İki yeni ayar: **Menü Yazı Rengi** ve
+  **Aktif Grup Yazı Rengi** (aktif grup rengi açık seçilince yazı
+  okunmuyordu). Seçilmezse eskisi gibi genel metin rengi kullanılıyor. Bölümün
+  içindeki "Sekme Boyutu / Sekme Zemin Rengi / Sekme Zemin Saydamlığı"
+  da "Menü …" oldu
+- Ayarlardaki "Tehlikeli İşlemler" bölümünün adı **Sıfırlama** oldu (uyarı
+  simgesi ve kırmızı başlık duruyor)
+- Temizlik: kullanılmayan iki ayar anahtarı (`kartKose`,
+  `grupSayiGoster`) ve bir çeviri anahtarı kaldırıldı
+- Kırık bağlantılar ekranında "Hepsini sil" ikiye ayrıldı: **Kırıkları
+  sil** ve **Ulaşılamayanları sil**. Her biri yalnızca kendi listesini
+  çöp kutusuna taşıyor, öbürüne dokunmuyor; silinecek bir şey yoksa
+  düğme görünmüyor
+- **Ayarlar paneli yeniden düzenlendi**: "Uzantı Simgesi", "Anasayfa
+  Kurulumu", "Sağ Tık Menüsü" ve "Kısayollar" tek bir **Sistem**
+  bölümünde toplandı; her biri tıklayınca açılan alt başlık. "Yedekleme
+  ve Aktarma" ile "Bakım" aşağıya, "Sıfırlama"nın hemen üstüne alındı.
+  Sıra: Görünüm, Grup Menüsü, Kartlar, Görüntü Yakalama, Sistem,
+  Yedekleme ve Aktarma, Bakım, Sıfırlama
+- Bölüm başlıkları dönüşümlü zeminli; Sistem mor, Yedekleme mavi, Bakım
+  yeşil, Sıfırlama kırmızı. Panelin kenar boşluğu daraltıldı
+- Panel **son açık bölümü hatırlıyor** (Sistem'in alt başlıkları dahil);
+  Sıfırlama açık bırakılsa da sonraki açılışta kapalı geliyor
+
+### Düzeltmeler
+- Boş alan menüsündeki "Hepsini yenile" yalnızca ekrandaki kartları
+  yeniliyor, klasör kutularının içindekileri atlıyordu. Artık grup
+  sekmesindeki "Görselleri yenile" gibi alt klasörleri de kapsıyor;
+  önce ekrandaki kartlar, sonra klasörlerin içindekiler yenileniyor
+- **"Görselleri yenile" bir kartta durup devam etmiyordu.** Dört ayrı
+  neden kapatıldı: (1) "Otomatik" yöntemde sayfa görseli aranırken
+  bağlantıyı kabul edip yanıt vermeyen site isteği sonsuza kadar
+  bekletiyordu; isteklere 12 sn sınır kondu. (2) Bir kartın tüm işlemi
+  artık tek üst sınır altında (150 sn); aşılırsa o kart atlanıp sıradakine
+  geçiliyor. (3) 300'den büyük bir grup yenilenirken arka plan işçisi
+  yeniden başlarsa "kuyruk çok büyük" diye tüm yenileme sessizce iptal
+  ediliyordu; sınır artık yalnızca arka planda biriken işlere uygulanıyor,
+  kullanıcının başlattığı yenileme kaç kart olursa olsun sürüyor. (4)
+  Yenileme sürerken işçi uyutulmuyor; döngü yine de 3 dakika ilerlemezse
+  bekçi onu yeniden başlatıyor
+- Yakalama süre sınırını aşan kart atlandığında işlem arkada çalışmaya
+  devam ediyor, sıradaki kartla aynı anda iki yakalama penceresi
+  açılabiliyordu; artık sınır aşılınca yakalama bırakılıp penceresi
+  kapatılıyor. Açılan pencereyi tarayıcı başka bir pencereye sekme
+  olarak taşırsa ("No window with id" hatası) sekmenin bulunduğu pencere
+  yakalanıyor; sekme etkin değilse yanlış sayfayı yakalamak yerine kart
+  atlanıyor ve o sekme açık bırakılmıyor
+- **Büyük içe aktarma "5407 / 5407"de takılıyordu**: ayarlar paneli
+  açıkken eklenen her kart için depo durumu yeniden ölçülüyordu (her
+  ölçüm tüm yer imi ağacını geziyor). Binlerce kartta bu iş kuyruğu
+  aktarma bittikten sonra dakikalarca sürüyor, sayfa yenilense bile
+  siyah ekran kalıyordu. Ölçüm artık aktarma bitene kadar bekliyor ve
+  tek seferde yapılıyor (1500 kartta 17,7 sn → 1,2 sn)
+- İçe aktarma penceresi kartlar bittikten sonraki adımları da yazıyor:
+  "Notlar, renkler, etiketler ve ayarlar kaydediliyor…", "Tamamlanıyor:
+  eksik görseller sıraya alınıyor…", "Sayfa yenileniyor…". Aşama adları
+  artık çevriliyor
+
 ## [1.5.1] — 2026-09-30
 
 ### Yeni

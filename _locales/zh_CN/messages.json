@@ -1169,9 +1169,6 @@
   "kartEklenemedi": {
     "message": "无法添加磁贴"
   },
-  "hepsiniSil": {
-    "message": "全部删除"
-  },
   "nKirikKartCopeTasinacak": {
     "message": "$1 个失效磁贴将移至回收站，可以恢复。"
   },

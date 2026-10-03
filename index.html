@@ -128,7 +128,8 @@
         </svg>
         <span data-c="kirikBaglantilar">Kırık Bağlantılar</span>
         <span id="kirikSayi"></span>
-        <button type="button" id="kirikHepsiniSil" class="copSeritDugme yikici"><span data-c="hepsiniSil">Hepsini sil</span></button>
+        <button type="button" id="kirikHepsiniSil" class="copSeritDugme yikici"><span data-c="kiriklariSil">Kırıkları sil</span></button>
+        <button type="button" id="kirikSupheliSil" class="copSeritDugme yikici"><span data-c="ulasilamayanlariSil">Ulaşılamayanları sil</span></button>
         <button type="button" id="kirikTekrarTara" class="copSeritDugme"><span data-c="tekrarTara">Tekrar tara</span></button>
         <button type="button" id="kirikEkranKapat" class="copSeritDugme"><span data-c="kapat">Kapat</span></button>
     </div>
@@ -310,6 +311,75 @@
 
         <section class="bolum">
             <button type="button" class="bolumBaslik">
+                <span class="bolumAd"><svg class="bolumSimge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span data-c="grupSeridi">Grup Menüsü</span></span>
+                <svg class="bolumOk" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m6 9 6 6 6-6"/>
+                </svg>
+            </button>
+            <div class="bolumIc"><div class="bolumGovde">
+                <div class="ayarGrup ilk">
+                    <div class="ayarGrupBaslik"><span data-c="davranis">Davranış</span></div>
+            <label class="ayarSatir">
+                <span data-c="anaSayfaGrubunuGoster">Ana Sayfa Grubunu Göster</span>
+                <input type="checkbox" id="ayAnaSayfa" class="anahtar">
+            </label>
+            <label class="ayarSatir">
+                <span data-c="sonGrubuHatirla">Son Grubu Hatırla</span>
+                <input type="checkbox" id="ayGrubuHatirla" class="anahtar">
+            </label>
+                </div>
+                <div class="ayarGrup">
+                    <div class="ayarGrupBaslik"><span data-c="gorunumAlt">Görünüm</span></div>
+            <div class="ayarSatir">
+                <span data-c="gosterim">Gösterim</span>
+                <div class="segment" id="ayGrupGosterim">
+                    <button type="button" class="segBtn" data-deger="ikon" data-c="ikon">İkon</button>
+                    <button type="button" class="segBtn" data-deger="ikon_yazi" data-c="ikonYazi">İkon+Yazı</button>
+                    <button type="button" class="segBtn" data-deger="yazi" data-c="yazi">Yazı</button>
+                </div>
+            </div>
+            <label class="ayarSatir">
+                <span data-c="sekmeBoyutu">Menü Boyutu</span>
+                <input type="range" id="ayGrupBoyut" min="75" max="150" step="5">
+                <output id="ayGrupBoyutDeger"></output>
+            </label>
+            <label class="ayarSatir">
+                <span data-c="ikonRengi">İkon Rengi</span>
+                <input type="color" id="ayGrupIkonRengi" class="renkKutu">
+            </label>
+            <label class="ayarSatir">
+                <span data-c="sekmeZeminRengi">Menü Zemin Rengi</span>
+                <input type="color" id="ayGrupZeminRengi" class="renkKutu">
+            </label>
+            <label class="ayarSatir">
+                <span data-c="sekmeZeminSaydamligi">Menü Zemin Saydamlığı</span>
+                <input type="range" id="ayGrupZeminOpaklik" min="0" max="100" step="1">
+                <output id="ayGrupZeminOpaklikDeger"></output>
+            </label>
+            <label class="ayarSatir">
+                <span data-c="aktifGrupRengi">Aktif Grup Rengi</span>
+                <input type="color" id="ayGrupAktifRengi" class="renkKutu">
+            </label>
+            <label class="ayarSatir">
+                <span data-c="aktifGrupSaydamligi">Aktif Grup Saydamlığı</span>
+                <input type="range" id="ayGrupAktifOpaklik" min="0" max="100" step="1">
+                <output id="ayGrupAktifOpaklikDeger"></output>
+            </label>
+            <label class="ayarSatir">
+                <span data-c="menuYaziRengi">Menü Yazı Rengi</span>
+                <input type="color" id="ayGrupYaziRengi" class="renkKutu">
+            </label>
+            <label class="ayarSatir">
+                <span data-c="aktifGrupYaziRengi">Aktif Grup Yazı Rengi</span>
+                <input type="color" id="ayGrupAktifYaziRengi" class="renkKutu">
+            </label>
+                </div>
+            </div></div>
+        </section>
+
+        <section class="bolum">
+            <button type="button" class="bolumBaslik">
                 <span class="bolumAd"><svg class="bolumSimge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="8" height="7" rx="1.5"/><rect x="13" y="4" width="8" height="7" rx="1.5"/><rect x="3" y="13" width="8" height="7" rx="1.5"/><rect x="13" y="13" width="8" height="7" rx="1.5"/></svg><span data-c="kartlarBolum">Kartlar</span></span>
                 <svg class="bolumOk" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                      stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -327,7 +397,7 @@
                 <option value="arkaplan" data-c="yeniSekmeArkaPlan">Yeni Sekme (Arka Plan)</option>
             </select>
         </label>
-        <label class="ayarSatir">
+                <label class="ayarSatir">
             <span data-c="kartUstuButonlar">Kart Üstü Butonlar</span>
             <input type="checkbox" id="ayKartAraclari" class="anahtar">
         </label>
@@ -368,11 +438,6 @@
                     <input type="range" id="ayKartEn" min="140" max="420" step="10">
                     <output id="ayKartEnDeger"></output>
                 </label>
-        <label class="ayarSatir">
-            <span data-c="baslikYaziBoyutu">Başlık Yazı Boyutu</span>
-            <input type="range" id="ayBaslikBoyut" min="10" max="20" step="1">
-            <output id="ayBaslikBoyutDeger"></output>
-        </label>
                 <label class="ayarSatir">
                     <span data-c="kartlarArasiBoslukYatay">Kartlar Arası Boşluk (Yatay)</span>
                     <input type="range" id="ayBoslukYatay" min="0" max="40" step="1">
@@ -383,6 +448,35 @@
                     <input type="range" id="ayBoslukDikey" min="0" max="40" step="1">
                     <output id="ayBoslukDikeyDeger"></output>
                 </label>
+                </div>
+                <div class="ayarGrup">
+                    <div class="ayarGrupBaslik"><span data-c="baslikAlt">Başlık</span></div>
+        <label class="ayarSatir">
+            <span data-c="baslikYaziBoyutu">Başlık Yazı Boyutu</span>
+            <input type="range" id="ayBaslikBoyut" min="10" max="20" step="1">
+            <output id="ayBaslikBoyutDeger"></output>
+        </label>
+        <label class="ayarSatir">
+            <span data-c="baslikRengi">Başlık Rengi</span>
+            <input type="color" id="ayBaslikRengi" class="renkKutu">
+        </label>
+        <label class="ayarSatir">
+            <span data-c="baslikStili">Başlık Stili</span>
+            <select id="ayBaslikStili">
+                <option value="normal" data-c="stilNormal">Normal</option>
+                <option value="kalin" data-c="stilKalin">Kalın</option>
+                <option value="italik" data-c="stilItalik">İtalik</option>
+                <option value="kalinItalik" data-c="stilKalinItalik">Kalın İtalik</option>
+            </select>
+        </label>
+        <label class="ayarSatir">
+            <span data-c="baslikGolgesi">Başlık Gölgesi</span>
+            <input type="checkbox" id="ayBaslikGolge" class="anahtar">
+        </label>
+        <label class="ayarSatir" id="ayBaslikGolgeRengiSatir">
+            <span data-c="baslikGolgeRengi">Gölge Rengi</span>
+            <input type="color" id="ayBaslikGolgeRengi" class="renkKutu">
+        </label>
                 </div>
                 <div class="ayarGrup">
                     <div class="ayarGrupBaslik"><span data-c="renkVeCerceve">Renk ve Çerçeve</span></div>
@@ -409,67 +503,6 @@
 
         <section class="bolum">
             <button type="button" class="bolumBaslik">
-                <span class="bolumAd"><svg class="bolumSimge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span data-c="grupSeridi">Grup Şeridi</span></span>
-                <svg class="bolumOk" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="m6 9 6 6 6-6"/>
-                </svg>
-            </button>
-            <div class="bolumIc"><div class="bolumGovde">
-                <div class="ayarGrup ilk">
-                    <div class="ayarGrupBaslik"><span data-c="davranis">Davranış</span></div>
-            <label class="ayarSatir">
-                <span data-c="anaSayfaGrubunuGoster">Ana Sayfa Grubunu Göster</span>
-                <input type="checkbox" id="ayAnaSayfa" class="anahtar">
-            </label>
-            <label class="ayarSatir">
-                <span data-c="sonGrubuHatirla">Son Grubu Hatırla</span>
-                <input type="checkbox" id="ayGrubuHatirla" class="anahtar">
-            </label>
-                </div>
-                <div class="ayarGrup">
-                    <div class="ayarGrupBaslik"><span data-c="gorunumAlt">Görünüm</span></div>
-            <div class="ayarSatir">
-                <span data-c="gosterim">Gösterim</span>
-                <div class="segment" id="ayGrupGosterim">
-                    <button type="button" class="segBtn" data-deger="ikon" data-c="ikon">İkon</button>
-                    <button type="button" class="segBtn" data-deger="ikon_yazi" data-c="ikonYazi">İkon+Yazı</button>
-                    <button type="button" class="segBtn" data-deger="yazi" data-c="yazi">Yazı</button>
-                </div>
-            </div>
-            <label class="ayarSatir">
-                <span data-c="sekmeBoyutu">Sekme Boyutu</span>
-                <input type="range" id="ayGrupBoyut" min="75" max="150" step="5">
-                <output id="ayGrupBoyutDeger"></output>
-            </label>
-            <label class="ayarSatir">
-                <span data-c="ikonRengi">İkon Rengi</span>
-                <input type="color" id="ayGrupIkonRengi" class="renkKutu">
-            </label>
-            <label class="ayarSatir">
-                <span data-c="sekmeZeminRengi">Sekme Zemin Rengi</span>
-                <input type="color" id="ayGrupZeminRengi" class="renkKutu">
-            </label>
-            <label class="ayarSatir">
-                <span data-c="sekmeZeminSaydamligi">Sekme Zemin Saydamlığı</span>
-                <input type="range" id="ayGrupZeminOpaklik" min="0" max="100" step="1">
-                <output id="ayGrupZeminOpaklikDeger"></output>
-            </label>
-            <label class="ayarSatir">
-                <span data-c="aktifGrupRengi">Aktif Grup Rengi</span>
-                <input type="color" id="ayGrupAktifRengi" class="renkKutu">
-            </label>
-            <label class="ayarSatir">
-                <span data-c="aktifGrupSaydamligi">Aktif Grup Saydamlığı</span>
-                <input type="range" id="ayGrupAktifOpaklik" min="0" max="100" step="1">
-                <output id="ayGrupAktifOpaklikDeger"></output>
-            </label>
-                </div>
-            </div></div>
-        </section>
-
-        <section class="bolum">
-            <button type="button" class="bolumBaslik">
                 <span class="bolumAd"><svg class="bolumSimge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span data-c="goruntuYakalama">Görüntü Yakalama</span></span>
                 <svg class="bolumOk" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                      stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -478,7 +511,7 @@
             </button>
             <div class="bolumIc"><div class="bolumGovde">
                 <div class="ayarGrup ilk">
-                    <div class="ayarGrupBaslik"><span data-c="yakalamaYontemi">Yöntem</span></div>
+                    <div class="ayarGrupBaslik"><span data-c="yakalamaYontemi">Yakalama</span></div>
         <label class="ayarSatir">
             <span data-c="yontem">Yöntem</span>
             <select id="ayYontem">
@@ -544,7 +577,80 @@
             </div></div>
         </section>
 
-        <section class="bolum">
+        <section class="bolum sistemBolum">
+            <button type="button" class="bolumBaslik">
+                <span class="bolumAd"><svg class="bolumSimge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg><span data-c="sistemBolum">Sistem</span></span>
+                <svg class="bolumOk" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m6 9 6 6 6-6"/>
+                </svg>
+            </button>
+            <div class="bolumIc"><div class="bolumGovde">
+                <div class="altBolum altAcilir">
+                    <button type="button" class="altBaslik altDugme"><span class="altAd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><span data-c="uzantiSimgesi">Uzantı Simgesi</span></span><svg class="altOk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
+                    <div class="altIc"><div>
+                <label class="ayarSatir">
+                    <span data-c="caprazVe">Çapraz 1 ve 4</span>
+                    <input type="color" id="aySimgeA" class="renkKutu">
+                </label>
+                <label class="ayarSatir">
+                    <span data-c="caprazVe">Çapraz 2 ve 3</span>
+                    <input type="color" id="aySimgeB" class="renkKutu">
+                </label>
+                <div class="ayarSatir tekSutun">
+                    <button type="button" class="miniDugme" id="aySimgeSifirla" style="width:100%"><svg class="dugmeSimge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.6-6.4"/><path d="M21 3v6h-6"/></svg><span data-c="varsayilanRenklereDon">Varsayılan renklere dön</span></button>
+                    </div></div>
+                </div>
+                </div>
+                <div class="altBolum altAcilir">
+                    <button type="button" class="altBaslik altDugme"><span class="altAd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg><span data-c="anasayfaKurulumu">Anasayfa Kurulumu</span></span><svg class="altOk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
+                    <div class="altIc"><div>
+                <p class="kurulumMetin" data-c="kurulumAciklama">
+                    Tarayıcının anasayfa (ev) butonuna basınca WSD açılsın
+                    istiyorsanız, aşağıdaki adresi kopyalayıp
+                    Ayarlar → Başlangıç → Ana Sayfa alanına yapıştırın.
+                </p>
+                <code id="kurulumAdres" class="kurulumAdres"></code>
+                <button type="button" id="kurulumKopyala" class="dugme birincil kurulumDugme"><svg class="dugmeSimge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span data-c="adresiKopyala">Adresi Kopyala</span></button>
+                    </div></div>
+                </div>
+                <div class="altBolum altAcilir">
+                    <button type="button" class="altBaslik altDugme"><span class="altAd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l7 17 2.5-7.5L21 11z"/></svg><span data-c="sagTikBaslik">Sağ Tık Menüsü</span></span><svg class="altOk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
+                    <div class="altIc"><div>
+        <label class="ayarSatir">
+            <span data-c="sagTikMenusu">Sayfada Sağ Tık Menüsü</span>
+            <select id="aySagTikMenu">
+                <option value="pencere" data-c="sagTikPencere">Gruplar + Klasör seç…</option>
+                <option value="agac" data-c="sagTikAgac">İç içe menüler</option>
+                <option value="gruplar" data-c="sagTikGruplar">Yalnızca gruplar</option>
+            </select>
+        </label>
+                    </div></div>
+                </div>
+                <div class="altBolum altAcilir">
+                    <button type="button" class="altBaslik altDugme"><span class="altAd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M8 14h8"/></svg><span data-c="kisayollarBolum">Kısayollar</span></span><svg class="altOk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
+                    <div class="altIc"><div>
+                <ul class="kisayolListe">
+                    <li><kbd>1</kbd> – <kbd>9</kbd><span data-c="oSiradakiGrubaGec">o sıradaki gruba geç</span></li>
+                    <li><kbd>Home</kbd> / <kbd>End</kbd><span data-c="ilkSonGrup">ilk / son grup</span></li>
+                    <li><kbd>←</kbd> / <kbd>→</kbd>, <kbd>-</kbd> / <kbd>+</kbd>, <kbd>PgUp</kbd> / <kbd>PgDn</kbd><span data-c="oncekiSonrakiGrup">önceki / sonraki grup</span></li>
+                    <li><kbd>/</kbd> <span data-c="veya">veya</span> <kbd>Ctrl</kbd>+<kbd>F</kbd><span data-c="arama">arama</span></li>
+                    <li><kbd>H</kbd><span data-c="herSeyiGizleGoster">her şeyi gizle / göster</span></li>
+                    <li><kbd>Ctrl</kbd>+<kbd>,</kbd><span data-c="ayarlariAcKapat">ayarları aç / kapat</span></li>
+                    <li><kbd>N</kbd><span data-c="yeniKart">yeni kart</span></li>
+                    <li><kbd>G</kbd><span data-c="yeniGrup">yeni grup</span></li>
+                    <li><kbd>Y</kbd><span data-c="gruplariYonet">grupları yönet</span></li>
+                    <li><kbd>Backspace</kbd><span data-c="ustKlasoreCik">üst klasöre çık</span></li>
+                    <li><kbd>Alt</kbd>+<kbd>←</kbd> / <kbd>→</kbd><span data-c="geriIleri">geri / ileri (fare yan tuşları)</span></li>
+                    <li><kbd>Esc</kbd><span data-c="pencereyiAramayiKapat">pencereyi / aramayı kapat</span></li>
+                </ul>
+                <p class="kucukBilgi" data-c="kisayollarBirMetinAlanindaykenCalismaz">Kısayollar bir metin alanındayken çalışmaz.</p>
+                    </div></div>
+                </div>
+            </div></div>
+        </section>
+
+        <section class="bolum yedekBolum">
             <button type="button" class="bolumBaslik">
                 <span class="bolumAd"><svg class="bolumSimge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8v13H3V8"/><path d="M1 3h22v5H1z"/><path d="M10 12h4"/></svg><span data-c="yedeklemeVeAktarma">Yedekleme ve Aktarma</span></span>
                 <svg class="bolumOk" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -577,7 +683,7 @@
             </div></div>
         </section>
 
-        <section class="bolum">
+        <section class="bolum bakimBolumu">
             <button type="button" class="bolumBaslik">
                 <span class="bolumAd"><svg class="bolumSimge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 1-5.4 5.4L4 17v3h3l5.3-5.3a4 4 0 0 1 5.4-5.4z"/></svg><span data-c="bakimBolum">Bakım</span></span>
                 <svg class="bolumOk" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -626,81 +732,9 @@
             </div></div>
         </section>
 
-        <section class="bolum">
-            <button type="button" class="bolumBaslik">
-                <span class="bolumAd"><svg class="bolumSimge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><span data-c="uzantiSimgesi">Uzantı Simgesi</span></span>
-                <svg class="bolumOk" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="m6 9 6 6 6-6"/>
-                </svg>
-            </button>
-            <div class="bolumIc"><div class="bolumGovde">
-                <label class="ayarSatir">
-                    <span data-c="caprazVe">Çapraz 1 ve 4</span>
-                    <input type="color" id="aySimgeA" class="renkKutu">
-                </label>
-                <label class="ayarSatir">
-                    <span data-c="caprazVe">Çapraz 2 ve 3</span>
-                    <input type="color" id="aySimgeB" class="renkKutu">
-                </label>
-                <div class="ayarSatir tekSutun">
-                    <button type="button" class="miniDugme" id="aySimgeSifirla" style="width:100%"><svg class="dugmeSimge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.6-6.4"/><path d="M21 3v6h-6"/></svg><span data-c="varsayilanRenklereDon">Varsayılan renklere dön</span></button>
-                </div>
-            
-            </div></div>
-        </section>
-
-        <section class="bolum">
-            <button type="button" class="bolumBaslik">
-                <span class="bolumAd"><svg class="bolumSimge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg><span data-c="anasayfaKurulumu">Anasayfa Kurulumu</span></span>
-                <svg class="bolumOk" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="m6 9 6 6 6-6"/>
-                </svg>
-            </button>
-            <div class="bolumIc"><div class="bolumGovde">
-                <p class="kurulumMetin" data-c="kurulumAciklama">
-                    Tarayıcının anasayfa (ev) butonuna basınca WSD açılsın
-                    istiyorsanız, aşağıdaki adresi kopyalayıp
-                    Ayarlar → Başlangıç → Ana Sayfa alanına yapıştırın.
-                </p>
-                <code id="kurulumAdres" class="kurulumAdres"></code>
-                <button type="button" id="kurulumKopyala" class="dugme birincil kurulumDugme"><svg class="dugmeSimge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span data-c="adresiKopyala">Adresi Kopyala</span></button>
-            
-            </div></div>
-        </section>
-
-        <section class="bolum">
-            <button type="button" class="bolumBaslik">
-                <span class="bolumAd"><svg class="bolumSimge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M8 14h8"/></svg><span data-c="kisayollarBolum">Kısayollar</span></span>
-                <svg class="bolumOk" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="m6 9 6 6 6-6"/>
-                </svg>
-            </button>
-            <div class="bolumIc"><div class="bolumGovde">
-                <ul class="kisayolListe">
-                    <li><kbd>1</kbd> – <kbd>9</kbd><span data-c="oSiradakiGrubaGec">o sıradaki gruba geç</span></li>
-                    <li><kbd>Home</kbd> / <kbd>End</kbd><span data-c="ilkSonGrup">ilk / son grup</span></li>
-                    <li><kbd>PgUp</kbd> / <kbd>PgDn</kbd><span data-c="oncekiSonrakiGrup">önceki / sonraki grup</span></li>
-                    <li><kbd>/</kbd> <span data-c="veya">veya</span> <kbd>Ctrl</kbd>+<kbd>F</kbd><span data-c="arama">arama</span></li>
-                    <li><kbd>H</kbd><span data-c="herSeyiGizleGoster">her şeyi gizle / göster</span></li>
-                    <li><kbd>Ctrl</kbd>+<kbd>,</kbd><span data-c="ayarlariAcKapat">ayarları aç / kapat</span></li>
-                    <li><kbd>N</kbd><span data-c="yeniKart">yeni kart</span></li>
-                    <li><kbd>G</kbd><span data-c="yeniGrup">yeni grup</span></li>
-                    <li><kbd>Y</kbd><span data-c="gruplariYonet">grupları yönet</span></li>
-                    <li><kbd>Backspace</kbd><span data-c="ustKlasoreCik">üst klasöre çık</span></li>
-                    <li><kbd>Alt</kbd>+<kbd>←</kbd> / <kbd>→</kbd><span data-c="geriIleri">geri / ileri (fare yan tuşları)</span></li>
-                    <li><kbd>Esc</kbd><span data-c="pencereyiAramayiKapat">pencereyi / aramayı kapat</span></li>
-                </ul>
-                <p class="kucukBilgi" data-c="kisayollarBirMetinAlanindaykenCalismaz">Kısayollar bir metin alanındayken çalışmaz.</p>
-            
-            </div></div>
-        </section>
-
         <section class="bolum tehlikeBolum">
             <button type="button" class="bolumBaslik">
-                <span class="bolumAd"><svg class="bolumSimge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg><span data-c="tehlikeliIslemler">Tehlikeli İşlemler</span></span>
+                <span class="bolumAd"><svg class="bolumSimge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg><span data-c="tehlikeliIslemler">Sıfırlama</span></span>
                 <svg class="bolumOk" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                      stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="m6 9 6 6 6-6"/>

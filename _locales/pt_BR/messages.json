@@ -1169,9 +1169,6 @@
   "kartEklenemedi": {
     "message": "Não foi possível adicionar o bloco"
   },
-  "hepsiniSil": {
-    "message": "Excluir todos"
-  },
   "nKirikKartCopeTasinacak": {
     "message": "$1 blocos quebrados serão movidos para a lixeira. Você pode restaurá-los."
   },
