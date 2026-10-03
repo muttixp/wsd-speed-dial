@@ -903,7 +903,8 @@ body.ayarAcik #yanArac { opacity: 0; pointer-events: none; }
     background: #fff;
     transition: transform var(--gecis);
 }
-.anahtar:checked { background: var(--vurgu); }
+/* Sabit renk: aktif grup rengi beyaz secilince anahtar okunmuyordu */
+.anahtar:checked { background: #4d7ea8; }
 .anahtar:checked::after { transform: translateX(17px); }
 
 /* --- Renk kutusu --- */

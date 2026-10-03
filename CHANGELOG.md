@@ -55,6 +55,9 @@ kurallarına uyar.
   Sıfırlama açık bırakılsa da sonraki açılışta kapalı geliyor
 
 ### Düzeltmeler
+- Aktif Grup Rengi beyaz (ya da çok açık) seçilince ayarlardaki açık/kapalı
+  anahtarları bembeyaz görünüyor, açık mı kapalı mı anlaşılmıyordu.
+  Anahtarlar artık seçilen renkten bağımsız, sabit mavi
 - Boş alan menüsündeki "Hepsini yenile" yalnızca ekrandaki kartları
   yeniliyor, klasör kutularının içindekileri atlıyordu. Artık grup
   sekmesindeki "Görselleri yenile" gibi alt klasörleri de kapsıyor;
