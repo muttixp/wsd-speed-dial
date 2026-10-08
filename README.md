@@ -34,8 +34,8 @@ Küçük resimler, notlar ve ayarlar `chrome.storage.local`'da tutulur.
 |---|---|
 | ![Ayarlar](docs/ayarlar.png) | ![Kart düzenleme](docs/kart-duzenle.png) |
 | Ayarlar paneli | Kart düzenleme ve görsel seçimi |
-| ![Arama](docs/arama.png) | ![Çöp kutusu](docs/cop-kutusu.png) |
-| Tüm gruplarda arama | Çöp kutusu — 30 gün saklama |
+| ![Arama](docs/arama.png) | ![İlk açılış](docs/kur.png) |
+| Tüm gruplarda arama | İlk açılış — içe aktarma ve site ekleme |
 
 ---
 
