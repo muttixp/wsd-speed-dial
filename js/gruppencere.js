@@ -13,7 +13,7 @@
 
 import { IKONLAR, ikonAl, faviconUrl } from './ikon.js';
 import { c } from './dil.js';
-import { kartSayilariAl } from './yerimi.js';
+import { kartSayilariAl, urlNormalle } from './yerimi.js';
 import { ikonlariAl, ikonYaz, gorunumleriAl, gorunumYaz } from './grupikon.js';
 import { RENKLER } from './renk.js';
 
@@ -77,6 +77,26 @@ export function grupPenceresiniKur() {
     el('gpKapakSec')?.addEventListener('click', () => el('gpKapakDosya').click());
     el('gpKapakOnizleme')?.addEventListener('click', () => el('gpKapakDosya').click());
     el('gpKapakKaldir')?.addEventListener('click', () => { secilenKapak = null; kapakGoster(); });
+    // GORUNTU URL'SI (1.5.3): kart penceresindeki dugmenin aynisi -
+    // adresteki resim indirilip kucultulur ve kapak olur.
+    el('gpKapakUrl')?.addEventListener('click', async () => {
+        const { metinSor } = await import('./onay.js');
+        const adres = await metinSor({
+            baslik: c('goruntuUrlsi'),
+            metin: c('gorselAdresiniYapistirin'),
+            evet: c('ekle')
+        });
+        if (!adres) return;
+        try {
+            const yanit = await fetch(adres.trim(), { credentials: 'omit' });
+            if (!yanit.ok) throw new Error('indirilemedi');
+            const blob = await yanit.blob();
+            if (!blob.type.startsWith('image/')) throw new Error('gorsel degil');
+            await kapakDosyasiniAl(blob);
+        } catch (e) {
+            uyarGoster(c('goruntuAlinamadi'));
+        }
+    });
     el('gpKapakDosya')?.addEventListener('change', async e => {
         const dosya = e.target.files && e.target.files[0];
         e.target.value = '';
@@ -175,6 +195,56 @@ async function kapakDosyasiniAl(dosya) {
     }
 }
 
+/**
+ * KAPAK ADAYLARI (1.5.3): klasorun ICINDEKI kartlarin gorselleri kucuk
+ * kutular halinde listelenir; birine tiklamak onu kapak yapar. Dosya
+ * aramaya gerek kalmadan "bu klasoru su site temsil etsin" denebiliyor.
+ * Alt klasorlerdeki kartlar da dahil. Yalnizca gorseli olanlar, en
+ * fazla 24 kutu (pencere uzamasin, yuzlerce data URI cizilmesin).
+ */
+let kapakAdaySirasi = 0;
+async function kapakAdaylariniDoldur(klasorId) {
+    const kap = el('gpKapakIcinden');
+    const liste = el('gpKapakAdaylar');
+    if (!kap || !liste) return;
+    const sira = ++kapakAdaySirasi;          // pencere yeniden acilirsa eski istek yazmasin
+    kap.hidden = true;
+    liste.textContent = '';
+    if (!klasorId) return;
+
+    try {
+        const [agac] = await chrome.bookmarks.getSubTree(klasorId);
+        const kartlar = [];
+        (function gez(dugum) {
+            for (const cocuk of dugum.children || []) {
+                if (cocuk.url) kartlar.push({ anahtar: urlNormalle(cocuk.url), baslik: cocuk.title || cocuk.url });
+                else gez(cocuk);
+            }
+        })(agac);
+
+        const ilkler = kartlar.slice(0, 80);
+        const depo = await chrome.storage.local.get(ilkler.map(k => k.anahtar));
+        if (sira !== kapakAdaySirasi) return;
+
+        let adet = 0;
+        const gorulen = new Set();
+        for (const k of ilkler) {
+            const gorsel = depo[k.anahtar]?.gorsel;
+            if (!gorsel || gorulen.has(k.anahtar)) continue;
+            gorulen.add(k.anahtar);
+            const b = document.createElement('button');
+            b.type = 'button';
+            b.className = 'gpKapakAday';
+            b.title = k.baslik;
+            b.style.backgroundImage = `url('${gorsel}')`;
+            b.addEventListener('click', () => { secilenKapak = gorsel; kapakGoster(); });
+            liste.appendChild(b);
+            if (++adet >= 24) break;
+        }
+        kap.hidden = adet === 0;
+    } catch (e) { /* klasor okunamadi - bolum gizli kalir */ }
+}
+
 function kapakGoster() {
     const onz = el('gpKapakOnizleme');
     if (!onz) return;
@@ -246,6 +316,7 @@ export async function grupPenceresiniAc(grup = null, { klasor = null } = {}) {
     if (g.zemin) { el('gpZemin').value = g.zemin; delete el('gpZemin').dataset.bos; }
     else { el('gpZemin').value = '#2a3340'; el('gpZemin').dataset.bos = '1'; }
     kapakGoster();
+    kapakAdaylariniDoldur(klasor && grup ? grup.id : null);
     el('gpAciklama').value = g.aciklama || '';
     if (g.renk) {
         el('gpIkonRengi').value = g.renk;

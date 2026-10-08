@@ -3,6 +3,81 @@
 Sürüm numaraları [Semantic Versioning](https://semver.org/lang/tr/)
 kurallarına uyar.
 
+## [1.5.3] — 2026-10-08
+
+### Yeni
+- **Tek "İçe Aktar", tür kendiliğinden tanınıyor**: WSD yedeği, eski
+  sürüm, FVD Speed Dial, Speed Dial 2, Speed Dial ve Group Speed Dial
+  yedekleri ile herhangi bir tarayıcının yer imi HTML dosyası aynı
+  düğmeden yükleniyor. Ayarlar › Yedekleme'deki ayrı "Yedekten yükle" ve
+  "HTML dosyasından içe aktar" düğmeleri tek **İçe aktar** düğmesinde
+  birleşti
+- **Speed Dial 2, Speed Dial ve Group Speed Dial'dan geçiş**: gruplar,
+  kartlar ve sıra aktarılıyor; Speed Dial 2'de ziyaret sayaçları da.
+  Görselleri o eklentilerin sunucularında durduğu için oraya istek
+  atılmıyor, kartların görselleri WSD'de yakalanıyor. Group Speed Dial'ın
+  metin, arama kutusu, zamanlayıcı gibi araç kartları WSD'de karşılığı
+  olmadığı için atlanıyor
+- **Metin yapıştırarak içe aktarma** (Ayarlar › Yedekleme › Metin
+  yapıştır): FVD yedeğini dosya olarak değil, ayarlarındaki bir metin
+  kutusunda veriyor; o metin kopyalanıp doğrudan yapıştırılabiliyor.
+  Alanın altında boyutu ve türü canlı yazıyor; büyük metinde yalnızca
+  başı önizleme olarak gösteriliyor, tarayıcı donmuyor
+- **Yeni karşılama ekranı**: birincil düğme **İçe Aktar**, yanında **Yer
+  imlerinden** ve **Site Ekle**; düğmelerde simgeler, hangi dosyaların
+  kabul edildiğini anlatan kısa açıklama ve **Bu pencereyi kapat ve devam
+  et** düğmesi. Karşılama önceden yalnızca ilk kart eklenince kayboluyordu,
+  boş başlamak isteyen kullanıcı çıkamıyordu
+- **Boş alan menüsünde "Grubu düzenle… / Klasörü düzenle…"**: bulunulan
+  grubu ya da içinde olunan klasörü doğrudan düzenliyor; yol şeridine sağ
+  tıklayınca da aynı menü geliyor
+- **Aramada "gruba git" aranan kartı gösteriyor**: grup açılıyor, kart
+  görünür alana kaydırılıyor ve birkaç saniye çerçeveyle işaretleniyor
+- **Klasör kapağı**: klasördeki kartların görsellerinden seçilebiliyor
+  (alt klasörler dahil, en fazla 24); kartlardaki gibi **Görüntü URL'si**
+  düğmesi de var
+- **İçe Aktarınca Eksik Görselleri Yakala** (Ayarlar › Görüntü Yakalama,
+  varsayılan açık): kapatılırsa içe aktarma bitince yakalama kendiliğinden
+  başlamıyor, kaç kartın görselsiz kaldığı bildiriliyor
+- Ekran görüntüsü hazır boyutlarına **16:10 · 1280×800** eklendi: varsayılan
+  kart oranıyla birebir, ne kırpma ne boşluk kalıyor
+
+### Değişiklikler
+- **Yeni simge**: iki renkli W (araç çubuğunda zeminsiz ve gölgeli, mağazada
+  koyu zemin üstünde). Eski dört kareli simge mağazadaki başka Speed Dial
+  eklentileriyle karışıyordu. Ayarlar › Sistem › Uzantı Simgesi'nde iki
+  renk ("Sol Kol Rengi", "Sağ Kol Rengi"; eskiden iki satır da yanlışlıkla
+  aynı etiketi gösteriyordu) ve yeni **Simge Gölgesi**, **Gölge Rengi**,
+  **Simge Zemini**, **Zemin Rengi** ayarları. Karşılama ekranı ve tanıtım
+  afişleri de W simgesine geçti; 1400×560 büyük afişler eklendi
+- Yedekleme bölümü: "Yedek al" → **Yedekle**; iki düğmenin simgeleri ters
+  duruyordu, düzeltildi (kutuya giren ok içe aktar, kutudan çıkan ok
+  yedekle)
+- Boş alan menüsünden "Yinelenen kartlar" kaldırıldı: yan panelde ve
+  Bakım'daki tutarlılık raporunda zaten var
+- Türkçe metinlerde "hız kadranı" ifadesi kaldırıldı; kısa açıklama artık
+  "Sık kullandığınız siteler yeni sekmede görsel kartlar olarak…"
+- Gizlilik metni tamamlandı: Logo Yakala'nın son çare favicon sorgusu ve
+  kırık bağlantı taraması da "Dış bağlantılar"da yazıyor
+
+### Düzeltmeler
+- **Kart görselinde sitenin üst kısmı kesiliyordu**: "kırp" yerleşiminde
+  görsel ortadan hizalanıyor, sitenin üst menüsü ve logosu kayboluyordu.
+  Artık üstten hizalanıyor, kırpılan kısım sayfanın altından gidiyor
+- **Gizli kipte görüntü Pencere kipinden farklı çıkıyordu** (kenarlarda
+  siyah boşluk, kaymış yerleşim): yakalama ölçüsü değiştikten sonra sitenin
+  yeniden yerleşmesi bekleniyor
+- **Speed Dial 2 yedekleri FVD sanılıyordu**: grup adları ve grup bağları
+  kayboluyor, her şey Ana Sayfa'ya düşüyordu
+- **FVD metnindeki gömülü görseller atılıyordu**: elle seçilmiş kart
+  görselleri artık aktarılıyor
+- **Büyük yer imi dosyasında sessiz bekleme**: okuma ve aktarma sırasında
+  ekranda hiçbir şey görünmüyor, bitince eski (boş) grup çiziliyordu.
+  Artık iki aşamada da ilerleme penceresi var (kart sayacı ve grup adıyla)
+  ve bitince aktarılan ilk gruba gidiliyor
+- **Kırık işareti kendiliğinden kalkmıyordu**: başarılı yakalamadan sonra
+  işareti kaldıran kod arka planda sessizce hata veriyordu
+
 ## [1.5.2] — 2026-10-03
 
 ### Yeni

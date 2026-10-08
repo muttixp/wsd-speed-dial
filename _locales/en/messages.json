@@ -62,9 +62,6 @@
   "buKartlaIlgiliNotunuz": {
     "message": "Your note about this tile..."
   },
-  "caprazVe": {
-    "message": "Diagonal 2 and 3"
-  },
   "copKutusu": {
     "message": "Trash"
   },
@@ -345,7 +342,7 @@
     "message": "Other data"
   },
   "yedekAl": {
-    "message": "Export backup"
+    "message": "Back up"
   },
   "simdiYedekAl": {
     "message": "Back up now"
@@ -1546,5 +1543,53 @@
   },
   "sagTikBaslik": {
     "message": "Right-Click Menu"
+  },
+  "simgeRenkSol": {
+    "message": "Left Stroke Color"
+  },
+  "simgeRenkSag": {
+    "message": "Right Stroke Color"
+  },
+  "simgeGolgesi": {
+    "message": "Icon Shadow"
+  },
+  "simgeZemini": {
+    "message": "Icon Background"
+  },
+  "simgeZeminRengi": {
+    "message": "Background Color"
+  },
+  "aktarimdaYakala": {
+    "message": "Capture Missing Thumbnails After Import"
+  },
+  "icindekiKartlardanSec": {
+    "message": "Pick from the tiles inside"
+  },
+  "dosyadanIceAktar": {
+    "message": "Import"
+  },
+  "desteklenmeyenDosya": {
+    "message": "This file was not recognised. Choose a WSD, FVD, Speed Dial 2 or Group Speed Dial backup, or a bookmarks HTML file"
+  },
+  "karsilamaIceAktarAciklama": {
+    "message": "Import: a WSD backup, a backup from another speed dial (FVD, Speed Dial 2, Group Speed Dial), or a bookmarks HTML file exported from any browser. The type is detected automatically."
+  },
+  "karsilamaKapatDevam": {
+    "message": "Close this and continue"
+  },
+  "yerimlerinden": {
+    "message": "From bookmarks"
+  },
+  "siteEkle": {
+    "message": "Add Site"
+  },
+  "metinYapistir": {
+    "message": "Paste text (FVD etc.)"
+  },
+  "metinYapistirAciklama": {
+    "message": "Copy the text from FVD's export box in its settings, or the contents of a backup file, and paste it here. The type is detected automatically."
+  },
+  "onizlemeKisaltildi": {
+    "message": "preview shortened, the full text will be imported"
   }
 }

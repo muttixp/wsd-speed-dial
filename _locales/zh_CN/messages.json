@@ -1189,5 +1189,8 @@
   },
   "grupAra": {
     "message": "搜索分组..."
+  },
+  "aktarimdaYakala": {
+    "message": "导入后自动截取缺失的缩略图"
   }
 }

@@ -313,6 +313,17 @@ async function aktarilanlariYakala(urller) {
 
     const eksik = [...new Set(anahtarlar)].filter(a => !varolan.has(a));
     if (!eksik.length) return;
+    // AYAR (1.5.3): kullanici kendiliginden yakalamayi kapatabiliyor.
+    // Kapaliyken yalnizca haber veriyoruz; gorseller gruptan ya da
+    // karttan elle yenilenir. Varsayilan ACIK (eski davranis).
+    try {
+        const ayarlar = (await chrome.storage.local.get('ayarlar')).ayarlar;
+        if (ayarlar && ayarlar.aktarimdaYakala === false) {
+            chrome.runtime.sendMessage({ hedef: 'sayfa', tur: 'aktarimGorselsiz', adet: eksik.length })
+                .catch(() => {});
+            return;
+        }
+    } catch (e) { /* ayar okunamadi - varsayilan davranis */ }
     // Cok fazlaysa KENDILIGINDEN baslatmiyoruz: yuzlerce pencere dakikalarca
     // acilip kapanir. Kullaniciya haber verip gruptan yenilemeyi birakiyoruz.
     if (eksik.length > 300) {
@@ -536,9 +547,17 @@ async function gorseliKaydet(url, adaylar) {
     // varsa kirik isaretini kaldiriyoruz. Isaretin kendiliginden
     // duzelmesinin tek yolu bu.
     if (adaylar && adaylar.length) {
+        // SERVIS ISCISINDE dinamik import() YASAK (her seferinde hata
+        // verip sessizce atlaniyordu) ve kirik.js arayuz modullerine
+        // bagli; bu yuzden ayni is burada dogrudan depo uzerinden.
         try {
-            const { kirikIsaretiKaldir } = await import('./kirik.js');
-            await kirikIsaretiKaldir(url);
+            const d = await chrome.storage.local.get('kirikSonuc');
+            const eski = d.kirikSonuc?.anahtarlar;
+            if (Array.isArray(eski) && eski.includes(url)) {
+                const kalan = eski.filter(a => a !== url);
+                if (kalan.length) await chrome.storage.local.set({ kirikSonuc: { ...d.kirikSonuc, anahtarlar: kalan } });
+                else await chrome.storage.local.remove('kirikSonuc');
+            }
         } catch (e) { /* onemli degil */ }
     }
     const liste = Array.isArray(adaylar) ? adaylar : (adaylar ? [adaylar] : []);

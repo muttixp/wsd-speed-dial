@@ -24,6 +24,34 @@ const el = id => document.getElementById(id);
 
 let klasorler = [];        // { ad, baglantilar: [{url, baslik}] }
 
+/* ============ Ilerleme (1.5.3) ============
+ *
+ * Buyuk dosyada (4 MB, binlerce yer imi) hem ayristirma hem aktarma
+ * saniyeler-dakikalar suruyordu ve ekranda HICBIR SEY yoktu; kullanici
+ * takildi saniyordu. Yedek yuklemedeki ilerleme penceresini kullaniyoruz.
+ */
+const kareVer = (ms = 0) => new Promise(r => setTimeout(r, ms));
+
+function ilerleme(acik, metin = '', yapilan = 0, toplam = 0) {
+    const p = el('ilerlemePencere');
+    if (!p) return;
+    const perde = document.getElementById('perde');
+    if (!acik) {
+        p.hidden = true;
+        perde?.classList.remove('acik');
+        // Pencere yedek yuklemeyle ortak - basligini geri birak
+        if (el('ilerlemeBaslik')) el('ilerlemeBaslik').textContent = c('yedekYukleniyor');
+        return;
+    }
+    if (el('ilerlemeBaslik')) el('ilerlemeBaslik').textContent = c('iceAktar');
+    if (el('ilerlemeMetin')) el('ilerlemeMetin').textContent = metin;
+    if (el('ilerlemeDolgu')) el('ilerlemeDolgu').style.width =
+        (toplam ? Math.max(4, Math.round(yapilan / toplam * 100)) : 6) + '%';
+    if (el('ilerlemeSayi')) el('ilerlemeSayi').textContent = toplam ? `${yapilan} / ${toplam}` : '';
+    p.hidden = false;
+    perde?.classList.add('acik');
+}
+
 /* ============ Ortak agac yapisi ============
  *
  * Iki kaynak da once AGACA ceviriliyor: { ad, baglantilar, cocuklar }.
@@ -192,7 +220,7 @@ function grupAdiniSadelestir(ad) {
  * Secilen klasorleri gruba cevirir.
  * Ayni adli grup varsa ICINE ekliyor; o grupta bulunan adresi atliyor.
  */
-async function aktar(secilenler) {
+async function aktar(secilenler, bildirim = null) {
     const { iceAktarimBaslat, iceAktarimBitir } = await import('./iceaktarim.js');
     const urller = [];
     for (const k of secilenler) {
@@ -201,13 +229,15 @@ async function aktar(secilenler) {
     }
     await iceAktarimBaslat();
     try {
-        return await aktarIc(secilenler);
+        return await aktarIc(secilenler, urller.length, bildirim);
     } finally {
         await iceAktarimBitir(urller);
     }
 }
 
-async function aktarIc(secilenler) {
+async function aktarIc(secilenler, toplam = 0, bildirim = null) {
+    let islenen = 0;
+    let ilkGrup = null;                  // bitince kullanici buraya goturulecek
     const mevcut = new Map();
     for (const g of await gruplariAl()) {
         mevcut.set((g.baslik || '').trim().toLocaleLowerCase('tr'), g.id);
@@ -239,9 +269,14 @@ async function aktarIc(secilenler) {
         return id;
     };
 
-    const ekle = async (klasorId, baglantilar) => {
+    const ekle = async (klasorId, baglantilar, grupAdi) => {
         const varolan = await adresleriAl(klasorId);
         for (const b of baglantilar) {
+            islenen++;
+            if (bildirim && (islenen % 15 === 0 || islenen === toplam)) {
+                bildirim(islenen, toplam, grupAdi);
+                await kareVer();                     // cubuk cizilsin
+            }
             const a = urlNormalle(b.url);
             if (varolan.has(a)) { atlanan++; continue; }
             varolan.add(a);
@@ -261,21 +296,31 @@ async function aktarIc(secilenler) {
             grupSayisi++;
         }
 
-        await ekle(grupId, k.baglantilar);
+        if (!ilkGrup) ilkGrup = grupId;
+
+        await ekle(grupId, k.baglantilar, grupAdi);
         for (const alt of k.altlar || []) {
-            await ekle(await klasorBul(grupId, alt.yol), alt.baglantilar);
+            await ekle(await klasorBul(grupId, alt.yol), alt.baglantilar, grupAdi);
         }
     }
 
-    return { eklenen, atlanan, grupSayisi };
+    return { eklenen, atlanan, grupSayisi, ilkGrup };
 }
 
 /* ============ Pencere ============ */
 
 export async function ictarPenceresiniAc(kaynak = 'tarayici', dosyaMetni = null) {
-    agacKoklari = kaynak === 'html'
-        ? htmlAgaciniCoz(dosyaMetni)
-        : await tarayiciAgaciniAl();
+    // Ayristirma ana is parcacigini kilitliyor: once "okunuyor" yazisi
+    // ekrana cizilsin diye bir kare bekliyoruz
+    ilerleme(true, c('asamaDosyaOkunuyor'));
+    await kareVer(60);
+    try {
+        agacKoklari = kaynak === 'html'
+            ? htmlAgaciniCoz(dosyaMetni)
+            : await tarayiciAgaciniAl();
+    } finally {
+        ilerleme(false);
+    }
     const koru = el('ictarKoru');
     if (koru) koru.checked = altlariKoru;
     await listeyiCiz();
@@ -369,11 +414,20 @@ export function ictarPenceresiniKur() {
 
         const btn = el('ictarAktar');
         btn.disabled = true;
+        // Secim penceresi kapanip ILERLEME aciliyor: kart kart sayac ve
+        // hangi grubun islendigi gorunuyor (once ekranda hicbir sey yoktu)
+        el('ictarPencere').hidden = true;
+        ilerleme(true, c('asamaKartlarEkleniyor'));
+        await kareVer();
         try {
-            const s = await aktar(secili);
-            el('ictarPencere').hidden = true;
+            const s = await aktar(secili, (yapilan, toplam, ad) =>
+                ilerleme(true, c('asamaKartlarEkleniyor') + (ad ? ` — ${ad}` : ''), yapilan, toplam));
+            ilerleme(true, c('asamaTamamlaniyor'), 1, 1);
+            await kareVer();
             await arayuzuKur();
-            await grubuAc(aktifGrup());
+            // Aktarilan ILK gruba git: once eski (cogu zaman bos) grup
+            // yeniden ciziliyordu, kullanici bos ekranda bekliyordu
+            await grubuAc(s.ilkGrup || aktifGrup());
             bildir('✓ ' + c('iceAktarmaTamamlandi') + ': ' + c('nKartEklendi', s.eklenen) +
                    (s.grupSayisi ? ` · ${c('nYeniGrup', s.grupSayisi)}` : '') +
                    (s.atlanan ? ` · ${c('nKartZatenVardi', s.atlanan)}` : ''), { sure: 8000 });
@@ -381,6 +435,7 @@ export function ictarPenceresiniKur() {
             console.log('[WSD] ice aktarma hatasi:', e);
             bildir(c('ictarBasarisiz'));
         } finally {
+            ilerleme(false);
             btn.disabled = false;
         }
     });

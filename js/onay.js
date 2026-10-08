@@ -21,12 +21,34 @@ const el = id => document.getElementById(id);
 let acikCozucu = null;      // acik pencerenin resolve fonksiyonu
 let acikHatirla = null;     // "bir daha sorma" anahtari
 
+// BUYUK YAPISTIRMA (1.5.3): 6 MB'lik FVD metni metin alanina dogrudan
+// yazilinca tarayici tek dev satiri kaydirip cizmeye calisirken sayfa
+// saniyelerce kilitleniyordu. Esigin ustundeki yapistirmada metnin
+// TAMAMI burada tutuluyor, alanda yalnizca basi onizleme olarak gorunuyor.
+const ONIZLEME_ESIGI = 20000;
+let yapistirilan = null;
+
 export function onayPenceresiniKur() {
     el('onayEvet')?.addEventListener('click', () => kapat(true));
     el('onayHayir')?.addEventListener('click', () => kapat(false));
 
     el('onayPencere')?.addEventListener('click', e => {
         if (e.target.id === 'onayPencere') kapat(false);
+    });
+
+    // Cok satirli alan: yapistirilan metnin boyutu ve turu canli gorunsun
+    // (1.5.3) - kullanici ne yapistirdigini ve dogru sey olup olmadigini
+    // gondermeden once goruyor.
+    el('onayMetinAlan')?.addEventListener('input', metinBilgisiniTazele);
+    el('onayMetinAlan')?.addEventListener('paste', e => {
+        const m = e.clipboardData?.getData('text') || '';
+        if (m.length <= ONIZLEME_ESIGI) return;          // kucuk metin: normal yapistirma
+        e.preventDefault();
+        yapistirilan = m;
+        const alan = el('onayMetinAlan');
+        alan.value = m.slice(0, 3000) + '\n\n… ' + c('onizlemeKisaltildi');
+        alan.readOnly = true;                            // onizleme duzenlenmesin
+        metinBilgisiniTazele();
     });
 
     el('onayGirisAlan')?.addEventListener('keydown', e => {
@@ -104,7 +126,7 @@ export function metinSor({ baslik = c('giris'), metin = '', deger = '',
     return ac({ baslik, metin, evet, hayir, tehlikeli: false, giris: deger });
 }
 
-function ac({ baslik, metin, evet, hayir, tehlikeli, giris, hatirla = null }) {
+function ac({ baslik, metin, evet, hayir, tehlikeli, giris, hatirla = null, cokSatir = false }) {
     // Onceki pencere acik kaldiysa iptal say - iki pencere ust uste binmesin
     if (acikCozucu) kapat(false);
 
@@ -115,6 +137,15 @@ function ac({ baslik, metin, evet, hayir, tehlikeli, giris, hatirla = null }) {
     const girisVar = giris !== null;
     el('onayGiris').hidden = !girisVar;
     if (girisVar) el('onayGirisAlan').value = giris;
+
+    const cok = el('onayCokSatir');
+    if (cok) {
+        cok.hidden = !cokSatir;
+        yapistirilan = null;
+        el('onayMetinAlan').readOnly = false;
+        el('onayMetinAlan').value = '';
+        metinBilgisiniTazele();
+    }
 
     // "Bir daha sorma" yalnizca geri alinabilir islemlerde
     acikHatirla = hatirla;
@@ -130,9 +161,35 @@ function ac({ baslik, metin, evet, hayir, tehlikeli, giris, hatirla = null }) {
 
     el('onayPencere').hidden = false;
     document.getElementById('perde').classList.add('acik');
-    setTimeout(() => (girisVar ? el('onayGirisAlan') : el('onayEvet')).focus(), 30);
+    setTimeout(() => (cokSatir ? el('onayMetinAlan') : girisVar ? el('onayGirisAlan') : el('onayEvet')).focus(), 30);
 
     return new Promise(coz => { acikCozucu = coz; });
+}
+
+function metinBilgisiniTazele() {
+    const alan = el('onayMetinAlan');
+    const bilgi = el('onayMetinBilgi');
+    if (!alan || !bilgi) return;
+    const m = yapistirilan ?? alan.value;
+    if (!m.trim()) { bilgi.textContent = ''; bilgi.className = 'onayMetinBilgi'; return; }
+    const bas = m.replace(/^\uFEFF/, '').trimStart();
+    const tur = bas.startsWith('<') ? 'HTML'
+              : (bas.startsWith('{') || bas.startsWith('[')) ? 'JSON' : null;
+    // Bayt hesabi icin metni kopyalamiyoruz: UTF-8 uzunlugu tahmini yeter
+    const kb = (m.length > 200000 ? m.length : new Blob([m]).size) / 1024;
+    const boyut = kb >= 1024 ? (kb / 1024).toFixed(1) + ' MB' : Math.max(1, Math.round(kb)) + ' KB';
+    bilgi.textContent = (tur ? tur + ' · ' : '⚠ ' + c('desteklenmeyenDosya') + ' · ') + boyut;
+    bilgi.className = 'onayMetinBilgi' + (tur ? ' iyi' : ' kotu');
+}
+
+/**
+ * COK SATIRLI metin ister (yapistirma icin, 1.5.3). Tek satirlik
+ * alanda yapistirilan uzun metin gorunmuyordu.
+ * @returns {Promise<string|null>}  iptal edilirse null
+ */
+export function metinAlaniSor({ baslik = c('giris'), metin = '', evet = c('tamam'),
+                                hayir = c('vazgec') } = {}) {
+    return ac({ baslik, metin, evet, hayir, tehlikeli: false, giris: null, cokSatir: true });
 }
 
 function kapat(kabul) {
@@ -146,12 +203,19 @@ function kapat(kabul) {
     }
 
     if (!coz) return;
-    if (!kabul) return coz(null);
+    if (!kabul) { yapistirilan = null; return coz(null); }
 
     // Yalnizca ONAYLANDIGINDA kaydediyoruz: vazgecerken isaretlemek
     // "bir daha sorma ve hep iptal et" anlamina gelirdi
     if (hatirla && el('onayHatirlaKutusu')?.checked) onayiAtla(hatirla);
 
+    if (el('onayCokSatir') && !el('onayCokSatir').hidden) {
+        const m = yapistirilan ?? el('onayMetinAlan').value;
+        yapistirilan = null;                     // buyuk metin bellekte kalmasin
+        el('onayMetinAlan').value = '';
+        el('onayMetinAlan').readOnly = false;
+        return coz(m);
+    }
     const girisVar = !el('onayGiris').hidden;
     coz(girisVar ? el('onayGirisAlan').value.trim() : '');
 }

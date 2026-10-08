@@ -27,6 +27,7 @@ export const VARSAYILAN = {
     jpegKalitesi: 85,
     yakalamaOneAl: false,       // odaksiz yakalama basarisizsa pencereyi one al
     yakalamaKipi: 'pencere',    // 'pencere' | 'gizli' (debugger ile, pencere hic gorunmez)
+    aktarimdaYakala: true,      // ice aktarma / yedek yukleme bitince eksik gorselleri kendiliginden yakala
 
     // Gorunum
     duvarAcik: true,
@@ -84,7 +85,11 @@ export const VARSAYILAN = {
 
     // Uzanti simgesi - dort kare, capraz iki renk
     simgeRenkA: '#5d93c2',      // capraz 1 ve 4
-    simgeRenkB: '#a8c8e4',      // capraz 2 ve 3
+    simgeRenkB: '#a8c8e4',      // sag kol
+    simgeGolge: true,           // arac cubugu simgesinde golge
+    simgeGolgeRengi: '#000000',
+    simgeZemin: false,          // W'nin arkasinda dolu zemin
+    simgeZeminRengi: '#1b2029',
     anaSayfaGoster: true,       // kok grup seritte ve menulerde gorunsun mu
 };
 

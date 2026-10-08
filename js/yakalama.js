@@ -2026,7 +2026,10 @@ async function gizliYakala(url, ayar) {
     let baglandi = false;
 
     try {
-        // Arka planda sekme - pencere acilmiyor
+        // Arka planda sekme - pencere acilmiyor.
+        // NOT (1.5.3): olcuyu sayfa yuklenmeden ONCE ayarlamak (bos sekmeye
+        // baglanip sonra adrese gitmek) denendi; Vivaldi'yi COKERTTI.
+        // Hata ayiklayici bagliyken sekmede gezinme yapilmiyor.
         sekme = await chrome.tabs.create({ url, active: false });
         await sayfaStabilOlsun(sekme.id);
         await bekle(ayar.yakalamaBekleme);
@@ -2050,6 +2053,12 @@ async function gizliYakala(url, ayar) {
             deviceScaleFactor: 1,
             mobile: false
         }), 10000, 'setDeviceMetricsOverride');
+
+        // YENIDEN YERLESIM BEKLEMESI (1.5.3): olcu degisince site kendini
+        // yeni genislige gore yeniden diziyor. Hemen cekilen karede bu ara
+        // durum yakalaniyordu: kenarlarda siyah bosluk, kaymis yerlesim,
+        // eksik ust menu. Duzenin oturmasi icin bekliyoruz.
+        await bekle(900);
 
         const bicim = ayar.gorselBicimi === 'png' ? 'png' : 'jpeg';
         const secenek = {

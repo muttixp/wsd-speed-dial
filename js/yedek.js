@@ -443,6 +443,23 @@ function bicimiCoz(veri) {
     if (veri.wsd) return veri.wsd;
     if (veri.yasd) return eskiyiCevir(veri.yasd);
 
+    // SPEED DIAL 2 ve "SPEED DIAL" (Speed Dial Dev) - ikisi AYNI bicim
+    // (1.5.3): dials[].idgroup, groups[].title. FVD'den ONCE bakilmali:
+    // ikisinde de groups+dials var, FVD kontrolu bunlari da yakalardi ve
+    // grup adlari (name yerine title) ile grup baglari (group_id yerine
+    // idgroup) kaybolurdu - her sey Ana Sayfa'ya duserdi.
+    if (Array.isArray(veri.dials) && Array.isArray(veri.groups) &&
+        (veri.dials.some(d => d && 'idgroup' in d) ||
+         veri.groups.some(g => g && 'title' in g && !('name' in g)))) {
+        return sd2Cevir(veri);
+    }
+
+    // GROUP SPEED DIAL (1.5.3): kartlar grubun ICINDE (groups[].dials[])
+    if (!Array.isArray(veri.dials) && Array.isArray(veri.groups) &&
+        veri.groups.some(g => g && Array.isArray(g.dials))) {
+        return gsdCevir(veri);
+    }
+
     // FVD "full" bicimi: `source` alani olmayabiliyor, yapidan da taniyoruz
     const fvdMi = veri.source === 'fvd-full' ||
         (Array.isArray(veri.groups) && Array.isArray(veri.dials));
@@ -452,6 +469,85 @@ function bicimiCoz(veri) {
     if (veri.db && Array.isArray(veri.db.dials)) return fvdHamCevir(veri);
 
     return null;
+}
+
+/* ============ Speed Dial 2 / Speed Dial (1.5.3) ============
+ *
+ * { dials: [{id, idgroup, position, title, url, thumbnail, visits}],
+ *   groups: [{id, title, position}], preferences: {...} }
+ *
+ * - idgroup 0 = varsayilan grup ("Home") -> bizim Ana Sayfa (kok)
+ * - `thumbnail` gomulu goruntu DEGIL, eklentinin sunucusundaki bir
+ *   adres (image.speeddial2.com). Oraya istek ATMIYORUZ - gizlilik
+ *   metnimizde boyle bir dis baglanti yok. Gorseller bizde yakalaniyor.
+ * - Tum kartlarda position 999 olabiliyor: esitlikte id sirasi.
+ * - visits -> ziyaret sayaci. preferences bizim ayarlarla ortusmuyor.
+ */
+function sd2Cevir(f) {
+    const gruplar = [{ kokMu: true, baslik: c('anaSayfa'), kartlar: [], ikon: null, gorunum: null }];
+    const grupIndeksi = new Map();
+    const sirala = (a, b) => (a.position || 0) - (b.position || 0) || (a.id || 0) - (b.id || 0);
+
+    for (const g of (f.groups || []).filter(Boolean).slice().sort(sirala)) {
+        if (String(g.id) === '0') { grupIndeksi.set('0', 0); continue; }
+        grupIndeksi.set(String(g.id), gruplar.length);
+        gruplar.push({ kokMu: false, baslik: g.title || g.name || 'Grup', kartlar: [], ikon: null, gorunum: null });
+    }
+
+    const sayaclar = {};
+    for (const d of (f.dials || []).filter(Boolean).slice().sort(sirala)) {
+        if (!d.url || !/^(https?|ftp|file):/i.test(d.url)) continue;
+        const yer = grupIndeksi.has(String(d.idgroup)) ? grupIndeksi.get(String(d.idgroup)) : 0;
+        const temiz = urlNormalle(d.url);
+        gruplar[yer].kartlar.push({ baslik: d.title || d.url, url: temiz });
+        if (d.visits > 0) sayaclar[temiz] = { adet: d.visits, son: null };
+    }
+
+    return { surum: SURUM, gruplar, gorseller: {}, notlar: {}, renkler: {}, sayaclar, ayarlar: null };
+}
+
+/* ============ Group Speed Dial (1.5.3) ============
+ *
+ * { groups: [{id, name, archived, dials: [{type, name, url, thumbnail}]}],
+ *   ___thumbnails: [{url, group, icon}], dataVersion, ... }
+ *
+ * - Kart turleri: 0 = site baglantisi. Digerleri (1 grup baglantisi
+ *   "#1", 3 metin, 4 arama kutusu, 7 son kapatilanlar, 8 en cok ziyaret
+ *   edilenler, 9 zamanlayici) bizde karsiligi olmayan ARACLAR: atlaniyor.
+ *   Bos `{}` ogeleri de var (grubun "+" yeri).
+ * - Grup id 0 ("Home group") -> Ana Sayfa. Arsivlenmis gruplar da
+ *   aliniyor: veri kaybolmasin.
+ * - Gorsel: yalnizca GOMULU raster goruntu (data:image/png|jpeg|webp).
+ *   `./svg/...` eklentinin kendi dosyasi, http adresi ise dis istek -
+ *   ikisi de alinmiyor. ___thumbnails'teki SVG site simgeleri kart
+ *   gorseli icin cok kucuk; kartlar bizde yakalaniyor.
+ */
+const GOMULU_RASTER = /^data:image\/(png|jpe?g|webp|gif|bmp);/i;
+
+function gsdCevir(f) {
+    const gruplar = [{ kokMu: true, baslik: c('anaSayfa'), kartlar: [], ikon: null, gorunum: null }];
+    const gorseller = {};
+
+    for (const g of (f.groups || []).filter(Boolean)) {
+        if (!Array.isArray(g.dials)) continue;
+        let yer = 0;
+        if (String(g.id) !== '0') {
+            yer = gruplar.length;
+            gruplar.push({ kokMu: false, baslik: g.name || 'Grup', kartlar: [], ikon: null, gorunum: null });
+        }
+        for (const d of g.dials) {
+            if (!d || (d.type != null && d.type !== 0)) continue;
+            if (!d.url || !/^(https?|ftp|file):/i.test(d.url)) continue;
+            const temiz = urlNormalle(d.url);
+            gruplar[yer].kartlar.push({ baslik: d.name || d.url, url: temiz });
+            const v = d.thumbnail && d.thumbnail.value;
+            if (typeof v === 'string' && GOMULU_RASTER.test(v) && !gorseller[temiz]) {
+                gorseller[temiz] = { gorsel: v, adaylar: [v], secim: 0, zemin: null };
+            }
+        }
+    }
+
+    return { surum: SURUM, gruplar, gorseller, notlar: {}, renkler: {}, sayaclar: {}, ayarlar: null };
 }
 
 /**
@@ -484,6 +580,7 @@ function fvdHamCevir(f) {
     }
 
     const sayaclar = {};
+    const gorseller = {};
     const kartlar = (db.dials || []).slice()
         .sort((a, b) => (a.position || 0) - (b.position || 0));
 
@@ -500,13 +597,20 @@ function fvdHamCevir(f) {
         });
 
         if (d.clicks) sayaclar[temiz] = { adet: d.clicks, son: null };
+
+        // GOMULU goruntu (1.5.3): `thumb` cogunlukla filesystem: baglantisi
+        // ama ELLE secilen gorsellerde data:image/png olarak metnin icinde.
+        // Onceden hepsi atiliyordu; tasinabilenler artik tasiniyor.
+        if (typeof d.thumb === 'string' && GOMULU_RASTER.test(d.thumb) && !gorseller[temiz]) {
+            gorseller[temiz] = { gorsel: d.thumb, adaylar: [d.thumb], secim: 0, zemin: null };
+        }
     }
 
     return {
         surum: SURUM,
         fvdHam: true,
         gruplar,
-        gorseller: {},          // filesystem: baglantilari tasinamiyor
+        gorseller,              // yalnizca gomulu olanlar; filesystem: tasinamiyor
         notlar: {},
         renkler: {},
         sayaclar,

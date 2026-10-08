@@ -11,7 +11,7 @@
 
 // WSD Speed Dial - ayar paneli baglantilari
 
-import { tazelemeBastirildiMi } from './arayuz.js';
+import { tazelemeBastirildiMi, bildir } from './arayuz.js';
 import { ayarlariAl, ayarYaz, ayarlariSifirla } from './ayar.js';
 import { c } from './dil.js';
 import { filtreZinciri, ikiRenkKatmanlari } from './filtre.js';
@@ -35,6 +35,7 @@ const ALANLAR = [
     ['gorselBicimi',     'ayBicim',     el => el.value],
     ['jpegKalitesi',     'ayKalite',    el => +el.value],
     ['yakalamaOneAl',    'ayOneAl',     el => el.checked],
+    ['aktarimdaYakala',  'ayAktarimdaYakala', el => el.checked],
     ['yakalamaKipi',     'ayYakalamaKipi', el => el.value],
     ['sagTikMenu',       'aySagTikMenu',     el => el.value],
     ['kartAraclariGoster','ayKartAraclari', el => el.checked],
@@ -70,6 +71,10 @@ const ALANLAR = [
     ['grubuHatirla',     'ayGrubuHatirla',   el => el.checked],
     ['simgeRenkA',       'aySimgeA',         el => el.value],
     ['simgeRenkB',       'aySimgeB',         el => el.value],
+    ['simgeGolge',       'aySimgeGolge',     el => el.checked],
+    ['simgeGolgeRengi',  'aySimgeGolgeRengi', el => el.value],
+    ['simgeZemin',       'aySimgeZemin',     el => el.checked],
+    ['simgeZeminRengi',  'aySimgeZeminRengi', el => el.value],
     ['anaSayfaGoster',   'ayAnaSayfa',       el => el.checked],
     ['kartOrani',        'ayKartOrani',        el => el.value],
     ['gorselYerlesim',   'ayGorselYerlesim',   el => el.value],
@@ -274,6 +279,8 @@ function gorunumuUygula(ayar) {
     const oranCss = { o1610: '16 / 10', o169: '16 / 9', o43: '4 / 3', okare: '1 / 1' };
     kok.setProperty('--kart-oran', oranCss[ayar.kartOrani] || '16 / 10');
     kok.setProperty('--gorsel-yerlesim', ayar.gorselYerlesim === 'contain' ? 'contain' : 'cover');
+    // Kirpmada USTTEN hizala (menu/logo ustte), sigdirmada ortala
+    kok.setProperty('--gorsel-konum', ayar.gorselYerlesim === 'contain' ? '50% 50%' : '50% 0');
     kok.setProperty('--kart-bosluk-yatay', (ayar.kartBoslukYatay ?? 3) + 'px');
     kok.setProperty('--kart-bosluk-dikey', (ayar.kartBoslukDikey ?? 12) + 'px');
     kok.setProperty('--kart-cerceve', (ayar.kartCerceve ?? 1) + 'px');
@@ -590,10 +597,14 @@ function hazirSecimiGoster(en, boy) {
 
 function simgeAraclariniKur() {
     document.getElementById('aySimgeSifirla')?.addEventListener('click', async () => {
-        const varsayilan = { simgeRenkA: '#5d93c2', simgeRenkB: '#a8c8e4' };
+        const varsayilan = { simgeRenkA: '#5d93c2', simgeRenkB: '#a8c8e4', simgeGolge: true, simgeGolgeRengi: '#000000', simgeZemin: false, simgeZeminRengi: '#1b2029' };
         const yeni = await ayarYaz(varsayilan);
         document.getElementById('aySimgeA').value = varsayilan.simgeRenkA;
         document.getElementById('aySimgeB').value = varsayilan.simgeRenkB;
+        document.getElementById('aySimgeGolge').checked = true;
+        document.getElementById('aySimgeGolgeRengi').value = varsayilan.simgeGolgeRengi;
+        document.getElementById('aySimgeZemin').checked = false;
+        document.getElementById('aySimgeZeminRengi').value = varsayilan.simgeZeminRengi;
         gorunumuUygula(yeni);
         uyar(c('simgeRenkleriSifirlandi'));
     });
@@ -771,10 +782,37 @@ function yedekAraclariniKur() {
     const secici = document.getElementById('ayYedekSecici');
     document.getElementById('ayYedekYukle')?.addEventListener('click', () => secici?.click());
 
-    secici?.addEventListener('change', async e => {
-        const dosya = e.target.files && e.target.files[0];
-        e.target.value = '';
-        if (!dosya) return;
+    /**
+     * Dosyadan ya da YAPISTIRILAN metinden ice aktarma - tek yol (1.5.3).
+     * Tur icerige bakilarak seciliyor: yer imi HTML'i -> yer imi aktarma
+     * penceresi; JSON -> yedek yukleme (WSD / eski surum / FVD / Speed
+     * Dial 2 / Group Speed Dial bicimini yedegiYukle kendisi taniyor).
+     */
+    async function metniIceAktar(metin, htmlAdli = false) {
+        const bas = String(metin || '').replace(/^\uFEFF/, '').trimStart();
+        if (htmlAdli || bas.startsWith('<')) {
+            const { ictarPenceresiniAc } = await import('./yerimiictar.js');
+            await ictarPenceresiniAc('html', bas);
+            return;
+        }
+        // Buyuk metinde JSON.parse saniyeler surebiliyor ve sayfayi
+        // kilitliyor: once "okunuyor" penceresi cizilsin (1.5.3)
+        const ilerPencere = document.getElementById('ilerlemePencere');
+        ilerPencere.hidden = false;
+        document.getElementById('perde')?.classList.add('acik');
+        ilerlemeCiz({ asama: 'baslangic', yapilan: 0, toplam: 0, ad: '' });
+        await new Promise(r => setTimeout(r, 60));
+
+        let veri = null;
+        if (bas.startsWith('{') || bas.startsWith('[')) {
+            try { veri = JSON.parse(bas); } catch (err) { veri = null; }
+        }
+        ilerPencere.hidden = true;               // soru penceresi icin
+        if (!veri) {
+            document.getElementById('perde')?.classList.remove('acik');
+            bildir(c('desteklenmeyenDosya'));
+            return;
+        }
 
         // Mevcut veriyi silmek geri alinamaz - acikca soruyoruz
         const temizle = await onaySor({
@@ -785,13 +823,11 @@ function yedekAraclariniKur() {
 
         const pencere = document.getElementById('ilerlemePencere');
         try {
-            const metin = await dosya.text();
-
             pencere.hidden = false;
             document.getElementById('perde')?.classList.add('acik');
-            ilerlemeCiz({ asama: 'baslangic', yapilan: 0, toplam: 0, ad: 'Dosya okunuyor' });
+            ilerlemeCiz({ asama: 'baslangic', yapilan: 0, toplam: 0, ad: '' });
 
-            const s = await yedegiYukle(JSON.parse(metin), temizle, ilerlemeCiz);
+            const s = await yedegiYukle(veri, temizle, ilerlemeCiz);
             ilerlemeCiz({ asama: 'yenile', yapilan: s.kart, toplam: s.kart, ad: '' });
 
             // Birlestirme yapildiysa atlanan kart sayisini da soyle
@@ -805,6 +841,29 @@ function yedekAraclariniKur() {
             console.log('[WSD] yedek yuklenemedi:', err);
             bildir(c('yedekYuklenemedi') + (err.message || ''));
         }
+    }
+
+    secici?.addEventListener('change', async e => {
+        const dosya = e.target.files && e.target.files[0];
+        e.target.value = '';
+        if (!dosya) return;
+        let metin = '';
+        try { metin = await dosya.text(); }
+        catch (err) { bildir(c('dosyaOkunamadi')); return; }
+        await metniIceAktar(metin, /\.html?$/i.test(dosya.name));
+    });
+
+    // METIN YAPISTIR (1.5.3): FVD yedegini dosya olarak degil, ayarlarindaki
+    // bir METIN KUTUSUNDA veriyor. Kullanici onu dosyaya kaydetmek zorunda
+    // kalmasin - kopyalayip buraya yapistirsin.
+    document.getElementById('ayMetinYapistir')?.addEventListener('click', async () => {
+        const { metinAlaniSor } = await import('./onay.js');
+        const metin = await metinAlaniSor({
+            baslik: c('metinYapistir'),
+            metin: c('metinYapistirAciklama'),
+            evet: c('iceAktar')
+        });
+        if (metin && metin.trim()) await metniIceAktar(metin);
     });
 
     document.getElementById('ayCopAc')?.addEventListener('click', async () => {
@@ -862,17 +921,7 @@ function yedekAraclariniKur() {
         await ictarPenceresiniAc('tarayici');
     });
 
-    document.getElementById('ayHtmlIctar')?.addEventListener('click', () => {
-        document.getElementById('ayHtmlSecici')?.click();
-    });
-
-    document.getElementById('ayHtmlSecici')?.addEventListener('change', async e => {
-        const dosya = e.target.files?.[0];
-        e.target.value = '';                      // ayni dosya tekrar secilebilsin
-        if (!dosya) return;
-        const { ictarPenceresiniAc } = await import('./yerimiictar.js');
-        await ictarPenceresiniAc('html', await dosya.text());
-    });
+    // HTML yer imi dosyasi artik "Dosyadan ice aktar" uzerinden (1.5.3)
 
     // --- Kirik baglanti taramasi ---
     document.getElementById('ayKirikTara')?.addEventListener('click', async () => {

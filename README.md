@@ -52,7 +52,7 @@ yalnızca izinler değişirse gerekir.
 
 ### Vivaldi kullanıyorsanız
 
-Vivaldi kendi hız kadranını varsayılan tutar. Yeni sekmede WSD çıkması için:
+Vivaldi yeni sekmede kendi Speed Dial sayfasını açar. Yeni sekmede WSD çıkması için:
 
 **Ayarlar → Sekmeler → Yeni Sekme Sayfası → Uzantı**
 
@@ -146,6 +146,14 @@ FVD'nin özgün yedeğinde görseller taşınamaz: dosya yolu olarak saklandıkl
 için başka bir eklenti onlara erişemez. Kartlar eklenir, görselleri yeniden
 yakalanır.
 
+FVD yedeğini dosya olarak değil, ayarlarındaki bir metin kutusunda verir.
+O metni kopyalayıp **Ayarlar › Yedekleme › Metin yapıştır** ile doğrudan
+içe aktarabilirsiniz; dosyaya kaydetmeye gerek yoktur.
+
+Speed Dial 2, Speed Dial ve Group Speed Dial yedeklerinden gruplar ve
+kartlar aktarılır; görselleri o eklentilerin sunucularında durduğu için
+WSD'de yeniden yakalanır.
+
 Birden fazla tarayıcıdaki veriyi birleştirmek için: ilkinde **"Sil ve yükle"**,
 sonrakilerde **"Ekle"** seçin.
 
@@ -177,6 +185,8 @@ Panel son açık bölümü hatırlar.
 
 **Gizli** — sekme arka planda açılır, pencere hiç görünmez. Karşılığında
 tarayıcı üstte "hata ayıklıyor" çubuğu gösterir.
+Bu kip `debugger` iznini kullanır. Chrome bu iznin isteğe bağlı
+olmasına izin vermediği için kurulumda istenir.
 
 ---
 

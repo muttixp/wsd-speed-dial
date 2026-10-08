@@ -387,7 +387,7 @@ async function klasoruSil(id) {
  * emoji / site favicon'u) ve ikon rengi. Veriler gruplarla ayni depoda,
  * yer imi kimligine bagli.
  */
-async function klasoruDuzenle(id) {
+export async function klasoruDuzenle(id) {
     const [d] = await chrome.bookmarks.get(id);
     const sonuc = await grupPenceresiniAc({ id, baslik: d.title }, { klasor: { ustId: d.parentId } });
     if (!sonuc) return;

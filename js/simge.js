@@ -24,29 +24,53 @@ const OLCULER = [16, 24, 32, 48, 128];
 /**
  * Tek bir olcu icin ImageData uretir.
  *
- * Dort kare, capraz iki renk. Cerceve ve orta kare YOK: 16px'te ikisi de
- * bulaniklasip ikonu kirletiyordu.
+ * 1.5.3: iki renkli W. Sol kol birinci renk,
+ * sag kol ikinci renk. Eski dort kareli simge magazadaki baska hiz
+ * kadranlariyla karisiyordu.
  *
- * Renkler SEFFAF DEGIL: opaklik kullanmak yerine iki gercek renk
- * veriyoruz. Seffaf kareler koyu ve acik arac cubuklarinda farkli
- * gorunuyor, acik zeminde silik kaliyordu.
+ * Renkler SEFFAF DEGIL: seffaf cizim koyu ve acik arac cubuklarinda
+ * farkli gorunuyor, acik zeminde silik kaliyordu.
  */
-function ciz(olcu, a, b) {
+function ciz(olcu, a, b, golge, zemin) {
     const tuval = new OffscreenCanvas(olcu, olcu);
     const ctx = tuval.getContext('2d');
 
-    // 24'luk tasarim izgarasi -> istenen olcu
-    const k = olcu / 24;
-    const K = 8.5 * k;            // kare kenari
-    const r = 2 * k;              // kose yaricapi
-    const bas = 2 * k;            // kenar boslugu
-    const ikinci = 13.5 * k;      // ikinci sutun/satir
+    // 128'lik tasarim izgarasi -> istenen olcu
+    const k = olcu / 128;
+    const kucuk = olcu <= 24;
 
     ctx.clearRect(0, 0, olcu, olcu);
-    yuvarlak(ctx, bas, bas, K, K, r, a);
-    yuvarlak(ctx, ikinci, bas, K, K, r, b);
-    yuvarlak(ctx, bas, ikinci, K, K, r, b);
-    yuvarlak(ctx, ikinci, ikinci, K, K, r, a);
+
+    // ZEMIN: varsayilan YOK (saydam). Sabit koyu zemin, secilen renkle
+    // uyusmayinca siritiyordu; artik istege bagli ve rengi secilebiliyor.
+    // Cerceve denendi, birakildi: W'yi kucultup 16px'te okunmaz yapiyordu.
+    if (zemin) yuvarlak(ctx, 0, 0, olcu, olcu, 26 * k, zemin);
+
+    // Golge: harf tek basina arac cubugunda zeminden ayrismiyordu
+    // (kart basligindaki golgeyle ayni fikir). Kucuk olcude en az 1px.
+    // Ayardan kapatilabiliyor, rengi secilebiliyor (golge = '' ise yok).
+    if (golge) {
+        ctx.shadowColor = /^#[0-9a-f]{6}$/i.test(golge) ? golge + '99' : 'rgba(0, 0, 0, .6)';
+        ctx.shadowOffsetX = ctx.shadowOffsetY = Math.max(1, olcu / 20);
+        ctx.shadowBlur = Math.max(1, olcu / 18);
+    }
+
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    // Kucuk olculerde cizgi kalinlasiyor: 16px'te ince W okunmuyor.
+    // Zemin varken W kenara yapismasin diye biraz iceride ve ince.
+    ctx.lineWidth = (zemin ? (kucuk ? 23 : 20) : (kucuk ? 28 : 25)) * k;
+    const N = zemin
+        ? [[[24, 30], [43, 94], [62, 48]], [[62, 48], [81, 94], [100, 30]]]
+        : [[[16, 22], [39, 98], [61, 44]], [[61, 44], [83, 98], [106, 22]]];
+    const kol = (renk, noktalar) => {
+        ctx.beginPath();
+        noktalar.forEach(([x, y], i) => (i ? ctx.lineTo(x * k, y * k) : ctx.moveTo(x * k, y * k)));
+        ctx.strokeStyle = renk;
+        ctx.stroke();
+    };
+    kol(a, N[0]);
+    kol(b, N[1]);
 
     return ctx.getImageData(0, 0, olcu, olcu);
 }
@@ -71,9 +95,11 @@ export async function simgeyiUygula() {
         const ay = d.ayarlar || {};
         const a = ay.simgeRenkA || '#5d93c2';
         const b = ay.simgeRenkB || '#a8c8e4';
+        const golge = ay.simgeGolge === false ? '' : (ay.simgeGolgeRengi || '#000000');
+        const zemin = ay.simgeZemin ? (ay.simgeZeminRengi || '#1b2029') : '';
 
         const imageData = {};
-        for (const o of OLCULER) imageData[o] = ciz(o, a, b);
+        for (const o of OLCULER) imageData[o] = ciz(o, a, b, golge, zemin);
 
         await chrome.action.setIcon({ imageData });
     } catch (e) {

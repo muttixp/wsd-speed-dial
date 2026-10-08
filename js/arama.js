@@ -204,7 +204,7 @@ async function etiketleriGoster(secili = seciliEtiket) {
  * Arama sonucundaki grup etiketine tiklayinca o grubu aciyoruz.
  * Aramayi kapatiyor, kart izgarasini o grupla yeniden ciziyor.
  */
-async function grubaGit(grupId, baglam) {
+async function grubaGit(grupId, baglam, kartId = null) {
     const ac = baglam?.grubuAc || sonBaglam?.grubuAc;
     if (!ac) return;
 
@@ -217,6 +217,30 @@ async function grubaGit(grupId, baglam) {
     seritBoslugunuAyarla();
 
     await ac(grupId);
+    if (kartId) bulunanKartiGoster(kartId);
+}
+
+/**
+ * Aramadan gruba gidildiginde ARANAN KARTI gosterir (1.5.3): gorunur
+ * alana kaydirir ve birkac saniye cerceveyle isaretler. Kalabalik
+ * grupta "hangisiydi" diye yeniden aramak gerekmesin.
+ *
+ * Izgara cizimi bir-iki kare surebiliyor; kart hemen bulunamazsa kisa
+ * araliklarla birkac kez deniyoruz.
+ */
+function bulunanKartiGoster(kartId, deneme = 0) {
+    const kart = [...document.querySelectorAll('.kart')].find(k => k.dataset.kartId === String(kartId));
+    if (!kart) {
+        if (deneme < 12) setTimeout(() => bulunanKartiGoster(kartId, deneme + 1), 80);
+        return;
+    }
+    document.querySelectorAll('.kart.aramaBulunan').forEach(k => k.classList.remove('aramaBulunan'));
+    kart.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    kart.classList.add('aramaBulunan');
+    const kaldir = () => kart.classList.remove('aramaBulunan');
+    setTimeout(kaldir, 4000);
+    // Kullanici bir yere tiklarsa isaret hemen kalksin
+    document.addEventListener('pointerdown', kaldir, { once: true, capture: true });
 }
 
 function kapat(baglam) {
@@ -429,7 +453,7 @@ async function ciz(kartlar, baglam, terim, gruplar = []) {
         etiket.addEventListener('click', e => {
             e.preventDefault();          // kartin baglantisini tetikleme
             e.stopPropagation();
-            grubaGit(k.grupId, baglam);
+            grubaGit(k.grupId, baglam, k.id);
         });
         a.appendChild(etiket);
 

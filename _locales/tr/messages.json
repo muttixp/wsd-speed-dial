@@ -3,7 +3,7 @@
     "message": "WSD Speed Dial"
   },
   "extDesc": {
-    "message": "Yeni sekme için görsel hız kadranı: gruplar, iç içe klasörler, ekran görüntüleri. Kendi yer imlerinizde — hesap yok, izleme yok."
+    "message": "Sık kullandığınız siteler yeni sekmede görsel kartlar olarak: gruplar, iç içe klasörler, ekran görüntüleri. Hesap yok, izleme yok."
   },
   "actionTitle": {
     "message": "WSD Speed Dial'e ekle"
@@ -61,9 +61,6 @@
   },
   "buKartlaIlgiliNotunuz": {
     "message": "Bu kartla ilgili notunuz..."
-  },
-  "caprazVe": {
-    "message": "Çapraz 2 ve 3"
   },
   "copKutusu": {
     "message": "Çöp Kutusu"
@@ -345,7 +342,7 @@
     "message": "Diğer veriler"
   },
   "yedekAl": {
-    "message": "Yedek al"
+    "message": "Yedekle"
   },
   "simdiYedekAl": {
     "message": "Şimdi yedek al"
@@ -1546,5 +1543,53 @@
   },
   "sagTikBaslik": {
     "message": "Sağ Tık Menüsü"
+  },
+  "simgeRenkSol": {
+    "message": "Sol Kol Rengi"
+  },
+  "simgeRenkSag": {
+    "message": "Sağ Kol Rengi"
+  },
+  "simgeGolgesi": {
+    "message": "Simge Gölgesi"
+  },
+  "simgeZemini": {
+    "message": "Simge Zemini"
+  },
+  "simgeZeminRengi": {
+    "message": "Zemin Rengi"
+  },
+  "aktarimdaYakala": {
+    "message": "İçe Aktarınca Eksik Görselleri Yakala"
+  },
+  "icindekiKartlardanSec": {
+    "message": "İçindeki kartlardan seç"
+  },
+  "dosyadanIceAktar": {
+    "message": "İçe aktar"
+  },
+  "desteklenmeyenDosya": {
+    "message": "Bu dosya tanınmadı. WSD, FVD, Speed Dial 2 ya da Group Speed Dial yedeği veya yer imi HTML dosyası seçin"
+  },
+  "karsilamaIceAktarAciklama": {
+    "message": "İçe Aktar: WSD yedeği, başka bir Speed Dial eklentisinin yedeği (FVD, Speed Dial 2, Group Speed Dial) ya da herhangi bir tarayıcıdan dışa aktarılmış yer imi HTML dosyası. Türü kendiliğinden tanınır."
+  },
+  "karsilamaKapatDevam": {
+    "message": "Bu pencereyi kapat ve devam et"
+  },
+  "yerimlerinden": {
+    "message": "Yer imlerinden"
+  },
+  "siteEkle": {
+    "message": "Site Ekle"
+  },
+  "metinYapistir": {
+    "message": "Metin yapıştır (FVD vb.)"
+  },
+  "metinYapistirAciklama": {
+    "message": "FVD'nin ayarlarındaki dışa aktarma kutusundaki metni ya da bir yedek dosyasının içeriğini kopyalayıp buraya yapıştırın. Türü kendiliğinden tanınır."
+  },
+  "onizlemeKisaltildi": {
+    "message": "önizleme kısaltıldı, metnin tamamı içe aktarılacak"
   }
 }

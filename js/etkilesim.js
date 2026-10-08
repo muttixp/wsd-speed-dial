@@ -16,7 +16,7 @@ import { grupEkle, grupSil, kartEkle, kartGuncelle, kartSil, kartGuncelleBaslik,
          urlNormalle } from './yerimi.js';
 import { c } from './dil.js';
 import { aktifGrup, aktifSekme, arayuzuKur, grubuAc, kartGorseliniTazele } from './cizim.js';
-import { klasorleriKur, klasorIsaretiniTemizle, yeniKlasor, klasoruTasi } from './klasor.js';
+import { klasorleriKur, klasorIsaretiniTemizle, yeniKlasor, klasoruTasi, klasoruDuzenle } from './klasor.js';
 import { gruplariAl, gorunurGruplariAl, kokKlasoruAl, tumKlasorleriAl } from './yerimi.js';
 import { RENKLER, renkleriAl, renkYaz } from './renk.js';
 import { karuseliKur, karuseliYukle, adayEkle, zeminAyarla, secimDurumu } from './karusel.js';
@@ -285,6 +285,15 @@ function karsilamaKur() {
     el('karsilamaYerimi')?.addEventListener('click', async () => {
         const { ictarPenceresiniAc } = await import('./yerimiictar.js');
         await ictarPenceresiniAc('tarayici');
+    });
+
+    // CIKIS (1.5.3): karsilama yalnizca kart eklenince kayboluyordu;
+    // bos kadranla baslamak isteyen kullanici "cikamadim" diyordu.
+    // Gecilince bir daha gosterilmiyor, izgarada "+" karti kaliyor.
+    el('karsilamaGec')?.addEventListener('click', async () => {
+        try { await chrome.storage.local.set({ karsilamaGecildi: true }); } catch (e) { /* */ }
+        el('karsilama').hidden = true;
+        document.body.classList.remove('bosDurum');
     });
 }
 
@@ -1514,6 +1523,14 @@ function menuleriKur() {
         kokKlasoruAl().then(kok => {
             el('bosMenu').querySelector('[data-eylem="yeniKlasor"]')
                 ?.classList.toggle('pasif', aktifGrup() === kok);
+            // "Duzenle" satiri bulunulan yere gore adlaniyor; Ana Sayfa'da yok
+            const duzenle = el('bosMenu').querySelector('[data-eylem="buYeriDuzenle"]');
+            if (duzenle) {
+                duzenle.hidden = aktifGrup() === kok;
+                const metin = duzenle.querySelector('span');
+                if (metin) metin.textContent = aktifGrup() !== aktifSekme()
+                    ? c('klasoruDuzenle') + '…' : c('mGrubuDuzenle');
+            }
         }).catch(() => {});
         menuyuAc(el('bosMenu'), e.clientX, e.clientY);
     });
@@ -1765,20 +1782,7 @@ async function grupMenuEylemi(e) {
     }
 
     if (eylem === 'grupYenidenAdlandir') {
-        const mevcut = document.querySelector(`[data-grup-id="${id}"] .grupAd`)?.textContent || '';
-        const sonuc = await grupPenceresiniAc({ id, baslik: mevcut });
-        if (!sonuc) return;
-        try {
-            await kartGuncelleBaslik(id, sonuc.ad);
-            await ikonYaz(id, sonuc.ikon);
-            await gorunumYaz(id, { gosterim: sonuc.gosterim, renk: sonuc.renk, aciklama: sonuc.aciklama });
-            await arayuzuKur();
-            menuTazele();
-            bildir(c('grupGuncellendi'));
-        } catch (e) {
-            console.log('[WSD] grup adi degistirilemedi:', e);
-            bildir(c('yenidenAdlandirilamadi'));
-        }
+        await grubuDuzenleAc(id);
     } else if (eylem === 'grupSil') {
         if (!await onaySor({
             baslik: c('grubuSil'),
@@ -1822,6 +1826,27 @@ async function grupMenuEylemi(e) {
     }
 }
 
+/**
+ * Grup duzenleme penceresi. Grup sekmesinin sag tik menusunden ve
+ * (1.5.3) bos alan menusundeki "Grubu duzenle"den cagriliyor.
+ */
+async function grubuDuzenleAc(id) {
+    const mevcut = document.querySelector(`[data-grup-id="${id}"] .grupAd`)?.textContent || '';
+    const sonuc = await grupPenceresiniAc({ id, baslik: mevcut });
+    if (!sonuc) return;
+    try {
+        await kartGuncelleBaslik(id, sonuc.ad);
+        await ikonYaz(id, sonuc.ikon);
+        await gorunumYaz(id, { gosterim: sonuc.gosterim, renk: sonuc.renk, aciklama: sonuc.aciklama });
+        await arayuzuKur();
+        menuTazele();
+        bildir(c('grupGuncellendi'));
+    } catch (e) {
+        console.log('[WSD] grup adi degistirilemedi:', e);
+        bildir(c('yenidenAdlandirilamadi'));
+    }
+}
+
 async function bosMenuEylemi(e) {
     const oge = e.target.closest('li');
     const eylem = oge && oge.dataset.eylem;
@@ -1836,6 +1861,17 @@ async function bosMenuEylemi(e) {
         case 'yeniGrup':
             await grupEklePenceresi();
             break;
+
+        // BULUNDUGUN YERI duzenle (1.5.3): klasorun icindeyken o klasoru,
+        // grubun kokundeyken grubu. Once yalnizca bir ust duzeye cikip
+        // klasor kutusuna sag tiklayarak ulasilabiliyordu.
+        case 'buYeriDuzenle': {
+            const kok = await kokKlasoruAl();
+            if (aktifGrup() === kok) return;          // Ana Sayfa duzenlenmiyor
+            if (aktifGrup() !== aktifSekme()) await klasoruDuzenle(aktifGrup());
+            else await grubuDuzenleAc(aktifGrup());
+            break;
+        }
 
         case 'yeniKlasor': {
             const kok = await kokKlasoruAl();

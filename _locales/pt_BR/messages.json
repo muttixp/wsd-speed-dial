@@ -1189,5 +1189,8 @@
   },
   "grupAra": {
     "message": "Pesquisar grupos..."
+  },
+  "aktarimdaYakala": {
+    "message": "Capturar miniaturas ausentes após importar"
   }
 }

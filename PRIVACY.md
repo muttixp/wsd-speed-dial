@@ -56,8 +56,15 @@ gönderilir. Bu özelliği kullanmazsanız böyle bir istek olmaz.
 **3. Logo Yakala kullanırken** — kart düzenleme penceresinde "Logo
 Yakala" düğmesine basarsanız, o kartın alan adı (ör. `example.com`)
 `cdn.brandfetch.io` logo servisine gönderilir ve sitenin logosu alınır.
+Logo bulunamazsa son çare olarak aynı alan adı
+`google.com/s2/favicons` adresine de sorulur.
 Kişisel veri, tanımlayıcı ya da tarama geçmişi gönderilmez. Özellik
 yalnızca siz tetiklediğinizde çalışır; kendiliğinden istek yapmaz.
+
+**4. Kırık bağlantı taraması yaparken** — Ayarlar'dan taramayı
+başlatırsanız kartlarınızdaki adresler tek tek yoklanır. İstekler
+yalnızca o sitelerin kendisine gider; başka bir sunucuya veri gitmez.
+Tarama kendiliğinden başlamaz.
 
 ---
 

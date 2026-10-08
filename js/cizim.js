@@ -308,7 +308,12 @@ export async function grubuAc(grupId, { gecmistenGeldi = false } = {}) {
     // eklenmemis). Kullanici gruba girip bosaltmissa gostermiyoruz -
     // orada "+" karti yeterli, karsilama metni yer kaplar.
     const gruplar = await gorunurGruplariAl();
-    const bosDurum = kartlar.length === 0 && klasorler.length === 0 && gruplar.length <= 1;
+    let bosDurum = kartlar.length === 0 && klasorler.length === 0 && gruplar.length <= 1;
+    // "Bos kadranla basla" denmisse karsilama bir daha cikmiyor (1.5.3)
+    if (bosDurum) {
+        try { if ((await chrome.storage.local.get('karsilamaGecildi')).karsilamaGecildi) bosDurum = false; }
+        catch (e) { /* */ }
+    }
     document.body.classList.toggle('bosDurum', bosDurum);
     const kars = document.getElementById('karsilama');
     if (kars) kars.hidden = !bosDurum;
