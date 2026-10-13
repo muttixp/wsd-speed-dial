@@ -132,6 +132,8 @@ Bir günlük iş ya da bir proje için açılan sekmeleri saklamak için.
 Yan paneldeki düğme ya da araç çubuğundaki simgeye sağ tık →
 **Sekmeleri çalışma alanına kaydet**. Kaydederken sekmeler kapanmaz.
 
+![Çalışma alanları](docs/workspace.png)
+
 - **Aç:** sekmeleri bu pencerede (Vivaldi'de o anki çalışma alanına)
   ya da yeni pencerede açar
 - **Düzenle:** ad, etiket, not, renk; kayıtlı sekmeleri çıkarma ve bu
