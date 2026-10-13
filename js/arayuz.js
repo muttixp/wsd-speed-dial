@@ -198,7 +198,8 @@ const SERITLER = [
     ['aramaAcik', 'aramaKap'],
     ['copAcik',   'copKap'],
     ['kopyaAcik', 'kopyaKap'],
-    ['kirikAcik', 'kirikKap']
+    ['kirikAcik', 'kirikKap'],
+    ['alanAcik',  'alanKap']
 ];
 const SERIT_NEFES = 26;
 
@@ -280,7 +281,7 @@ export function yanSeridiKur() {
 
 /* ============ Tam ekran gorunumler ============ */
 
-const EKRAN_SINIFLARI = ['aramaAcik', 'aramaBekliyor', 'copAcik', 'kopyaAcik', 'kirikAcik'];
+const EKRAN_SINIFLARI = ['aramaAcik', 'aramaBekliyor', 'copAcik', 'kopyaAcik', 'kirikAcik', 'alanAcik'];
 
 /**
  * Arama, cop kutusu, yinelenenler ve kirik baglantilar ayni kart

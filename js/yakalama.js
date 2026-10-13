@@ -72,7 +72,17 @@ const ALARM_ADI = 'wsdYakalama';
 const kuyruk = [];
 let calisiyor = false;
 let iptal = false;
-let biterken = null;        // depodan devam ederken kullanilacak geri cagirma
+let biterken = null;
+
+// IPTAL ANINDA KAPAT (1.5.4): "Bekleyenleri iptal et" yalnizca SIRADAKI
+// isleri siliyordu; o an islenen kart (gizli sekme ya da pencere,
+// gizli olmazsa pencere kipiyle ikinci deneme - 150 sn'ye kadar)
+// sonuna kadar suruyordu ve kullanici iptal olmadi saniyordu. Acik
+// yakalama sekme/pencereleri burada tutuluyor, iptalde kapatiliyor;
+// islenen kartin beklemesi de hemen bitiriliyor.
+const acikSekmeler = new Set();
+const acikPencereler = new Set();
+let iptalCoz = null;        // depodan devam ederken kullanilacak geri cagirma
 
 // TAKILMA BEKCISI (1.5.2). Dongu bir `await`te sonsuza kadar kalirsa
 // `calisiyor` hep true kaliyor ve kuyruk bir daha baslamiyordu. Her
@@ -161,10 +171,16 @@ function alarmiKapat() {
  */
 /** Bekleyen tum yakalama islerini iptal eder. */
 export async function kuyrugaTemizle() {
-    const adet = kuyruk.length;
+    const adet = kuyruk.length + islenenler.size;
     kuyruk.length = 0;
     iptal = true;              // isleme dongusu bir sonraki adimda cikar
     alarmiKapat();
+    // Islenmekte olani da birak: bekleyen adimi bitir, sekme/pencereyi kapat
+    if (iptalCoz) { try { iptalCoz(); } catch (e) { /* */ } iptalCoz = null; }
+    for (const id of acikSekmeler) chrome.tabs.remove(id).catch(() => {});
+    for (const id of acikPencereler) chrome.windows.remove(id).catch(() => {});
+    acikSekmeler.clear();
+    acikPencereler.clear();
     try {
         const d = await chrome.storage.local.get(KUYRUK_ANAHTARI);
         const depoda = Array.isArray(d[KUYRUK_ANAHTARI]) ? d[KUYRUK_ANAHTARI].length : 0;
@@ -409,7 +425,8 @@ async function kuyruguIsle() {
             // IS TAVANI (1.5.2): kartin TUM islemi (sayfa gorselleri +
             // ekran goruntusu + bos kare olcumu) tek sinir altinda. Icteki
             // adimlardan biri hic donmezse kuyruk o kartta kalmiyor.
-            adaylar = await zamanAsimli((async () => {
+            const iptalBekle = new Promise(coz => { iptalCoz = () => coz([]); });
+            adaylar = await Promise.race([iptalBekle, zamanAsimli((async () => {
                 const ayar = await ayarlariAl();
 
                 // YONTEM AYARI:
@@ -449,13 +466,15 @@ async function kuyruguIsle() {
 
                 // GIZLI KIP YEDEGI: arka plan sekmesinde Page.captureScreenshot
                 // bazi sitelerde kare gelmedigi icin hic donmuyor (zaman asimi).
-                // Tek kart yenilemede tutuyor, toplu yenilemede takiliyordu.
-                // Basarisizsa ayni kart pencere kipiyle bir kez daha deneniyor.
-                if (!ekran && ayar.yakalamaKipi === 'gizli' && !YAKALANAMAZ_SEMA.test(is.url)) {
-                    console.log('[WSD] gizli olmadi, pencere kipiyle deneniyor:', is.url);
-                    const durum = { iptal: false };
-                    ekran = await zamanAsimli(ekranGoruntusuAl(is.url, ayar, durum),
-                        YAKALAMA_TAVANI_MS, 'yakalama').catch(() => { durum.iptal = true; return null; });
+                // 1.5.4: yedek artik PENCERE KIPI DEGIL - kullanici gizliyi
+                // secmisken ekranda pencere aciliyordu. Gizli kipte, sayfaya
+                // daha uzun bekleme verilerek bir kez daha deneniyor; yine
+                // olmazsa kart yer tutucuyla kaliyor (elle yenilenebilir).
+                if (!ekran && !iptal && ayar.yakalamaKipi === 'gizli' && !YAKALANAMAZ_SEMA.test(is.url)) {
+                    console.log('[WSD] gizli olmadi, gizli kipte bir kez daha deneniyor:', is.url);
+                    const uzun = { ...ayar, yakalamaBekleme: Math.max(3000, (ayar.yakalamaBekleme || 0) * 2) };
+                    ekran = await zamanAsimli(gizliYakala(is.url, uzun), YAKALAMA_TAVANI_MS, 'yakalama')
+                        .catch(e => { console.log('[WSD] gizli ikinci deneme de olmadi:', is.url, e.message); return null; });
                 }
 
                 // Bombos kare (yumusak 404) kart olmasin
@@ -464,11 +483,17 @@ async function kuyruguIsle() {
                 if (ekranGecerli) liste.push(ekran);
                 else if (ekran) console.log('[WSD] bos kare atlandi:', is.url);
                 return liste;
-            })(), IS_TAVANI_MS, 'kart islemi') || [];
+            })(), IS_TAVANI_MS, 'kart islemi')]) || [];
+            iptalCoz = null;
         } catch (e) {
             console.log('[WSD] yakalama hatasi:', is.url, e.message);
         }
         if (benimNeslim !== nesil) return;
+        if (iptal) {                  // iptal edildi: yer tutucu da yazma
+            islenenler.delete(is.url);
+            kuyruk.length = 0;
+            break;
+        }
 
         // Hicbir gorsel alinamadiysa kart siyah kalmasin
         if (!adaylar.length) {
@@ -727,6 +752,8 @@ async function ekranGoruntusuAl(url, ayar, durum = null) {
             left: 0,
             top: 0
         });
+        acikPencereler.add(pencere.id);
+        birak();
 
         sekmeId = pencere.tabs[0].id;
 
@@ -820,6 +847,7 @@ async function ekranGoruntusuAl(url, ayar, durum = null) {
             try { await chrome.tabs.remove(sekmeId); } catch (e) { /* kapanmisti */ }
         }
         if (pencere) {
+            acikPencereler.delete(pencere.id);
             try { await chrome.windows.remove(pencere.id); } catch (e) { /* kapanmisti */ }
         }
         // Odak kullaniciya geri donsun - yakalama penceresi one gelmis
@@ -2031,6 +2059,7 @@ async function gizliYakala(url, ayar) {
         // baglanip sonra adrese gitmek) denendi; Vivaldi'yi COKERTTI.
         // Hata ayiklayici bagliyken sekmede gezinme yapilmiyor.
         sekme = await chrome.tabs.create({ url, active: false });
+        acikSekmeler.add(sekme.id);
         await sayfaStabilOlsun(sekme.id);
         await bekle(ayar.yakalamaBekleme);
 
@@ -2100,6 +2129,7 @@ async function gizliYakala(url, ayar) {
             try { await chrome.debugger.detach({ tabId: sekme.id }); } catch (e) { /* kopmus */ }
         }
         if (sekme) {
+            acikSekmeler.delete(sekme.id);
             try { await chrome.tabs.remove(sekme.id); } catch (e) { /* kapanmis */ }
         }
     }

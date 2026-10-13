@@ -109,8 +109,15 @@ export async function yedekIskeleti() {
         // Adli etiketler (1.5.1)
         etiketler: { tanimlar: kucukler.etiketTanimlari || {},
                      kartlar: suz(kucukler.kartEtiketleri, yasayanUrlIer) },
-        ayarlar: await ayarlariAl()
+        ayarlar: await ayarlariAl(),
+        // Calisma alanlari (1.5.4) - WSD agacinin disinda, ayri bolum
+        calismaAlanlari: await calismaAlanlariniAl()
     };
+}
+
+async function calismaAlanlariniAl() {
+    try { return await (await import('./calismaalani.js')).alanlariDisaVer(); }
+    catch (e) { console.log('[WSD] calisma alanlari yedege alinamadi:', e); return []; }
 }
 
 function suz(nesne, yasayanlar) {
@@ -143,6 +150,7 @@ export async function yedegiIndir(ilerleme) {
     parcalar.push(`"sayaclar":${JSON.stringify(isk.sayaclar)},`);
     parcalar.push(`"etiketler":${JSON.stringify(isk.etiketler)},`);
     parcalar.push(`"ayarlar":${JSON.stringify(isk.ayarlar)},`);
+    parcalar.push(`"calismaAlanlari":${JSON.stringify(isk.calismaAlanlari || [])},`);
     parcalar.push('"gorseller":{');
 
     const anahtarlar = [...isk.yasayan];
@@ -419,6 +427,12 @@ async function yedegiYukleIc(veri, temizle, ilerleme, urller) {
 
     bildir('kaydet', toplamKart, '');
     await chrome.storage.local.set(yazilacak);
+
+    // Calisma alanlari (1.5.4): yalnizca yedekte bolum varsa
+    if (Array.isArray(y.calismaAlanlari)) {
+        try { await (await import('./calismaalani.js')).alanlariIceAl(y.calismaAlanlari, temizle); }
+        catch (e) { console.log('[WSD] calisma alanlari geri yuklenemedi:', e); }
+    }
 
     bildir(c('bitti'), toplamKart, '');
     return { grup: y.gruplar.length, kart: toplamKart,

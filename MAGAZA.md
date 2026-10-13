@@ -7,29 +7,39 @@ kopyalayıp yapıştırmak için hazırlandı.
 
 ## Ad
 
-```
-WSD Speed Dial
-```
+Paketten (`extName`, dile göre) gelir; mağaza her kullanıcıya kendi dilindekini gösterir.
+Aramada en çok ağırlık taşıyan alan; listelerde ~45 karakterden sonrası kırpılır.
+
+| Dil | Ad |
+|---|---|
+| EN (varsayılan) | WSD Speed Dial – New Tab & Visual Bookmarks |
+| TR | WSD Speed Dial – Yeni Sekme, Görsel Yer İmleri |
+| RU | WSD Speed Dial – визуальные закладки |
 
 ## Kısa açıklama (132 karakter sınırı)
 
+Mağaza bu metni manifest'teki `extDesc`'ten (dil dosyaları) alır; aşağıdakiler
+1.5.4 paketindeki ile aynı. Mağaza araması başlığa ve bu metne bakıyor:
+"speed dial", "new tab", "visual bookmarks", "workspaces" ve taşıma
+kaynakları (FVD, Speed Dial 2) bilerek burada.
+
 **İngilizce**
 ```
-Visual speed dial for your new tab: groups, nested folders, screenshots. Stored in your own bookmarks — no account, no tracking.
+Speed dial for your new tab: visual bookmarks, folders and workspaces. One-click import from FVD and Speed Dial 2. No account.
 ```
-(128 karakter)
+(126 karakter)
 
 **Türkçe**
 ```
-Sık kullandığınız siteler yeni sekmede görsel kartlar olarak: gruplar, iç içe klasörler, ekran görüntüleri. Hesap yok, izleme yok.
+Yeni sekme için speed dial: görsel yer imleri, klasörler, çalışma alanları. FVD ve Speed Dial 2'den tek tıkla taşıma. Hesap yok.
 ```
-(130 karakter)
+(128 karakter)
 
 **Rusça**
 ```
-Визуальные закладки для новой вкладки: группы, вложенные папки, скриншоты сайтов. Без аккаунта и без слежки.
+Speed dial для новой вкладки: визуальные закладки, папки и рабочие области. Перенос из FVD и Speed Dial 2 в один клик. Без аккаунта.
 ```
-(108 karakter)
+(132 karakter)
 
 ---
 
@@ -39,7 +49,15 @@ Sık kullandığınız siteler yeni sekmede görsel kartlar olarak: gruplar, iç
 
 ```
 WSD Speed Dial turns your new tab page into a board of the sites you
-actually use, each with its own screenshot.
+actually use, each with its own screenshot. Free, open source, no
+tracking.
+
+COMING FROM FVD SPEED DIAL OR SPEED DIAL 2?
+
+Bring everything over in one click: groups, tiles and their order.
+FVD backups keep their thumbnails; for the others, screenshots are
+taken again automatically. Group Speed Dial backups and a bookmarks
+HTML file exported from any browser work the same way.
 
 WHY IT'S DIFFERENT
 
@@ -71,9 +89,15 @@ one, add it to the other, and you end up with a single collection.
 The backup is a complete file on your own disk, thumbnails included.
 It is free: there is no paid sync service and nothing held back.
 
-Coming from another speed dial? Import a backup from FVD Speed Dial,
-Speed Dial 2 or Group Speed Dial, your browser's own bookmarks, or a bookmarks HTML file exported from any
-browser.
+SAVE YOUR OPEN TABS AS WORKSPACES
+
+Working on something for a day or a project? Save the open tabs as a
+workspace and close them. Reopen them later with one click, in the
+current window or a new one. Edit a workspace from your open tabs,
+add tags, a note and a color, reorder by drag and drop. Tabs are not
+closed when you save. When it's worth keeping, turn it into a regular
+group with thumbnails; when you're done, delete it. Workspaces are
+stored as bookmarks and are included in backups.
 
 WHAT IT DOES
 
@@ -143,6 +167,14 @@ Written from scratch with no third-party code. Translations welcome.
 ```
 WSD Speed Dial, yeni sekme sayfanızı gerçekten kullandığınız
 sitelerin panosuna çevirir — her biri kendi ekran görüntüsüyle.
+Ücretsiz, açık kaynak, izleme yok.
+
+FVD SPEED DIAL YA DA SPEED DIAL 2'DEN Mİ GELİYORSUNUZ?
+
+Her şeyi tek tıkla taşıyın: gruplar, kartlar ve sıraları. FVD
+yedeklerinin görselleri de gelir; diğerlerinde ekran görüntüleri
+kendiliğinden yeniden alınır. Group Speed Dial yedekleri ve herhangi
+bir tarayıcıdan dışa aktarılmış yer imi HTML dosyası da aynı şekilde.
 
 FARKI NE
 
@@ -175,9 +207,15 @@ Yedek, kendi diskinizde duran eksiksiz bir dosyadır; görseller de
 içindedir. Ücretsizdir: ücretli bir eşitleme servisi yok, dışarıda
 bırakılan veri yok.
 
-Başka bir Speed Dial eklentisinden mi geliyorsunuz? FVD Speed Dial, Speed Dial 2 ya
-da Group Speed Dial yedeğinizi, tarayıcınızın kendi yer imlerini ya da herhangi bir tarayıcıdan dışa
-aktarılmış yer imi HTML dosyasını içe aktarın.
+AÇIK SEKMELERİ ÇALIŞMA ALANI OLARAK SAKLAYIN
+
+Bir günlük iş ya da bir proje için açtığınız sekmeleri çalışma alanı
+olarak kaydedin ve kapatın. Sonra tek tıkla, bu pencerede ya da yeni
+pencerede geri açın. Çalışma alanını açık sekmelerden düzenleyin;
+etiket, not ve renk ekleyin, sürükleyip sıralayın. Kaydederken
+sekmeler kapanmaz. Kalıcı olacaksa görselli bir gruba dönüştürün,
+iş bittiyse silin. Çalışma alanları yer imi olarak saklanır ve
+yedeğe dahildir.
 
 NELER YAPAR
 
@@ -250,7 +288,15 @@ bekliyoruz.
 
 ```
 WSD Speed Dial превращает новую вкладку в панель сайтов, которыми вы
-действительно пользуетесь, — у каждого свой скриншот.
+действительно пользуетесь, — у каждого свой скриншот. Бесплатно,
+открытый код, без слежки.
+
+ПЕРЕХОДИТЕ С FVD SPEED DIAL ИЛИ SPEED DIAL 2?
+
+Перенесите всё в один клик: группы, плитки и их порядок. Из копий FVD
+переносятся и скриншоты; для остальных они делаются заново
+автоматически. Так же работают копии Group Speed Dial и HTML-файл
+закладок, экспортированный из любого браузера.
 
 ЧЕМ ОТЛИЧАЕТСЯ
 
@@ -281,9 +327,16 @@ WSD Speed Dial превращает новую вкладку в панель с
 Резервная копия — полный файл на вашем диске, скриншоты включены.
 Бесплатно: никакой платной синхронизации и ничего «за кадром».
 
-Переходите с другого Speed Dial? Импортируйте копию из FVD Speed Dial,
-Speed Dial 2 или Group Speed Dial, закладки самого браузера или
-HTML-файл закладок, экспортированный из любого браузера.
+СОХРАНЯЙТЕ ОТКРЫТЫЕ ВКЛАДКИ КАК РАБОЧИЕ ОБЛАСТИ
+
+Работаете над задачей на день или над проектом? Сохраните открытые
+вкладки как рабочую область и закройте их. Потом откройте одним
+щелчком — в этом окне или в новом. Редактируйте рабочую область из
+открытых вкладок, добавляйте метки, заметку и цвет, меняйте порядок
+перетаскиванием. При сохранении вкладки не закрываются. Если стоит
+сохранить надолго — превратите в обычную группу со скриншотами; если
+работа закончена — удалите. Рабочие области хранятся как закладки и
+входят в резервные копии.
 
 ВОЗМОЖНОСТИ
 
@@ -380,8 +433,8 @@ bookmarks, each shown as a tile with a screenshot.
 | `bookmarks` | Tiles are stored as bookmarks. The extension reads them to draw the grid and writes them when the user adds, edits, reorders or deletes a tile. |
 | `storage` | Stores tile thumbnails, notes, color labels, visit counts and user settings locally. |
 | `unlimitedStorage` | Thumbnails for a large collection can exceed the default 5 MB quota. A user with a thousand tiles uses roughly 40 MB. |
-| `tabs` | Opens tiles in a new tab when the user chooses that, and reads the current tab's address when adding it from the context menu. |
-| `contextMenus` | Adds the "Add to WSD Speed Dial" item so pages can be added while browsing. |
+| `tabs` | Opens tiles in a new tab when the user chooses that, reads the current tab's address when adding it from the context menu, and lists the open tabs of the current window when the user saves them as a workspace or a group. |
+| `contextMenus` | Adds the "Add to WSD Speed Dial" item so pages can be added while browsing, and a "Save tabs to a workspace" item on the toolbar icon. |
 | `alarms` | Keeps the screenshot queue running. In Manifest V3 the service worker is terminated while idle; an alarm wakes it so a long capture batch finishes. |
 | `scripting` | Scrolls the page being captured past fixed headers and cookie banners, and reads candidate images from the page. |
 | `debugger` | Only used by the optional "Hidden" capture mode, which takes a screenshot without showing a window. The default mode does not use it. Chrome does not allow this permission to be optional, so it is requested at install. |
@@ -431,6 +484,13 @@ Ekran görüntüsü için öneri sırası:
 3. Kart düzenleme penceresi
 4. Arama sonuçları
 5. Yinelenen kartlar ya da çöp kutusu
+
+### 1.5.4 ile yapılacaklar (mağaza paneli)
+
+- Uzun açıklamalar (EN/TR/RU) "çalışma alanları" bölümüyle ve en üstte FVD / Speed Dial 2'den taşıma paragrafıyla güncellendi — panele yeniden yapıştırılacak
+- Kısa açıklama paketin içinden (manifest) geliyor; yeni metin 1.5.4 ile kendiliğinden yayına girer
+- `tabs` ve `contextMenus` gerekçeleri güncellendi — Gizlilik sekmesinde yenilenecek
+- İsteğe bağlı: çalışma alanları ekranının görüntüsü ekran görüntüleri arasına eklenebilir
 
 ### 1.5.3 ile yapılacaklar (mağaza paneli)
 

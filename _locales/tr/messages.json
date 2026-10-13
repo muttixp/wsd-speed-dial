@@ -1,9 +1,9 @@
 {
   "extName": {
-    "message": "WSD Speed Dial"
+    "message": "WSD Speed Dial – Yeni Sekme, Görsel Yer İmleri"
   },
   "extDesc": {
-    "message": "Sık kullandığınız siteler yeni sekmede görsel kartlar olarak: gruplar, iç içe klasörler, ekran görüntüleri. Hesap yok, izleme yok."
+    "message": "Yeni sekme için speed dial: görsel yer imleri, klasörler, çalışma alanları. FVD ve Speed Dial 2'den tek tıkla taşıma. Hesap yok."
   },
   "actionTitle": {
     "message": "WSD Speed Dial'e ekle"
@@ -1591,5 +1591,119 @@
   },
   "onizlemeKisaltildi": {
     "message": "önizleme kısaltıldı, metnin tamamı içe aktarılacak"
+  },
+  "mSekmeleriKaydet": {
+    "message": "Açık sekmeleri gruba kaydet…"
+  },
+  "tumunuSec": {
+    "message": "Tümünü seç"
+  },
+  "kaydedilecekSekmeYok": {
+    "message": "Burada kaydedilecek açık sekme yok"
+  },
+  "sekmelerGrupAdi": {
+    "message": "Sekmeler $1"
+  },
+  "sekmeleriKaydetBaslik": {
+    "message": "Açık sekmeleri gruba kaydet"
+  },
+  "sekmeleriKaydetMetin": {
+    "message": "Bu penceredeki sekmeler yeni bir gruba kart olarak eklenecek. İstemediklerinizin işaretini kaldırın."
+  },
+  "nSekmeKaydedildi": {
+    "message": "$1 sekme yeni gruba kaydedildi"
+  },
+  "calismaAlanlari": {
+    "message": "Çalışma Alanları"
+  },
+  "alanKaydetBaslik": {
+    "message": "Çalışma alanı kaydet"
+  },
+  "alanKaydetMetin": {
+    "message": "Kaydetmek istediğiniz sekmeleri işaretleyin. Pencerede birden fazla bölüm varsa (Vivaldi/Opera çalışma alanları gibi) bölüm başlığındaki kutu o bölümün tamamını seçer."
+  },
+  "alanVarsayilanAd": {
+    "message": "Çalışma alanı $1"
+  },
+  "alanKaydedildi": {
+    "message": "$1 sekme çalışma alanına kaydedildi"
+  },
+  "alanBos": {
+    "message": "Bu çalışma alanı boş"
+  },
+  "alanAc": {
+    "message": "Aç"
+  },
+  "yenidenAdlandir": {
+    "message": "Yeniden adlandır"
+  },
+  "grubaDonustur": {
+    "message": "Gruba dönüştür"
+  },
+  "grubaDonusturMetin": {
+    "message": "\"$1\" normal bir gruba dönüşecek ve kartların görselleri yakalanacak."
+  },
+  "grubaDonusturuldu": {
+    "message": "Gruba dönüştürüldü"
+  },
+  "alanSil": {
+    "message": "Çalışma alanını sil"
+  },
+  "alanSilMetin": {
+    "message": "\"$1\" ($2 sekme) kalıcı olarak silinecek."
+  },
+  "alanYok": {
+    "message": "Henüz çalışma alanı yok. \"Sekmeleri kaydet\" ile açık sekmelerinizi saklayın, sonra tek tıkla geri açın."
+  },
+  "nSekme": {
+    "message": "$1 sekme"
+  },
+  "yeniPencerede": {
+    "message": "Yeni pencerede"
+  },
+  "sekmeleriKaydet": {
+    "message": "Sekmeleri kaydet"
+  },
+  "alandanCikar": {
+    "message": "Çalışma alanından çıkar"
+  },
+  "nDahaGoster": {
+    "message": "+$1 sekme daha"
+  },
+  "dahaAzGoster": {
+    "message": "Daha az göster"
+  },
+  "alanAcIpucu": {
+    "message": "Sekmeleri bu pencerede aç"
+  },
+  "kayitliSekmeler": {
+    "message": "Kayıtlı sekmeler"
+  },
+  "acikSekmeler": {
+    "message": "Bu penceredeki açık sekmeler"
+  },
+  "alanDuzenleBaslik": {
+    "message": "Çalışma alanını düzenle"
+  },
+  "alanDuzenleMetin": {
+    "message": "İşaretini kaldırdığınız kayıtlı sekmeler çıkarılır, işaretlediğiniz açık sekmeler eklenir."
+  },
+  "alanDuzenlendi": {
+    "message": "$1 sekme eklendi, $2 sekme çıkarıldı"
+  },
+  "etiketIpucu": {
+    "message": "virgülle ayırın: iş, araştırma"
+  },
+  "tumu": {
+    "message": "Tümü"
+  },
+  "renk": {
+    "message": "Renk"
+  },
+  "blokBasligi": {
+    "message": "$1 sekme · $2"
+  },
+  "mSekmeleriAlanaKaydet": {
+    "message": "Sekmeleri çalışma alanına kaydet…"
   }
 }

@@ -3,6 +3,65 @@
 Sürüm numaraları [Semantic Versioning](https://semver.org/lang/tr/)
 kurallarına uyar.
 
+## [1.5.4] — 2026-10-10
+
+### Yeni
+- **Çalışma alanları**: açık sekmeleri ad vererek saklayıp sonra tek
+  tıkla geri açmak için ayrı ekran (yan paneldeki düğme). Günlük ya da
+  proje bazlı geçici sekmeler için: kalıcı olacaksa gruba dönüştürülür,
+  iş bitince silinir. Kaydederken sekmeler kapanmaz
+  - **Aç** bu pencerede (Vivaldi'de o anki çalışma alanına), ayrıca
+    **Yeni pencerede**
+  - **Düzenle**: ad, etiket, not ve renk; kayıtlı sekmeleri çıkarma ve
+    bu penceredeki açık sekmelerden ekleme tek pencerede (ada çift tık
+    da açar)
+  - **Gruba dönüştür**: normal, görselli grup olur; not grubun
+    açıklamasına geçer
+  - Kartlar sürükleyip sıralanır, üstteki etiket süzgeciyle ayıklanır;
+    renk seçilmeyen kart gri başlıklı
+  - Kayıtlar WSD klasörünün yanında ayrı **WSD Çalışma Alanları** yer
+    imi klasöründe; grup şeridi, arama, yinelenenler, kırık bağlantılar
+    ve görsel yakalama bunlara dokunmaz
+- **Araç çubuğu simgesine sağ tık → "Sekmeleri çalışma alanına
+  kaydet…"**: WSD sayfasını etkin sekmenin yanına açıp kaydetmeyi başlatır
+- **Boş alana sağ tık → "Açık sekmeleri gruba kaydet…"**: seçilen
+  sekmeler doğrudan yeni bir grupta kart olur
+- **Yedek**: çalışma alanları (etiket, not, renk, sıra dahil) yedeğe
+  giriyor. "Sil ve yükle" mevcutları değiştirir, "Ekle" aynı adlı olanı
+  "Ad (2)" diye ekler. Eski yedekler çalışma alanlarına dokunmaz
+
+### Değişti
+- **Eklenti adı ve kısa açıklama (EN/TR/RU)** aramada bulunacak şekilde
+  yenilendi: ad "WSD Speed Dial – New Tab & Visual Bookmarks" (TR/RU
+  karşılıklarıyla); kısa açıklama: speed
+  dial, yeni sekme, görsel yer imleri, çalışma alanları; FVD ve Speed
+  Dial 2'den tek tıkla taşıma
+- **Rusça arayüz tamamlandı**: eksik 133 metin (klasör işlemleri, menüler,
+  ayar başlıkları, içe aktarma adımları, renk adları…) çevrildi; Rusça
+  kullanıcılar artık İngilizceye düşen satır görmüyor
+- **Arama sonuçları eşleşme gücüne göre sıralanıyor**: başlığı aranan
+  kelimeyle başlayanlar önce, sonra başlığında geçenler, en son yalnızca
+  adreste ya da etikette geçenler; her katmanda bulunduğunuz grubun
+  kartları üstte
+- **Sekme seçimi ve Vivaldi/Opera çalışma alanları**: tarayıcı hangi
+  sekmenin hangi çalışma alanında olduğunu eklentilere bildirmiyor.
+  Pencerede birden fazla bölüm varsa (yeni sekme sayfalarına göre)
+  sekmeler bloklar halinde, işaretsiz listelenir; blok başlığındaki
+  kutu bloğun tamamını seçer. Tek bölümlü pencerede (Chrome/Edge'de
+  olağan) hepsi işaretli gelir
+
+### Düzeltildi
+- **Klasör kutusundaki "N kart" yazısı açık zeminde okunmuyordu**: boyutu
+  aynı kaldı, rengi, kalınlığı ve gölgesi artık kart başlığı ayarlarından
+  geliyor
+- **"Bekleyen yakalamaları iptal et" işlenen kartı durdurmuyordu**:
+  gizli sekme ya da pencere sonuna kadar açık kalıyor, ardından bir kez
+  daha deneniyordu (2 dakikayı bulabiliyordu). Artık açık yakalama
+  sekmesi/penceresi hemen kapanıyor
+- **Gizli kipte pencere açılıyordu**: gizli yakalaması başarısız olan
+  kart pencere kipiyle yeniden deneniyordu. İkinci deneme de artık gizli
+  kipte, daha uzun beklemeyle; olmazsa kart yer tutucuyla kalır
+
 ## [1.5.3] — 2026-10-08
 
 ### Yeni

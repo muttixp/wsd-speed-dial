@@ -61,6 +61,7 @@ function ekraniTazele() {
             if (document.body.classList.contains('copAcik')) return;
             if (document.body.classList.contains('kopyaAcik')) return;
             if (document.body.classList.contains('kirikAcik')) return;
+            if (document.body.classList.contains('alanAcik')) return;
 
             await arayuzuKur();
         } catch (e) {
@@ -199,6 +200,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         await arayuzuKur();
         await ayarPaneliniKur();
         etkilesimiKur();
+        // Calisma alanlari (1.5.4, deneysel) - ayri modul
+        import('./calismaalani.js').then(m => m.calismaAlanlariniKur()).catch(() => {});
         await grupSuruklemeKur(() => arayuzuKur());
         kartSuruklemeKur({
             aktifGrup,

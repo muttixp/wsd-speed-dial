@@ -1,9 +1,9 @@
 {
   "extName": {
-    "message": "WSD Speed Dial"
+    "message": "WSD Speed Dial – визуальные закладки"
   },
   "extDesc": {
-    "message": "Страница быстрого доступа: ваши закладки в виде визуальных плиток."
+    "message": "Speed dial для новой вкладки: визуальные закладки, папки и рабочие области. Перенос из FVD и Speed Dial 2 в один клик. Без аккаунта."
   },
   "actionTitle": {
     "message": "Добавить в WSD Speed Dial"
@@ -61,9 +61,6 @@
   },
   "buKartlaIlgiliNotunuz": {
     "message": "Ваша заметка к этой плитке..."
-  },
-  "caprazVe": {
-    "message": "Диагональ 2 и 3"
   },
   "copKutusu": {
     "message": "Корзина"
@@ -1190,7 +1187,523 @@
   "grupAra": {
     "message": "Поиск групп..."
   },
+  "altKlasorleriKoru": {
+    "message": "Сохранить вложенные папки (если снять отметку, каждая папка станет отдельной группой)"
+  },
+  "buKlasordeKartYok": {
+    "message": "В этой папке нет плиток"
+  },
+  "klasorGrupOldu": {
+    "message": "Папка стала группой"
+  },
+  "klasorSilMetin": {
+    "message": "Папка «$1» вместе с плитками ($2) и вложенными папками ($3) будет перемещена в корзину."
+  },
+  "klasorSilindiNKart": {
+    "message": "Папка удалена (плиток: $1)"
+  },
+  "klasorTasindi": {
+    "message": "Папка перемещена"
+  },
+  "klasoruSil": {
+    "message": "Удалить папку"
+  },
+  "klasoruTasi": {
+    "message": "Переместить папку"
+  },
+  "nAltKlasor": {
+    "message": "Вложенных папок: $1"
+  },
+  "olustur": {
+    "message": "Создать"
+  },
+  "ustDuzeyGrupOlarak": {
+    "message": "⬆ Как группу верхнего уровня"
+  },
+  "ustKlasor": {
+    "message": "Родительская папка (Backspace)"
+  },
+  "yeniKlasor": {
+    "message": "Новая папка"
+  },
+  "klasorKendiIcine": {
+    "message": "Папку нельзя переместить в неё саму или во вложенную папку"
+  },
+  "klasoruDuzenle": {
+    "message": "Изменить папку"
+  },
+  "buKlasordeNKart": {
+    "message": "В этой папке плиток: <b>$1</b>"
+  },
+  "klasorAdiZatenVar": {
+    "message": "Папка «$1» здесь уже есть"
+  },
+  "bekleyenYenilemeler": {
+    "message": "Ожидающие обновления"
+  },
+  "nBekleyenIptalEdilsinMi": {
+    "message": "В очереди ещё ждут прежние обновления ($1). Сначала отменить их? Если нет, они тоже будут обновлены по очереди."
+  },
+  "iptalEt": {
+    "message": "Отменить"
+  },
+  "kalsin": {
+    "message": "Оставить"
+  },
+  "nBekleyenIptalEdildi": {
+    "message": "Отменено ожидающих обновлений: $1"
+  },
+  "aktarimGorselsizN": {
+    "message": "У импортированных плиток нет изображений ($1). Снимки не запускались автоматически: используйте «Обновить изображения группы» в меню группы."
+  },
+  "iceAktarmaTamamlandi": {
+    "message": "Импорт завершён"
+  },
+  "nYeniGrup": {
+    "message": "Новых групп: $1"
+  },
+  "yaziVePanel": {
+    "message": "Текст и панель"
+  },
+  "davranis": {
+    "message": "Поведение"
+  },
+  "boyutVeYerlesim": {
+    "message": "Размер и расположение"
+  },
+  "renkVeCerceve": {
+    "message": "Цвет и рамка"
+  },
+  "gorunumAlt": {
+    "message": "Внешний вид"
+  },
+  "yakalamaYontemi": {
+    "message": "Снимок"
+  },
+  "goruntuAlt": {
+    "message": "Изображение"
+  },
+  "yedekAlt": {
+    "message": "Резервная копия"
+  },
+  "iceAktarAlt": {
+    "message": "Импорт"
+  },
+  "yedeklemeVeAktarma": {
+    "message": "Резервная копия и импорт"
+  },
+  "tehlikeliIslemler": {
+    "message": "Сброс"
+  },
+  "tehlikeliAciklama": {
+    "message": "Эти действия массово меняют данные или настройки. Рекомендуется сначала сделать резервную копию."
+  },
+  "ustKlasoreCik": {
+    "message": "перейти в родительскую папку"
+  },
+  "geriIleri": {
+    "message": "назад / вперёд (боковые кнопки мыши)"
+  },
+  "mSekmedeAc": {
+    "message": "Открыть во вкладке"
+  },
+  "mYeniSekmedeAc": {
+    "message": "Открыть в новой вкладке"
+  },
+  "mGizliSekmedeAc": {
+    "message": "Открыть в режиме инкогнито"
+  },
+  "mAdresiKopyala": {
+    "message": "Копировать адрес"
+  },
+  "mGorseliYenile": {
+    "message": "Обновить изображение"
+  },
+  "mDuzenle": {
+    "message": "Изменить…"
+  },
+  "mNotEkle": {
+    "message": "Добавить заметку…"
+  },
+  "mTasi": {
+    "message": "Переместить…"
+  },
+  "mSil": {
+    "message": "Удалить"
+  },
+  "mAc": {
+    "message": "Открыть"
+  },
+  "mHepsiniAc": {
+    "message": "Открыть все"
+  },
+  "mYeniPencerede": {
+    "message": "Открыть все в новом окне"
+  },
+  "mGorselleriYenile": {
+    "message": "Обновить изображения"
+  },
+  "mKartlariSirala": {
+    "message": "Сортировать плитки…"
+  },
+  "mGrubuDuzenle": {
+    "message": "Изменить группу…"
+  },
+  "mBaskaGrubaTasi": {
+    "message": "Переместить в другую группу…"
+  },
+  "mGruplariYonet": {
+    "message": "Управление группами…"
+  },
+  "mKartEkle": {
+    "message": "Добавить плитку…"
+  },
+  "mYeniKlasor": {
+    "message": "Новая папка…"
+  },
+  "mYeniGrup": {
+    "message": "Новая группа…"
+  },
+  "mYinelenenKartlar": {
+    "message": "Повторяющиеся плитки"
+  },
+  "mCopKutusu": {
+    "message": "Корзина"
+  },
+  "mAyarlar": {
+    "message": "Настройки"
+  },
+  "gorseliYenile": {
+    "message": "Обновить изображение"
+  },
+  "kapakResmi": {
+    "message": "Обложка"
+  },
+  "resimSec": {
+    "message": "Выбрать изображение…"
+  },
+  "kapakIpucu": {
+    "message": "Перетащите сюда изображение или вставьте через Ctrl+V"
+  },
+  "etiketler": {
+    "message": "Метки"
+  },
+  "yeniEtiket": {
+    "message": "Новая метка…"
+  },
+  "etiketiSil": {
+    "message": "Удалить метку"
+  },
+  "etiketiSilSoru": {
+    "message": "Метка «$1» будет снята с плиток ($2). Сами плитки не удаляются."
+  },
+  "renk_kirmizi": {
+    "message": "Красный"
+  },
+  "renk_turuncu": {
+    "message": "Оранжевый"
+  },
+  "renk_sari": {
+    "message": "Жёлтый"
+  },
+  "renk_yesil": {
+    "message": "Зелёный"
+  },
+  "renk_mavi": {
+    "message": "Синий"
+  },
+  "renk_mor": {
+    "message": "Фиолетовый"
+  },
+  "renk_gri": {
+    "message": "Серый"
+  },
+  "renk_yok": {
+    "message": "Нет"
+  },
+  "koseYuvarlakligi": {
+    "message": "Скругление углов"
+  },
+  "koseYuvarlakligiIpucu": {
+    "message": "Плитки, вкладки, окна, меню и кнопки"
+  },
+  "yanPaneliGizle": {
+    "message": "Автоскрытие боковой панели"
+  },
+  "buGruptaNKart": {
+    "message": "В этой группе плиток: <b>$1</b>"
+  },
+  "dIkonRengi": {
+    "message": "Цвет значка"
+  },
+  "dArkaPlanRengi": {
+    "message": "Цвет фона"
+  },
+  "kirikDegil": {
+    "message": "Не битая"
+  },
+  "kirikDegilIpucu": {
+    "message": "Страница открывается: пропускать этот адрес при следующих проверках"
+  },
+  "kirikDegilBildir": {
+    "message": "Этот адрес будет пропускаться при проверке битых ссылок"
+  },
+  "nUlasilamadi": {
+    "message": "Недоступно: $1"
+  },
+  "silinecekKirikYok": {
+    "message": "Удалять нечего"
+  },
+  "klasorSec": {
+    "message": "Выбрать папку"
+  },
+  "klasorSecMenu": {
+    "message": "Выбрать папку…"
+  },
+  "klasorSecIpucu": {
+    "message": "Нажмите на название, чтобы добавить туда · ▸ раскрывает ветку"
+  },
+  "sagTikMenusu": {
+    "message": "Контекстное меню страницы"
+  },
+  "sagTikPencere": {
+    "message": "Группы + «Выбрать папку…»"
+  },
+  "sagTikAgac": {
+    "message": "Вложенные меню"
+  },
+  "sagTikGruplar": {
+    "message": "Только группы"
+  },
+  "asamaDosyaOkunuyor": {
+    "message": "Чтение файла"
+  },
+  "asamaMevcutSiliniyor": {
+    "message": "Удаление текущих данных"
+  },
+  "asamaKartlarEkleniyor": {
+    "message": "Добавление плиток"
+  },
+  "asamaKartlarSiliniyor": {
+    "message": "Удаление плиток"
+  },
+  "asamaKaydediliyor": {
+    "message": "Сохранение заметок, цветов, меток и настроек…"
+  },
+  "asamaTamamlaniyor": {
+    "message": "Завершение: в очередь ставятся недостающие изображения…"
+  },
+  "asamaYenileniyor": {
+    "message": "Перезагрузка страницы…"
+  },
+  "kiriklariSil": {
+    "message": "Удалить битые"
+  },
+  "ulasilamayanlariSil": {
+    "message": "Удалить недоступные"
+  },
+  "nUlasilamayanCopeTasinacak": {
+    "message": "Недоступные плитки ($1) будут перемещены в корзину. Некоторые из них могут быть недоступны лишь временно. Их можно восстановить."
+  },
+  "baslikAlt": {
+    "message": "Заголовок"
+  },
+  "baslikRengi": {
+    "message": "Цвет заголовка"
+  },
+  "baslikStili": {
+    "message": "Стиль заголовка"
+  },
+  "stilNormal": {
+    "message": "Обычный"
+  },
+  "stilKalin": {
+    "message": "Жирный"
+  },
+  "stilItalik": {
+    "message": "Курсив"
+  },
+  "stilKalinItalik": {
+    "message": "Жирный курсив"
+  },
+  "baslikGolgesi": {
+    "message": "Тень заголовка"
+  },
+  "baslikGolgeRengi": {
+    "message": "Цвет тени"
+  },
+  "menuYaziRengi": {
+    "message": "Цвет текста меню"
+  },
+  "aktifGrupYaziRengi": {
+    "message": "Цвет текста активной группы"
+  },
+  "sistemBolum": {
+    "message": "Система"
+  },
+  "sagTikBaslik": {
+    "message": "Контекстное меню"
+  },
+  "simgeRenkSol": {
+    "message": "Цвет левой линии"
+  },
+  "simgeRenkSag": {
+    "message": "Цвет правой линии"
+  },
+  "simgeGolgesi": {
+    "message": "Тень значка"
+  },
+  "simgeZemini": {
+    "message": "Фон значка"
+  },
+  "simgeZeminRengi": {
+    "message": "Цвет фона"
+  },
   "aktarimdaYakala": {
     "message": "Создавать недостающие миниатюры после импорта"
+  },
+  "icindekiKartlardanSec": {
+    "message": "Выбрать из плиток внутри"
+  },
+  "dosyadanIceAktar": {
+    "message": "Импорт"
+  },
+  "desteklenmeyenDosya": {
+    "message": "Файл не распознан. Выберите резервную копию WSD, FVD, Speed Dial 2 или Group Speed Dial либо HTML-файл закладок"
+  },
+  "karsilamaIceAktarAciklama": {
+    "message": "Импорт: резервная копия WSD, копия другого Speed Dial (FVD, Speed Dial 2, Group Speed Dial) или HTML-файл закладок, экспортированный из любого браузера. Тип определяется автоматически."
+  },
+  "karsilamaKapatDevam": {
+    "message": "Закрыть и продолжить"
+  },
+  "yerimlerinden": {
+    "message": "Из закладок"
+  },
+  "siteEkle": {
+    "message": "Добавить сайт"
+  },
+  "metinYapistir": {
+    "message": "Вставить текст (FVD и др.)"
+  },
+  "metinYapistirAciklama": {
+    "message": "Скопируйте текст из поля экспорта в настройках FVD или содержимое файла резервной копии и вставьте сюда. Тип определяется автоматически."
+  },
+  "onizlemeKisaltildi": {
+    "message": "превью сокращено, будет импортирован весь текст"
+  },
+  "mSekmeleriKaydet": {
+    "message": "Сохранить вкладки в группу…"
+  },
+  "tumunuSec": {
+    "message": "Выбрать все"
+  },
+  "kaydedilecekSekmeYok": {
+    "message": "Здесь нет открытых вкладок для сохранения"
+  },
+  "sekmelerGrupAdi": {
+    "message": "Вкладки $1"
+  },
+  "sekmeleriKaydetBaslik": {
+    "message": "Сохранить открытые вкладки в группу"
+  },
+  "sekmeleriKaydetMetin": {
+    "message": "Вкладки этого окна будут добавлены в новую группу. Снимите отметку с ненужных."
+  },
+  "nSekmeKaydedildi": {
+    "message": "Сохранено вкладок: $1"
+  },
+  "calismaAlanlari": {
+    "message": "Рабочие области"
+  },
+  "alanKaydetBaslik": {
+    "message": "Сохранить рабочую область"
+  },
+  "alanKaydetMetin": {
+    "message": "Отметьте вкладки для сохранения. Если в окне несколько разделов (например, рабочие области Vivaldi/Opera), флажок в заголовке раздела выбирает весь раздел."
+  },
+  "alanVarsayilanAd": {
+    "message": "Рабочая область $1"
+  },
+  "alanKaydedildi": {
+    "message": "Сохранено вкладок: $1"
+  },
+  "alanBos": {
+    "message": "Эта рабочая область пуста"
+  },
+  "alanAc": {
+    "message": "Открыть"
+  },
+  "yenidenAdlandir": {
+    "message": "Переименовать"
+  },
+  "grubaDonustur": {
+    "message": "Превратить в группу"
+  },
+  "grubaDonusturMetin": {
+    "message": "«$1» станет обычной группой, для карточек будут сделаны скриншоты."
+  },
+  "grubaDonusturuldu": {
+    "message": "Превращено в группу"
+  },
+  "alanSil": {
+    "message": "Удалить рабочую область"
+  },
+  "alanSilMetin": {
+    "message": "«$1» (вкладок: $2) будет удалена навсегда."
+  },
+  "alanYok": {
+    "message": "Рабочих областей пока нет. Нажмите «Сохранить вкладки», чтобы сохранить открытые вкладки и потом открыть их одним щелчком."
+  },
+  "nSekme": {
+    "message": "Вкладок: $1"
+  },
+  "yeniPencerede": {
+    "message": "В новом окне"
+  },
+  "sekmeleriKaydet": {
+    "message": "Сохранить вкладки"
+  },
+  "alandanCikar": {
+    "message": "Убрать из рабочей области"
+  },
+  "nDahaGoster": {
+    "message": "Ещё вкладок: $1"
+  },
+  "dahaAzGoster": {
+    "message": "Свернуть"
+  },
+  "alanAcIpucu": {
+    "message": "Открыть вкладки в этом окне"
+  },
+  "kayitliSekmeler": {
+    "message": "Сохранённые вкладки"
+  },
+  "acikSekmeler": {
+    "message": "Открытые вкладки в этом окне"
+  },
+  "alanDuzenleBaslik": {
+    "message": "Изменить рабочую область"
+  },
+  "alanDuzenleMetin": {
+    "message": "Сохранённые вкладки без отметки будут удалены, отмеченные открытые — добавлены."
+  },
+  "alanDuzenlendi": {
+    "message": "Добавлено: $1, удалено: $2"
+  },
+  "etiketIpucu": {
+    "message": "через запятую: работа, учёба"
+  },
+  "tumu": {
+    "message": "Все"
+  },
+  "renk": {
+    "message": "Цвет"
+  },
+  "blokBasligi": {
+    "message": "Вкладок: $1 · $2"
+  },
+  "mSekmeleriAlanaKaydet": {
+    "message": "Сохранить вкладки в рабочую область…"
   }
 }

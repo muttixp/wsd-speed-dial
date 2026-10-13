@@ -20,7 +20,9 @@ import { icSuruklemeVarMi } from './kartsurukle.js';
 import { klasorSuruklemeVarMi } from './klasorsurukle.js';
 
 /** Kendi kartimizi ya da klasorumuzu tasirken bu modul devreye girmiyor. */
-const icSurukleme = () => icSuruklemeVarMi() || klasorSuruklemeVarMi();
+// Calisma alani karti surukleniyorsa (1.5.4) o da ic surukleme
+const icSurukleme = () => icSuruklemeVarMi() || klasorSuruklemeVarMi()
+    || document.body.classList.contains('alanSurukleniyor');
 
 export function disBirakmayiKur() {
     const kap = document.getElementById('kartKabi');

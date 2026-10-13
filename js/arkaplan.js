@@ -176,6 +176,11 @@ async function menuyuKur() {
     try {
         await chrome.contextMenus.removeAll();
 
+        // ARAC CUBUGU SIMGESI (1.5.4): sekmeleri calisma alanina kaydet.
+        // Yeni sekme acmadan, bulunulan yerden tek tikla.
+        await menuOgesi({ id: 'wsdSekmeKaydet', contexts: ['action'],
+                          title: chrome.i18n.getMessage('mSekmeleriAlanaKaydet') || 'Sekmeleri çalışma alanına kaydet…' });
+
         const gruplar = await gorunurGruplariAl();
         const kok = await kokKlasoruAl();
         const baslik = chrome.i18n.getMessage('actionTitle') || "WSD Speed Dial'e ekle";
@@ -387,6 +392,16 @@ function dosyaAdi(url) {
 
 chrome.contextMenus.onClicked.addListener(async (bilgi, sekme) => {
     const id = String(bilgi.menuItemId);
+
+    // Simge menusu: WSD sayfasi ETKIN SEKMENIN YANINA aciliyor - sekme
+    // secimi (bloklar) o sekmenin konumuna bakiyor; Vivaldi'de de o anki
+    // calisma alanina dusuyor. Sayfa #sekmeleriKaydet ile kaydetmeyi acar.
+    if (id === 'wsdSekmeKaydet') {
+        const ozellik = { url: chrome.runtime.getURL(SAYFA) + '#sekmeleriKaydet', active: true };
+        if (sekme && sekme.id >= 0) { ozellik.windowId = sekme.windowId; ozellik.index = sekme.index + 1; }
+        await chrome.tabs.create(ozellik).catch(() => chrome.tabs.create({ url: ozellik.url }));
+        return;
+    }
     let hedef = null;
 
     // Adres onceligi: ORTAM OGESI > baglanti > sayfa.

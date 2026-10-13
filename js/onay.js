@@ -10,6 +10,7 @@
 // Lisans metni: LICENSE dosyasi - https://www.gnu.org/licenses/
 
 import { c } from './dil.js';
+import { RENKLER } from './renk.js';
 // WSD Speed Dial - onay ve giris pencereleri
 //
 // Native confirm()/prompt() yerine kendi pencerelerimiz: sayfa temasiyla
@@ -126,7 +127,7 @@ export function metinSor({ baslik = c('giris'), metin = '', deger = '',
     return ac({ baslik, metin, evet, hayir, tehlikeli: false, giris: deger });
 }
 
-function ac({ baslik, metin, evet, hayir, tehlikeli, giris, hatirla = null, cokSatir = false }) {
+function ac({ baslik, metin, evet, hayir, tehlikeli, giris, hatirla = null, cokSatir = false, liste = null, ek = null }) {
     // Onceki pencere acik kaldiysa iptal say - iki pencere ust uste binmesin
     if (acikCozucu) kapat(false);
 
@@ -145,6 +146,17 @@ function ac({ baslik, metin, evet, hayir, tehlikeli, giris, hatirla = null, cokS
         el('onayMetinAlan').readOnly = false;
         el('onayMetinAlan').value = '';
         metinBilgisiniTazele();
+    }
+
+    listeyiCiz(liste);
+
+    // Ek alanlar: etiket + not (calisma alani duzenleme, 1.5.4)
+    if (el('onayEk')) {
+        el('onayEk').hidden = !ek;
+        el('onayEtiket').value = ek ? (ek.etiketler || []).join(', ') : '';
+        el('onayNot').value = ek ? (ek.not || '') : '';
+        ekRenk = ek ? (ek.renk || null) : null;
+        renkleriCiz();
     }
 
     // "Bir daha sorma" yalnizca geri alinabilir islemlerde
@@ -209,6 +221,21 @@ function kapat(kabul) {
     // "bir daha sorma ve hep iptal et" anlamina gelirdi
     if (hatirla && el('onayHatirlaKutusu')?.checked) onayiAtla(hatirla);
 
+    if (el('onayListe') && !el('onayListe').hidden) {
+        const secili = [...el('onayListeIc').querySelectorAll('input[data-i]')]
+            .filter(k => k.checked).map(k => Number(k.dataset.i));
+        el('onayListe').hidden = true;
+        el('onayListeIc').textContent = '';
+        const ekVar = el('onayEk') && !el('onayEk').hidden;
+        const ek = ekVar ? {
+            etiketler: [...new Set(el('onayEtiket').value.split(',').map(x => x.trim()).filter(Boolean))],
+            not: el('onayNot').value.trim(),
+            renk: ekRenk
+        } : null;
+        if (ekVar) el('onayEk').hidden = true;
+        return coz({ ad: el('onayGirisAlan').value.trim(), secili, ek });
+    }
+
     if (el('onayCokSatir') && !el('onayCokSatir').hidden) {
         const m = yapistirilan ?? el('onayMetinAlan').value;
         yapistirilan = null;                     // buyuk metin bellekte kalmasin
@@ -218,4 +245,120 @@ function kapat(kabul) {
     }
     const girisVar = !el('onayGiris').hidden;
     coz(girisVar ? el('onayGirisAlan').value.trim() : '');
+}
+
+/* ---------- Secimli liste (1.5.4, deneysel) ---------- */
+
+/**
+ * Ad + onay kutulu liste ister. Acik sekmeleri gruba kaydetmede
+ * kullaniliyor: Vivaldi/Opera calisma alanlarini eklenti ayirt
+ * edemiyor, kullanici istemedigi sekmelerin isaretini kaldiriyor.
+ *
+ * @param satirlar [{ baslik, alt, ikon }]
+ * @returns {Promise<{ad: string, secili: number[]}|null>}
+ */
+export function listeSor({ baslik = c('giris'), metin = '', deger = '', satirlar = [],
+                           evet = c('tamam'), hayir = c('vazgec'), ek = null } = {}) {
+    return ac({ baslik, metin, evet, hayir, tehlikeli: false, giris: deger, liste: satirlar, ek });
+}
+
+function listeyiCiz(liste) {
+    const kap = el('onayListe');
+    if (!kap) return;
+    kap.hidden = !liste;
+    const ic = el('onayListeIc');
+    ic.textContent = '';
+    el('onayEvet').disabled = false;
+    if (!liste) return;
+
+    for (const [i, s] of liste.entries()) {
+        // Bolum basligi (duzenlemede "Kayitli" / "Acik sekmeler")
+        if (s.bolum) {
+            const b = document.createElement(s.secici ? 'label' : 'div');
+            b.className = 'onayListeBolum' + (s.secici ? ' secici' : '');
+            if (s.secici) {
+                // Blok basligi: kutusu o bloktaki tum sekmeleri secer
+                const k = document.createElement('input');
+                k.type = 'checkbox';
+                k.dataset.blokSecici = s.blok;
+                k.addEventListener('change', e => {
+                    e.stopPropagation();
+                    for (const x of ic.querySelectorAll(`input[data-blok="${s.blok}"]`)) x.checked = k.checked;
+                    ic.dispatchEvent(new Event('change'));
+                });
+                b.appendChild(k);
+            }
+            const sp = document.createElement('span');
+            sp.textContent = s.bolum;
+            b.appendChild(sp);
+            ic.appendChild(b);
+            continue;
+        }
+        const satir = document.createElement('label');
+        satir.className = 'onayListeSatir';
+        const kutu = document.createElement('input');
+        kutu.type = 'checkbox';
+        kutu.checked = s.secili !== false;
+        if (s.blok != null) kutu.dataset.blok = s.blok;
+        kutu.dataset.i = i;
+        satir.appendChild(kutu);
+        if (s.ikon) {
+            const img = document.createElement('img');
+            img.src = s.ikon;
+            img.alt = '';
+            img.onerror = () => img.replaceWith(document.createElement('i'));
+            satir.appendChild(img);
+        } else {
+            satir.appendChild(document.createElement('i'));
+        }
+        const ad = document.createElement('span');
+        ad.textContent = s.baslik;
+        ad.title = s.baslik;
+        satir.appendChild(ad);
+        const alt = document.createElement('small');
+        alt.textContent = s.alt || '';
+        satir.appendChild(alt);
+        ic.appendChild(satir);
+    }
+
+    const hepsi = el('onayListeHepsi');
+    const sayiyiYaz = () => {
+        const kutular = [...ic.querySelectorAll('input[data-i]')];
+        const n = kutular.filter(k => k.checked).length;
+        // Blok basliklari: bloktakilerin durumunu yansitsin
+        for (const bs of ic.querySelectorAll('input[data-blok-secici]')) {
+            const grup = kutular.filter(k => k.dataset.blok === bs.dataset.blokSecici);
+            const sec = grup.filter(k => k.checked).length;
+            bs.checked = sec === grup.length && sec > 0;
+            bs.indeterminate = sec > 0 && sec < grup.length;
+        }
+        el('onayListeSayi').textContent = `${n} / ${kutular.length}`;
+        hepsi.checked = n === kutular.length;
+        hepsi.indeterminate = n > 0 && n < kutular.length;
+        el('onayEvet').disabled = n === 0;
+    };
+    ic.onchange = sayiyiYaz;
+    hepsi.onchange = () => {
+        for (const k of ic.querySelectorAll('input[data-i]')) k.checked = hepsi.checked;
+        sayiyiYaz();
+    };
+    sayiyiYaz();
+}
+
+/* Ek alanlardaki renk secimi */
+let ekRenk = null;
+function renkleriCiz() {
+    const kap = el('onayRenkler');
+    if (!kap) return;
+    kap.textContent = '';
+    for (const r of RENKLER) {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'renkNokta' + (r.deger ? '' : ' bos') + ((r.deger || null) === ekRenk ? ' secili' : '');
+        b.title = c('renk_' + r.ad) || r.ad;
+        if (r.deger) b.style.backgroundColor = r.deger;
+        else b.textContent = '\u2715';
+        b.addEventListener('click', () => { ekRenk = r.deger || null; renkleriCiz(); });
+        kap.appendChild(b);
+    }
 }

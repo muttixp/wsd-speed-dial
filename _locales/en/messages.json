@@ -1,9 +1,9 @@
 {
   "extName": {
-    "message": "WSD Speed Dial"
+    "message": "WSD Speed Dial – New Tab & Visual Bookmarks"
   },
   "extDesc": {
-    "message": "Visual speed dial for your new tab: groups, nested folders, screenshots. Stored in your own bookmarks — no account, no tracking."
+    "message": "Speed dial for your new tab: visual bookmarks, folders and workspaces. One-click import from FVD and Speed Dial 2. No account."
   },
   "actionTitle": {
     "message": "Add to WSD Speed Dial"
@@ -1591,5 +1591,119 @@
   },
   "onizlemeKisaltildi": {
     "message": "preview shortened, the full text will be imported"
+  },
+  "mSekmeleriKaydet": {
+    "message": "Save open tabs as group…"
+  },
+  "tumunuSec": {
+    "message": "Select all"
+  },
+  "kaydedilecekSekmeYok": {
+    "message": "No open tabs to save here"
+  },
+  "sekmelerGrupAdi": {
+    "message": "Tabs $1"
+  },
+  "sekmeleriKaydetBaslik": {
+    "message": "Save open tabs as group"
+  },
+  "sekmeleriKaydetMetin": {
+    "message": "Tabs in this window will be added to a new group as cards. Untick the ones you don’t want."
+  },
+  "nSekmeKaydedildi": {
+    "message": "$1 tabs saved to a new group"
+  },
+  "calismaAlanlari": {
+    "message": "Workspaces"
+  },
+  "alanKaydetBaslik": {
+    "message": "Save workspace"
+  },
+  "alanKaydetMetin": {
+    "message": "Tick the tabs you want to save. If the window has several sections (e.g. Vivaldi/Opera workspaces), the box on a section header selects the whole section."
+  },
+  "alanVarsayilanAd": {
+    "message": "Workspace $1"
+  },
+  "alanKaydedildi": {
+    "message": "$1 tabs saved to workspace"
+  },
+  "alanBos": {
+    "message": "This workspace is empty"
+  },
+  "alanAc": {
+    "message": "Open"
+  },
+  "yenidenAdlandir": {
+    "message": "Rename"
+  },
+  "grubaDonustur": {
+    "message": "Convert to group"
+  },
+  "grubaDonusturMetin": {
+    "message": "\"$1\" will become a regular group and card images will be captured."
+  },
+  "grubaDonusturuldu": {
+    "message": "Converted to group"
+  },
+  "alanSil": {
+    "message": "Delete workspace"
+  },
+  "alanSilMetin": {
+    "message": "\"$1\" ($2 tabs) will be deleted permanently."
+  },
+  "alanYok": {
+    "message": "No workspaces yet. Use \"Save tabs\" to keep your open tabs, then reopen them with one click."
+  },
+  "nSekme": {
+    "message": "$1 tabs"
+  },
+  "yeniPencerede": {
+    "message": "In new window"
+  },
+  "sekmeleriKaydet": {
+    "message": "Save tabs"
+  },
+  "alandanCikar": {
+    "message": "Remove from workspace"
+  },
+  "nDahaGoster": {
+    "message": "+$1 more tabs"
+  },
+  "dahaAzGoster": {
+    "message": "Show less"
+  },
+  "alanAcIpucu": {
+    "message": "Open tabs in this window"
+  },
+  "kayitliSekmeler": {
+    "message": "Saved tabs"
+  },
+  "acikSekmeler": {
+    "message": "Open tabs in this window"
+  },
+  "alanDuzenleBaslik": {
+    "message": "Edit workspace"
+  },
+  "alanDuzenleMetin": {
+    "message": "Unticked saved tabs are removed, ticked open tabs are added."
+  },
+  "alanDuzenlendi": {
+    "message": "$1 tabs added, $2 tabs removed"
+  },
+  "etiketIpucu": {
+    "message": "comma separated: work, research"
+  },
+  "tumu": {
+    "message": "All"
+  },
+  "renk": {
+    "message": "Color"
+  },
+  "blokBasligi": {
+    "message": "$1 tabs · $2"
+  },
+  "mSekmeleriAlanaKaydet": {
+    "message": "Save tabs to a workspace…"
   }
 }

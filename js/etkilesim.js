@@ -21,7 +21,7 @@ import { gruplariAl, gorunurGruplariAl, kokKlasoruAl, tumKlasorleriAl } from './
 import { RENKLER, renkleriAl, renkYaz } from './renk.js';
 import { karuseliKur, karuseliYukle, adayEkle, zeminAyarla, secimDurumu } from './karusel.js';
 import { adaylariYaz } from './gorsel.js';
-import { onayPenceresiniKur, onaySor, metinSor } from './onay.js';
+import { onayPenceresiniKur, onaySor, metinSor, listeSor } from './onay.js';
 import { bildir, pencereAc, pencereKapat, sayfaKaydirmasiniTazele,
          pencereIzleyiciyiKur, kacisliMetin, acikPencereyiKapat,
          tazelemeyiBastir, menuTazele } from './arayuz.js';
@@ -388,6 +388,44 @@ async function grupEklePenceresi() {
         menuTazele();
         bildir(c('grupOlusturuldu'));
     } catch (e) {
+        bildir(c('grupOlusturulamadi'));
+    }
+}
+
+/**
+ * ACIK SEKMELERI GRUBA KAYDET (1.5.4, deneysel).
+ *
+ * Yalnizca BU PENCEREnin sekmeleri: ayri pencereleri tarayici ayirt
+ * ediyor. Vivaldi/Opera calisma alanlari ayni pencerede oldugu icin
+ * eklentiye hepsi birden gelebiliyor; liste isaretli geliyor, kullanici
+ * istemediklerini kaldiriyor. WSD sekmesi ve http/https/file disi
+ * adresler (chrome://, vivaldi:// ...) alinmiyor; ayni adres bir kez.
+ * Gorseller her zamanki gibi arka plandaki onCreated ile kuyruga giriyor.
+ */
+async function sekmeleriGrubaKaydet() {
+    // Sekme secimi calisma alanlariyla ORTAK (bloklar, Vivaldi alanlari)
+    const { sekmeSec } = await import('./calismaalani.js');
+    const tarih = new Date().toLocaleString(undefined, { dateStyle: 'short', timeStyle: 'short' });
+    const varsayilan = c('sekmelerGrupAdi', tarih);
+    const sonuc = await sekmeSec({
+        baslik: c('sekmeleriKaydetBaslik'),
+        deger: varsayilan,
+        evet: c('grupOlustur')
+    });
+    if (!sonuc || !sonuc.sekmeler.length) return;
+
+    tazelemeyiBastir(5000);
+    try {
+        const g = await grupEkle(sonuc.ad || varsayilan);
+        for (const s of sonuc.sekmeler) {
+            await kartEkle(g.id, s.title || s.url, s.url);
+        }
+        await arayuzuKur();
+        await grubuAc(g.id);
+        menuTazele();
+        bildir(c('nSekmeKaydedildi', sonuc.sekmeler.length));
+    } catch (e) {
+        console.log('[WSD] sekmeler kaydedilemedi:', e);
         bildir(c('grupOlusturulamadi'));
     }
 }
@@ -1516,7 +1554,7 @@ function menuleriKur() {
         // Tarayici menusu de cikmasin diye preventDefault ustte.
         // KIRIK BAGLANTILAR ve ARAMA sonuclari da ayni (1.5.1): ekranda
         // tek bir grup yok, "Kart ekle" nereye ekleyecegi belirsizdi.
-        if (['copAcik', 'kopyaAcik', 'kirikAcik', 'aramaAcik']
+        if (['copAcik', 'kopyaAcik', 'kirikAcik', 'aramaAcik', 'alanAcik']
             .some(s => document.body.classList.contains(s))) return;
 
         // Ana Sayfa'da (kok) klasor = grup: "Yeni Klasor" soluk
@@ -1862,6 +1900,10 @@ async function bosMenuEylemi(e) {
             await grupEklePenceresi();
             break;
 
+        case 'sekmeleriKaydet':
+            await sekmeleriGrubaKaydet();
+            break;
+
         // BULUNDUGUN YERI duzenle (1.5.3): klasorun icindeyken o klasoru,
         // grubun kokundeyken grubu. Once yalnizca bir ust duzeye cikip
         // klasor kutusuna sag tiklayarak ulasilabiliyordu.
@@ -1898,7 +1940,7 @@ async function bosMenuEylemi(e) {
             // yenileniyor, klasor kutularinin icindekiler atlaniyordu.
             // Ozel ekranlarda (arama, kirik...) liste tek bir klasor
             // degil: orada yalnizca gorunen kartlar yenilenir.
-            const ozelEkran = ['aramaAcik', 'kirikAcik', 'kopyaAcik', 'copAcik']
+            const ozelEkran = ['aramaAcik', 'kirikAcik', 'kopyaAcik', 'copAcik', 'alanAcik']
                 .some(x => document.body.classList.contains(x));
             if (!ozelEkran) { await grubunGorselleriniYenile(aktifGrup()); break; }
 

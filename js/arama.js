@@ -20,7 +20,7 @@
 // yaklasimi sirayi ve surukleme durumunu bozuyor.
 
 import { gruplariAl, grubunTumKartlari, klasorIcerigi, urlNormalle } from './yerimi.js';
-import { kartAraclariOlustur, gorselleriGozle } from './cizim.js';
+import { kartAraclariOlustur, gorselleriGozle, aktifSekme } from './cizim.js';
 import { renkleriAl, RENKLER } from './renk.js';
 import { etiketTanimlariAl, kartEtiketleriAl, etiketNoktalari, etiketSil } from './etiket.js';
 import { notlariAl } from './not.js';
@@ -287,6 +287,7 @@ async function dizinOlustur() {
                 baslik: k.baslik || k.url,
                 grupAdi: [g.baslik, ...(k.yol || [])].join(' › '),
                 grupId: k.parentId || g.id,
+                ustGrupId: g.id,
                 id: k.id
             });
         }
@@ -340,6 +341,19 @@ async function suz(terim, baglam) {
         k.url.toLocaleLowerCase('tr').includes(t) ||
         etiketAdlari(k.url).includes(t)
     );
+
+    // SIRALAMA (1.5.4): terim siralamayi da belirliyor. Basligi terimle
+    // baslayan > basliginda gecen > yalniz adreste/etikette gecen; her
+    // katmanda bulunulan grubun kartlari once. sort() kararli, esitlerde
+    // agactaki sira korunuyor.
+    let aktif = null;
+    try { aktif = aktifSekme(); } catch {}
+    const puan = k => {
+        const b = k.baslik.toLocaleLowerCase('tr');
+        const kat = b.startsWith(t) ? 0 : b.includes(t) ? 2 : 4;
+        return kat + (aktif && k.ustGrupId === aktif ? 0 : 1);
+    };
+    eslesen.sort((x, y) => puan(x) - puan(y));
 
     // GRUP ARAMASI: ayni kutudan, ayri kip yok. Eslesen gruplar
     // sonuclarin ustunde kucuk rozetler olarak cikiyor.

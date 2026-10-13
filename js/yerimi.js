@@ -22,6 +22,8 @@
 // kilitlenmiyor ve tarayicinin kendi yedekleme araclariyla da disari alinabiliyor.
 
 export const KOK_ADI = 'WSD';
+// Calisma alanlari (1.5.4, deneysel): WSD kokunun YANINDA ayri klasor
+export const ALAN_KOK_ADI = 'WSD Çalışma Alanları';
 
 let kokId = null;
 

@@ -14,7 +14,7 @@
  * kendimize kopyalamanin anlami yok.
  */
 
-import { kokKlasoruAl, kartlariAl, kartEkle, grupEkle, gruplariAl, urlNormalle, KOK_ADI }
+import { kokKlasoruAl, kartlariAl, kartEkle, grupEkle, gruplariAl, urlNormalle, KOK_ADI, ALAN_KOK_ADI }
     from './yerimi.js';
 import { bildir } from './arayuz.js';
 import { grubuAc, aktifGrup, arayuzuKur } from './cizim.js';
@@ -127,7 +127,7 @@ export async function tarayiciAgaciniAl() {
     const cevir = dugum => {
         // Kimlik listesine ek olarak ADA da bakiyoruz: kok kimligi
         // bayatlamis olsa bile WSD klasoru listeye girmesin
-        if (bizim.has(dugum.id) || dugum.title === KOK_ADI) return null;
+        if (bizim.has(dugum.id) || dugum.title === KOK_ADI || dugum.title === ALAN_KOK_ADI) return null;
         const d = { ad: dugum.title || '', baglantilar: [], cocuklar: [] };
         for (const c of dugum.children || []) {
             if (c.url) d.baglantilar.push({ url: c.url, baslik: c.title || c.url });

@@ -126,6 +126,27 @@ yaklaşınca açılabilir ya da hep açık durabilir.
 
 Sağdaki göz simgesi her şeyi gizler, yalnızca duvar kâğıdı kalır.
 
+### Çalışma alanları
+
+Bir günlük iş ya da bir proje için açılan sekmeleri saklamak için.
+Yan paneldeki düğme ya da araç çubuğundaki simgeye sağ tık →
+**Sekmeleri çalışma alanına kaydet**. Kaydederken sekmeler kapanmaz.
+
+- **Aç:** sekmeleri bu pencerede (Vivaldi'de o anki çalışma alanına)
+  ya da yeni pencerede açar
+- **Düzenle:** ad, etiket, not, renk; kayıtlı sekmeleri çıkarma ve bu
+  penceredeki açık sekmelerden ekleme tek pencerede
+- **Gruba dönüştür:** kalıcı olacaksa görselli normal grup olur
+- Kartlar sürükleyip sıralanır, etiketle süzülür
+- Kayıtlar WSD klasörünün yanında **WSD Çalışma Alanları** yer imi
+  klasöründe durur; grup şeridi, arama ve görsel yakalama bunlara
+  dokunmaz. Yedeğe dahildir.
+
+**Vivaldi / Opera çalışma alanları:** tarayıcı hangi sekmenin hangi
+çalışma alanında olduğunu eklentilere bildirmiyor. Pencerede birden
+fazla bölüm varsa sekmeler bloklar halinde, işaretsiz listelenir;
+blok başlığındaki kutu o bloğun tamamını seçer.
+
 ---
 
 ## Yedekleme ve taşıma
