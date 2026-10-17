@@ -66,6 +66,19 @@ başlatırsanız kartlarınızdaki adresler tek tek yoklanır. İstekler
 yalnızca o sitelerin kendisine gider; başka bir sunucuya veri gitmez.
 Tarama kendiliğinden başlamaz.
 
+**5. Ana sayfadaki arama kutusunu kullanırken** — yazdığınız arama
+yalnızca seçtiğiniz arama motoruna gider ("Tarayıcının arama motoru"
+seçiliyse tarayıcınızın kendi motoruna). Eklenti aramaları okumaz,
+saklamaz, kaydetmez. Listede görünen motorların simgeleri bir kez o
+motorun kendi sitesinden (çerez gönderilmeden) alınıp yerelde saklanır
+ve bir daha istenmez (alınamazsa en erken 7 gün sonra yeniden denenir).
+
+**6. Hazır Gruplar penceresini açarken** — örnek grup listesi ve
+seçtiğiniz paket, eklentinin kendi GitHub deposundan
+(`raw.githubusercontent.com/muttixp/wsd-speed-dial`) okunur; ağ yoksa
+eklentinin içindeki kopya kullanılır. Gönderilen bir veri yoktur;
+pencereyi açmazsanız bu istek olmaz.
+
 ---
 
 ## İzinler ve gerekçeleri
@@ -75,6 +88,7 @@ Tarama kendiliğinden başlamaz.
 | `bookmarks` | Kartlar yer imi olarak saklanıyor; okumak ve yazmak için |
 | `storage`, `unlimitedStorage` | Görseller, notlar ve ayarlar için. Görseller birkaç yüz MB'a ulaşabildiğinden varsayılan 5 MB kotası yetmiyor |
 | `tabs` | Kartı yeni sekmede açmak, açık sekmenin adresini almak |
+| `search` | Arama kutusunda "Tarayıcının arama motoru" seçildiğinde aramayı tarayıcının kendi motoruyla yapmak. Kurulumda uyarı göstermez |
 | `contextMenus` | "WSD Speed Dial'e ekle" sağ tık menüsü |
 | `alarms` | Görsel yakalama kuyruğunu sürdürmek. Manifest V3'te servis işçisi uyuduğunda kuyruk kesiliyor; alarm onu uyandırıyor |
 | `scripting` | Yakalanan sayfayı kaydırmak ve sayfa görsellerini okumak |

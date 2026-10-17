@@ -86,6 +86,7 @@ export async function arayuzuKur() {
     const gorunumler = await gorunumleriAl();
 
     grupSeridiCiz(gruplar, sayilar, ikonlar, gorunumler);
+    ayarlariAl().then(a => grupIkonCakismasi(a.grupAktifRengi)).catch(() => {});
 
     // YENIDEN CIZIM (canli senkron, grup islemleri): ekrandaki klasorde
     // kal. localStorage TUM WSD sekmelerinde ortak; ona bakinca bir
@@ -116,6 +117,31 @@ export async function arayuzuKur() {
     await grubuAc(hedef);
 }
 
+/**
+ * Gruba ozel ikon rengi aktif sekme zeminine cok yakinsa (kirmizi ikon,
+ * kirmizi aktif zemin) aktif sekmede ikon kayboluyordu. Kontrast dusukse
+ * sekme isaretleniyor; aktifken ikon, aktif ikon rengini aliyor (CSS).
+ */
+export function grupIkonCakismasi(aktifRenk) {
+    const parlaklik = hex => {
+        const m = /^#?([0-9a-f]{6})$/i.exec(hex || '');
+        if (!m) return null;
+        const n = parseInt(m[1], 16);
+        const k = v => { v /= 255; return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; };
+        return 0.2126 * k(n >> 16) + 0.7152 * k((n >> 8) & 255) + 0.0722 * k(n & 255);
+    };
+    const zemin = parlaklik(aktifRenk || '#576a80');
+    for (const ikon of document.querySelectorAll('#grupSeridi .grupIkon[data-ozel-renk]')) {
+        const p = parlaklik(ikon.dataset.ozelRenk);
+        let cakisir = false;
+        if (p !== null && zemin !== null) {
+            const oran = (Math.max(p, zemin) + 0.05) / (Math.min(p, zemin) + 0.05);
+            cakisir = oran < 1.8;
+        }
+        ikon.closest('.grupSekme')?.classList.toggle('ikonCakisir', cakisir);
+    }
+}
+
 function grupSeridiCiz(gruplar, sayilar, ikonlar = {}, gorunumler = {}) {
     const serit = grupSeridi();
     serit.textContent = '';
@@ -136,7 +162,7 @@ function grupSeridiCiz(gruplar, sayilar, ikonlar = {}, gorunumler = {}) {
 
         // Gruba ozel renk genel ayari eziyor
         const gorunum = gorunumler[g.id] || {};
-        if (gorunum.renk) ikon.style.color = gorunum.renk;
+        if (gorunum.renk) { ikon.style.color = gorunum.renk; ikon.dataset.ozelRenk = gorunum.renk; }
         btn.appendChild(ikon);
 
         // Gruba ozel gosterim modu
@@ -296,6 +322,16 @@ export async function grubuAc(grupId, { gecmistenGeldi = false } = {}) {
     try { cocuklar = await chrome.bookmarks.getChildren(grupId); } catch (e) { /* silinmis */ }
     const kartlar = cocuklar.filter(x => x.url)
         .map(x => ({ id: x.id, baslik: x.title, url: x.url, sira: x.index }));
+    // Web arama kutusu yalnizca Ana Sayfa'da (1.5.5). Ana Sayfa gizliyse
+    // giris sayfasi seritteki ilk grup: kutu orada - yoksa hic gorunmuyordu.
+    // Hangisinde gorunecegi ayardan (webAramaYeri) - siniflar burada,
+    // secim webarama.js'te (body.webYer*)
+    const seritIdleri = [...grupSeridi().children].map(s => s.dataset.grupId).filter(Boolean);
+    // "Yalnizca Ana Sayfa": Ana Sayfa gizliyse kutu da gizli (kullanici
+    // kutuyu boyle kaldirabiliyor); ilk grupta istenirse "Ilk grupta"
+    const ilk = seritIdleri.find(id => id !== kok);
+    document.body.classList.toggle('grupGiris', grupId === kok);
+    document.body.classList.toggle('grupIlk', grupId === ilk);
     const klasorler = grupId === kok ? [] : cocuklar.filter(x => !x.url)
         .map(x => ({ id: x.id, baslik: x.title }));
     // Klasorlerin ikon/renk/aciklamasi gruplarla ayni depoda

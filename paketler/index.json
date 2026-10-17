@@ -1,0 +1,86 @@
+{
+ "surum": 1,
+ "paketler": [
+  {
+   "id": "tr-gunluk",
+   "dil": "tr",
+   "ad": "Günlük",
+   "aciklama": "Vikipedi, YouTube, harita, hava durumu, e-Devlet",
+   "ikon": "web",
+   "kart": 6,
+   "dosya": "tr-gunluk.json"
+  },
+  {
+   "id": "tr-alisveris",
+   "dil": "tr",
+   "ad": "Alışveriş",
+   "aciklama": "Pazaryerleri, ilanlar ve firma rehberi",
+   "ikon": "cart",
+   "kart": 6,
+   "dosya": "tr-alisveris.json"
+  },
+  {
+   "id": "tr-gelistirici",
+   "dil": "tr",
+   "ad": "Geliştirici",
+   "aciklama": "Kod, belge, araçlar ve web tasarım",
+   "ikon": "code",
+   "kart": 7,
+   "dosya": "tr-gelistirici.json"
+  },
+  {
+   "id": "en-daily",
+   "dil": "en",
+   "ad": "Daily",
+   "aciklama": "Wikipedia, YouTube, maps, weather, mail",
+   "ikon": "web",
+   "kart": 5,
+   "dosya": "en-daily.json"
+  },
+  {
+   "id": "en-learning",
+   "dil": "en",
+   "ad": "Learning",
+   "aciklama": "Courses, reference and research",
+   "ikon": "school",
+   "kart": 5,
+   "dosya": "en-learning.json"
+  },
+  {
+   "id": "en-developer",
+   "dil": "en",
+   "ad": "Developer",
+   "aciklama": "Code, docs and tools",
+   "ikon": "code",
+   "kart": 6,
+   "dosya": "en-developer.json"
+  },
+  {
+   "id": "ru-povsednevnoe",
+   "dil": "ru",
+   "ad": "Повседневное",
+   "aciklama": "Поиск, видео, карты, погода, Госуслуги",
+   "ikon": "web",
+   "kart": 6,
+   "dosya": "ru-povsednevnoe.json"
+  },
+  {
+   "id": "ru-ucheba",
+   "dil": "ru",
+   "ad": "Учёба",
+   "aciklama": "Курсы, словари и справочники",
+   "ikon": "school",
+   "kart": 5,
+   "dosya": "ru-ucheba.json"
+  },
+  {
+   "id": "ru-razrabotchiku",
+   "dil": "ru",
+   "ad": "Разработчику",
+   "aciklama": "Код, документация и инструменты",
+   "ikon": "code",
+   "kart": 6,
+   "dosya": "ru-razrabotchiku.json"
+  }
+ ]
+}

@@ -1,0 +1,40 @@
+{
+ "wsd": {
+  "surum": 1,
+  "gruplar": [
+   {
+    "kokMu": false,
+    "baslik": "Учёба",
+    "ikon": "school",
+    "gorunum": null,
+    "kartlar": [
+     {
+      "baslik": "Stepik",
+      "url": "https://stepik.org/"
+     },
+     {
+      "baslik": "Грамота.ру",
+      "url": "https://gramota.ru/"
+     },
+     {
+      "baslik": "Википедия",
+      "url": "https://ru.wikipedia.org/"
+     },
+     {
+      "baslik": "Khan Academy",
+      "url": "https://ru.khanacademy.org/"
+     },
+     {
+      "baslik": "Google Академия",
+      "url": "https://scholar.google.ru/"
+     }
+    ]
+   }
+  ],
+  "gorseller": {},
+  "notlar": {},
+  "renkler": {},
+  "sayaclar": {},
+  "ayarlar": null
+ }
+}

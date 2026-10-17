@@ -3,7 +3,7 @@
     "message": "WSD Speed Dial – Yeni Sekme, Görsel Yer İmleri"
   },
   "extDesc": {
-    "message": "Yeni sekme için speed dial: görsel yer imleri, klasörler, çalışma alanları. FVD ve Speed Dial 2'den tek tıkla taşıma. Hesap yok."
+    "message": "Yeni sekme için speed dial: görsel yer imleri, klasörler, çalışma alanları, web araması. FVD ve Speed Dial'den taşıma. Hesap yok."
   },
   "actionTitle": {
     "message": "WSD Speed Dial'e ekle"
@@ -99,7 +99,7 @@
     "message": "Gerekirse Pencereyi Öne Al"
   },
   "gizliHataAyiklamaCubuguCikar": {
-    "message": "Gizli (hata ayıklama çubuğu çıkar)"
+    "message": "Gizli (pencere açılmaz)"
   },
   "golgeRengi": {
     "message": "Gölge Rengi"
@@ -1572,7 +1572,7 @@
     "message": "Bu dosya tanınmadı. WSD, FVD, Speed Dial 2 ya da Group Speed Dial yedeği veya yer imi HTML dosyası seçin"
   },
   "karsilamaIceAktarAciklama": {
-    "message": "İçe Aktar: WSD yedeği, başka bir Speed Dial eklentisinin yedeği (FVD, Speed Dial 2, Group Speed Dial) ya da herhangi bir tarayıcıdan dışa aktarılmış yer imi HTML dosyası. Türü kendiliğinden tanınır."
+    "message": "İçe Aktar: WSD yedeği, başka bir Speed Dial eklentisinin yedeği (FVD, Speed Dial .spd, Speed Dial 2, Group Speed Dial) ya da herhangi bir tarayıcıdan dışa aktarılmış yer imi HTML dosyası. Türü kendiliğinden tanınır."
   },
   "karsilamaKapatDevam": {
     "message": "Bu pencereyi kapat ve devam et"
@@ -1705,5 +1705,239 @@
   },
   "mSekmeleriAlanaKaydet": {
     "message": "Sekmeleri çalışma alanına kaydet…"
+  },
+  "webTarayiciMotoru": {
+    "message": "Tarayıcının arama motoru"
+  },
+  "webAraYer": {
+    "message": "$1 ile ara veya adres yaz"
+  },
+  "webVarsayilanYap": {
+    "message": "Varsayılan yap"
+  },
+  "anaSayfaBolum": {
+    "message": "Ana Sayfa"
+  },
+  "webAramaCubugu": {
+    "message": "Arama Çubuğu"
+  },
+  "webAramaGoster": {
+    "message": "Arama Çubuğunu Göster"
+  },
+  "webVarsayilanMotor": {
+    "message": "Varsayılan Arama Motoru"
+  },
+  "webMotorListesi": {
+    "message": "Listede Görünen Motorlar"
+  },
+  "webMotorEkle": {
+    "message": "Kendi Arama Motorunu Ekle"
+  },
+  "webYeniAd": {
+    "message": "Ad"
+  },
+  "webYeniKisa": {
+    "message": "Kısayol"
+  },
+  "webYeniAdres": {
+    "message": "https://site.com/ara?q=%s"
+  },
+  "webYeniIpucu": {
+    "message": "Adreste aranan kelimenin yerine %s yazın. Kısayol isteğe bağlı: \"ab kelime\" gibi kullanılır."
+  },
+  "webYeniAdGerek": {
+    "message": "Motor için bir ad yazın"
+  },
+  "webYeniAdresGecersiz": {
+    "message": "Adres http(s):// ile başlamalı ve %s içermeli"
+  },
+  "webYeniKisaVar": {
+    "message": "Bu kısayol kullanılıyor ya da boşluk içeriyor"
+  },
+  "webYeniEklendi": {
+    "message": "$1 eklendi"
+  },
+  "ekrandanSec": {
+    "message": "Ekrandan renk seç"
+  },
+  "arayuzAlt": {
+    "message": "Arayüz"
+  },
+  "renkliSimgeler": {
+    "message": "Renkli Simgeler"
+  },
+  "temaBaslik": {
+    "message": "Tema"
+  },
+  "temaMod": {
+    "message": "Mod"
+  },
+  "temaKoyu": {
+    "message": "Koyu"
+  },
+  "temaAcik": {
+    "message": "Açık"
+  },
+  "temaSistem": {
+    "message": "Sistem"
+  },
+  "temaIpucu": {
+    "message": "Şablon renkleri birlikte ayarlar; sonra her rengi aşağıdan tek tek değiştirebilirsiniz. Duvar kâğıdı resmine dokunulmaz."
+  },
+  "temaUygulandi": {
+    "message": "$1 teması uygulandı"
+  },
+  "temaDegistirildi": {
+    "message": "değiştirildi"
+  },
+  "temaDegistirildiIpucu": {
+    "message": "Renkler elle değiştirildi. Şablona dönmek için tıklayın."
+  },
+  "tema_gece": {
+    "message": "Gece"
+  },
+  "tema_grafit": {
+    "message": "Grafit"
+  },
+  "tema_okyanus": {
+    "message": "Okyanus"
+  },
+  "tema_orman": {
+    "message": "Orman"
+  },
+  "tema_mor": {
+    "message": "Mor"
+  },
+  "tema_gunbatimi": {
+    "message": "Gün Batımı"
+  },
+  "tema_kagit": {
+    "message": "Kâğıt"
+  },
+  "tema_kum": {
+    "message": "Kum"
+  },
+  "tema_buz": {
+    "message": "Buz"
+  },
+  "tema_nane": {
+    "message": "Nane"
+  },
+  "tema_pastel": {
+    "message": "Pastel"
+  },
+  "temaKaydet": {
+    "message": "Kaydet"
+  },
+  "temaKaydetIpucu": {
+    "message": "Şu anki renkleri kendi temanız olarak kaydedin"
+  },
+  "temaKaydetMetin": {
+    "message": "Şu anki renkler bu adla kaydedilecek. Aynı adlı temanız varsa güncellenir."
+  },
+  "temaOzelAd": {
+    "message": "Temam $1"
+  },
+  "temaKaydedildi": {
+    "message": "\"$1\" kaydedildi"
+  },
+  "temaSilindi": {
+    "message": "\"$1\" silindi"
+  },
+  "temaSinir": {
+    "message": "En fazla $1 tema kaydedilebilir"
+  },
+  "anaSayfaSilinemez": {
+    "message": "Ana Sayfa silinemez"
+  },
+  "anaSayfaAdiDegismez": {
+    "message": "Ana Sayfa'nın adı değiştirilemez"
+  },
+  "camGorunum": {
+    "message": "Buzlu Cam Görünüm"
+  },
+  "aktifIkonRengi": {
+    "message": "Aktif Grup İkon Rengi"
+  },
+  "aktarimGorselBaslik": {
+    "message": "Kart görselleri"
+  },
+  "aktarimGorselMetin": {
+    "message": "İçe aktarılan $1 kartın görseli yok; yedek dosyası görsel içermiyor.\n\nArka planda alınsın mı? Pencere açılmaz, bu sırada WSD'yi kullanmaya devam edebilirsiniz. Kart sayısına göre uzun sürebilir ve tarayıcının üstünde \"hata ayıklama\" uyarısı görünebilir."
+  },
+  "arkaPlandaAl": {
+    "message": "Arka planda al"
+  },
+  "simdiDegil": {
+    "message": "Şimdi değil"
+  },
+  "kartKelime": {
+    "message": "kart"
+  },
+  "copGeriYukle": {
+    "message": "Geri Al"
+  },
+  "sonYedekKisa": {
+    "message": "Son yedek: $1 ($2, $3 kart)"
+  },
+  "mevcutVerilerSiliniyor": {
+    "message": "Mevcut veriler siliniyor"
+  },
+  "tema_kontrast": {
+    "message": "Kontrast"
+  },
+  "tema_murekkep": {
+    "message": "Mürekkep"
+  },
+  "webAramaYeri": {
+    "message": "Nerede Görünsün"
+  },
+  "webYerAnaSayfa": {
+    "message": "Yalnızca Ana Sayfa"
+  },
+  "webYerIlkGrup": {
+    "message": "İlk grupta"
+  },
+  "webYerHepsi": {
+    "message": "Tüm gruplarda"
+  },
+  "kucukPencere": {
+    "message": "Küçük Pencere, Köşede (deneysel)"
+  },
+  "gizliKipBilgi": {
+    "message": "Bu kipte Chrome üstte \"WSD Speed Dial hata ayıklamaya başladı\" çubuğu gösterir. Bu, pencere açmadan sayfanın görüntüsünü almak için Chrome'un zorunlu bildirimidir; izin yalnızca ekran görüntüsü almak için kullanılır. Çubuk yakalama bitince kaybolur."
+  },
+  "hazirGruplar": {
+    "message": "Hazır Gruplar"
+  },
+  "hazirGruplarAciklama": {
+    "message": "Seçtiğiniz paket yeni bir grup olarak eklenir; mevcut kartlarınıza dokunulmaz. Kartları sonra dilediğiniz gibi düzenleyebilirsiniz."
+  },
+  "tumDiller": {
+    "message": "Tüm dillerdeki paketleri göster"
+  },
+  "paketOner": {
+    "message": "Paket öner (GitHub)"
+  },
+  "paketListesiAlinamadi": {
+    "message": "Paket listesi alınamadı."
+  },
+  "nKartKisa": {
+    "message": "$1 kart"
+  },
+  "eklendi": {
+    "message": "Eklendi"
+  },
+  "paketEklendi": {
+    "message": "\"$1\" eklendi · $2 kart"
+  },
+  "paketEklenemedi": {
+    "message": "Paket eklenemedi"
+  },
+  "yukleniyor": {
+    "message": "Yükleniyor…"
+  },
+  "webAraYerTarayici": {
+    "message": "Web'de ara veya adres yaz"
   }
 }

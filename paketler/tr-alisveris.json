@@ -1,0 +1,44 @@
+{
+ "wsd": {
+  "surum": 1,
+  "gruplar": [
+   {
+    "kokMu": false,
+    "baslik": "Alışveriş",
+    "ikon": "cart",
+    "gorunum": null,
+    "kartlar": [
+     {
+      "baslik": "WEBTE City",
+      "url": "https://webtecity.com/"
+     },
+     {
+      "baslik": "Trendyol",
+      "url": "https://www.trendyol.com/"
+     },
+     {
+      "baslik": "Hepsiburada",
+      "url": "https://www.hepsiburada.com/"
+     },
+     {
+      "baslik": "n11",
+      "url": "https://www.n11.com/"
+     },
+     {
+      "baslik": "Amazon Türkiye",
+      "url": "https://www.amazon.com.tr/"
+     },
+     {
+      "baslik": "sahibinden.com",
+      "url": "https://www.sahibinden.com/"
+     }
+    ]
+   }
+  ],
+  "gorseller": {},
+  "notlar": {},
+  "renkler": {},
+  "sayaclar": {},
+  "ayarlar": null
+ }
+}

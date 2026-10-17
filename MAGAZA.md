@@ -20,24 +20,26 @@ Aramada en çok ağırlık taşıyan alan; listelerde ~45 karakterden sonrası k
 
 Mağaza bu metni manifest'teki `extDesc`'ten (dil dosyaları) alır; aşağıdakiler
 1.5.4 paketindeki ile aynı. Mağaza araması başlığa ve bu metne bakıyor:
-"speed dial", "new tab", "visual bookmarks", "workspaces" ve taşıma
-kaynakları (FVD, Speed Dial 2) bilerek burada.
+"speed dial", "new tab", "visual bookmarks", "workspaces", "web search"
+ve taşıma kaynakları (FVD, Speed Dial) bilerek burada. "Speed Dial" hem
+Speed Dial 2'yi hem .spd yedekli "Speed Dial"ı kapsıyor. Rusçada
+"визуальные закладки" başa alındı: oradaki kullanıcıların aradığı ifade.
 
 **İngilizce**
 ```
-Speed dial for your new tab: visual bookmarks, folders and workspaces. One-click import from FVD and Speed Dial 2. No account.
+Speed dial for your new tab: visual bookmarks, folders, workspaces and web search. Import from FVD and Speed Dial. No account.
 ```
 (126 karakter)
 
 **Türkçe**
 ```
-Yeni sekme için speed dial: görsel yer imleri, klasörler, çalışma alanları. FVD ve Speed Dial 2'den tek tıkla taşıma. Hesap yok.
+Yeni sekme için speed dial: görsel yer imleri, klasörler, çalışma alanları, web araması. FVD ve Speed Dial'den taşıma. Hesap yok.
 ```
-(128 karakter)
+(129 karakter)
 
 **Rusça**
 ```
-Speed dial для новой вкладки: визуальные закладки, папки и рабочие области. Перенос из FVD и Speed Dial 2 в один клик. Без аккаунта.
+Визуальные закладки для новой вкладки: папки, рабочие области, поиск Яндекса. Перенос из FVD и Speed Dial в один клик. Без аккаунта.
 ```
 (132 karakter)
 
@@ -52,12 +54,20 @@ WSD Speed Dial turns your new tab page into a board of the sites you
 actually use, each with its own screenshot. Free, open source, no
 tracking.
 
-COMING FROM FVD SPEED DIAL OR SPEED DIAL 2?
+COMING FROM FVD SPEED DIAL, SPEED DIAL OR SPEED DIAL 2?
 
 Bring everything over in one click: groups, tiles and their order.
-FVD backups keep their thumbnails; for the others, screenshots are
-taken again automatically. Group Speed Dial backups and a bookmarks
-HTML file exported from any browser work the same way.
+Speed Dial (.spd) backups keep their logo tiles. FVD and Speed Dial 2
+backups contain no images, so WSD offers to capture them in the
+background, without opening windows. Group Speed Dial backups and a
+bookmarks HTML file exported from any browser work the same way.
+
+SEARCH THE WEB FROM THE HOME PAGE
+
+A search box on the home page with an engine picker: your browser's
+default, Google, Bing, DuckDuckGo, Yandex, Brave, Ecosia, Startpage,
+Wikipedia, YouTube or GitHub. Add your own engine with one address,
+reorder the list, or hide the box entirely.
 
 WHY IT'S DIFFERENT
 
@@ -126,10 +136,12 @@ Groups and folders
   too
 
 Your data
+- Ready-made groups: add a starter pack (Daily, Developer, Learning…)
+  in one click; packs are kept in the open GitHub repository
 - Backup and restore (folder structure included); one Import button
   that recognises the file: WSD, FVD Speed Dial, Speed Dial 2,
-  Group Speed Dial, or a bookmarks HTML file. FVD's text export can be
-  pasted directly
+  Speed Dial (.spd), Group Speed Dial, or a bookmarks HTML file. FVD's
+  text export can be pasted directly
 - Restore can REPLACE or MERGE: merging combines groups with the same
   name and skips sites you already have
 - Import your existing browser bookmarks: every top-level folder
@@ -142,6 +154,8 @@ Your data
 - Open tabs stay in sync with each other
 
 Looks
+- Light and dark mode, ready-made themes, save your own theme
+- Optional frosted-glass look for menus, panels and the search box
 - Wallpaper, background tinting (hue shift or duotone)
 - Tile ratio, size, spacing, borders
 - One corner setting for tiles, tabs, menus, windows and buttons
@@ -150,9 +164,12 @@ Looks
 PRIVACY
 
 No account. No servers. No analytics. Nothing leaves your browser.
-The only outbound requests are ones you trigger: the page you asked
-to capture, a favicon lookup if you choose one as a group icon, a logo
-lookup if you press "Capture Logo", and the broken-link check.
+Outbound requests go only where your own actions point: the page you
+asked to capture, a favicon lookup if you choose one as a group icon,
+a logo lookup if you press "Capture Logo", the broken-link check, and
+the search engine you pick in the search box (your query, plus that
+engine's icon, fetched once), and the pack list from the project's
+GitHub repository when you open Ready-made groups.
 
 OPEN SOURCE
 
@@ -169,12 +186,20 @@ WSD Speed Dial, yeni sekme sayfanızı gerçekten kullandığınız
 sitelerin panosuna çevirir — her biri kendi ekran görüntüsüyle.
 Ücretsiz, açık kaynak, izleme yok.
 
-FVD SPEED DIAL YA DA SPEED DIAL 2'DEN Mİ GELİYORSUNUZ?
+FVD SPEED DIAL, SPEED DIAL YA DA SPEED DIAL 2'DEN Mİ GELİYORSUNUZ?
 
-Her şeyi tek tıkla taşıyın: gruplar, kartlar ve sıraları. FVD
-yedeklerinin görselleri de gelir; diğerlerinde ekran görüntüleri
-kendiliğinden yeniden alınır. Group Speed Dial yedekleri ve herhangi
-bir tarayıcıdan dışa aktarılmış yer imi HTML dosyası da aynı şekilde.
+Her şeyi tek tıkla taşıyın: gruplar, kartlar ve sıraları. Speed Dial
+(.spd) yedeklerinin logolu kartları da gelir. FVD ve Speed Dial 2
+yedekleri görsel içermez; WSD bunları pencere açmadan arka planda
+almayı önerir. Group Speed Dial yedekleri ve herhangi bir tarayıcıdan
+dışa aktarılmış yer imi HTML dosyası da aynı şekilde.
+
+ANA SAYFADAN WEB ARAMASI
+
+Ana sayfada motor seçmeli bir arama kutusu: tarayıcınızın varsayılanı,
+Google, Bing, DuckDuckGo, Yandex, Brave, Ecosia, Startpage, Wikipedia,
+YouTube ya da GitHub. Tek adresle kendi motorunuzu ekleyin, listeyi
+sıralayın ya da kutuyu tamamen gizleyin.
 
 FARKI NE
 
@@ -246,10 +271,12 @@ Gruplar ve klasörler
   klasörleri de bulur
 
 Verileriniz
+- Hazır gruplar: tek tıkla örnek paket ekleyin (Günlük, Alışveriş,
+  Geliştirici…); paketler açık GitHub deposunda
 - Yedek alma ve yükleme (klasör yapısıyla birlikte); dosyayı kendisi
   tanıyan tek İçe Aktar düğmesi: WSD, FVD Speed Dial, Speed Dial 2,
-  Group Speed Dial ya da yer imi HTML dosyası. FVD'nin metin çıktısı
-  doğrudan yapıştırılabilir
+  Speed Dial (.spd), Group Speed Dial ya da yer imi HTML dosyası. FVD'nin
+  metin çıktısı doğrudan yapıştırılabilir
 - Geri yüklerken DEĞİŞTİR ya da BİRLEŞTİR: birleştirme aynı adlı grupları
   toplar, zaten olan siteleri tekrar eklemez
 - Mevcut tarayıcı yer imlerinizi içe aktarma: her üst klasör bir
@@ -262,6 +289,8 @@ Verileriniz
 - Açık sekmeler birbiriyle eşitlenir
 
 Görünüm
+- Açık ve koyu mod, hazır temalar, kendi temanızı kaydetme
+- İsteğe bağlı buzlu cam görünümü: menüler, paneller, arama kutusu
 - Duvar kâğıdı, zemin renklendirme (ton kaydırma ya da iki renk)
 - Kart oranı, boyutu, boşluğu, çerçevesi
 - Kart, sekme, menü, pencere ve düğmeler için tek köşe ayarı
@@ -270,10 +299,12 @@ Görünüm
 GİZLİLİK
 
 Hesap yok. Sunucu yok. Analitik yok. Hiçbir şey tarayıcınızdan
-çıkmaz. Dışarıya giden istekleri yalnızca siz başlatırsınız:
+çıkmaz. Dışarıya giden istekler yalnızca sizin işlemlerinizden doğar:
 yakalamasını istediğiniz sayfa, grup ikonu olarak seçerseniz favicon
-sorgusu, "Logo Yakala"ya basarsanız logo sorgusu ve kırık bağlantı
-taraması.
+sorgusu, "Logo Yakala"ya basarsanız logo sorgusu, kırık bağlantı
+taraması, arama kutusunda seçtiğiniz motor (aramanız ve o motorun
+bir kez alınan simgesi) ve Hazır Gruplar açılınca projenin GitHub
+deposundan paket listesi.
 
 AÇIK KAYNAK
 
@@ -291,12 +322,20 @@ WSD Speed Dial превращает новую вкладку в панель с
 действительно пользуетесь, — у каждого свой скриншот. Бесплатно,
 открытый код, без слежки.
 
-ПЕРЕХОДИТЕ С FVD SPEED DIAL ИЛИ SPEED DIAL 2?
+ПЕРЕХОДИТЕ С FVD SPEED DIAL, SPEED DIAL ИЛИ SPEED DIAL 2?
 
-Перенесите всё в один клик: группы, плитки и их порядок. Из копий FVD
-переносятся и скриншоты; для остальных они делаются заново
-автоматически. Так же работают копии Group Speed Dial и HTML-файл
+Перенесите всё в один клик: группы, плитки и их порядок. Из копий
+Speed Dial (.spd) переносятся и плитки с логотипами. В копиях FVD и
+Speed Dial 2 изображений нет — WSD предложит сделать скриншоты в фоне,
+не открывая окон. Так же работают копии Group Speed Dial и HTML-файл
 закладок, экспортированный из любого браузера.
+
+ПОИСК ПРЯМО НА ГЛАВНОЙ
+
+Строка поиска на главной странице с выбором системы: Яндекс (по
+умолчанию), поисковик браузера, Google, Bing, DuckDuckGo, Brave,
+Ecosia, Startpage, Википедия, YouTube или GitHub. Добавьте свой
+поисковик одной ссылкой, измените порядок или скройте строку совсем.
 
 ЧЕМ ОТЛИЧАЕТСЯ
 
@@ -313,8 +352,8 @@ WSD Speed Dial превращает новую вкладку в панель с
 Сервис синхронизации не нужен. Один файл резервной копии (JSON)
 переносит всё на другой компьютер или в другой браузер, а восстановление
 — один клик. Плитки, группы, папки, скриншоты, заметки, метки и
-настройки переезжают вместе. Ни аккаунта, ни сервера — нечего терять
-при входе и нет сбоев синхронизации, которые стирают плитки.
+настройки переезжают вместе. Ни аккаунта, ни сервера — не нужно помнить
+пароль, и никакой сбой синхронизации не сотрёт ваши плитки.
 
 ОБЪЕДИНЯТЬ, А НЕ ЗАМЕНЯТЬ
 
@@ -325,7 +364,7 @@ WSD Speed Dial превращает новую вкладку в панель с
 добавьте в другой — и у вас одна общая коллекция.
 
 Резервная копия — полный файл на вашем диске, скриншоты включены.
-Бесплатно: никакой платной синхронизации и ничего «за кадром».
+Бесплатно: никакой платной синхронизации, ничего не урезано.
 
 СОХРАНЯЙТЕ ОТКРЫТЫЕ ВКЛАДКИ КАК РАБОЧИЕ ОБЛАСТИ
 
@@ -365,10 +404,12 @@ WSD Speed Dial превращает новую вкладку в панель с
   папки
 
 Ваши данные
+- Готовые группы: набор для старта в один клик (Повседневное,
+  Разработчику, Учёба…); наборы лежат в открытом репозитории GitHub
 - Резервное копирование и восстановление (со структурой папок); одна
   кнопка «Импорт», которая сама распознаёт файл: WSD, FVD Speed Dial,
-  Speed Dial 2, Group Speed Dial или HTML-файл закладок. Текстовый
-  экспорт FVD можно просто вставить
+  Speed Dial 2, Speed Dial (.spd), Group Speed Dial или HTML-файл
+  закладок. Текстовый экспорт FVD можно просто вставить
 - При восстановлении — ЗАМЕНИТЬ или ОБЪЕДИНИТЬ: объединение сливает
   одноимённые группы и пропускает уже имеющиеся сайты
 - Импорт закладок браузера: каждая папка верхнего уровня становится
@@ -381,6 +422,8 @@ WSD Speed Dial превращает новую вкладку в панель с
 - Открытые вкладки синхронизируются друг с другом
 
 Внешний вид
+- Светлая и тёмная тема, готовые темы, сохранение своей темы
+- Эффект матового стекла для меню, панелей и строки поиска (по желанию)
 - Обои, тонирование фона (сдвиг оттенка или два цвета)
 - Пропорции, размер, отступы и рамки плиток
 - Единое скругление углов для плиток, вкладок, меню, окон и кнопок
@@ -390,9 +433,11 @@ WSD Speed Dial превращает новую вкладку в панель с
 КОНФИДЕНЦИАЛЬНОСТЬ
 
 Без аккаунта. Без серверов. Без аналитики. Ничего не покидает ваш
-браузер. Внешние запросы только те, что запускаете вы: страница,
+браузер. Внешние запросы возникают только из ваших действий: страница,
 скриншот которой нужен; значок сайта, если вы выбрали его для группы;
-поиск логотипа по кнопке «Логотип»; проверка битых ссылок.
+поиск логотипа по кнопке «Логотип»; проверка битых ссылок; поисковая
+система, выбранная в строке поиска (ваш запрос и один раз — её значок);
+список наборов из GitHub-репозитория проекта при открытии «Готовых групп».
 
 ОТКРЫТЫЙ КОД
 
@@ -437,6 +482,7 @@ bookmarks, each shown as a tile with a screenshot.
 | `contextMenus` | Adds the "Add to WSD Speed Dial" item so pages can be added while browsing, and a "Save tabs to a workspace" item on the toolbar icon. |
 | `alarms` | Keeps the screenshot queue running. In Manifest V3 the service worker is terminated while idle; an alarm wakes it so a long capture batch finishes. |
 | `scripting` | Scrolls the page being captured past fixed headers and cookie banners, and reads candidate images from the page. |
+| `search` | Lets the home-page search box send a query to the browser's own default search engine when the user picks "Browser default". The extension does not read, store or log queries; the permission shows no warning at install. |
 | `debugger` | Only used by the optional "Hidden" capture mode, which takes a screenshot without showing a window. The default mode does not use it. Chrome does not allow this permission to be optional, so it is requested at install. |
 | `host_permissions` (`<all_urls>`) | The user can add any site, so the target is not known in advance. Access is used solely to capture a screenshot of pages the user explicitly added. |
 
@@ -484,6 +530,18 @@ Ekran görüntüsü için öneri sırası:
 3. Kart düzenleme penceresi
 4. Arama sonuçları
 5. Yinelenen kartlar ya da çöp kutusu
+
+### 1.5.5 ile yapılacaklar (mağaza paneli)
+
+- Uzun açıklamalar (EN/TR/RU) yenilendi: .spd taşıma, FVD'nin görsel
+  taşımadığı (önceki metin "FVD görselleri de gelir" diyordu - yanlıştı),
+  web arama kutusu, temalar, gizlilik satırında arama motoru - panele
+  yeniden yapıştırılacak
+- Kısa açıklama paketten geliyor (`extDesc`); Rusçası "визуальные
+  закладки" ile başlıyor
+- Gizlilik sekmesinde yeni izin: `search` gerekçesi eklenecek
+- İsteğe bağlı: arama kutulu ana sayfa ekran görüntüsü (RU listelemesinde
+  Yandex seçili haliyle)
 
 ### 1.5.4 ile yapılacaklar (mağaza paneli)
 

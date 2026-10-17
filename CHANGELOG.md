@@ -3,6 +3,167 @@
 Sürüm numaraları [Semantic Versioning](https://semver.org/lang/tr/)
 kurallarına uyar.
 
+## [1.5.5] — 2026-10-17
+
+### Yeni
+- **Hazır Gruplar:** karşılama ekranında ve Yedekleme › İçe Aktar'da.
+  Dile göre örnek paketler (TR: Günlük, Alışveriş, Geliştirici; EN ve RU
+  için de üçer paket), tek tıkla yeni grup olarak ekleniyor ve açılıyor.
+  Liste depodaki `paketler/` klasöründen - önce GitHub'daki güncel kopya,
+  ağ yoksa eklentinin içindeki. Paketten yalnızca grup adı, ikon ve
+  http/https kartlar alınıyor.
+- **Yakalama kipi tarayıcıya göre:** ilk kurulumda Edge, Vivaldi ve diğer
+  Chromium tarayıcılarda varsayılan "Gizli" (pencere açılmaz, uyarı çıkmaz);
+  yalnızca Chrome'da "Pencere" (Chrome gizli kipte üstte "hata ayıklama"
+  çubuğu gösteriyor). Chrome'da gizli kip seçilince altında bu çubuğun ne
+  olduğunu anlatan not çıkıyor. Seçenek adı "Gizli (pencere açılmaz)" oldu.
+  Mevcut kullanıcıların seçimine dokunulmuyor.
+- **Küçük Pencere, Köşede (deneysel)** (Yakalama): pencere kipinde
+  yakalama penceresi yarı boyutta, kullanıcının penceresinin sağ alt
+  köşesinde açılıyor; sayfa %50 yakınlaştırmayla aynı genişlikte diziliyor.
+  Arkada açmak denendi, kaldırıldı: Chrome örtülen pencereyi çizmiyor.
+- **Arama çubuğu: Nerede Görünsün** (Ana Sayfa › Arama Çubuğu):
+  Yalnızca Ana Sayfa / İlk grupta / Tüm gruplarda. "Yalnızca Ana Sayfa"
+  seçiliyken Ana Sayfa gizlenirse kutu da gizlenir.
+- **Yeni temalar:** Kontrast (koyu: siyah zemin, aktif grup beyaz) ve
+  Mürekkep (açık: beyaz zemin, aktif grup siyah). Seçili tema kartında
+  onay rozeti ve metin renginde kalın çerçeve - gri vurgulu temalarda
+  seçim anlaşılmıyordu.
+- **Rusça arayüzde varsayılan arama motoru Yandex** (diğer dillerde
+  tarayıcının kendi motoru). Ayardan değiştirilebilir.
+- **"Speed Dial" (.spd) yedeğinden içe aktarma:** kategoriler gruba, ilk
+  kategori (Main/Главная) Ana Sayfa'ya. Yedekteki gömülü logolar zemin
+  rengiyle 16:10 karta çiziliyor - yakalama gerekmiyor. Varsayılan arama
+  motoru (Yandex vb.) ve arama kutusu açıklığı da alınıyor. Dosya
+  seçicisi .spd'yi kabul ediyor; adreslerdeki "#from_speed_dial" izi
+  temizleniyor.
+- **İçe aktarma sonrası görsel sorusu:** 30'dan fazla kartın görseli
+  eksikse (FVD yedekleri hiç görsel taşımıyor) yakalama kendiliğinden
+  başlamıyor; "Arka planda al" (pencere açmadan, ayardaki kipten
+  bağımsız) ya da "Şimdi değil" soruluyor. Sayfa cevapsız kapanırsa bir
+  sonraki açılışta yeniden soruluyor. Eskiden 30-300 arası kart pencere
+  kipinde ekranda pencere açıp kapatıyor, 300 üstünde hiç başlamıyordu.
+- **Aktif Grup İkon Rengi** (Grup Menüsü › Görünüm): aktif sekmenin
+  ikonu ayrı renk. Seçilmemişse aktif sekmenin yazı rengini alır (aktif
+  zemin açıksa koyu, koyuysa açık) - tek ikon rengi aktif zeminde
+  kaybolabiliyordu. Gruba özel ikon rengi yine geçerli; ama aktif zeminle
+  aynı tondaysa (kırmızı ikon + kırmızı aktif zemin) o grup aktifken ikon
+  kendiliğinden okunur renge geçer
+- **Buzlu cam görünüm**: üstteki koyu bant kalktı; grup menüsü duvar
+  kâğıdının üstünde yüzen, köşeleri yuvarlak, sekmelere sarılı ince bir
+  cam panelde (zeminsiz: renk tonu yok, yalnızca bulanıklık; kenar
+  çizgisi çok hafif). Arama
+  çubuğu, motor listesi, özel ekran şeritleri (kart araması, çöp,
+  çalışma alanları…), sağ tık menüleri, pencereler, kart üzerindeki araç
+  şeridi, yan şerit, ayarlar paneli, bildirim ve renk seçici aynı camdan.
+  Kartın boş alanı (sığdır kipinde görselin çevresi) yarı saydam, hafif
+  parlamalı (kartlarda bulanıklık yok: çok kartta kaydırma ağırlaşmasın).
+  Çalışma alanı kartları, boş durum ve karşılama kutusu da cam. Açık modda cam açık tonlu. Görünüm › Arayüz › Buzlu Cam
+  Görünüm ile kapatılabilir (kapalıyken eski görünüm)
+- **Tema: Koyu / Açık / Sistem + hazır şablonlar** (Görünüm bölümünün en
+  üstü). Açık mod artık var: ayar paneli, menüler, pencereler, seritler
+  açık renk. Şablonlar (koyu: Gece, Grafit, Okyanus, Orman, Mor, Gün
+  Batımı; açık: Kâğıt, Kum, Buz, Nane, Pastel) zemin, kart, grup menüsü
+  ve başlık renklerini birlikte ayarlar; sonra her renk tek tek
+  değiştirilebilir ("değiştirildi" rozeti çıkar). Seçimden sonra "Geri
+  al". Her modun renkleri ayrı saklanır: açığa geçip koyuya dönünce koyuda
+  yaptığın değişiklikler geri gelir. "Sistem" işletim sisteminin
+  koyu/açık ayarını izler. Duvar kâğıdı resmine dokunulmaz; resim yoksa
+  varsayılan geçişli zemin temadan gelir. Açılışta parlama olmasın diye
+  mod sayfa çizilmeden uygulanır
+  Açık modda üst şeritte solma bandı yok (koyu duvar kâğıdında beyaz
+  boru gibi görünüyordu); grup sekmeleri açık zeminli hap
+  Kendi teman: şablon listesinin sonundaki "+ Kaydet" şu anki renkleri
+  adıyla kaydeder (aynı adlı tema varsa günceller); kaydedilen tema
+  listede şablonların yanında durur, üzerine gelince ✕ ile silinir (Geri
+  al var). Her mod kendi temalarını gösterir; yedeğe ayarlarla gider
+- **Renkli simgeler**: ayar bölümlerinin ve yan şeritteki düğmelerin
+  simgeleri kendi renginde (aynı iş aynı renk: Ana Sayfa ve Çalışma
+  alanları turkuaz, Ayarlar ve Sistem mor…). Görünüm › Arayüz ›
+  Renkli Simgeler ile kapatılabilir; kapalıyken alt bölümler de sade
+- **Web arama kutusu**: yalnızca Ana Sayfa'da, kartların
+  üstünde. Varsayılan motor tarayıcının kendi arama motoru (`search`
+  izni - kurulum uyarısı yok). Soldaki simgeden 10 motordan biri yalnızca
+  o arama için seçilir; raptiye kalıcı varsayılan yapar. Kısayollar:
+  `g`, `b`, `d`, `y`, `br`, `e`, `s`, `w`, `yt`, `gh` + boşluk + kelime.
+  Adres yazılırsa doğrudan açılır. Ctrl/Shift/Alt+Enter yeni sekmede.
+  Yazarken hiçbir yere istek gitmez; tarayıcının arama ayarına dokunulmaz
+- **Ayarlarda "Ana Sayfa" bölümü**: "Ana Sayfa grubunu göster" ve "Son
+  grubu hatırla" Grup Menüsü'nden buraya taşındı. Arama çubuğu ayarları da
+  burada (Davranış, Arama Çubuğu, Anasayfa Kurulumu Sistem bölümündeki gibi açılır-kapanır alt başlıklar): göster/gizle, varsayılan motor, listede görünecek motorlar,
+  kendi motorunu ekleme (ad + kısayol + `%s` içeren adres) ve silme
+  "Anasayfa Kurulumu" da Sistem'den bu bölüme taşındı.
+  Motorların sırası ayar listesinde sürükle-bırak ile değişir; açılır
+  liste ve kısayollar bu sırayı izler. Motor simgeleri sitenin kendi
+  favicon'u: motorun sitesinden bir kez (çerezsiz) alınıp yerelde
+  saklanır, alınamazsa harf rozeti kalır, 7 gün sonra yeniden denenir
+  Bölgesel motorlar: Sahibinden, Trendyol, Hepsiburada, WEBTE City
+  yalnızca Türkiye'deki kullanıcıda listelenir (tarayıcı dili Türkçe ya
+  da saat dilimi İstanbul; izin/ağ isteği yok) ve kapalı gelir
+- **Yaylı klasör (deneysel)**: kart sürüklerken bir klasör kutusunun,
+  yol çubuğundaki klasör adının ya da bir grup sekmesinin üzerinde
+  ~0,7 sn beklenince o klasör/grup açılır (hedef yanıp söner); kart
+  bırakılmadan içeri girilip kardeş klasöre taşınabilir. Taşı
+  penceresine gerek kalmaz. Açılan klasörde boş bir yere bırakılırsa
+  kart sona eklenir ("+" kartı turuncu yanar; o kart gizliyse alan
+  kesik çizgiyle işaretlenir); Esc vazgeçer
+
+### Düzeltildi
+- Arama kutusunda tarayıcının motoru seçiliyken yer tutucu "Tarayıcının arama
+  motoru ile ara" yerine "Web'de ara veya adres yaz" (İngilizcesi bozuk duruyordu).
+- Açık temada koyu duvar kâğıdı (ya da koyu temada açık resim / zemin
+  rengi) seçilince kart başlıkları, klasör sayıları, yol şeridi ve "+"
+  kutusu zeminde kayboluyordu. Zeminin parlaklığı ölçülüp yalnızca bu
+  yazılar çevriliyor; koyu temada açık resimde grup hapları ve arama
+  kutusu da koyu yarı saydam zemin alıyor. Seçilmiş başlık rengi öncelikli.
+- Chrome'da (Windows) pencere kipi görüntü alamıyordu: yakalama penceresi
+  kullanıcının penceresinin arkasında açılıyor, örtülen pencere çizilmiyordu
+  (pencereye tıklayınca alınıyordu). Sayfa gizli görünüyorsa pencere kısa
+  süreliğine öne alınıyor, odak sonra geri veriliyor.
+- **Rusça çeviri gözden geçirildi:** sayıyla birlikte yanlış çoğul
+  ("2 плиток" gibi) kalıpları "Плиток: 2" biçimine çevrildi; kaynakla
+  uyuşmayan iki açıklama (kırık/şüpheli bağlantı) düzeltildi; terimler
+  tek tipe indirildi (плитка, панель групп, резервная копия, импорт,
+  снимок, готовая тема); cins uyumu hataları giderildi.
+- Koda gömülü kalmış Türkçe metinler çeviriye alındı: çöp kutusundaki
+  "Geri Al" düğmeleri, veri kaybı uyarısındaki "Son yedek … kart"
+  satırı, yedek yüklerken "Mevcut veriler siliniyor".
+- Mağaza metni: "FVD yedeklerinin görselleri de gelir" yanlıştı (FVD
+  görsel taşımıyor) - düzeltildi. Kısa açıklamalara web araması,
+  Rusçasına "визуальные закладки" eklendi.
+- **Ana Sayfa'nın menüsünde "Sil / Grubu düzenle / Taşı" görünüyordu**:
+  gizlenmeleri gerekiyordu ama ikonlu menüde [hidden] eziliyordu (aynı
+  hata diğer ikonlu menülerde gizlenen öğeleri de etkiliyordu). Artık
+  Ana Sayfa'da "Sil" kilitli görünür, tıklayınca "Ana Sayfa silinemez"
+  der (onay penceresi açılmaz); "Taşı" yok; "Grubu düzenle" açılır ama
+  ad kutusu kilitli (simge, renk, açıklama değiştirilebilir). Ana
+  Sayfa'nın adı değişseydi yer imlerindeki "WSD" klasörünün adı
+  değişiyor ve WSD verisini bulamıyordu
+- **WSD sayfasına geri dönünce "ilk kurulum" ekranı çıkabiliyordu**: kök
+  klasör o an bulunamazsa (tarayıcı yer imlerini henüz yüklememişken)
+  hemen yeni, boş bir "WSD" klasörü açılıyordu. Artık önce kayıtlı
+  kimliğe bakılıyor ve kısa aralarla yeniden deneniyor; birden çok
+  "WSD" klasörü varsa en dolu olanı kullanılıyor (boş olan veriyi
+  gizlemiyor)
+- **Soluk metin rengi sabitti**: kart başlıkları ve grup adları ayarlardaki
+  metin renginden değil sabit açık griden geliyordu; artık metin renginin
+  soluk tonu
+- **Ayarlardaki renk kutuları arasında geçiş zordu**: tarayıcının renk
+  penceresi kutunun altına açılıp alttaki satırları kapatıyordu; bir
+  sonraki rengi seçmek için önce pencereyi kapatmak gerekiyordu. Artık
+  kendi seçicimiz panelin solunda, satır hizasında açılıyor; başka bir
+  renk kutusuna tıklayınca doğrudan oraya geçiyor. Ton çubuğu, HEX
+  alanı, ekrandan renk alma ve son kullanılan 10 renk var; Esc geri alır
+- **Gizli kipte "görüntü alınamadı" / boş kart**: arka plan sekmesi
+  tarayıcı tarafından hiç çizilmiyor; "Loading" perdesi ya da yavaşça
+  beliren içerik ilk karede takılı kalıyordu. Artık ilk çekim sayfayı
+  uyandırıyor, aralıkla birkaç kare daha çekilip sonuncusu alınıyor
+  (sayfa oturunca erken bitiyor); donan çekim kısa sürede atlanıyor
+- **Vurgu renkli düğmelerde yazı okunmuyordu** (çalışma alanlarındaki
+  "Sekmeleri kaydet", seçili etiket çipi, arama etiketi, "gruba git"):
+  yazı rengi sabit beyazdı; artık ayarlardaki Aktif Grup Yazı Rengi'nden,
+  seçilmemişse zemine göre kendiliğinden geliyor
+
 ## [1.5.4] — 2026-10-10
 
 ### Yeni

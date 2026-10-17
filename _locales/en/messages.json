@@ -3,7 +3,7 @@
     "message": "WSD Speed Dial – New Tab & Visual Bookmarks"
   },
   "extDesc": {
-    "message": "Speed dial for your new tab: visual bookmarks, folders and workspaces. One-click import from FVD and Speed Dial 2. No account."
+    "message": "Speed dial for your new tab: visual bookmarks, folders, workspaces and web search. Import from FVD and Speed Dial. No account."
   },
   "actionTitle": {
     "message": "Add to WSD Speed Dial"
@@ -99,7 +99,7 @@
     "message": "Bring Window to Front if Needed"
   },
   "gizliHataAyiklamaCubuguCikar": {
-    "message": "Hidden (shows debug bar)"
+    "message": "Hidden (no window)"
   },
   "golgeRengi": {
     "message": "Shadow Color"
@@ -1572,7 +1572,7 @@
     "message": "This file was not recognised. Choose a WSD, FVD, Speed Dial 2 or Group Speed Dial backup, or a bookmarks HTML file"
   },
   "karsilamaIceAktarAciklama": {
-    "message": "Import: a WSD backup, a backup from another speed dial (FVD, Speed Dial 2, Group Speed Dial), or a bookmarks HTML file exported from any browser. The type is detected automatically."
+    "message": "Import: a WSD backup, a backup from another speed dial (FVD, Speed Dial .spd, Speed Dial 2, Group Speed Dial), or a bookmarks HTML file exported from any browser. The type is detected automatically."
   },
   "karsilamaKapatDevam": {
     "message": "Close this and continue"
@@ -1705,5 +1705,239 @@
   },
   "mSekmeleriAlanaKaydet": {
     "message": "Save tabs to a workspace…"
+  },
+  "webTarayiciMotoru": {
+    "message": "Browser search engine"
+  },
+  "webAraYer": {
+    "message": "Search with $1 or type an address"
+  },
+  "webVarsayilanYap": {
+    "message": "Make default"
+  },
+  "anaSayfaBolum": {
+    "message": "Home"
+  },
+  "webAramaCubugu": {
+    "message": "Search Bar"
+  },
+  "webAramaGoster": {
+    "message": "Show Search Bar"
+  },
+  "webVarsayilanMotor": {
+    "message": "Default Search Engine"
+  },
+  "webMotorListesi": {
+    "message": "Engines Shown in the List"
+  },
+  "webMotorEkle": {
+    "message": "Add Your Own Search Engine"
+  },
+  "webYeniAd": {
+    "message": "Name"
+  },
+  "webYeniKisa": {
+    "message": "Shortcut"
+  },
+  "webYeniAdres": {
+    "message": "https://site.com/search?q=%s"
+  },
+  "webYeniIpucu": {
+    "message": "Put %s where the search term goes. Shortcut is optional: used as \"ab term\"."
+  },
+  "webYeniAdGerek": {
+    "message": "Enter a name for the engine"
+  },
+  "webYeniAdresGecersiz": {
+    "message": "Address must start with http(s):// and contain %s"
+  },
+  "webYeniKisaVar": {
+    "message": "This shortcut is already used or contains a space"
+  },
+  "webYeniEklendi": {
+    "message": "$1 added"
+  },
+  "ekrandanSec": {
+    "message": "Pick a color from the screen"
+  },
+  "arayuzAlt": {
+    "message": "Interface"
+  },
+  "renkliSimgeler": {
+    "message": "Colored Icons"
+  },
+  "temaBaslik": {
+    "message": "Theme"
+  },
+  "temaMod": {
+    "message": "Mode"
+  },
+  "temaKoyu": {
+    "message": "Dark"
+  },
+  "temaAcik": {
+    "message": "Light"
+  },
+  "temaSistem": {
+    "message": "System"
+  },
+  "temaIpucu": {
+    "message": "A preset sets the colors together; you can still change each color below. Your wallpaper image is kept."
+  },
+  "temaUygulandi": {
+    "message": "$1 theme applied"
+  },
+  "temaDegistirildi": {
+    "message": "modified"
+  },
+  "temaDegistirildiIpucu": {
+    "message": "Colors were changed by hand. Click to return to the preset."
+  },
+  "tema_gece": {
+    "message": "Night"
+  },
+  "tema_grafit": {
+    "message": "Graphite"
+  },
+  "tema_okyanus": {
+    "message": "Ocean"
+  },
+  "tema_orman": {
+    "message": "Forest"
+  },
+  "tema_mor": {
+    "message": "Violet"
+  },
+  "tema_gunbatimi": {
+    "message": "Sunset"
+  },
+  "tema_kagit": {
+    "message": "Paper"
+  },
+  "tema_kum": {
+    "message": "Sand"
+  },
+  "tema_buz": {
+    "message": "Ice"
+  },
+  "tema_nane": {
+    "message": "Mint"
+  },
+  "tema_pastel": {
+    "message": "Pastel"
+  },
+  "temaKaydet": {
+    "message": "Save"
+  },
+  "temaKaydetIpucu": {
+    "message": "Save the current colors as your own theme"
+  },
+  "temaKaydetMetin": {
+    "message": "The current colors will be saved under this name. A theme with the same name is updated."
+  },
+  "temaOzelAd": {
+    "message": "My theme $1"
+  },
+  "temaKaydedildi": {
+    "message": "\"$1\" saved"
+  },
+  "temaSilindi": {
+    "message": "\"$1\" deleted"
+  },
+  "temaSinir": {
+    "message": "Up to $1 themes can be saved"
+  },
+  "anaSayfaSilinemez": {
+    "message": "Home cannot be deleted"
+  },
+  "anaSayfaAdiDegismez": {
+    "message": "Home cannot be renamed"
+  },
+  "camGorunum": {
+    "message": "Frosted Glass Look"
+  },
+  "aktifIkonRengi": {
+    "message": "Active Group Icon Color"
+  },
+  "aktarimGorselBaslik": {
+    "message": "Card images"
+  },
+  "aktarimGorselMetin": {
+    "message": "$1 imported cards have no image; the backup file does not contain images.\n\nCapture them in the background? No windows will open and you can keep using WSD meanwhile. It may take a while depending on the number of cards, and the browser may show a \"debugging\" notice at the top."
+  },
+  "arkaPlandaAl": {
+    "message": "Capture in background"
+  },
+  "simdiDegil": {
+    "message": "Not now"
+  },
+  "kartKelime": {
+    "message": "tiles"
+  },
+  "copGeriYukle": {
+    "message": "Restore"
+  },
+  "sonYedekKisa": {
+    "message": "Last backup: $1 ($2, $3 tiles)"
+  },
+  "mevcutVerilerSiliniyor": {
+    "message": "Deleting existing data"
+  },
+  "tema_kontrast": {
+    "message": "Contrast"
+  },
+  "tema_murekkep": {
+    "message": "Ink"
+  },
+  "webAramaYeri": {
+    "message": "Where to Show"
+  },
+  "webYerAnaSayfa": {
+    "message": "Home only"
+  },
+  "webYerIlkGrup": {
+    "message": "In the first group"
+  },
+  "webYerHepsi": {
+    "message": "In all groups"
+  },
+  "kucukPencere": {
+    "message": "Small Window in the Corner (experimental)"
+  },
+  "gizliKipBilgi": {
+    "message": "In this mode Chrome shows a \"WSD Speed Dial started debugging this browser\" bar at the top. It is Chrome's mandatory notice for taking a page screenshot without opening a window; the permission is used only to take the screenshot. The bar disappears when capturing ends."
+  },
+  "hazirGruplar": {
+    "message": "Ready-made Groups"
+  },
+  "hazirGruplarAciklama": {
+    "message": "The pack you pick is added as a new group; your existing tiles are not touched. You can edit the tiles afterwards."
+  },
+  "tumDiller": {
+    "message": "Show packs in all languages"
+  },
+  "paketOner": {
+    "message": "Suggest a pack (GitHub)"
+  },
+  "paketListesiAlinamadi": {
+    "message": "Could not load the pack list."
+  },
+  "nKartKisa": {
+    "message": "$1 tiles"
+  },
+  "eklendi": {
+    "message": "Added"
+  },
+  "paketEklendi": {
+    "message": "\"$1\" added · $2 tiles"
+  },
+  "paketEklenemedi": {
+    "message": "Could not add the pack"
+  },
+  "yukleniyor": {
+    "message": "Loading…"
+  },
+  "webAraYerTarayici": {
+    "message": "Search the web or type an address"
   }
 }

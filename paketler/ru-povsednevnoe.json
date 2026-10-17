@@ -1,0 +1,44 @@
+{
+ "wsd": {
+  "surum": 1,
+  "gruplar": [
+   {
+    "kokMu": false,
+    "baslik": "Повседневное",
+    "ikon": "web",
+    "gorunum": null,
+    "kartlar": [
+     {
+      "baslik": "Яндекс",
+      "url": "https://ya.ru/"
+     },
+     {
+      "baslik": "Википедия",
+      "url": "https://ru.wikipedia.org/"
+     },
+     {
+      "baslik": "YouTube",
+      "url": "https://www.youtube.com/"
+     },
+     {
+      "baslik": "Яндекс Карты",
+      "url": "https://yandex.ru/maps/"
+     },
+     {
+      "baslik": "Яндекс Погода",
+      "url": "https://yandex.ru/pogoda/"
+     },
+     {
+      "baslik": "Госуслуги",
+      "url": "https://www.gosuslugi.ru/"
+     }
+    ]
+   }
+  ],
+  "gorseller": {},
+  "notlar": {},
+  "renkler": {},
+  "sayaclar": {},
+  "ayarlar": null
+ }
+}

@@ -1,0 +1,44 @@
+{
+ "wsd": {
+  "surum": 1,
+  "gruplar": [
+   {
+    "kokMu": false,
+    "baslik": "Разработчику",
+    "ikon": "code",
+    "gorunum": null,
+    "kartlar": [
+     {
+      "baslik": "Хабр",
+      "url": "https://habr.com/ru/"
+     },
+     {
+      "baslik": "GitHub",
+      "url": "https://github.com/"
+     },
+     {
+      "baslik": "Stack Overflow на русском",
+      "url": "https://ru.stackoverflow.com/"
+     },
+     {
+      "baslik": "MDN Web Docs",
+      "url": "https://developer.mozilla.org/ru/"
+     },
+     {
+      "baslik": "Can I use",
+      "url": "https://caniuse.com/"
+     },
+     {
+      "baslik": "regex101",
+      "url": "https://regex101.com/"
+     }
+    ]
+   }
+  ],
+  "gorseller": {},
+  "notlar": {},
+  "renkler": {},
+  "sayaclar": {},
+  "ayarlar": null
+ }
+}

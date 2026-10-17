@@ -22,7 +22,8 @@ import { klasorSuruklemeVarMi } from './klasorsurukle.js';
 /** Kendi kartimizi ya da klasorumuzu tasirken bu modul devreye girmiyor. */
 // Calisma alani karti surukleniyorsa (1.5.4) o da ic surukleme
 const icSurukleme = () => icSuruklemeVarMi() || klasorSuruklemeVarMi()
-    || document.body.classList.contains('alanSurukleniyor');
+    || document.body.classList.contains('alanSurukleniyor')
+    || document.body.classList.contains('icSurukleniyor');   // ayar listeleri (1.5.5)
 
 export function disBirakmayiKur() {
     const kap = document.getElementById('kartKabi');

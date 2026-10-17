@@ -120,7 +120,7 @@ function copKartiOlustur(k) {
     geri.type = 'button';
     geri.className = 'copKartDugme';
     geri.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${COP_SVG.geri}</svg>Geri Al`;
+        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${COP_SVG.geri}</svg>${c('copGeriYukle')}`;
     geri.addEventListener('click', async () => {
         const kayit = await coptenCikar(k.copId);
         await kartiGeriAl(kayit, false);   // ekrani tazeleme - copteyiz
@@ -197,7 +197,7 @@ function copGrubuOlustur(k) {
     geri.type = 'button';
     geri.className = 'copKartDugme';
     geri.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${COP_SVG.geri}</svg>Geri Al`;
+        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${COP_SVG.geri}</svg>${c('copGeriYukle')}`;
     geri.addEventListener('click', async () => {
         const kayit = await coptenCikar(k.copId);
         await grubuGeriAl(kayit);
@@ -294,7 +294,7 @@ async function copGrubunuAc(g) {
         geri.type = 'button';
         geri.className = 'copKartDugme';
         geri.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${COP_SVG.geri}</svg>Geri Al`;
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${COP_SVG.geri}</svg>${c('copGeriYukle')}`;
         geri.addEventListener('click', () => tekKartiGeriAl(g, k));
 
         const sil = document.createElement('button');

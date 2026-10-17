@@ -1,0 +1,40 @@
+{
+ "wsd": {
+  "surum": 1,
+  "gruplar": [
+   {
+    "kokMu": false,
+    "baslik": "Daily",
+    "ikon": "web",
+    "gorunum": null,
+    "kartlar": [
+     {
+      "baslik": "Wikipedia",
+      "url": "https://en.wikipedia.org/"
+     },
+     {
+      "baslik": "YouTube",
+      "url": "https://www.youtube.com/"
+     },
+     {
+      "baslik": "Maps",
+      "url": "https://www.google.com/maps"
+     },
+     {
+      "baslik": "Weather",
+      "url": "https://weather.com/"
+     },
+     {
+      "baslik": "Gmail",
+      "url": "https://mail.google.com/"
+     }
+    ]
+   }
+  ],
+  "gorseller": {},
+  "notlar": {},
+  "renkler": {},
+  "sayaclar": {},
+  "ayarlar": null
+ }
+}

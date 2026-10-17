@@ -1,0 +1,40 @@
+{
+ "wsd": {
+  "surum": 1,
+  "gruplar": [
+   {
+    "kokMu": false,
+    "baslik": "Learning",
+    "ikon": "school",
+    "gorunum": null,
+    "kartlar": [
+     {
+      "baslik": "Khan Academy",
+      "url": "https://www.khanacademy.org/"
+     },
+     {
+      "baslik": "Coursera",
+      "url": "https://www.coursera.org/"
+     },
+     {
+      "baslik": "Wikipedia",
+      "url": "https://en.wikipedia.org/"
+     },
+     {
+      "baslik": "Google Scholar",
+      "url": "https://scholar.google.com/"
+     },
+     {
+      "baslik": "Duolingo",
+      "url": "https://www.duolingo.com/"
+     }
+    ]
+   }
+  ],
+  "gorseller": {},
+  "notlar": {},
+  "renkler": {},
+  "sayaclar": {},
+  "ayarlar": null
+ }
+}

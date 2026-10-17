@@ -3,7 +3,7 @@
     "message": "WSD Speed Dial – визуальные закладки"
   },
   "extDesc": {
-    "message": "Speed dial для новой вкладки: визуальные закладки, папки и рабочие области. Перенос из FVD и Speed Dial 2 в один клик. Без аккаунта."
+    "message": "Визуальные закладки для новой вкладки: папки, рабочие области, поиск Яндекса. Перенос из FVD и Speed Dial в один клик. Без аккаунта."
   },
   "actionTitle": {
     "message": "Добавить в WSD Speed Dial"
@@ -93,13 +93,13 @@
     "message": "Сначала старые"
   },
   "genelAyar": {
-    "message": "Общая настройка"
+    "message": "Как в общих настройках"
   },
   "gerekirsePencereyiOneAl": {
     "message": "Выводить окно на передний план при необходимости"
   },
   "gizliHataAyiklamaCubuguCikar": {
-    "message": "Скрытый (показывает панель отладки)"
+    "message": "Скрытый (без окна)"
   },
   "golgeRengi": {
     "message": "Цвет тени"
@@ -150,7 +150,7 @@
     "message": "Цвет значка"
   },
   "ikonYazi": {
-    "message": "Значок+текст"
+    "message": "Значок и текст"
   },
   "ilkSonGrup": {
     "message": "первая / последняя группа"
@@ -231,13 +231,13 @@
     "message": "предыдущая / следующая группа"
   },
   "otomatikYedekGunde": {
-    "message": "Автоматическая копия (ежедневно)"
+    "message": "Ежедневная резервная копия"
   },
   "ozelEmoji": {
     "message": "Свой эмодзи"
   },
   "pencereKisaSureGorunur": {
-    "message": "Окно (ненадолго видно)"
+    "message": "Окно (ненадолго появляется)"
   },
   "pencereyiAramayiKapat": {
     "message": "закрыть окно / поиск"
@@ -258,7 +258,7 @@
     "message": "Скачать изображение"
   },
   "sekmeZeminSaydamligi": {
-    "message": "Прозрачность фона вкладок"
+    "message": "Прозрачность фона панели групп"
   },
   "sil": {
     "message": "Удалить"
@@ -306,7 +306,7 @@
     "message": "Текст"
   },
   "yedekYukleniyor": {
-    "message": "Загрузка копии"
+    "message": "Импорт резервной копии"
   },
   "yedektenYukle": {
     "message": "Восстановить из копии"
@@ -318,10 +318,10 @@
     "message": "новая плитка"
   },
   "yeniSekme": {
-    "message": "Новая вкладка"
+    "message": "В новой вкладке"
   },
   "yeniSekmeArkaPlan": {
-    "message": "Новая вкладка (в фоне)"
+    "message": "В фоновой вкладке"
   },
   "yontem": {
     "message": "Способ"
@@ -342,7 +342,7 @@
     "message": "Прочие данные"
   },
   "yedekAl": {
-    "message": "Экспорт копии"
+    "message": "Создать резервную копию"
   },
   "simdiYedekAl": {
     "message": "Создать копию сейчас"
@@ -357,7 +357,7 @@
     "message": "Фон"
   },
   "yedekAlinamadi": {
-    "message": "Не удалось создать копию"
+    "message": "Не удалось создать резервную копию"
   },
   "htmlHazirlaniyor": {
     "message": "Подготовка HTML..."
@@ -366,7 +366,7 @@
     "message": "Не удалось создать HTML"
   },
   "yedekYuklenemedi": {
-    "message": "Не удалось загрузить копию:"
+    "message": "Не удалось импортировать резервную копию:"
   },
   "bekleyenYakalamalarIptalEdiliyor": {
     "message": "Отмена ожидающих снимков"
@@ -390,13 +390,13 @@
     "message": "Нечего очищать"
   },
   "yedektenYukleBd": {
-    "message": "Загрузка копии"
+    "message": "Импорт резервной копии"
   },
   "mevcutGruplarSilinsinMiHayirDerseniz": {
     "message": "Заменить существующие группы? Выберите «Добавить», чтобы объединить копию с текущими данными."
   },
   "silVeYukle": {
-    "message": "Заменить и загрузить"
+    "message": "Заменить и импортировать"
   },
   "ekle": {
     "message": "Добавить"
@@ -498,7 +498,7 @@
     "message": "Плитка удалена"
   },
   "gizliPencereAcilamadi": {
-    "message": "Не удалось открыть приватное окно"
+    "message": "Не удалось открыть окно инкогнито"
   },
   "adresKopyalandi": {
     "message": "Адрес скопирован"
@@ -597,16 +597,16 @@
     "message": "Хранилище заполнено — выполните очистку в разделе «Обслуживание»"
   },
   "nKartKuyrugaAlindi": {
-    "message": "В очередь: $1 плиток"
+    "message": "Добавлено в очередь плиток: $1"
   },
   "nKartSiralandi": {
     "message": "Отсортировано плиток: $1"
   },
   "nKartGorseliYenilenecek": {
-    "message": "Изображения $1 плиток будут сняты заново. Это может занять несколько минут."
+    "message": "Изображения плиток ($1) будут сняты заново. Это может занять несколько минут."
   },
   "nKartSirasiDegisecek": {
-    "message": "Порядок $1 плиток изменится. Ручная расстановка будет потеряна."
+    "message": "Порядок плиток ($1) изменится. Ручная расстановка будет потеряна."
   },
   "nSekmeAcilacak": {
     "message": "Откроется вкладок: $1. Продолжить?"
@@ -624,13 +624,13 @@
     "message": "Сохранено групп: $1, плиток: $2 — $3"
   },
   "nGrupNKartYuklendi": {
-    "message": "Загружено групп: $1, плиток: $2"
+    "message": "Импортировано групп: $1, плиток: $2"
   },
   "yedekAlindiDosya": {
-    "message": "Копия сохранена — $1"
+    "message": "Резервная копия сохранена — $1"
   },
   "geriAlindiAd": {
-    "message": "«$1» восстановлено"
+    "message": "Восстановлено: «$1»"
   },
   "tutarlilikKontrolu": {
     "message": "Проверка целостности"
@@ -693,10 +693,10 @@
     "message": "изображение плитки"
   },
   "yedegiYukle": {
-    "message": "Загрузить копию"
+    "message": "Импорт резервной копии"
   },
   "gecersizYedekDosyasi": {
-    "message": "Неверный файл копии"
+    "message": "Неверный файл резервной копии"
   },
   "onceEnAzBirGrupOlusturun": {
     "message": "Сначала создайте хотя бы одну группу"
@@ -729,7 +729,7 @@
     "message": "Перезагрузите страницу и попробуйте снова."
   },
   "nKartinGorseliYok": {
-    "message": "Без изображения: $1 плиток"
+    "message": "Плиток без изображения: $1"
   },
   "grupMenusundenYenilenebilir": {
     "message": "Снимите их через «Обновить изображения группы» в меню группы."
@@ -747,19 +747,19 @@
     "message": "Проверка отрисовки пропущена"
   },
   "ozelEkranAcikNormaleDonun": {
-    "message": "Открыт поиск, корзина или повторы. Вернитесь к обычному виду и запустите снова."
+    "message": "Открыт поиск, корзина или повторяющиеся плитки. Вернитесь к обычному виду и запустите снова."
   },
   "sorunBulunamadi": {
     "message": "Проблем не найдено"
   },
   "nKezAcildi": {
-    "message": "открыто $1 раз"
+    "message": "Открытий: $1"
   },
   "nSekmeAcilacakDevam": {
     "message": "Откроется вкладок: $1. Продолжить?"
   },
   "nKartKuyrugaAlindi2": {
-    "message": "В очередь: $1 плиток"
+    "message": "Добавлено в очередь плиток: $1"
   },
   "nDakikaOnce": {
     "message": "$1 мин. назад"
@@ -777,19 +777,19 @@
     "message": "$1 г. назад"
   },
   "sizSilmediyseniz": {
-    "message": "Если вы их не удаляли, можно восстановить из копии."
+    "message": "Если вы их не удаляли, можно восстановить из резервной копии."
   },
   "depoDolduYedekAlipTemizleyin": {
     "message": "Хранилище заполнено — сделайте копию и очистку"
   },
   "anaSayfaGizlendiNKart": {
-    "message": "«Главная» скрыта — $1 плиток больше нет на панели"
+    "message": "«Главная» скрыта — плитки ($1) больше не видны на панели"
   },
   "nGorsel": {
     "message": "Изображений: $1"
   },
   "ayrilanAlanDoldu": {
-    "message": "Хранилище заполнено. Новые изображения не сохраняются. Сначала сделайте копию, затем очистите неиспользуемые данные или удалите ненужные плитки."
+    "message": "Хранилище заполнено. Новые изображения не сохраняются. Сначала сделайте резервную копию, затем очистите неиспользуемые данные или удалите ненужные плитки."
   },
   "yedekAlipTemizlemenizOnerilir": {
     "message": "Рекомендуем сделать копию и очистить неиспользуемые данные."
@@ -807,13 +807,13 @@
     "message": "Записей: $1"
   },
   "nKartSilinmisGrup": {
-    "message": "$1 плиток · удалённая группа"
+    "message": "Плиток: $1 · удалённая группа"
   },
   "goruntuUrlsi": {
     "message": "URL изображения"
   },
   "oncekiSimdiKayip": {
-    "message": "Было $1 $2, сейчас $3. "
+    "message": "Было: $1, сейчас: $3 ($2). "
   },
   "nGorselTemizlendi": {
     "message": "Очищено изображений: $1"
@@ -846,7 +846,7 @@
     "message": "Значок расширения"
   },
   "baslamakIcin": {
-    "message": "Начните с"
+    "message": "Начало работы"
   },
   "tonKaydir": {
     "message": "Сдвиг оттенка"
@@ -858,7 +858,7 @@
     "message": "Или щёлкните правой кнопкой на любой странице и выберите «Добавить в WSD Speed Dial»"
   },
   "nKartYenidenYakalanacak": {
-    "message": "Изображения $1 плиток будут сняты заново. Это может занять несколько минут."
+    "message": "Изображения плиток ($1) будут сняты заново. Это может занять несколько минут."
   },
   "colorizeTekTonaIndir": {
     "message": "Colorize (один тон)"
@@ -876,16 +876,16 @@
     "message": "Квадрат"
   },
   "sekmeZeminRengi": {
-    "message": "Фон вкладок"
+    "message": "Цвет фона панели групп"
   },
   "sekmeBoyutu": {
-    "message": "Размер вкладок"
+    "message": "Размер панели групп"
   },
   "yakalamaKipi": {
     "message": "Режим снимка"
   },
   "bekleme": {
-    "message": "Ожидание"
+    "message": "Задержка"
   },
   "jpegKalitesi": {
     "message": "Качество JPEG"
@@ -942,19 +942,19 @@
     "message": "Вперёд"
   },
   "nKart": {
-    "message": "$1 плиток"
+    "message": "Плиток: $1"
   },
   "silindiTarih": {
     "message": "удалено $1"
   },
   "sonYedekBilgisi": {
-    "message": "Последняя копия: $1 · $2 · $3 плиток · $4"
+    "message": "Последняя резервная копия: $1 · $2 · плиток: $3 · $4"
   },
   "nGrupNKart": {
-    "message": "$1 групп · $2 плиток"
+    "message": "Групп: $1 · плиток: $2"
   },
   "nAdresNKart": {
-    "message": "$1 адресов · $2 плиток"
+    "message": "Адресов: $1 · плиток: $2"
   },
   "grubaEklendi": {
     "message": "Добавлено в «$1»"
@@ -993,13 +993,13 @@
     "message": "Не удалось сделать снимок"
   },
   "grupKaliciSilMetin": {
-    "message": "Группа «$1» и её $2 плиток будут удалены безвозвратно."
+    "message": "Группа «$1» и её плитки ($2) будут удалены безвозвратно."
   },
   "sifirlaKucuk": {
     "message": "сбросить"
   },
   "copeTasinacak": {
-    "message": "«$1» будет перемещено в корзину."
+    "message": "Плитка «$1» будет перемещена в корзину."
   },
   "sonucBulunamadi": {
     "message": "Ничего не найдено по запросу «$1»"
@@ -1008,10 +1008,10 @@
     "message": "Занято $1% выделенного места. "
   },
   "depoDoluBildirim": {
-    "message": "Хранилище заполнено на $1% — рекомендуется сделать копию"
+    "message": "Хранилище заполнено на $1% — рекомендуется сделать резервную копию"
   },
   "grupVeKartSilinecek": {
-    "message": "«$1» и $2 плиток внутри будут удалены."
+    "message": "«$1» и плитки внутри ($2) будут удалены."
   },
   "grupAdiZatenVar": {
     "message": "Группа «$1» уже существует"
@@ -1035,7 +1035,7 @@
     "message": "Всё равно добавить"
   },
   "alanSec": {
-    "message": "Выбрать область"
+    "message": "Выделить область"
   },
   "uzunCekim": {
     "message": "Длинный снимок"
@@ -1059,7 +1059,7 @@
     "message": "Группы и плитки"
   },
   "nGrup": {
-    "message": "$1 групп"
+    "message": "Групп: $1"
   },
   "nKartZatenVardi": {
     "message": "уже было: $1"
@@ -1074,7 +1074,7 @@
     "message": "Проверка..."
   },
   "durdur": {
-    "message": "Стоп"
+    "message": "Остановить"
   },
   "isaretleriTemizle": {
     "message": "Снять отметки"
@@ -1095,10 +1095,10 @@
     "message": "Проверено адресов: $1, битых ссылок не найдено."
   },
   "kirikAciklama": {
-    "message": "Эти адреса вернули 404/410 — страница больше не существует."
+    "message": "Эти адреса вернули 404/410 — страница больше не существует. Их плитки отмечены красным восклицательным знаком."
   },
   "supheliAciklama": {
-    "message": "До этих адресов не удалось достучаться, но результат неоднозначный (тайм-аут, ошибка сети или защита от ботов). Плитки не отмечены."
+    "message": "До этих адресов вообще не удалось достучаться (домен не существует, тайм-аут или ошибка сервера). Плитки не удалены — проверьте их по одной."
   },
   "kirikKartlariGoster": {
     "message": "Показать битые плитки"
@@ -1107,7 +1107,7 @@
     "message": "Проверить снова"
   },
   "nKartDuzelmis": {
-    "message": "Снова доступны: $1 плиток, убраны из списка"
+    "message": "Снова доступны плитки ($1) — убраны из списка"
   },
   "degisiklikYok": {
     "message": "Без изменений, все по-прежнему битые"
@@ -1140,7 +1140,7 @@
     "message": "Импорт не удалось завершить."
   },
   "nKlasorNBaglanti": {
-    "message": "$1 папок · $2 ссылок"
+    "message": "Папок: $1 · ссылок: $2"
   },
   "hepsiniSec": {
     "message": "Выбрать / снять все"
@@ -1149,7 +1149,7 @@
     "message": "Закладки"
   },
   "grubaEklenecek": {
-    "message": "будет добавлено в существующую группу"
+    "message": "добавится в существующую группу"
   },
   "ipucuYerimiSurukle": {
     "message": "Перетащите ссылку с панели закладок сюда — появится плитка"
@@ -1158,7 +1158,7 @@
     "message": "Импортируйте закладки браузера — каждая папка станет группой"
   },
   "silmeyiGeriAl": {
-    "message": "Отменить удаление всех данных"
+    "message": "Отменить удаление"
   },
   "klasorSurukleme": {
     "message": "Папки нельзя перетащить. Используйте Настройки → Импорт из закладок"
@@ -1170,7 +1170,7 @@
     "message": "Битых плиток будет перемещено в корзину: $1. Их можно восстановить."
   },
   "nKartCopeTasindi": {
-    "message": "Перемещено в корзину: $1 плиток"
+    "message": "Перемещено в корзину плиток: $1"
   },
   "tekleDusur": {
     "message": "Оставить по одной"
@@ -1179,10 +1179,10 @@
     "message": "Для каждого повторяющегося адреса останется одна плитка, остальные переместятся в корзину. Их можно восстановить."
   },
   "nKartGorseliAlinamadi": {
-    "message": "Не удалось снять $1 плиток"
+    "message": "Не удалось снять плиток: $1"
   },
   "ulasilamadi": {
-    "message": "нет доступа"
+    "message": "недоступен"
   },
   "grupAra": {
     "message": "Поиск групп..."
@@ -1533,7 +1533,7 @@
     "message": "Цвет тени"
   },
   "menuYaziRengi": {
-    "message": "Цвет текста меню"
+    "message": "Цвет текста панели групп"
   },
   "aktifGrupYaziRengi": {
     "message": "Цвет текста активной группы"
@@ -1560,7 +1560,7 @@
     "message": "Цвет фона"
   },
   "aktarimdaYakala": {
-    "message": "Создавать недостающие миниатюры после импорта"
+    "message": "Снимать недостающие изображения после импорта"
   },
   "icindekiKartlardanSec": {
     "message": "Выбрать из плиток внутри"
@@ -1572,7 +1572,7 @@
     "message": "Файл не распознан. Выберите резервную копию WSD, FVD, Speed Dial 2 или Group Speed Dial либо HTML-файл закладок"
   },
   "karsilamaIceAktarAciklama": {
-    "message": "Импорт: резервная копия WSD, копия другого Speed Dial (FVD, Speed Dial 2, Group Speed Dial) или HTML-файл закладок, экспортированный из любого браузера. Тип определяется автоматически."
+    "message": "Импорт: резервная копия WSD, копия другого Speed Dial (FVD, Speed Dial .spd, Speed Dial 2, Group Speed Dial) или HTML-файл закладок, экспортированный из любого браузера. Тип определяется автоматически."
   },
   "karsilamaKapatDevam": {
     "message": "Закрыть и продолжить"
@@ -1611,7 +1611,7 @@
     "message": "Вкладки этого окна будут добавлены в новую группу. Снимите отметку с ненужных."
   },
   "nSekmeKaydedildi": {
-    "message": "Сохранено вкладок: $1"
+    "message": "Создана новая группа (вкладок: $1)"
   },
   "calismaAlanlari": {
     "message": "Рабочие области"
@@ -1626,7 +1626,7 @@
     "message": "Рабочая область $1"
   },
   "alanKaydedildi": {
-    "message": "Сохранено вкладок: $1"
+    "message": "Рабочая область сохранена (вкладок: $1)"
   },
   "alanBos": {
     "message": "Эта рабочая область пуста"
@@ -1638,10 +1638,10 @@
     "message": "Переименовать"
   },
   "grubaDonustur": {
-    "message": "Превратить в группу"
+    "message": "Преобразовать в группу"
   },
   "grubaDonusturMetin": {
-    "message": "«$1» станет обычной группой, для карточек будут сделаны скриншоты."
+    "message": "«$1» станет обычной группой, для плиток будут сделаны снимки."
   },
   "grubaDonusturuldu": {
     "message": "Превращено в группу"
@@ -1705,5 +1705,239 @@
   },
   "mSekmeleriAlanaKaydet": {
     "message": "Сохранить вкладки в рабочую область…"
+  },
+  "webTarayiciMotoru": {
+    "message": "Поисковая система браузера"
+  },
+  "webAraYer": {
+    "message": "Искать в $1 или ввести адрес"
+  },
+  "webVarsayilanYap": {
+    "message": "Сделать основной"
+  },
+  "anaSayfaBolum": {
+    "message": "Главная"
+  },
+  "webAramaCubugu": {
+    "message": "Строка поиска"
+  },
+  "webAramaGoster": {
+    "message": "Показывать строку поиска"
+  },
+  "webVarsayilanMotor": {
+    "message": "Поисковая система по умолчанию"
+  },
+  "webMotorListesi": {
+    "message": "Поисковые системы в списке"
+  },
+  "webMotorEkle": {
+    "message": "Добавить свою поисковую систему"
+  },
+  "webYeniAd": {
+    "message": "Название"
+  },
+  "webYeniKisa": {
+    "message": "Ключевое слово"
+  },
+  "webYeniAdres": {
+    "message": "https://site.com/search?q=%s"
+  },
+  "webYeniIpucu": {
+    "message": "Укажите %s на месте искомого слова. Ключевое слово необязательно: используется как «ab слово»."
+  },
+  "webYeniAdGerek": {
+    "message": "Введите название системы"
+  },
+  "webYeniAdresGecersiz": {
+    "message": "Адрес должен начинаться с http(s):// и содержать %s"
+  },
+  "webYeniKisaVar": {
+    "message": "Это сокращение уже занято или содержит пробел"
+  },
+  "webYeniEklendi": {
+    "message": "Добавлено: $1"
+  },
+  "ekrandanSec": {
+    "message": "Взять цвет с экрана"
+  },
+  "arayuzAlt": {
+    "message": "Интерфейс"
+  },
+  "renkliSimgeler": {
+    "message": "Цветные значки"
+  },
+  "temaBaslik": {
+    "message": "Тема"
+  },
+  "temaMod": {
+    "message": "Режим"
+  },
+  "temaKoyu": {
+    "message": "Тёмная"
+  },
+  "temaAcik": {
+    "message": "Светлая"
+  },
+  "temaSistem": {
+    "message": "Системная"
+  },
+  "temaIpucu": {
+    "message": "Готовая тема задаёт все цвета сразу; ниже каждый цвет можно изменить отдельно. Изображение обоев сохраняется."
+  },
+  "temaUygulandi": {
+    "message": "Тема «$1» применена"
+  },
+  "temaDegistirildi": {
+    "message": "изменена"
+  },
+  "temaDegistirildiIpucu": {
+    "message": "Цвета изменены вручную. Нажмите, чтобы вернуть готовую тему."
+  },
+  "tema_gece": {
+    "message": "Ночь"
+  },
+  "tema_grafit": {
+    "message": "Графит"
+  },
+  "tema_okyanus": {
+    "message": "Океан"
+  },
+  "tema_orman": {
+    "message": "Лес"
+  },
+  "tema_mor": {
+    "message": "Фиалка"
+  },
+  "tema_gunbatimi": {
+    "message": "Закат"
+  },
+  "tema_kagit": {
+    "message": "Бумага"
+  },
+  "tema_kum": {
+    "message": "Песок"
+  },
+  "tema_buz": {
+    "message": "Лёд"
+  },
+  "tema_nane": {
+    "message": "Мята"
+  },
+  "tema_pastel": {
+    "message": "Пастель"
+  },
+  "temaKaydet": {
+    "message": "Сохранить"
+  },
+  "temaKaydetIpucu": {
+    "message": "Сохранить текущие цвета как свою тему"
+  },
+  "temaKaydetMetin": {
+    "message": "Текущие цвета будут сохранены под этим именем. Тема с таким же именем будет обновлена."
+  },
+  "temaOzelAd": {
+    "message": "Моя тема $1"
+  },
+  "temaKaydedildi": {
+    "message": "«$1» сохранена"
+  },
+  "temaSilindi": {
+    "message": "«$1» удалена"
+  },
+  "temaSinir": {
+    "message": "Можно сохранить не более $1 тем"
+  },
+  "anaSayfaSilinemez": {
+    "message": "Главную нельзя удалить"
+  },
+  "anaSayfaAdiDegismez": {
+    "message": "Главную нельзя переименовать"
+  },
+  "camGorunum": {
+    "message": "Эффект матового стекла"
+  },
+  "aktifIkonRengi": {
+    "message": "Цвет значка активной группы"
+  },
+  "aktarimGorselBaslik": {
+    "message": "Изображения плиток"
+  },
+  "aktarimGorselMetin": {
+    "message": "У импортированных плиток нет изображений ($1): файл резервной копии их не содержит.\n\nСделать снимки в фоне? Окна открываться не будут, WSD можно пользоваться как обычно. Это может занять время в зависимости от числа плиток, а вверху браузера может появиться уведомление об «отладке»."
+  },
+  "arkaPlandaAl": {
+    "message": "Снять в фоне"
+  },
+  "simdiDegil": {
+    "message": "Не сейчас"
+  },
+  "kartKelime": {
+    "message": "плитки"
+  },
+  "copGeriYukle": {
+    "message": "Восстановить"
+  },
+  "sonYedekKisa": {
+    "message": "Последняя резервная копия: $1 ($2, плиток: $3)"
+  },
+  "mevcutVerilerSiliniyor": {
+    "message": "Удаление текущих данных"
+  },
+  "tema_kontrast": {
+    "message": "Контраст"
+  },
+  "tema_murekkep": {
+    "message": "Чернила"
+  },
+  "webAramaYeri": {
+    "message": "Где показывать"
+  },
+  "webYerAnaSayfa": {
+    "message": "Только на главной"
+  },
+  "webYerIlkGrup": {
+    "message": "В первой группе"
+  },
+  "webYerHepsi": {
+    "message": "Во всех группах"
+  },
+  "kucukPencere": {
+    "message": "Маленькое окно в углу (экспериментально)"
+  },
+  "gizliKipBilgi": {
+    "message": "В этом режиме Chrome показывает вверху панель «WSD Speed Dial начал отладку браузера». Это обязательное уведомление Chrome при снимке страницы без открытия окна; разрешение используется только для снимка. Панель исчезает после завершения."
+  },
+  "hazirGruplar": {
+    "message": "Готовые группы"
+  },
+  "hazirGruplarAciklama": {
+    "message": "Выбранный набор добавляется новой группой; ваши плитки не затрагиваются. Плитки потом можно изменить."
+  },
+  "tumDiller": {
+    "message": "Показать наборы на всех языках"
+  },
+  "paketOner": {
+    "message": "Предложить набор (GitHub)"
+  },
+  "paketListesiAlinamadi": {
+    "message": "Не удалось загрузить список наборов."
+  },
+  "nKartKisa": {
+    "message": "плиток: $1"
+  },
+  "eklendi": {
+    "message": "Добавлено"
+  },
+  "paketEklendi": {
+    "message": "«$1» добавлена · плиток: $2"
+  },
+  "paketEklenemedi": {
+    "message": "Не удалось добавить набор"
+  },
+  "yukleniyor": {
+    "message": "Загрузка…"
+  },
+  "webAraYerTarayici": {
+    "message": "Поиск в интернете или адрес"
   }
 }

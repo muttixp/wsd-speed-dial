@@ -1,0 +1,44 @@
+{
+ "wsd": {
+  "surum": 1,
+  "gruplar": [
+   {
+    "kokMu": false,
+    "baslik": "Günlük",
+    "ikon": "web",
+    "gorunum": null,
+    "kartlar": [
+     {
+      "baslik": "Vikipedi",
+      "url": "https://tr.wikipedia.org/"
+     },
+     {
+      "baslik": "YouTube",
+      "url": "https://www.youtube.com/"
+     },
+     {
+      "baslik": "Haritalar",
+      "url": "https://www.google.com/maps"
+     },
+     {
+      "baslik": "Meteoroloji",
+      "url": "https://www.mgm.gov.tr/"
+     },
+     {
+      "baslik": "e-Devlet",
+      "url": "https://www.turkiye.gov.tr/"
+     },
+     {
+      "baslik": "Gmail",
+      "url": "https://mail.google.com/"
+     }
+    ]
+   }
+  ],
+  "gorseller": {},
+  "notlar": {},
+  "renkler": {},
+  "sayaclar": {},
+  "ayarlar": null
+ }
+}

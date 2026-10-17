@@ -34,6 +34,62 @@ let kaynakUzerinde = false;    // imlec kendi yerinin uzerinde mi (vazgecme)
 
 const GHOST_OFSET = { x: 0, y: 0 };
 
+// YAYLI KLASOR (1.5.5, deneysel): kart suruklenirken bir klasor kutusu,
+// yol seridindeki bir ad ya da grup sekmesi uzerinde YAYLI_MS beklenirse
+// o klasor surukleme BIRAKILMADAN acilir. Ornek: "1" klasorundeyken kardes
+// "fx" klasorune tasimak icin yolda "LTS" uzerinde beklenir, LTS acilir,
+// kart fx kutusuna birakilir. Tasi penceresine gerek kalmaz.
+//
+// Ekran yeniden cizilirken suruklenen kart DOM'dan kalkarsa tarayici
+// dragend'i kimseye ulastiramiyor ve surukleme yarim kaliyordu; kart
+// bu yuzden once gorunmez bir TUTUCUya aliniyor.
+const YAYLI_MS = 700;
+let yayliId = null;
+let yayliEl = null;
+let yayliZaman = null;
+let yayliAcar = null;          // kartSuruklemeKur'da baglaniyor
+let tutucu = null;
+
+function yayliKur(id, el) {
+    if (!id || yayliId === id) return;
+    yayliIptal();
+    yayliId = id;
+    yayliEl = el;
+    el?.classList.add('yayliBekliyor');
+    yayliZaman = setTimeout(() => { const h = yayliId; yayliIptal(); if (h && yayliAcar) yayliAcar(h); }, YAYLI_MS);
+}
+
+function yayliIptal() {
+    clearTimeout(yayliZaman);
+    yayliZaman = null;
+    yayliEl?.classList.remove('yayliBekliyor');
+    yayliEl = null;
+    yayliId = null;
+}
+
+function tutucudaMi() {
+    return !!(tutucu && surukKart && surukKart.parentNode === tutucu);
+}
+
+/** Kart alani ya da sayfanin hicbir ogeye ait olmayan zemini. */
+function bosYerMi(el) {
+    if (!el) return false;
+    if (el === document.body || el === document.documentElement) return true;
+    return !!el.closest?.('#kartAlani');
+}
+
+/** Suruklenen karti gorunmez tutucuya alir: ekran yenilense de DOM'da kalsin. */
+function kartiTut(kart) {
+    if (!kart) return;
+    if (!tutucu) {
+        tutucu = document.createElement('div');
+        tutucu.id = 'surukTutucu';
+        tutucu.style.cssText = 'position:fixed;left:-9999px;top:0;width:1px;height:1px;overflow:hidden;';
+        document.body.appendChild(tutucu);
+    }
+    if (kart.parentNode !== tutucu) tutucu.appendChild(kart);
+}
+
 // Son imlec konumu. Birakma aninda hedef kaydi bos kalirsa buradan
 // YENIDEN hesapliyoruz: hizli hareket ya da olay sirasi yuzunden son
 // dragover kartin uzerine denk gelmeyebiliyor ve tasima kaciyordu.
@@ -43,6 +99,21 @@ export function kartSuruklemeKur({ aktifGrup, yenile, bildir }) {
     const kap = document.getElementById('kartKabi');
     const serit = document.getElementById('grupSeridi');
     if (!kap) return;
+
+    yayliAcar = async id => {
+        if (!surukKart || id === aktifGrup()) return;
+        kartiTut(surukKart);
+        try {
+            const { grubuAc } = await import('./cizim.js');
+            await grubuAc(id);
+        } catch (e) { console.log('[WSD] yayli klasor acilamadi:', e); }
+        // Yeni ekranda hedefler sifirdan hesaplanacak
+        klasorHedefId = null;
+        hedefGrupId = null;
+        surukHedefi = null;
+        sekmeIsaretiniTemizle();
+        isaretiTemizle();
+    };
 
     kap.addEventListener('dragstart', e => {
         const kart = e.target.closest('.kart:not(.ekleKart)');
@@ -76,7 +147,7 @@ export function kartSuruklemeKur({ aktifGrup, yenile, bildir }) {
     kap.addEventListener('drop', async e => {
         e.preventDefault();
         e.stopPropagation();
-        await birak({ aktifGrup, yenile, bildir }, { x: e.clientX, y: e.clientY });
+        await birak({ aktifGrup, yenile, bildir }, { x: e.clientX, y: e.clientY }, true);
     });
 
     document.getElementById('grupSeridi')?.addEventListener('drop', async e => {
@@ -85,7 +156,10 @@ export function kartSuruklemeKur({ aktifGrup, yenile, bildir }) {
         await birak({ aktifGrup, yenile, bildir }, { x: e.clientX, y: e.clientY });
     });
 
-    kap.addEventListener('dragend', async () => {
+    // dragend kaynak kartta tetikleniyor; yayli klasorle ekran degismisse
+    // kart tutucuda (kabin disinda) - bu yuzden belge duzeyinde dinleniyor
+    document.addEventListener('dragend', async () => {
+        if (!surukKart) return;
         await birak({ aktifGrup, yenile, bildir });
     });
 
@@ -119,6 +193,7 @@ export function kartSuruklemeKur({ aktifGrup, yenile, bildir }) {
         isaretiTemizle();
         sekmeIsaretle(sekme);
         hayaletiHedefteIsaretle(true);
+        yayliKur(sekme.dataset.grupId, sekme);
     });
 
     serit?.addEventListener('dragleave', e => {
@@ -127,18 +202,26 @@ export function kartSuruklemeKur({ aktifGrup, yenile, bildir }) {
             hedefGrupId = null;
             sekmeIsaretiniTemizle();
             hayaletiHedefteIsaretle(false);
+            yayliIptal();
         }
     });
 
-    // Kabin/seridin disina birakma - sadece temizle
-    document.addEventListener('drop', e => e.preventDefault());
+    // Kabin/seridin disina birakma - sadece temizle.
+    // Yayli klasorle gelinmisse sayfanin bos yeri de "buraya koy" demek
+    // (kart alani kisa ya da klasor bossa kabin disina dusuluyor).
+    document.addEventListener('drop', async e => {
+        e.preventDefault();
+        if (tutucudaMi() && bosYerMi(e.target)) {
+            await birak({ aktifGrup, yenile, bildir }, { x: e.clientX, y: e.clientY }, true);
+        }
+    });
 }
 
 /* ---------- Birakma ---------- */
 
 let islendi = false;
 
-async function birak({ aktifGrup, yenile, bildir }, konum = null) {
+async function birak({ aktifGrup, yenile, bildir }, konum = null, kabaBirakildi = false) {
     if (islendi) return;
     // Kendi tasimamiz yer imi olayi uretiyor - otomatik tazeleme
     // araya girip DOM'u yeniden cizmesin
@@ -154,6 +237,8 @@ async function birak({ aktifGrup, yenile, bildir }, konum = null) {
     // Hedef kaydini YEREL degiskene aliyoruz: temizlik globali sifirliyor
     let hedefKaydi = surukHedefi;
     const grupHedefi = hedefGrupId || klasorHedefId;
+    // Yayli klasorle yeni klasore gecilmis mi (kart tutucuda bekliyor)
+    const tutucuda = !!(tutucu && kart && kart.parentNode === tutucu);
 
     // YEDEK YOL: kayit bos ama imlec bir kartin uzerindeyse hedefi
     // son konumdan hesapla. Kayit, hizli harekette ya da olay sirasi
@@ -169,6 +254,14 @@ async function birak({ aktifGrup, yenile, bildir }, konum = null) {
         // 1) Baska gruba tasima
         if (grupHedefi && grupHedefi !== aktifGrup()) {
             await chrome.bookmarks.move(kart.dataset.kartId, { parentId: grupHedefi });
+            await yenile();
+            bildir(c('kartTasindi'));
+            return;
+        }
+
+        // 1b) Yayli klasorle acilan klasorde BOS yere birakildi: sona ekle
+        if (tutucuda && !hedefKaydi && kabaBirakildi) {
+            await chrome.bookmarks.move(kart.dataset.kartId, { parentId: aktifGrup() });
             await yenile();
             bildir(c('kartTasindi'));
             return;
@@ -246,8 +339,10 @@ function hedefiTazele(x, y) {
         hayaletiHedefteIsaretle(true);
         surukHedefi = null;
         kaynakUzerinde = false;
+        yayliKur(klasor.dataset.birakKlasor, klasor);
         return;
     }
+    yayliIptal();
     if (klasorHedefId) {
         klasorHedefId = null;
         sekmeIsaretiniTemizle();
@@ -262,6 +357,15 @@ function hedefiTazele(x, y) {
     if (!ustKart || kaynakUzerinde) {
         surukHedefi = null;
         isaretiTemizle();
+        // Yayli klasorle gelindiyse kabin bos yeri de hedef: sona eklenir
+        if (!ustKart && tutucudaMi() && bosYerMi(altindaki)) {
+            // "+" karti gorunuyorsa o isaretlenir (kart oraya, sona gelecek);
+            // gizliyse kart alani kesik cizgiyle
+            const ekle = document.querySelector('#kartKabi .ekleKart .ekleKutu');
+            if (ekle && ekle.offsetParent) ekle.classList.add('surukHedef');
+            else document.getElementById('kartAlani')?.classList.add('surukKapHedef');
+            hayaletiHedefteIsaretle(true);
+        }
         return;
     }
 
@@ -376,6 +480,7 @@ function isaretiTemizle() {
     for (const el of document.querySelectorAll('.surukHedef')) {
         el.classList.remove('surukHedef');
     }
+    document.getElementById('kartAlani')?.classList.remove('surukKapHedef');
     hayaletiHedefteIsaretle(false);
 }
 
@@ -391,7 +496,11 @@ function sekmeIsaretiniTemizle() {
 }
 
 function temizle() {
+    yayliIptal();
     surukKart?.classList.remove('surukKaynak');
+    // Tutucuda kalan kart (yayli klasorle ekran degisti, birakma yeri
+    // siralama degildi) - ekranda yeri yok, at
+    if (surukKart && tutucu && surukKart.parentNode === tutucu) surukKart.remove();
     hayalet?.remove();
     hayalet = null;
     isaretiTemizle();

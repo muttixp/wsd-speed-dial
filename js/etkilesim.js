@@ -1520,15 +1520,20 @@ function menuleriKur() {
         e.preventDefault();
         menuGrupId = sekme.dataset.grupId;
 
-        // "Ana Sayfa" kok klasor: silinemez ve adi degistirilemez, ama
-        // DIGER islemler gecerli. Once menuyu tumden kapatiyordum;
-        // boylece kok gruptaki kartlar siralanamiyordu.
+        // "Ana Sayfa" kok klasor: silinemez, tasinamaz, adi degistirilemez;
+        // DIGER islemler gecerli (simge, renk dahil - duzenle penceresinde
+        // ad kutusu kilitli). "Sil" gizlenmiyor, KILITLI gorunuyor: neden
+        // olmadigi tiklamadan belli olsun.
         const kok = await kokKlasoruAl();
         const kokMu = menuGrupId === kok;
 
         for (const li of el('grupMenu').children) {
             const eylem = li.dataset.eylem;
-            li.hidden = kokMu && (eylem === 'grupYenidenAdlandir' || eylem === 'grupSil' || eylem === 'grupTasi');
+            li.hidden = kokMu && eylem === 'grupTasi';
+            const kilitli = kokMu && eylem === 'grupSil';
+            li.classList.toggle('kilitli', kilitli);
+            if (kilitli) li.title = c('anaSayfaSilinemez');
+            else if (eylem === 'grupSil') li.removeAttribute('title');
         }
 
         menuyuAc(el('grupMenu'), e.clientX, e.clientY);
@@ -1822,6 +1827,7 @@ async function grupMenuEylemi(e) {
     if (eylem === 'grupYenidenAdlandir') {
         await grubuDuzenleAc(id);
     } else if (eylem === 'grupSil') {
+        if (id === await kokKlasoruAl()) { bildir(c('anaSayfaSilinemez')); return; }
         if (!await onaySor({
             baslik: c('grubuSil'),
             metin: c('grupVeIcindekiTumKartlarCop'),
@@ -1870,10 +1876,13 @@ async function grupMenuEylemi(e) {
  */
 async function grubuDuzenleAc(id) {
     const mevcut = document.querySelector(`[data-grup-id="${id}"] .grupAd`)?.textContent || '';
-    const sonuc = await grupPenceresiniAc({ id, baslik: mevcut });
+    // Ana Sayfa = WSD kok klasoru. Adi degisirse yer imlerindeki "WSD"
+    // klasorunun adi degisir ve WSD verisini bulamaz; ad kutusu kilitli.
+    const kokMu = id === await kokKlasoruAl();
+    const sonuc = await grupPenceresiniAc({ id, baslik: mevcut, adKilitli: kokMu });
     if (!sonuc) return;
     try {
-        await kartGuncelleBaslik(id, sonuc.ad);
+        if (!kokMu) await kartGuncelleBaslik(id, sonuc.ad);
         await ikonYaz(id, sonuc.ikon);
         await gorunumYaz(id, { gosterim: sonuc.gosterim, renk: sonuc.renk, aciklama: sonuc.aciklama });
         await arayuzuKur();
@@ -1909,7 +1918,7 @@ async function bosMenuEylemi(e) {
         // klasor kutusuna sag tiklayarak ulasilabiliyordu.
         case 'buYeriDuzenle': {
             const kok = await kokKlasoruAl();
-            if (aktifGrup() === kok) return;          // Ana Sayfa duzenlenmiyor
+            if (aktifGrup() === kok) { await grubuDuzenleAc(kok); break; }   // ad kilitli
             if (aktifGrup() !== aktifSekme()) await klasoruDuzenle(aktifGrup());
             else await grubuDuzenleAc(aktifGrup());
             break;

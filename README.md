@@ -116,7 +116,22 @@ gruptan geldiğini yazar. Adı eşleşen grup ve alt klasörler üstte rozet
 olarak çıkar; kelime etiket adlarında da aranır. Arama boşken etiket
 listesi görünür.
 
+### Web araması
+
+Kartların üstünde motor seçmeli arama kutusu: tarayıcının kendi motoru,
+Google, Bing, DuckDuckGo, Yandex, Brave, Ecosia, Startpage, Wikipedia,
+YouTube, GitHub. Simgeden yalnızca o arama için motor seçilir; kısayolla
+da olur (`g kelime`, `yt kelime`…). Kendi motorunuzu (`%s` içeren adres)
+ekleyebilir, listeyi sürükleyip sıralayabilirsiniz. Nerede görüneceği
+ayarlanır: yalnızca Ana Sayfa, ilk grup ya da tüm gruplar. Rusça
+arayüzde varsayılan Yandex. Yazarken hiçbir yere istek gitmez.
+
 ### Görünüm
+
+**Tema:** Koyu / Açık / Sistem modu ve hazır temalar (Gece, Grafit,
+Okyanus, Orman, Mor, Gün Batımı, Kontrast; Kâğıt, Kum, Buz, Nane, Pastel,
+Mürekkep). Sonra her renk tek tek değişir; kendi temanızı kaydedebilirsiniz.
+İsteğe bağlı **buzlu cam** görünüm ve **renkli simgeler**.
 
 Duvar kâğıdı, zemin renklendirme (ton kaydırma veya iki renk), kart oranı,
 boyut, çerçeve, sütun sınırı, grup menüsü renkleri. Tek **Köşe
@@ -177,6 +192,18 @@ Speed Dial 2, Speed Dial ve Group Speed Dial yedeklerinden gruplar ve
 kartlar aktarılır; görselleri o eklentilerin sunucularında durduğu için
 WSD'de yeniden yakalanır.
 
+**Speed Dial (`.spd`)** yedeğinde logolar gömülü geldiği için kartlar
+görselleriyle aktarılır; arama motoru tercihi de alınır. 30'dan fazla
+kartın görseli eksikse (FVD gibi) WSD yakalamayı sormadan başlatmaz:
+"Arka planda al" ya da "Şimdi değil".
+
+### Hazır gruplar
+
+Karşılama ekranındaki ya da **Yedekleme › İçe Aktar**'daki **Hazır
+Gruplar** düğmesi, dile göre örnek paketleri listeler (Günlük, Alışveriş,
+Geliştirici…). Paketler bu depodaki [`paketler/`](paketler/) klasöründe;
+yeni paket önerileri çekme isteğiyle gelebilir.
+
 Birden fazla tarayıcıdaki veriyi birleştirmek için: ilkinde **"Sil ve yükle"**,
 sonrakilerde **"Ekle"** seçin.
 
@@ -204,10 +231,13 @@ Panel son açık bölümü hatırlar.
 
 ### Görüntü yakalama kipleri
 
-**Pencere** (varsayılan) — sayfa küçük bir pencerede açılır, kısa süre görünür.
+**Pencere** (Chrome'da varsayılan) — sayfa küçük bir pencerede açılır, kısa
+süre görünür. "Küçük pencere, köşede" seçeneğiyle yarı boyutta ve sağ alt
+köşede açılır.
 
-**Gizli** — sekme arka planda açılır, pencere hiç görünmez. Karşılığında
-tarayıcı üstte "hata ayıklıyor" çubuğu gösterir.
+**Gizli** (Edge, Vivaldi ve diğerlerinde varsayılan) — sekme arka planda
+açılır, pencere hiç görünmez. Chrome bu kipte üstte "hata ayıklıyor"
+çubuğu gösterir; diğer tarayıcılar sessizdir.
 Bu kip `debugger` iznini kullanır. Chrome bu iznin isteğe bağlı
 olmasına izin vermediği için kurulumda istenir.
 
@@ -266,7 +296,11 @@ js/
   ayarpanel.js     ayarlar paneli
   yakalama.js      ekran görüntüsü kuyruğu
   gorsel.js        görsel deposu ve küçültme
-  arama.js         arama
+  arama.js         kart araması
+  webarama.js      web arama kutusu ve motorlar
+  tema.js          açık/koyu mod ve hazır temalar
+  renksecici.js    ayar panelindeki renk seçici
+  paketler.js      hazır gruplar
   kartsurukle.js   kart sürükleme motoru
   grupsurukle.js   grup şeridi sürükleme
   yedek.js         yedekleme, içe aktarma, temizlik
@@ -281,7 +315,7 @@ Yeni bileşen eklerken sabit değer yazmak yerine bunları kullanın.
 
 ## Katkı
 
-Çeviri katkısı özellikle değerli — şu an yalnızca Türkçe ve İngilizce var.
+Çeviri katkısı özellikle değerli — arayüz Türkçe, İngilizce ve Rusça tam; diğer diller kısmi.
 
 Ayrıntılar için `CONTRIBUTING.md` dosyasına bakın.
 

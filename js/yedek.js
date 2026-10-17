@@ -259,7 +259,7 @@ async function yedegiYukleIc(veri, temizle, ilerleme, urller) {
         ilerleme && ilerleme({ asama, yapilan, toplam: toplamKart, ad });
 
     if (temizle) {
-        bildir(c('temizlik'), 0, 'Mevcut veriler siliniyor');
+        bildir(c('temizlik'), 0, c('mevcutVerilerSiliniyor'));
         // Kok altindaki her seyi sil - kokun kendisi kaliyor
         const cocuklar = await chrome.bookmarks.getChildren(kok);
         for (const c of cocuklar) {
@@ -271,6 +271,15 @@ async function yedegiYukleIc(veri, temizle, ilerleme, urller) {
     // Yer imleri once olusturulursa `bookmarks.onCreated` her kart icin
     // tetiklenip yakalama kuyruguna atiyor - yedekte gorsel zaten oldugu
     // halde. Bir ice aktarmada kuyruk 1000'in ustune cikmisti.
+    // Logo + zemin rengiyle tanimli kartlar (.spd): karta burada cizilir
+    if (y.bestele) {
+        y.gorseller = y.gorseller || {};
+        for (const [url, t] of Object.entries(y.bestele)) {
+            if (y.gorseller[url]) continue;
+            const v = await logoKarti(t).catch(() => null);
+            if (v) y.gorseller[url] = { gorsel: v, adaylar: [v], secim: 0, zemin: null };
+        }
+    }
     if (y.gorseller && Object.keys(y.gorseller).length) {
         bildir(c('gorsellerBd'), 0, c('gorsellerYaziliyor'));
         await chrome.storage.local.set(y.gorseller);
@@ -457,8 +466,8 @@ function bicimiCoz(veri) {
     if (veri.wsd) return veri.wsd;
     if (veri.yasd) return eskiyiCevir(veri.yasd);
 
-    // SPEED DIAL 2 ve "SPEED DIAL" (Speed Dial Dev) - ikisi AYNI bicim
-    // (1.5.3): dials[].idgroup, groups[].title. FVD'den ONCE bakilmali:
+    // SPEED DIAL 2 (1.5.3): dials[].idgroup, groups[].title.
+    // ("Speed Dial" - Speed Dial Dev - farkli: .spd, bkz. spdCevir) FVD'den ONCE bakilmali:
     // ikisinde de groups+dials var, FVD kontrolu bunlari da yakalardi ve
     // grup adlari (name yerine title) ile grup baglari (group_id yerine
     // idgroup) kaybolurdu - her sey Ana Sayfa'ya duserdi.
@@ -481,6 +490,9 @@ function bicimiCoz(veri) {
 
     // FVD ORIJINAL bicimi: { db: {dials, groups}, prefs: {...} }
     if (veri.db && Array.isArray(veri.db.dials)) return fvdHamCevir(veri);
+
+    // "SPEED DIAL" .spd (1.5.5): { categories, links, opts }
+    if (Array.isArray(veri.categories) && Array.isArray(veri.links)) return spdCevir(veri);
 
     return null;
 }
@@ -518,6 +530,103 @@ function sd2Cevir(f) {
     }
 
     return { surum: SURUM, gruplar, gorseller: {}, notlar: {}, renkler: {}, sayaclar, ayarlar: null };
+}
+
+/* ============ "Speed Dial" .spd (1.5.5) ============
+ *
+ * { categories: [{id, name, icon}],
+ *   links: [{id, category, url, title, style, logo, bg, color,
+ *            favicon, bgColor, file}],
+ *   opts: {search, search_status, ...} }
+ *
+ * - Ilk kategori (icon 'home', "Main"/"Главная") -> Ana Sayfa.
+ * - Gorsel GOMULU geliyor ama kart degil: 'big_logo' = genis logo +
+ *   zemin rengi, 'minimalizm' = kucuk site simgesi + zemin rengi + ad.
+ *   Ice aktarmada 16:10 karta ciziliyor (bkz. logoKarti) - yakalama
+ *   gerekmiyor.
+ * - Adreslere eklenen "#from_speed_dial" izi temizleniyor.
+ * - opts.search -> web arama motoru.
+ */
+function spdCevir(f) {
+    const gruplar = [{ kokMu: true, baslik: c('anaSayfa'), kartlar: [], ikon: null, gorunum: null }];
+    const grupIndeksi = new Map();
+    const kategoriler = f.categories.filter(Boolean);
+    const kokId = String((kategoriler.find(k => k.icon === 'home') || kategoriler[0] || {}).id);
+    for (const k of kategoriler) {
+        if (String(k.id) === kokId) { grupIndeksi.set(kokId, 0); continue; }
+        grupIndeksi.set(String(k.id), gruplar.length);
+        gruplar.push({ kokMu: false, baslik: k.name || 'Grup', kartlar: [], ikon: null, gorunum: null });
+    }
+
+    const gorseller = {}, bestele = {};
+    const gomulu = v => (typeof v === 'string' && GOMULU_RASTER.test(v)) ? v : null;
+    for (const l of f.links.filter(Boolean)) {
+        if (!l.url || !/^(https?|ftp|file):/i.test(l.url)) continue;
+        const temiz = urlNormalle(l.url.replace(/#from_speed_dial$/i, ''));
+        let ad = (l.title || '').trim();
+        if (!ad) { try { ad = new URL(temiz).hostname.replace(/^www\./, ''); } catch (e) { ad = temiz; } }
+        const yer = grupIndeksi.has(String(l.category)) ? grupIndeksi.get(String(l.category)) : 0;
+        gruplar[yer].kartlar.push({ baslik: ad, url: temiz });
+        if (gorseller[temiz] || bestele[temiz]) continue;
+
+        // Kullanicinin kendi yukledigi resim (varsa) dogrudan kart gorseli
+        const dosya = gomulu(l.file) || gomulu(l.file && (l.file.data || l.file.src || l.file.url));
+        if (dosya) { gorseller[temiz] = { gorsel: dosya, adaylar: [dosya], secim: 0, zemin: null }; continue; }
+        const logo = gomulu(l.logo), simge = gomulu(l.favicon);
+        if (logo) bestele[temiz] = { resim: logo, zemin: l.bg || l.bgColor || '#ffffff', buyuk: true };
+        else if (simge) bestele[temiz] = { resim: simge, zemin: l.bgColor || l.bg || '#3a3f47', ad: l.title || ad };
+    }
+
+    const ayarlar = {};
+    const motor = String(f.opts && f.opts.search || '').toLowerCase();
+    if (['google', 'yandex', 'bing', 'duckduckgo'].includes(motor)) ayarlar.webMotoru = motor;
+    if (f.opts && f.opts.search_status === true) ayarlar.webAramaGoster = true;
+
+    return { surum: SURUM, gruplar, gorseller, bestele, notlar: {}, renkler: {}, sayaclar: {},
+             ayarlar: Object.keys(ayarlar).length ? ayarlar : null };
+}
+
+/**
+ * Logo ya da site simgesini zemin rengiyle 16:10 karta cizer (data URI).
+ *   buyuk: genis logo, kartin cogunu kaplar
+ *   ad:    kucuk simge + altinda site adi
+ */
+async function logoKarti({ resim, zemin, buyuk = false, ad = '' }) {
+    const EN = 800, BOY = 500;
+    const bmp = await createImageBitmap(await (await fetch(resim)).blob());
+    const tuval = new OffscreenCanvas(EN, BOY);
+    const x = tuval.getContext('2d');
+    x.fillStyle = zemin;
+    x.fillRect(0, 0, EN, BOY);
+    x.imageSmoothingQuality = 'high';
+    if (buyuk) {
+        const o = Math.min(EN * 0.78 / bmp.width, BOY * 0.6 / bmp.height);
+        const w = bmp.width * o, h = bmp.height * o;
+        x.drawImage(bmp, (EN - w) / 2, (BOY - h) / 2, w, h);
+    } else {
+        // Kucuk simgeyi en fazla 4 kat buyut: daha fazlasi bulaniklasiyor
+        const k = Math.min(150, bmp.width * 4, bmp.height * 4);
+        const ust = ad ? BOY / 2 - k / 2 - 40 : (BOY - k) / 2;
+        x.drawImage(bmp, (EN - k) / 2, ust, k, k);
+        if (ad) {
+            // Yazi rengi zemine gore: koyu zeminde beyaz, acikta koyu
+            const [r, g, b] = x.getImageData(0, 0, 1, 1).data;   // zemin rengi
+            x.fillStyle = (0.299 * r + 0.587 * g + 0.114 * b) > 150 ? '#1f2328' : '#ffffff';
+            x.font = 'bold 54px system-ui, sans-serif';
+            x.textAlign = 'center';
+            x.textBaseline = 'middle';
+            const kisa = ad.length > 22 ? ad.slice(0, 21) + '…' : ad;
+            x.fillText(kisa, EN / 2, ust + k + 60);
+        }
+    }
+    bmp.close();
+    const blob = await tuval.convertToBlob({ type: 'image/png' });
+    return await new Promise((coz, red) => {
+        const r = new FileReader();
+        r.onload = () => coz(r.result);
+        r.onerror = red;
+        r.readAsDataURL(blob);
+    });
 }
 
 /* ============ Group Speed Dial (1.5.3) ============

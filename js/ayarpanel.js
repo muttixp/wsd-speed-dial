@@ -11,6 +11,7 @@
 
 // WSD Speed Dial - ayar paneli baglantilari
 
+import { moduSinifla } from './tema.js';
 import { tazelemeBastirildiMi, bildir } from './arayuz.js';
 import { ayarlariAl, ayarYaz, ayarlariSifirla } from './ayar.js';
 import { c } from './dil.js';
@@ -34,6 +35,7 @@ const ALANLAR = [
     ['yakalamaBekleme',  'ayBekleme',   el => +el.value],
     ['gorselBicimi',     'ayBicim',     el => el.value],
     ['jpegKalitesi',     'ayKalite',    el => +el.value],
+    ['yakalamaKucuk',    'ayKucukPencere', el => el.checked],
     ['yakalamaOneAl',    'ayOneAl',     el => el.checked],
     ['aktarimdaYakala',  'ayAktarimdaYakala', el => el.checked],
     ['yakalamaKipi',     'ayYakalamaKipi', el => el.value],
@@ -66,9 +68,12 @@ const ALANLAR = [
     ['grupAktifOpaklik', 'ayGrupAktifOpaklik', el => +el.value],
     ['grupYaziRengi',    'ayGrupYaziRengi',    el => el.value],
     ['grupAktifYaziRengi','ayGrupAktifYaziRengi', el => el.value],
+    ['grupAktifIkonRengi', 'ayGrupAktifIkonRengi', el => el.value],
     ['grupKose',         'ayGrupKose',       el => +el.value],
     ['grupBoyut',        'ayGrupBoyut',      el => +el.value],
     ['grubuHatirla',     'ayGrubuHatirla',   el => el.checked],
+    ['renkliSimgeler',   'ayRenkliSimgeler', el => el.checked],
+    ['camGorunum',       'ayCamGorunum',     el => el.checked],
     ['simgeRenkA',       'aySimgeA',         el => el.value],
     ['simgeRenkB',       'aySimgeB',         el => el.value],
     ['simgeGolge',       'aySimgeGolge',     el => el.checked],
@@ -125,22 +130,49 @@ export async function ayarPaneliniKur() {
 
     const ayar = await ayarlariAl();
 
-    for (const [anahtar, id] of ALANLAR) {
-        const el = document.getElementById(id);
-        if (!el) continue;
-        // Onay kutusu `value` degil `checked` kullaniyor
-        if (el.type === 'checkbox') el.checked = !!ayar[anahtar];
-        else el.value = ayar[anahtar];
-        ciktiTazele(id);
+    const girdileriDoldur = a => {
+        for (const [anahtar, id] of ALANLAR) {
+            const el = document.getElementById(id);
+            if (!el) continue;
+            // Onay kutusu `value` degil `checked` kullaniyor
+            if (el.type === 'checkbox') el.checked = !!a[anahtar];
+            else el.value = a[anahtar];
+            ciktiTazele(id);
+        }
+        // Baslik rengi secilmemisse kutu siyah gorunmesin: genel metin rengi
+        for (const [anahtar, id] of [['baslikRengi', 'ayBaslikRengi'], ['grupYaziRengi', 'ayGrupYaziRengi'],
+                                     ['grupAktifYaziRengi', 'ayGrupAktifYaziRengi']]) {
+            if (a[anahtar]) continue;
+            const kutu = document.getElementById(id);
+            if (kutu) kutu.value = a.metinRengi || '#e8eaed';
+        }
+        // Aktif ikon rengi secilmemisse kutuda gercekte kullanilan renk
+        if (!a.grupAktifIkonRengi) {
+            const kutu = document.getElementById('ayGrupAktifIkonRengi');
+            const v = getComputedStyle(document.documentElement).getPropertyValue('--vurgu-yazi').trim();
+            if (kutu) kutu.value = a.grupAktifYaziRengi || (/^#[0-9a-f]{6}$/i.test(v) ? v : '#ffffff');
+        }
+        gizliBilgisi();
+    };
+    // Gizli kip secilince tarayicinin gosterecegi uyari cubugunu onceden
+    // acikla: "hata ayiklama" sozu kullaniciyi tedirgin ediyordu
+    function gizliBilgisi() {
+        const b = document.getElementById('ayGizliBilgi');
+        if (b) b.hidden = !chromeTarayici || document.getElementById('ayYakalamaKipi')?.value !== 'gizli';
     }
-    // Baslik rengi secilmemisse kutu siyah gorunmesin: genel metin rengi
-    for (const [anahtar, id] of [['baslikRengi', 'ayBaslikRengi'], ['grupYaziRengi', 'ayGrupYaziRengi'],
-                                 ['grupAktifYaziRengi', 'ayGrupAktifYaziRengi']]) {
-        if (ayar[anahtar]) continue;
-        const kutu = document.getElementById(id);
-        if (kutu) kutu.value = ayar.metinRengi || '#e8eaed';
-    }
+    // Cubuk yalnizca Chrome'da cikiyor (Edge/Vivaldi sessiz)
+    let chromeTarayici = false;
+    import('./tarayici.js').then(m => m.chromeMu()).then(v => { chromeTarayici = v; gizliBilgisi(); }).catch(() => {});
+    document.getElementById('ayYakalamaKipi')?.addEventListener('change', gizliBilgisi);
+    girdileriDoldur(ayar);
     gorunumuUygula(ayar);
+
+    // Tema sablonu / geri al birden cok ayari degistirdi: kutular ve gorunum
+    document.addEventListener('wsd-ayar-tazele', async () => {
+        const a = await ayarlariAl();
+        girdileriDoldur(a);
+        gorunumuUygula(a);
+    });
 
     // Degisiklikler aninda kaydediliyor - ayri "Kaydet" dugmesi yok
     for (const [anahtar, id, oku] of ALANLAR) {
@@ -246,10 +278,60 @@ export async function ayarPaneliniKur() {
 
 
 /** Gorunum ayarlarini sayfaya uygular. */
+/**
+ * ZEMIN-MOD ZITLIGI (1.5.5): kart basliklari, klasor sayilari, yol seridi
+ * ve "+" kutusu dogrudan duvar kagidinin USTUNDE duruyor ve renklerini
+ * temadan aliyor. Acik temada koyu bir duvar kagidi (ya da koyu temada
+ * acik bir resim) secilince bu yazilar zeminde kayboluyordu. Zeminin
+ * parlakligi olculup gerekirse yalnizca bu yazilarin rengi ceviriliyor.
+ */
+let zeminOlcum = { anahtar: null, deger: null };
+function renkParlakligi(hex) {
+    const m = /^#?([0-9a-f]{6})$/i.exec(hex || '');
+    if (!m) return null;
+    const n = parseInt(m[1], 16);
+    return (0.2126 * (n >> 16) + 0.7152 * ((n >> 8) & 255) + 0.0722 * (n & 255)) / 255;
+}
+async function gorselParlakligi(src) {
+    const anahtar = src.length + ':' + src.slice(-64);
+    if (zeminOlcum.anahtar === anahtar) return zeminOlcum.deger;
+    try {
+        const img = new Image();
+        img.src = src;
+        await img.decode();
+        const N = 24, t = document.createElement('canvas');
+        t.width = t.height = N;
+        const x = t.getContext('2d', { willReadFrequently: true });
+        x.drawImage(img, 0, 0, N, N);
+        const p = x.getImageData(0, 0, N, N).data;
+        let top = 0;
+        for (let i = 0; i < p.length; i += 4) top += 0.2126 * p[i] + 0.7152 * p[i + 1] + 0.0722 * p[i + 2];
+        zeminOlcum = { anahtar, deger: top / (p.length / 4) / 255 };
+    } catch (e) {
+        zeminOlcum = { anahtar, deger: null };
+    }
+    return zeminOlcum.deger;
+}
+let zitlikSirasi = 0;
+async function zeminZitliginiUygula(ayar, duvarKapali) {
+    const sira = ++zitlikSirasi;
+    let p = null;
+    if (duvarKapali) p = renkParlakligi(ayar.zeminRengi);
+    else if (ayar.duvarGorsel) p = await gorselParlakligi(ayar.duvarGorsel);
+    // Gorsel yoksa temanin kendi gradyani: mod ile zaten uyumlu
+    if (sira !== zitlikSirasi) return;
+    const acik = document.documentElement.classList.contains('acikMod');
+    document.body.classList.toggle('zeminKoyu', p != null && acik && p < 0.42);
+    document.body.classList.toggle('zeminAcik', p != null && !acik && p > 0.62);
+}
+
 function gorunumuUygula(ayar) {
     if (!ayar) return;              // yazma sirasinda null gelebiliyordu
     const kapali = ayar.kartAraclariGoster === false;
     document.body.classList.toggle('araclarKapali', kapali);
+    document.body.classList.toggle('renkliSimgeler', ayar.renkliSimgeler !== false);
+    document.body.classList.toggle('camGorunum', ayar.camGorunum !== false);
+    moduSinifla(ayar);
     hazirSecimiGoster(ayar.yakalamaEn, ayar.yakalamaBoy);
 
     // Kart acilis sekli - tiklama isleyicisi bu veriden okuyor
@@ -316,6 +398,7 @@ function gorunumuUygula(ayar) {
     // gosteriyor, ama dugmede okunaksizliga yol aciyor.
     const vurgu = ayar.grupAktifRengi || '#576a80';
     document.documentElement.style.setProperty('--vurgu', vurgu);
+    import('./cizim.js').then(m => m.grupIkonCakismasi(vurgu)).catch(() => {});
     document.documentElement.style.setProperty('--vurgu-parlak', acikTon(vurgu, 18));
     // Vurgu zeminli dugmelerin YAZISI: acik vurguda (beyaz, sari) beyaz yazi
     // okunmuyordu.
@@ -354,6 +437,14 @@ function gorunumuUygula(ayar) {
 
     // Metin rengi ve baslik boyutu - kok degiskenler uzerinden
     document.documentElement.style.setProperty('--metin', ayar.metinRengi || '#e8eaed');
+    // Soluk metin de ayni renkten (1.5.5): sabit acik gri, acik temada
+    // kart basliklarini ve grup adlarini gorunmez yapiyordu
+    {
+        const m = /^#?([0-9a-f]{6})$/i.exec(ayar.metinRengi || '#e8eaed');
+        const n = m ? parseInt(m[1], 16) : 0xe8eaed;
+        document.documentElement.style.setProperty('--metin-sonuk',
+            `rgba(${n >> 16}, ${(n >> 8) & 255}, ${n & 255}, .62)`);
+    }
     document.documentElement.style.setProperty('--baslik-boyut', (ayar.baslikBoyut || 13) + 'px');
 
     // GRUP MENUSU YAZI RENKLERI (1.5.2). Aktif grup rengi acik (beyaz)
@@ -364,6 +455,8 @@ function gorunumuUygula(ayar) {
         yaz('--grup-yazi', ayar.grupYaziRengi);
         yaz('--grup-yazi-hover', ayar.grupYaziRengi);
         yaz('--grup-aktif-yazi', ayar.grupAktifYaziRengi);
+        // Aktif sekmenin IKONU (1.5.5): tek ikon rengi aktif zeminde kayboluyordu
+        yaz('--grup-aktif-ikon', ayar.grupAktifIkonRengi);
     }
 
     // KART BASLIGI (1.5.2): renk, stil ve golge. Renk secilmemisse CSS
@@ -407,10 +500,12 @@ function gorunumuUygula(ayar) {
                 // Gorsel yoksa gradyan: <img> gizlenip kaba arka plan veriliyor
                 gorsel.removeAttribute('src');
                 gorsel.style.display = 'none';
-                katman.style.background = VARSAYILAN_DUVAR;
+                katman.style.background = ayar.duvarVarsayilan || VARSAYILAN_DUVAR;
             }
         }
     }
+
+    zeminZitliginiUygula(ayar, duvarKapali);
 
     // Duvar kapaliyken onizleme/araclar anlamsiz, renk satiri anlamli
     const duvarKutu  = document.getElementById('ayDuvarKutu');
@@ -464,7 +559,7 @@ function gorunumuUygula(ayar) {
     // Panel onizlemesi - filtre ve iki renk boyasi burada da uygulaniyor
     const onizleme = document.getElementById('ayDuvarOnizleme');
     if (onizleme) {
-        const arka = ayar.duvarGorsel ? `url('${ayar.duvarGorsel}')` : VARSAYILAN_DUVAR;
+        const arka = ayar.duvarGorsel ? `url('${ayar.duvarGorsel}')` : (ayar.duvarVarsayilan || VARSAYILAN_DUVAR);
         onizleme.style.backgroundImage = arka;
         const oGorsel = document.getElementById('ayOnizlemeGorsel');
         if (oGorsel) oGorsel.style.backgroundImage = arka;

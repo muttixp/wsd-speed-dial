@@ -14,6 +14,10 @@
 // Tek kaynak: varsayilanlar burada. Depoda eksik anahtar olabilir (eski
 // kurulum, yeni surum), o yuzden okuma HER ZAMAN varsayilanla birlestiriyor.
 
+function rusArayuz() {
+    try { return /^ru\b/i.test(chrome.i18n.getUILanguage() || ''); } catch (e) { return false; }
+}
+
 export const VARSAYILAN = {
     // Yakalama
     // Varsayilan EKRAN GORUNTUSU. Sayfa etiketleri (og:image) cogu sitede
@@ -25,6 +29,7 @@ export const VARSAYILAN = {
     yakalamaBekleme: 2500,       // ms - render icin ek sure
     gorselBicimi: 'jpeg',        // 'jpeg' | 'png'
     jpegKalitesi: 85,
+    yakalamaKucuk: false,       // pencere kipi: yari boyutta, sag alt kosede, %50 yakinlastirma (1.5.5)
     yakalamaOneAl: false,       // odaksiz yakalama basarisizsa pencereyi one al
     yakalamaKipi: 'pencere',    // 'pencere' | 'gizli' (debugger ile, pencere hic gorunmez)
     aktarimdaYakala: true,      // ice aktarma / yedek yukleme bitince eksik gorselleri kendiliginden yakala
@@ -79,6 +84,7 @@ export const VARSAYILAN = {
     grupAktifOpaklik: 100,      // % - aktif sekme zemini
     grupYaziRengi: '',          // bos = genel metin rengi (soluk); 1.5.2
     grupAktifYaziRengi: '',     // bos = genel metin rengi; acik renkli aktif sekmede okunmasi icin
+    grupAktifIkonRengi: '',     // bos = aktif sekme yazi rengi (zemine gore) - 1.5.5
     grupKose: 9,                // grup sekmesi kose yaricapi
     grupBoyut: 100,             // sekme olcegi (%) - yazi, ikon ve dolgu birlikte
     grubuHatirla: true,         // acilista son bakilan grup mu, Ana Sayfa mi
@@ -91,6 +97,27 @@ export const VARSAYILAN = {
     simgeZemin: false,          // W'nin arkasinda dolu zemin
     simgeZeminRengi: '#1b2029',
     anaSayfaGoster: true,       // kok grup seritte ve menulerde gorunsun mu
+    renkliSimgeler: true,       // ayar bolumleri ve yan serit simgeleri renkli (1.5.5)
+    camGorunum: true,           // ust serit ve arama cubugu buzlu cam (1.5.5)
+
+    // Tema (1.5.5) - tema.js
+    temaModu: 'koyu',           // 'koyu' | 'acik' | 'sistem'
+    tema: 'gece',               // secili sablon (renkler elle degisebilir)
+    temaSonMod: 'koyu',         // en son uygulanan etkin mod
+    temaRenkleri: {},           // { koyu: {tema, renkler}, acik: {...} } - mod gecisinde saklanan
+    temaOzel: [],               // kullanicinin kaydettigi temalar [{ id, ad, mod, r }]
+    duvarVarsayilan: 'linear-gradient(135deg, #4aa3df, #2f6fd0)',   // gorsel yokken duvar
+
+    // Web arama cubugu (1.5.5) - yalnizca Ana Sayfa'da
+    webAramaGoster: true,
+    webAramaYeri: 'anaSayfa',   // 'anaSayfa' (Ana Sayfa gizliyse kutu da yok) | 'ilkGrup' | 'hepsi'
+    // 'tarayici' = tarayicinin kendi arama motoru. Rusca arayuzde Yandex:
+    // oradaki kullanicilarin aliskin oldugu varsayilan (1.5.5)
+    webMotoru: rusArayuz() ? 'yandex' : 'tarayici',
+    webGizliMotorlar: [],       // listeden kaldirilan yerlesik motorlar
+    webOzelMotorlar: [],        // [{ id, ad, adres ('%s' iceren), kisa }]
+    webMotorSirasi: [],         // motor id'leri, kullanicinin dizdigi sira
+    webAcikMotorlar: [],        // varsayilani kapali (bolgesel) olup acilanlar
 };
 
 let onbellek = null;

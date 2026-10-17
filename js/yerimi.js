@@ -42,10 +42,35 @@ export async function kokKlasoruAl() {
     }
 
     // Once "Diger yer imleri" altinda ariyoruz
-    const agac = await chrome.bookmarks.getTree();
-    const bulunan = kokAra(agac, KOK_ADI);
+    let agac = await chrome.bookmarks.getTree();
+    let bulunan = kokAra(agac, KOK_ADI);
+
+    // KORUMA (1.5.5): kok bulunamadiginda hemen YENI kok olusturmuyoruz.
+    // Tarayici yer imi modelini henuz yuklememisse (sekme geri gelince,
+    // tarayici yeni acilinca) agac bos/eksik donebiliyor; o anda acilan bos
+    // bir kok "veriler gitti, ilk kurulum ekrani" gorunumune yol aciyordu.
+    // Once kaydedilmis kimlige bakiyoruz, sonra kisa aralarla yeniden deniyoruz.
+    // Yeniden deneme yalnizca daha once bir kok KAYDEDILMISSE: ilk kurulumda
+    // beklemenin anlami yok (acilis gecikmesin).
+    let oncedenVardi = false;
+    if (!bulunan) {
+        try {
+            const { wsdKokId } = await chrome.storage.local.get('wsdKokId');
+            oncedenVardi = !!wsdKokId;
+            if (wsdKokId) {
+                const [d] = await chrome.bookmarks.get(wsdKokId);
+                if (d && !d.url) bulunan = d.id;
+            }
+        } catch (e) { /* kayitli kimlik gecersiz */ }
+    }
+    for (let i = 0; !bulunan && oncedenVardi && i < 3; i++) {
+        await new Promise(r => setTimeout(r, 300 * (i + 1)));
+        agac = await chrome.bookmarks.getTree();
+        bulunan = kokAra(agac, KOK_ADI);
+    }
     if (bulunan) {
         kokId = bulunan;
+        chrome.storage.local.set({ wsdKokId: kokId }).catch(() => {});
         return kokId;
     }
 
@@ -57,18 +82,26 @@ export async function kokKlasoruAl() {
         title: KOK_ADI
     });
     kokId = yeni.id;
+    chrome.storage.local.set({ wsdKokId: kokId }).catch(() => {});
     return kokId;
 }
 
 function kokAra(dugumler, ad) {
-    for (const d of dugumler) {
-        if (!d.url && d.title === ad && d.parentId) return d.id;
-        if (d.children) {
-            const alt = kokAra(d.children, ad);
-            if (alt) return alt;
+    // Birden cok "WSD" klasoru olabilir (eski bir hatayla bos kok acilmis,
+    // ya da senkronla gelmis): EN DOLU olani seciyoruz, bos olan veriyi
+    // gizlemesin.
+    const adaylar = [];
+    const gez = liste => {
+        for (const d of liste) {
+            if (!d.url && d.title === ad && d.parentId) adaylar.push(d);
+            if (d.children) gez(d.children);
         }
-    }
-    return null;
+    };
+    gez(dugumler);
+    if (!adaylar.length) return null;
+    const boyut = d => (d.children || []).length;
+    adaylar.sort((a, b) => boyut(b) - boyut(a));
+    return adaylar[0].id;
 }
 
 function digerYerImleriId(agac) {

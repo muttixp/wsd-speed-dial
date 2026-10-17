@@ -120,7 +120,7 @@ const islenenler = new Set();
  *   sirasini koruyor. Once hep sona ekleniyordu: X grubunu yenileyince
  *   donenceler X'te donuyor ama kuyruk once baska kartlari isliyordu.
  */
-export function yakalamayaEkle(url, bitince, oncelik = false) {
+export function yakalamayaEkle(url, bitince, oncelik = false, kip = null) {
     if (!url) return;
     if (islenenler.has(url)) return;
 
@@ -132,7 +132,8 @@ export function yakalamayaEkle(url, bitince, oncelik = false) {
     }
 
     iptal = false;             // yeni is geldi - iptal bayragi sifirlansin
-    const is = { url, bitince, oncelik };
+    // kip: 'gizli' -> ayardan bagimsiz pencere acmadan (ice aktarma sorusu, 1.5.5)
+    const is = { url, bitince, oncelik, kip };
     if (oncelik) {
         const ilkSiradan = kuyruk.findIndex(i => !i.oncelik);
         if (ilkSiradan < 0) kuyruk.push(is);
@@ -151,7 +152,9 @@ export function yakalamayaEkle(url, bitince, oncelik = false) {
 function kuyrugaYaz() {
     // Oncelik de yaziliyor: kullanicinin baslattigi yenileme (o: 1) isci
     // yeniden baslayinca "cok buyuk kuyruk" sinirina takilip iptal olmasin
-    const liste = kuyruk.map(i => (i.oncelik ? { u: i.url, o: 1 } : i.url));
+    const liste = kuyruk.map(i => (i.oncelik || i.kip
+        ? { u: i.url, ...(i.oncelik ? { o: 1 } : {}), ...(i.kip ? { k: i.kip } : {}) }
+        : i.url));
     chrome.storage.local.set({ [KUYRUK_ANAHTARI]: liste }).catch(() => {});
 }
 
@@ -207,7 +210,7 @@ export async function kuyrugaDevamEt(bitince) {
         }
         // Eski bicim: duz url dizisi. Yeni: { u, o } (oncelikli) ya da url
         const kalan = ham.map(x => (typeof x === 'string' ? { url: x, oncelik: false }
-                                                          : { url: x && x.u, oncelik: !!(x && x.o) }))
+                                                          : { url: x && x.u, oncelik: !!(x && x.o), kip: (x && x.k) || null }))
                          .filter(x => x.url);
 
         // SINIR YALNIZCA ARKA PLAN ISLERINE: kullanicinin "Gorselleri
@@ -223,7 +226,7 @@ export async function kuyrugaDevamEt(bitince) {
 
         for (const k of islenecek) {
             if (islenenler.has(k.url) || kuyruk.some(i => i.url === k.url)) continue;
-            kuyruk.push({ url: k.url, bitince: bitince || biterken, oncelik: k.oncelik });
+            kuyruk.push({ url: k.url, bitince: bitince || biterken, oncelik: k.oncelik, kip: k.kip || null });
         }
         biterken = bitince || biterken;
         if (!kuyruk.length) { if (!calisiyor) alarmiKapat(); return; }
@@ -428,6 +431,7 @@ async function kuyruguIsle() {
             const iptalBekle = new Promise(coz => { iptalCoz = () => coz([]); });
             adaylar = await Promise.race([iptalBekle, zamanAsimli((async () => {
                 const ayar = await ayarlariAl();
+                const gizliKip = is.kip ? is.kip === 'gizli' : ayar.yakalamaKipi === 'gizli';
 
                 // YONTEM AYARI:
                 //   'ekran' -> yalnizca ekran goruntusu
@@ -454,7 +458,7 @@ async function kuyruguIsle() {
                     : await (() => {
                         const durum = { iptal: false };
                         return zamanAsimli(
-                            ayar.yakalamaKipi === 'gizli'
+                            gizliKip
                                 ? gizliYakala(is.url, ayar)
                                 : ekranGoruntusuAl(is.url, ayar, durum),
                             YAKALAMA_TAVANI_MS, 'yakalama').catch(e => {
@@ -470,7 +474,7 @@ async function kuyruguIsle() {
                 // secmisken ekranda pencere aciliyordu. Gizli kipte, sayfaya
                 // daha uzun bekleme verilerek bir kez daha deneniyor; yine
                 // olmazsa kart yer tutucuyla kaliyor (elle yenilenebilir).
-                if (!ekran && !iptal && ayar.yakalamaKipi === 'gizli' && !YAKALANAMAZ_SEMA.test(is.url)) {
+                if (!ekran && !iptal && gizliKip && !YAKALANAMAZ_SEMA.test(is.url)) {
                     console.log('[WSD] gizli olmadi, gizli kipte bir kez daha deneniyor:', is.url);
                     const uzun = { ...ayar, yakalamaBekleme: Math.max(3000, (ayar.yakalamaBekleme || 0) * 2) };
                     ekran = await zamanAsimli(gizliYakala(is.url, uzun), YAKALAMA_TAVANI_MS, 'yakalama')
@@ -743,14 +747,31 @@ async function ekranGoruntusuAl(url, ayar, durum = null) {
     try {
         // Pencere once 1x1 aciliyor: kullanicinin ekraninda bir an bile
         // buyuk bir pencere parlamasin. Sonra gercek olcuye buyutuluyor.
+        // KUCUK PENCERE (1.5.5, deneysel): yakalama penceresi yari boyutta,
+        // kullanicinin penceresinin SAG ALT kosesinde aciliyor; sayfa %50
+        // yakinlastirmayla ayni genislikte diziliyor (kare yari cozunurlukte,
+        // kart icin yeterli). Arkada acmak denendi: Chrome ortulen pencereyi
+        // cizmiyor, kare gelmiyordu.
+        const kucuk = !!ayar.yakalamaKucuk;
+        const en = kucuk ? Math.round(ayar.yakalamaEn / 2) : ayar.yakalamaEn;
+        const boy = kucuk ? Math.round(ayar.yakalamaBoy / 2) : ayar.yakalamaBoy;
+        let left = 0, top = 0;
+        if (kucuk && onceki) {
+            try {
+                const w = await chrome.windows.get(onceki);
+                left = Math.max(w.left, w.left + w.width - en - 12);
+                top = Math.max(w.top, w.top + w.height - boy - 12);
+            } catch (e) { /* kapanmis - sol ust */ }
+        }
+
         pencere = await chrome.windows.create({
             url,
             type: 'popup',
             focused: false,
             width: 1,
             height: 1,
-            left: 0,
-            top: 0
+            left,
+            top
         });
         acikPencereler.add(pencere.id);
         birak();
@@ -759,14 +780,25 @@ async function ekranGoruntusuAl(url, ayar, durum = null) {
 
         await chrome.windows.update(pencere.id, {
             focused: false,
-            width: ayar.yakalamaEn,
-            height: ayar.yakalamaBoy,
-            left: 0,
-            top: 0
+            width: en,
+            height: boy,
+            left,
+            top
         });
 
         await sayfaStabilOlsun(sekmeId);
         birak();
+
+        // Yakinlastirma sayfa YUKLENDIKTEN sonra: yukleme sirasinda verilince
+        // gezinmeyle sifirlaniyordu. per-tab: kullanicinin o site icin
+        // kayitli yakinlastirmasi degismesin.
+        if (kucuk) {
+            try {
+                await chrome.tabs.setZoomSettings(sekmeId, { mode: 'automatic', scope: 'per-tab' });
+                await chrome.tabs.setZoom(sekmeId, 0.5);
+                await bekle(300);
+            } catch (e) { console.log('[WSD] yakinlastirma olmadi:', e.message); }
+        }
 
         // Sayfa yuklendikten SONRA baslik dogru olanidir
         try {
@@ -798,6 +830,25 @@ async function ekranGoruntusuAl(url, ayar, durum = null) {
         // ("No window with id"). Sekme hangi penceredeyse onu yakaliyoruz -
         // ama yalnizca o pencerede ETKIN sekmeyse: degilse kullanicinin
         // baktigi sayfa yakalanirdi.
+        // ORTULU PENCERE (1.5.5): Chrome (Windows) odaksiz acilan pencereyi
+        // kullanicinin penceresinin ARKASINA koyabiliyor; ortulen pencere
+        // cizilmiyor, yakalama bos/eski kare donduruyordu (pencereye
+        // tiklayinca aliniyordu). Sayfa kendini gizli sayiyorsa pencereyi
+        // kisa sureligine one aliyoruz; odak sonda kullaniciya geri donuyor.
+        // Gorunur acilan tarayicilarda (Vivaldi) bu adim hic calismiyor.
+        try {
+            const [r] = await chrome.scripting.executeScript({
+                target: { tabId: sekmeId }, func: () => document.visibilityState
+            });
+            if (r && r.result === 'hidden') {
+                console.log('[WSD] yakalama penceresi ortulu - one aliniyor');
+                const s = await chrome.tabs.get(sekmeId);
+                await chrome.windows.update(s.windowId, { focused: true });
+                await bekle(600);
+            }
+        } catch (e) { /* betik calismadi (ozel sayfa) - dogrudan dene */ }
+        birak();
+
         const yakala = async () => {
             const s = await chrome.tabs.get(sekmeId);
             if (!s.active) throw new Error('yakalama sekmesi etkin degil');
@@ -2061,6 +2112,8 @@ async function gizliYakala(url, ayar) {
         sekme = await chrome.tabs.create({ url, active: false });
         acikSekmeler.add(sekme.id);
         await sayfaStabilOlsun(sekme.id);
+        // Gizli sekme cizilmiyor; bu bekleme agdan gelenler icin (yavas
+        // sitelerde gerekli - kisaltinca basari dustu)
         await bekle(ayar.yakalamaBekleme);
 
         // Sekme arada kapanmis olabilir (kullanici kapatti, site yonlendirdi)
@@ -2084,10 +2137,8 @@ async function gizliYakala(url, ayar) {
         }), 10000, 'setDeviceMetricsOverride');
 
         // YENIDEN YERLESIM BEKLEMESI (1.5.3): olcu degisince site kendini
-        // yeni genislige gore yeniden diziyor. Hemen cekilen karede bu ara
-        // durum yakalaniyordu: kenarlarda siyah bosluk, kaymis yerlesim,
-        // eksik ust menu. Duzenin oturmasi icin bekliyoruz.
-        await bekle(900);
+        // yeni genislige gore yeniden diziyor; duzenin oturmasi icin kisa bekleme.
+        await bekle(300);
 
         const bicim = ayar.gorselBicimi === 'png' ? 'png' : 'jpeg';
         const secenek = {
@@ -2113,13 +2164,39 @@ async function gizliYakala(url, ayar) {
             secenek.captureBeyondViewport = false;
         }
 
-        const sonuc = await zamanAsimli(
-            chrome.debugger.sendCommand(hedef, 'Page.captureScreenshot', secenek),
-            10000, 'captureScreenshot');
+        // UYUYAN SEKME (1.5.5): arka plan sekmesi gizli sayiliyor ve tarayici
+        // onu HIC CIZMIYOR - beklemenin yarari yok. "Loading" perdesini
+        // kaldiran, icerigi beliren (fade-in) animasyonlar ancak ilk
+        // cekimle basliyordu; tek kare cekince ya "Loading" ya da bos
+        // (henuz saydam) sayfa geliyordu. Artik ilk cekim sayfayi UYANDIRIYOR,
+        // animasyonlar ilerlesin diye aralikla birkac kare daha cekiliyor ve
+        // SONUNCUSU aliniyor. Iki kare ayniysa sayfa oturmus demektir, durulur.
+        // Cekim ara sira hic donmuyor (degisen bir sey yoksa kare uretilmiyor);
+        // donmeyen cekimde eldeki kareyle bitiriliyor. ILK cekim (uyandirma)
+        // eskisi gibi uzun sinirli: Vivaldi'de uyuyan sekmenin ilk karesi
+        // gec geliyor, kisa sinirla hic kare alinamiyordu.
+        const cek = ms => {
+            const t = Date.now();
+            return zamanAsimli(
+                chrome.debugger.sendCommand(hedef, 'Page.captureScreenshot', secenek),
+                ms, 'captureScreenshot').then(s => s?.data || null)
+                .catch(e => { console.log('[WSD] gizli cekim:', e.message); return null; })
+                .then(d => { console.log('[WSD] gizli cekim', url, (Date.now() - t) + 'ms', d ? 'kare' : 'YOK'); return d; });
+        };
+        let son = await cek(10000);
+        for (const ara of [1200, 1500]) {
+            await bekle(ara);
+            // Donmeyen cekim = yeni kare yok = sayfada degisen bir sey yok;
+            // eldeki kare son hal. Elde kare yoksa (uyandirma da dondu)
+            // vazgecmeyip uzun sinirla bir daha deneniyor.
+            const yeni = await cek(son ? 3000 : 8000);
+            if (!yeni) { if (son) break; continue; }
+            const ayni = yeni === son;
+            son = yeni;
+            if (ayni) break;
+        }
 
-        return sonuc && sonuc.data
-            ? `data:image/${bicim};base64,${sonuc.data}`
-            : null;
+        return son ? `data:image/${bicim};base64,${son}` : null;
 
     } catch (e) {
         console.log('[WSD] gizli yakalama basarisiz:', url, e.message);

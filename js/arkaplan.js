@@ -16,6 +16,7 @@ import { c } from './dil.js';
 import { yakalamayaEkle, kuyrugaDevamEt, kuyrugaTemizle, sonBasliklar } from './yakalama.js';
 import { simgeyiUygula } from './simge.js';
 import { guvenliYaz } from './depo.js';
+import { chromeMu } from './tarayici.js';
 
 /* ============================================================
    ZIYARET EDILEN SAYFAYA ENJEKTE EDILEN PARCALAR
@@ -247,6 +248,19 @@ async function menuyuKur() {
 }
 
 chrome.runtime.onInstalled.addListener(menuyuTazele);
+
+// ILK KURULUMDA YAKALAMA KIPI (1.5.5): gizli kip Edge/Vivaldi'de sessiz,
+// pencere acmiyor - varsayilan o. Chrome'da ustte "hata ayiklama" cubugu
+// cikiyor; orada pencere kipi kaliyor. Kullanici secim yaptiysa dokunulmaz.
+chrome.runtime.onInstalled.addListener(async ({ reason }) => {
+    if (reason !== 'install') return;
+    try {
+        if (await chromeMu()) return;
+        const { ayarlar } = await chrome.storage.local.get('ayarlar');
+        if (ayarlar && ayarlar.yakalamaKipi) return;
+        await chrome.storage.local.set({ ayarlar: { ...(ayarlar || {}), yakalamaKipi: 'gizli' } });
+    } catch (e) { /* varsayilan pencere kipi kalir */ }
+});
 chrome.runtime.onStartup.addListener(menuyuTazele);
 menuyuTazele();
 
@@ -329,14 +343,33 @@ async function aktarilanlariYakala(urller) {
             return;
         }
     } catch (e) { /* ayar okunamadi - varsayilan davranis */ }
-    // Cok fazlaysa KENDILIGINDEN baslatmiyoruz: yuzlerce pencere dakikalarca
-    // acilip kapanir. Kullaniciya haber verip gruptan yenilemeyi birakiyoruz.
-    if (eksik.length > 300) {
-        chrome.runtime.sendMessage({ hedef: 'sayfa', tur: 'aktarimGorselsiz', adet: eksik.length })
+    // COK SAYIDA EKSIK (1.5.5): sormadan baslatmiyoruz. FVD yedekleri hic
+    // gorsel tasimiyor; 1000 kartlik bir aktarmada pencere kipi bir saat
+    // boyunca ekranda pencere acip kapatiyordu (300 ustunde ise hic
+    // baslamiyor, kartlar bos kaliyordu). Liste depoda bekliyor; sayfa
+    // acikken ya da bir sonraki acilista kullaniciya soruluyor.
+    if (eksik.length > AKTARIM_SOR_ESIGI) {
+        await chrome.storage.local.set({ [AKTARIM_BEKLEYEN]: eksik }).catch(() => {});
+        chrome.runtime.sendMessage({ hedef: 'sayfa', tur: 'aktarimGorselSor', adet: eksik.length })
             .catch(() => {});
         return;
     }
     for (const a of eksik) yakalamayaEkle(a, gorseliKaydet);
+}
+
+const AKTARIM_SOR_ESIGI = 30;
+const AKTARIM_BEKLEYEN = 'aktarimGorselBekleyen';
+
+/** Sayfadaki sorunun cevabi: kabul -> gizli kipte, kullanici isi olarak kuyruga */
+async function aktarimGorselCevabi(kabul) {
+    let liste = [];
+    try {
+        liste = (await chrome.storage.local.get(AKTARIM_BEKLEYEN))[AKTARIM_BEKLEYEN] || [];
+        await chrome.storage.local.remove(AKTARIM_BEKLEYEN);
+    } catch (e) { return; }
+    if (!kabul || !Array.isArray(liste)) return;
+    // Oncelikli: isci yeniden baslayinca 300 sinirina takilip iptal olmasin
+    for (const a of liste) yakalamayaEkle(a, gorseliKaydet, true, 'gizli');
 }
 
 // On yuzden gelen istekler
@@ -351,6 +384,10 @@ chrome.runtime.onMessage.addListener((mesaj) => {
         chrome.storage.local.remove('iceAktarim').catch(() => {});
         menuyuTazele();
         aktarilanlariYakala(Array.isArray(mesaj.urller) ? mesaj.urller : []);
+        return;
+    }
+    if (mesaj && mesaj.hedef === 'arkaplan' && mesaj.tur === 'aktarimGorselCevap') {
+        aktarimGorselCevabi(!!mesaj.kabul);
         return;
     }
     if (mesaj && mesaj.hedef === 'arkaplan' && mesaj.tur === 'kuyrugaTemizle') {

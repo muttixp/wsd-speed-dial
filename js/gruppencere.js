@@ -295,6 +295,9 @@ export async function grupPenceresiniAc(grup = null, { klasor = null } = {}) {
     el('gpZeminSatir').hidden = !klasor;
     el('gpKapakSatir').hidden = !klasor;
     el('gpAd').value = grup ? grup.baslik : '';
+    // Ana Sayfa'nin adi degistirilemez (1.5.5)
+    el('gpAd').readOnly = !!grup?.adKilitli;
+    el('gpAd').title = grup?.adKilitli ? c('anaSayfaAdiDegismez') : '';
     // Kart sayisi - yalnizca duzenlemede anlamli
     const bilgi = el('gpKartSayisi');
     if (grup) {
@@ -327,7 +330,7 @@ export async function grupPenceresiniAc(grup = null, { klasor = null } = {}) {
     }
 
     const ikonlar = await ikonlariAl();
-    secilenIkon = (grup && ikonlar[grup.id]) || 'folder';
+    secilenIkon = (grup && ikonlar[grup.id]) || (grup?.adKilitli ? 'home' : 'folder');   // Ana Sayfa: ev simgesi
 
     // Mevcut secim ozel bir deger ise ilgili alani doldur
     el('gpEmoji').value   = secilenIkon.startsWith('emoji:')   ? secilenIkon.slice(6) : '';

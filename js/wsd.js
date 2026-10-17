@@ -148,7 +148,7 @@ async function kayipDenetimi() {
         const kayip = await kayipDenetle(kart);
         if (!kayip) return;
 
-        const ne = kayip.tur === 'gorsel' ? c('kartGorseli') : 'kart';
+        const ne = kayip.tur === 'gorsel' ? c('kartGorseli') : c('kartKelime');
         const { bildir } = await import('./etkilesim.js');
         const { sonYedekBilgisi } = await import('./yedek.js');
         const { tarihMetni } = await import('./sayac.js');
@@ -159,8 +159,7 @@ async function kayipDenetimi() {
         // klasorunde neyi arayacagini bilsin
         let metin = c('oncekiSimdiKayip', kayip.onceki, ne, kayip.suanki);
         if (yedek) {
-            metin += `Son yedek: ${yedek.dosya} (${tarihMetni(yedek.tarih)}, ` +
-                     `${yedek.kart} kart)`;
+            metin += c('sonYedekKisa', yedek.dosya, tarihMetni(yedek.tarih), yedek.kart);
         } else {
             metin += c('sizSilmediyseniz');
         }
@@ -202,6 +201,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         etkilesimiKur();
         // Calisma alanlari (1.5.4, deneysel) - ayri modul
         import('./calismaalani.js').then(m => m.calismaAlanlariniKur()).catch(() => {});
+        // Tema (1.5.5): mod + sablonlar
+        import('./tema.js').then(m => m.temayiKur()).catch(e => console.log('[WSD] tema:', e));
+        // Ayar paneli renk secicisi (1.5.5): yerel pencere alttaki satirlari kapatiyordu
+        import('./renksecici.js').then(m => m.renkSeciciyiKur()).catch(() => {});
+        // Web arama kutusu (1.5.5) - yalnizca Ana Sayfa'da
+        import('./webarama.js').then(m => m.webAramayiKur()).catch(e => console.log('[WSD] web arama:', e));
         await grupSuruklemeKur(() => arayuzuKur());
         kartSuruklemeKur({
             aktifGrup,
@@ -250,11 +255,18 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         }, 3000);
         copuSuz();
+        // Soru cevaplanmadan sayfa kapandiysa: bu acilista sor
+        chrome.storage.local.get('aktarimGorselBekleyen').then(d => {
+            const l = d.aktarimGorselBekleyen;
+            if (Array.isArray(l) && l.length) setTimeout(() => aktarimGorselSor(l.length), 1200);
+        }).catch(() => {});
         import('./arayuz.js').then(m => m.bekleyenBildirimiGoster()).catch(() => {});
         seritGozcusunuKur();       // ust serit kart basliklarini kapatmasin
         yanSeridiKur();            // yan serit yakinlikla aciliyor
         disBirakmayiKur();         // yer imi surukleyip birakma
         import('./yerimiictar.js').then(m => m.ictarPenceresiniKur()).catch(() => {})
+        // Hazir gruplar (1.5.5)
+        import('./paketler.js').then(m => m.paketPenceresiniKur()).catch(() => {});
         // Kirik isaretleri varsa yan seritteki dugme gorunsun
         import('./kirik.js').then(k => k.kirikDugmesiniTazele()).catch(() => {});
     } catch (e) {
@@ -285,6 +297,11 @@ chrome.runtime.onMessage.addListener(mesaj => {
             .catch(() => {});
         return;
     }
+    // Ice aktarmada cok sayida gorselsiz kart (1.5.5): nasil alinacagini sor
+    if (mesaj && mesaj.hedef === 'sayfa' && mesaj.tur === 'aktarimGorselSor') {
+        aktarimGorselSor(mesaj.adet);
+        return;
+    }
     // Kuyruk bitti: gorseli alinamayan kart varsa sessiz gecmesin
     if (mesaj && mesaj.hedef === 'sayfa' && mesaj.tur === 'yakalamaBitti') {
         import('./etkilesim.js')
@@ -297,3 +314,33 @@ chrome.runtime.onMessage.addListener(mesaj => {
         if (mesaj.depoHatasi) depoUyarisi(mesaj.depoHatasi);
     }
 });
+
+/**
+ * ICE AKTARMA SONRASI GORSEL SORUSU (1.5.5)
+ *
+ * FVD gibi yedekler hic gorsel tasimiyor. Yuzlerce kart icin ayardaki
+ * pencere kipiyle yakalama ekranda saatlerce pencere acip kapatiyordu.
+ * Kullanici secsin: pencere acmadan arka planda al, ya da simdilik birak
+ * (gruptan "Gorselleri yenile" ile sonra alinir).
+ */
+let aktarimSoruAcik = false;
+async function aktarimGorselSor(adet) {
+    if (aktarimSoruAcik || !adet) return;
+    aktarimSoruAcik = true;
+    try {
+        const { onaySor } = await import('./onay.js');
+        const kabul = await onaySor({
+            baslik: c('aktarimGorselBaslik'),
+            metin: c('aktarimGorselMetin', adet),
+            evet: c('arkaPlandaAl'),
+            hayir: c('simdiDegil')
+        });
+        chrome.runtime.sendMessage({ hedef: 'arkaplan', tur: 'aktarimGorselCevap', kabul })
+            .catch(() => {});
+        if (!kabul) bildir(c('aktarimGorselsizN', adet), { sure: 12000 });
+    } catch (e) {
+        console.log('[WSD] aktarim gorsel sorusu:', e);
+    } finally {
+        aktarimSoruAcik = false;
+    }
+}
