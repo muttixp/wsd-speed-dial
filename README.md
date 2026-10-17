@@ -126,6 +126,8 @@ ekleyebilir, listeyi sürükleyip sıralayabilirsiniz. Nerede görüneceği
 ayarlanır: yalnızca Ana Sayfa, ilk grup ya da tüm gruplar. Rusça
 arayüzde varsayılan Yandex. Yazarken hiçbir yere istek gitmez.
 
+![Web araması](docs/web-arama.png)
+
 ### Görünüm
 
 **Tema:** Koyu / Açık / Sistem modu ve hazır temalar (Gece, Grafit,
