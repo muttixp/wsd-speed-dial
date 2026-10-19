@@ -34,7 +34,7 @@ let kaynakUzerinde = false;    // imlec kendi yerinin uzerinde mi (vazgecme)
 
 const GHOST_OFSET = { x: 0, y: 0 };
 
-// YAYLI KLASOR (1.5.5, deneysel): kart suruklenirken bir klasor kutusu,
+// YAYLI KLASOR (1.5.5; 1.5.6 itibariyla kalici): kart suruklenirken bir klasor kutusu,
 // yol seridindeki bir ad ya da grup sekmesi uzerinde YAYLI_MS beklenirse
 // o klasor surukleme BIRAKILMADAN acilir. Ornek: "1" klasorundeyken kardes
 // "fx" klasorune tasimak icin yolda "LTS" uzerinde beklenir, LTS acilir,

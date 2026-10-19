@@ -20,6 +20,8 @@
 <body>
     <div id="zeminKatmani">
         <img id="zeminGorsel" alt="">
+        <!-- Desenli/gradyan zemin: filtre gorselle ayni sekilde uygulansin diye ayri katman -->
+        <div id="zeminDesen"></div>
         <!-- Iki renk yontemi icin boya katmanlari -->
         <div id="boyaGolge"></div>
         <div id="boyaIsik"></div>
@@ -554,6 +556,13 @@
                     <output id="ayMaxSutunDeger"></output>
                 </label>
                 <label class="ayarSatir">
+                    <span data-c="kartHizalama">Kart Hizalama</span>
+                    <select id="ayKartHizalama">
+                        <option value="orta" data-c="hizaOrta">Ortaya</option>
+                        <option value="sol" data-c="hizaSol">Sola</option>
+                    </select>
+                </label>
+                <label class="ayarSatir">
                     <span data-c="kartBoyutu">Kart Boyutu</span>
                     <input type="range" id="ayKartEn" min="140" max="420" step="10">
                     <output id="ayKartEnDeger"></output>
@@ -884,6 +893,32 @@
             </div></div>
         </section>
 
+        <section class="bolum hakkindaBolum">
+            <button type="button" class="bolumBaslik">
+                <span class="bolumAd"><svg class="bolumSimge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5h.01"/></svg><span data-c="hakkinda">Hakkında</span></span>
+                <svg class="bolumOk" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m6 9 6 6 6-6"/>
+                </svg>
+            </button>
+            <div class="bolumIc"><div class="bolumGovde">
+                <div class="hakkindaUst">
+                    <img src="icons/wsd48.png" alt="" width="40" height="40">
+                    <div>
+                        <b>WSD Speed Dial</b> <span class="hakkindaSurum" id="hkSurum"></span>
+                        <p class="kucukBilgi" data-c="hakkindaAlt">Açık kaynak · İzleme yok · Hesap gerekmez</p>
+                    </div>
+                </div>
+                <div class="ayarSatir tekSutun dugmeYigini">
+                    <button type="button" class="miniDugme" id="ayYenilikler"><svg class="dugmeSimge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.5 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.5-.5z"/></svg><span data-c="yenilikler">Yenilikler</span></button>
+                    <button type="button" class="miniDugme" id="ayDegerlendir"><svg class="dugmeSimge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v11"/><path d="M15 5.9 14 10h5.8a2 2 0 0 1 2 2.4l-1.4 7A2 2 0 0 1 18.5 21H7V10l4-7a3 3 0 0 1 4 2.9z"/></svg><span data-c="degerlendir">Değerlendir</span></button>
+                    <button type="button" class="miniDugme" id="ayOneri"><svg class="dugmeSimge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span data-c="oneriHataBildir">Öneri / hata bildir</span></button>
+                    <button type="button" class="miniDugme" id="ayKaynak"><svg class="dugmeSimge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/></svg><span data-c="kaynakKod">Kaynak kod (GitHub)</span></button>
+                    <button type="button" class="miniDugme" id="ayGizlilik"><svg class="dugmeSimge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/></svg><span data-c="gizlilikPolitikasi">Gizlilik politikası</span></button>
+                </div>
+            </div></div>
+        </section>
+
 </aside>
 
     <!-- Kart ekle / duzenle penceresi -->
@@ -1161,6 +1196,17 @@
 
     <!-- Yer imi ice aktarma -->
     <!-- Hazir gruplar (1.5.5) -->
+    <div id="yenilikPencere" class="pencere" hidden>
+        <div class="pencereIc">
+            <h2 data-c="yenilikler">Yenilikler</h2>
+            <div id="yenilikListe" class="yenilikListe"></div>
+            <div class="pencereAlt">
+                <button id="yenilikTumu" class="dugme"><span data-c="tumDegisiklikler">Tüm değişiklikler (GitHub)</span></button>
+                <button id="yenilikKapat" class="dugme birincil"><span data-c="kapat">Kapat</span></button>
+            </div>
+        </div>
+    </div>
+
     <div id="paketPencere" class="pencere" hidden>
         <div class="pencereIc">
             <h2 data-c="hazirGruplar">Hazır Gruplar</h2>

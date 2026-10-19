@@ -696,6 +696,19 @@ async function kartiKaydet() {
     const hedefGrup = el('kpGrup')?.value || aktifGrup();
 
     try {
+        // GORSEL ONCE (1.5.5): yer imi olusunca arka plan (onCreated) gorsel
+        // yoksa yakalamayi baslatiyordu; kullanicinin sectigi yerel resim
+        // biraz sonra yaziliyor, yakalama bitince de EZILIYORDU ("2-3
+        // denemede tutuyor"). Once gorsel, sonra yer imi.
+        const { adaylar: kAdaylar, secim: kSecim, zemin: kZemin, elle: kElle } = secimDurumu();
+        if (kAdaylar.length) {
+            await adaylariYaz(url, kAdaylar, kSecim, kElle);
+            if (kZemin) {
+                const { zeminYaz } = await import('./gorsel.js');
+                await zeminYaz(url, kZemin);
+            }
+        }
+
         if (duzenlenenKartId) {
             await kartGuncelle(duzenlenenKartId, { title: baslik || url, url });
             // Grup degistiyse tasi
@@ -731,21 +744,14 @@ async function kartiKaydet() {
             await kartEtiketleriniYaz(url, kpEtiketler);
         }
 
-        // Karuseldeki secim ve varsa kullanicinin ekledigi gorseller
-        const { adaylar: kAdaylar, secim: kSecim, zemin: kZemin } = secimDurumu();
-        if (kAdaylar.length) {
-            await adaylariYaz(url, kAdaylar, kSecim);
-            if (kZemin) {
-                const { zeminYaz } = await import('./gorsel.js');
-                await zeminYaz(url, kZemin);
-            }
-        }
-
+        const adresDegisti = duzenlenenKartId && duzenlenenUrl && duzenlenenUrl !== url;
         kartPenceresiniKapat();
         await grubuAc(aktifGrup());
-        // Gorsel yoksa arka plan onCreated ile zaten yakalayacak;
-        // duzenlemede URL degismis olabilir, acikca isteyelim.
-        if (duzenlenenKartId) gorselIste(url);
+        // Gorsel yoksa arka plan onCreated ile zaten yakalayacak. Duzenlemede
+        // YALNIZCA adres degistiyse yeniden yakala (eskiden her kayitta).
+        // Yakalanmis resim yeni sayfayla degisir; KENDI resmi varsa korunur,
+        // yeni goruntu donenceye aday olarak eklenir (1.5.6).
+        if (adresDegisti) gorselIste(url, kElle);
     } catch (e) {
         bildir(c('kaydedilemedi'));
     }
@@ -2050,8 +2056,8 @@ async function bekleyenleriSor() {
 }
 
 /** Kullanicinin istedigi yenileme: kuyrukta arka plan islerinin onune gecer. */
-function gorselIste(url) {
-    chrome.runtime.sendMessage({ hedef: 'arkaplan', tur: 'gorselIste', url, oncelik: true })
+function gorselIste(url, koru = false) {
+    chrome.runtime.sendMessage({ hedef: 'arkaplan', tur: 'gorselIste', url, oncelik: true, koru })
         .catch(() => {});
 }
 

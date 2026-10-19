@@ -1,0 +1,132 @@
+// WSD Speed Dial - Copyright (C) 2026 muttixp - GPL-3.0-or-later
+//
+// HAKKINDA (1.5.6): Ayarlar'in en altindaki bolum - surum, Yenilikler
+// penceresi ve baglantilar (degerlendir, oneri/hata, kaynak, gizlilik).
+//
+// Guncelleme sonrasi: surum degistiyse bir kez bildirim + ayarlar
+// dugmesinde nokta. Yenilikler penceresi acilinca nokta soner. Gorulen surum chrome.storage.local `sonGorulenSurum`da; ilk
+// kurulumda arkaplan.js yaziyor, yeni kullaniciya "yenilik" denmiyor.
+import { c } from './dil.js';
+import { YENILIKLER } from './yenilikler.js';
+
+const el = id => document.getElementById(id);
+const DEPO = 'https://github.com/muttixp/wsd-speed-dial';
+// Chrome Web Magazasi'ndaki kimlik (gelistirme kopyasi icin yedek)
+const CWS_ID = 'blhdiabjeaeidnnmiflopnocieiaiibd';
+
+const surum = () => chrome.runtime.getManifest().version;
+
+function ac(url) { chrome.tabs.create({ url }); }
+
+/**
+ * Degerlendirme sayfasi: eklenti HANGI magazadan kurulduysa orasi.
+ * Magazadan kurulan eklentinin kimligi o magazadaki kimligi; kaynak da
+ * guncelleme adresinden anlasiliyor (getSelf izin istemiyor).
+ */
+async function degerlendirmeAdresi() {
+    let guncelleme = '';
+    try { guncelleme = (await chrome.management.getSelf()).updateUrl || ''; } catch (e) { /* */ }
+    if (/microsoft|edge/i.test(guncelleme)) {
+        return `https://microsoftedge.microsoft.com/addons/detail/${chrome.runtime.id}`;
+    }
+    // Magazadan kurulduysa kendi kimligi; paketsiz (gelistirme) yuklemede
+    // kimlik farkli - magazadaki kimlige dus
+    const id = guncelleme ? chrome.runtime.id : CWS_ID;
+    return `https://chromewebstore.google.com/detail/${id}/reviews`;
+}
+
+/** Yeniliklerin listesini dil dosyasinin diline gore cizer */
+function listeyiCiz() {
+    const dil = c('yenilikDil');
+    const kutu = el('yenilikListe');
+    kutu.textContent = '';
+    const simdiki = surum();
+    for (const s of YENILIKLER) {
+        const blok = document.createElement('section');
+        blok.className = 'yenilikSurum';
+        const h = document.createElement('h3');
+        h.textContent = s.surum;
+        if (s.surum === simdiki) {
+            const r = document.createElement('span');
+            r.className = 'yenilikRozet';
+            r.textContent = c('yenilikBuSurum');
+            h.appendChild(r);
+        }
+        blok.appendChild(h);
+        // Iki baslik: Yeni / Duzeltmeler (bos olan cizilmez)
+        for (const [tur, etiket] of [['yeni', 'yenilikYeni'], ['duzeltme', 'yenilikDuzeltme']]) {
+            const maddeler = s[tur] && (s[tur][dil] || s[tur].en);
+            if (!maddeler || !maddeler.length) continue;
+            const t = document.createElement('div');
+            t.className = 'yenilikTur ' + tur;
+            t.textContent = c(etiket);
+            const ul = document.createElement('ul');
+            for (const m of maddeler) {
+                const li = document.createElement('li');
+                li.textContent = m;
+                ul.appendChild(li);
+            }
+            blok.append(t, ul);
+        }
+        kutu.appendChild(blok);
+    }
+}
+
+async function goruldu() {
+    el('ayarBtn')?.classList.remove('yeniNokta');
+    el('ayYenilikler')?.classList.remove('yeniNokta');
+    try { await chrome.storage.local.set({ sonGorulenSurum: surum() }); } catch (e) { /* */ }
+}
+
+export function yenilikPenceresiniAc() {
+    const p = el('yenilikPencere');
+    if (!p) return;
+    listeyiCiz();
+    p.hidden = false;
+    el('perde')?.classList.add('acik');
+    goruldu();
+}
+
+function kapat() {
+    el('yenilikPencere').hidden = true;
+    if (!el('ayarPanel')?.classList.contains('acik')) el('perde')?.classList.remove('acik');
+}
+
+/** Guncellendiyse bir kez haber ver */
+async function guncellemeyiDuyur() {
+    let kayit;
+    try { kayit = (await chrome.storage.local.get('sonGorulenSurum')).sonGorulenSurum; } catch (e) { return; }
+    const simdiki = surum();
+    if (kayit === simdiki) return;
+    // Yalnizca listede yer alan bir surum icin duyur (yama surumleri sessiz)
+    if (!YENILIKLER.some(s => s.surum === simdiki)) {
+        try { await chrome.storage.local.set({ sonGorulenSurum: simdiki }); } catch (e) { /* */ }
+        return;
+    }
+    el('ayarBtn')?.classList.add('yeniNokta');
+    el('ayYenilikler')?.classList.add('yeniNokta');
+    const { bildir } = await import('./arayuz.js');
+    // Sayfa ilk acilisinda baska bildirimlerle cakismasin
+    setTimeout(() => bildir(c('yenilikYuklendi', simdiki), {
+        etiket: c('yenilikler'),
+        calistir: yenilikPenceresiniAc,
+        sure: 12000,
+    }), 1500);
+}
+
+export function hakkindaKur() {
+    const s = el('hkSurum');
+    if (!s) return;
+    s.textContent = surum();
+    el('ayYenilikler')?.addEventListener('click', yenilikPenceresiniAc);
+    el('ayDegerlendir')?.addEventListener('click', async () => ac(await degerlendirmeAdresi()));
+    el('ayOneri')?.addEventListener('click', () => ac(DEPO + '/issues'));
+    el('ayKaynak')?.addEventListener('click', () => ac(DEPO));
+    el('ayGizlilik')?.addEventListener('click', () => ac(DEPO + '/blob/main/PRIVACY.md'));
+    el('yenilikTumu')?.addEventListener('click', () => ac(DEPO + '/blob/main/CHANGELOG.md'));
+    el('yenilikKapat')?.addEventListener('click', kapat);
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && el('yenilikPencere') && !el('yenilikPencere').hidden) kapat();
+    });
+    guncellemeyiDuyur();
+}

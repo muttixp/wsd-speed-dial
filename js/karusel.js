@@ -19,6 +19,7 @@ import { gorselAl } from './gorsel.js';
 let adaylar = [];
 let secim = 0;
 let zemin = null;
+let elle = false;           // kullanici kendi gorselini ekledi (dosya/URL/logo)
 
 const el = id => document.getElementById(id);
 
@@ -38,11 +39,15 @@ export async function karuseliYukle(anahtar) {
     adaylar = [];
     secim = 0;
     zemin = null;
+    elle = false;
 
     if (anahtar) {
         const kayit = (await gorselAl(anahtar))[anahtar];
         if (kayit) {
             zemin = kayit.zemin || null;
+            // Kendi resmi isareti kayitta duruyor; pencere acilinca kaybolup
+            // adres degisince yakalama secili resmi eziyordu (1.5.6)
+            elle = !!kayit.elle;
             if (Array.isArray(kayit.adaylar) && kayit.adaylar.length) {
                 adaylar = [...kayit.adaylar];
                 secim = Math.min(kayit.secim || 0, adaylar.length - 1);
@@ -57,6 +62,7 @@ export async function karuseliYukle(anahtar) {
 /** Disaridan gorsel ekler (dosya secimi / URL) ve ona gecer. */
 export function adayEkle(dataUri) {
     if (!dataUri) return;
+    elle = true;
     const mevcut = adaylar.indexOf(dataUri);
     if (mevcut >= 0) {
         secim = mevcut;
@@ -73,7 +79,7 @@ export function zeminAyarla(renk) {
 }
 
 export function secimDurumu() {
-    return { adaylar, secim, zemin, gorsel: adaylar[secim] || null };
+    return { adaylar, secim, zemin, elle, gorsel: adaylar[secim] || null };
 }
 
 function kaydir(yon) {

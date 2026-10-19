@@ -1883,6 +1883,24 @@
   "mevcutVerilerSiliniyor": {
     "message": "Удаление текущих данных"
   },
+  "tema_yakut": {
+    "message": "Рубин"
+  },
+  "tema_gul": {
+    "message": "Роза"
+  },
+  "temaGuncelle": {
+    "message": "Обновить"
+  },
+  "temaGuncelleIpucu": {
+    "message": "Сохранить изменения в эту тему"
+  },
+  "tema_kehribar": {
+    "message": "Янтарь"
+  },
+  "tema_gunes": {
+    "message": "Солнце"
+  },
   "tema_kontrast": {
     "message": "Контраст"
   },
@@ -1939,5 +1957,56 @@
   },
   "webAraYerTarayici": {
     "message": "Поиск в интернете или адрес"
+  },
+  "kartHizalama": {
+    "message": "Выравнивание плиток"
+  },
+  "hizaOrta": {
+    "message": "По центру"
+  },
+  "hizaSol": {
+    "message": "По левому краю"
+  },
+  "hakkinda": {
+    "message": "О расширении"
+  },
+  "hakkindaAlt": {
+    "message": "Открытый код · Без слежки · Без аккаунта"
+  },
+  "yenilikler": {
+    "message": "Что нового"
+  },
+  "degerlendir": {
+    "message": "Оценить"
+  },
+  "oneriHataBildir": {
+    "message": "Предложение / ошибка"
+  },
+  "kaynakKod": {
+    "message": "Исходный код (GitHub)"
+  },
+  "gizlilikPolitikasi": {
+    "message": "Политика конфиденциальности"
+  },
+  "tumDegisiklikler": {
+    "message": "Все изменения (GitHub)"
+  },
+  "yenilikBuSurum": {
+    "message": "эта версия"
+  },
+  "yenilikYuklendi": {
+    "message": "WSD Speed Dial $1 установлен"
+  },
+  "yenilikDil": {
+    "message": "ru"
+  },
+  "yenilikYeni": {
+    "message": "Новое"
+  },
+  "yenilikDuzeltme": {
+    "message": "Исправлено"
+  },
+  "temaIceAktarilan": {
+    "message": "Импортированная"
   }
 }

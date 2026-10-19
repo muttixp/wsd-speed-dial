@@ -252,6 +252,12 @@ chrome.runtime.onInstalled.addListener(menuyuTazele);
 // ILK KURULUMDA YAKALAMA KIPI (1.5.5): gizli kip Edge/Vivaldi'de sessiz,
 // pencere acmiyor - varsayilan o. Chrome'da ustte "hata ayiklama" cubugu
 // cikiyor; orada pencere kipi kaliyor. Kullanici secim yaptiysa dokunulmaz.
+// YENILIKLER (1.5.6): yeni kullaniciya "guncellendi" bildirimi cikmasin
+chrome.runtime.onInstalled.addListener(({ reason }) => {
+    if (reason !== 'install') return;
+    chrome.storage.local.set({ sonGorulenSurum: chrome.runtime.getManifest().version }).catch(() => {});
+});
+
 chrome.runtime.onInstalled.addListener(async ({ reason }) => {
     if (reason !== 'install') return;
     try {
@@ -407,6 +413,14 @@ chrome.runtime.onMessage.addListener((mesaj) => {
         return;
     }
     if (mesaj && mesaj.hedef === 'arkaplan' && mesaj.tur === 'gorselIste' && mesaj.url) {
+        // Kullanici acikca "yenile" dedi: kendi resmi korumasi kalkar.
+        // `koru`: adres degisti ama kendi resmi var - yeni goruntu yalnizca
+        // aday olarak eklenir (gorseliKaydet elle kaydini boyle birlestiriyor)
+        if (mesaj.koru) { yakalamayaEkle(mesaj.url, gorseliKaydet, mesaj.oncelik !== false); return; }
+        chrome.storage.local.get(mesaj.url).then(d => {
+            const k = d[mesaj.url];
+            if (k && k.elle) { delete k.elle; return chrome.storage.local.set({ [mesaj.url]: k }); }
+        }).catch(() => {});
         yakalamayaEkle(mesaj.url, gorseliKaydet, mesaj.oncelik !== false);
     }
 });
@@ -617,9 +631,12 @@ async function gorseliKaydet(url, adaylar) {
 
     if (liste.length) {
         const mevcut = (await chrome.storage.local.get(url).catch(() => ({})))[url] || {};
-        const sonuc = await guvenliYaz({
-            [url]: { ...mevcut, adaylar: liste, secim: 0, gorsel: liste[0] }
-        });
+        // KULLANICININ RESMI (1.5.5): kendi resmini secmisse yakalanan
+        // goruntu yalnizca aday olarak eklenir, secim degismez
+        const kayit = mevcut.elle && mevcut.gorsel
+            ? { ...mevcut, adaylar: [...(mevcut.adaylar || [mevcut.gorsel]), ...liste.filter(x => !(mevcut.adaylar || []).includes(x))] }
+            : { ...mevcut, adaylar: liste, secim: 0, gorsel: liste[0] };
+        const sonuc = await guvenliYaz({ [url]: kayit });
         if (!sonuc.ok) {
             depoHatasi = sonuc.dolu ? 'dolu' : 'hata';
             // Depo doluysa kuyrugu surdurmenin anlami yok - hepsi

@@ -1883,6 +1883,24 @@
   "mevcutVerilerSiliniyor": {
     "message": "Mevcut veriler siliniyor"
   },
+  "tema_yakut": {
+    "message": "Yakut"
+  },
+  "tema_gul": {
+    "message": "Gül"
+  },
+  "temaGuncelle": {
+    "message": "Güncelle"
+  },
+  "temaGuncelleIpucu": {
+    "message": "Değişiklikleri bu temaya kaydet"
+  },
+  "tema_kehribar": {
+    "message": "Kehribar"
+  },
+  "tema_gunes": {
+    "message": "Güneş"
+  },
   "tema_kontrast": {
     "message": "Kontrast"
   },
@@ -1939,5 +1957,56 @@
   },
   "webAraYerTarayici": {
     "message": "Web'de ara veya adres yaz"
+  },
+  "kartHizalama": {
+    "message": "Kart Hizalama"
+  },
+  "hizaOrta": {
+    "message": "Ortaya"
+  },
+  "hizaSol": {
+    "message": "Sola"
+  },
+  "hakkinda": {
+    "message": "Hakkında"
+  },
+  "hakkindaAlt": {
+    "message": "Açık kaynak · İzleme yok · Hesap gerekmez"
+  },
+  "yenilikler": {
+    "message": "Yenilikler"
+  },
+  "degerlendir": {
+    "message": "Değerlendir"
+  },
+  "oneriHataBildir": {
+    "message": "Öneri / hata bildir"
+  },
+  "kaynakKod": {
+    "message": "Kaynak kod (GitHub)"
+  },
+  "gizlilikPolitikasi": {
+    "message": "Gizlilik politikası"
+  },
+  "tumDegisiklikler": {
+    "message": "Tüm değişiklikler (GitHub)"
+  },
+  "yenilikBuSurum": {
+    "message": "bu sürüm"
+  },
+  "yenilikYuklendi": {
+    "message": "WSD Speed Dial $1 yüklendi"
+  },
+  "yenilikDil": {
+    "message": "tr"
+  },
+  "yenilikYeni": {
+    "message": "Yeni"
+  },
+  "yenilikDuzeltme": {
+    "message": "Düzeltmeler"
+  },
+  "temaIceAktarilan": {
+    "message": "İçe aktarılan"
   }
 }

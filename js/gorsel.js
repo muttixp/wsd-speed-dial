@@ -47,7 +47,11 @@ export async function gorselYaz(anahtar, dataUri, zemin) {
  * Ikisini ayri tutuyoruz cunku kullanici kendi dosyasini secebiliyor -
  * o durumda gorsel adaylar listesinde olmayabilir.
  */
-export async function adaylariYaz(anahtar, adaylar, secim = 0) {
+/**
+ * @param elle  kullanici kendi gorselini ekledi: arka plandaki yakalama
+ *              (kart eklenince otomatik baslayan) bunu EZMESIN (1.5.5)
+ */
+export async function adaylariYaz(anahtar, adaylar, secim = 0, elle = false) {
     if (!adaylar || !adaylar.length) return;
     const mevcut = (await gorselAl(anahtar))[anahtar] || {};
     await chrome.storage.local.set({
@@ -55,7 +59,8 @@ export async function adaylariYaz(anahtar, adaylar, secim = 0) {
             ...mevcut,
             adaylar,
             secim,
-            gorsel: adaylar[secim] || adaylar[0]
+            gorsel: adaylar[secim] || adaylar[0],
+            ...(elle ? { elle: true } : {})
         }
     });
 }

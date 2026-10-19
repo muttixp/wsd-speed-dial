@@ -54,20 +54,18 @@ WSD Speed Dial turns your new tab page into a board of the sites you
 actually use, each with its own screenshot. Free, open source, no
 tracking.
 
-COMING FROM FVD SPEED DIAL, SPEED DIAL OR SPEED DIAL 2?
+COMING FROM ANOTHER SPEED DIAL?
 
-Bring everything over in one click: groups, tiles and their order.
-Speed Dial (.spd) backups keep their logo tiles. FVD and Speed Dial 2
-backups contain no images, so WSD offers to capture them in the
-background, without opening windows. Group Speed Dial backups and a
-bookmarks HTML file exported from any browser work the same way.
+Bring everything over in one click from FVD Speed Dial and other speed
+dial extensions: groups, tiles and their order. If a backup carries no
+images, WSD offers to capture them in the background, without opening
+windows. A bookmarks HTML file from any browser works the same way.
 
 SEARCH THE WEB FROM THE HOME PAGE
 
-A search box on the home page with an engine picker: your browser's
-default, Google, Bing, DuckDuckGo, Yandex, Brave, Ecosia, Startpage,
-Wikipedia, YouTube or GitHub. Add your own engine with one address,
-reorder the list, or hide the box entirely.
+A search box on the home page. Use your browser's default search engine
+or pick another one from the list; add your own engine with a single
+address, reorder the list, or hide the box entirely.
 
 WHY IT'S DIFFERENT
 
@@ -139,9 +137,8 @@ Your data
 - Ready-made groups: add a starter pack (Daily, Developer, Learning…)
   in one click; packs are kept in the open GitHub repository
 - Backup and restore (folder structure included); one Import button
-  that recognises the file: WSD, FVD Speed Dial, Speed Dial 2,
-  Speed Dial (.spd), Group Speed Dial, or a bookmarks HTML file. FVD's
-  text export can be pasted directly
+  that recognises the file: a WSD backup, a backup from another speed
+  dial extension, or a bookmarks HTML file
 - Restore can REPLACE or MERGE: merging combines groups with the same
   name and skips sites you already have
 - Import your existing browser bookmarks: every top-level folder
@@ -186,20 +183,18 @@ WSD Speed Dial, yeni sekme sayfanızı gerçekten kullandığınız
 sitelerin panosuna çevirir — her biri kendi ekran görüntüsüyle.
 Ücretsiz, açık kaynak, izleme yok.
 
-FVD SPEED DIAL, SPEED DIAL YA DA SPEED DIAL 2'DEN Mİ GELİYORSUNUZ?
+BAŞKA BİR SPEED DIAL'DAN MI GELİYORSUNUZ?
 
-Her şeyi tek tıkla taşıyın: gruplar, kartlar ve sıraları. Speed Dial
-(.spd) yedeklerinin logolu kartları da gelir. FVD ve Speed Dial 2
-yedekleri görsel içermez; WSD bunları pencere açmadan arka planda
-almayı önerir. Group Speed Dial yedekleri ve herhangi bir tarayıcıdan
-dışa aktarılmış yer imi HTML dosyası da aynı şekilde.
+FVD Speed Dial ve diğer speed dial eklentilerinden her şeyi tek tıkla
+taşıyın: gruplar, kartlar ve sıraları. Yedekte görsel yoksa WSD bunları
+pencere açmadan arka planda almayı önerir. Herhangi bir tarayıcıdan dışa
+aktarılmış yer imi HTML dosyası da aynı şekilde.
 
 ANA SAYFADAN WEB ARAMASI
 
-Ana sayfada motor seçmeli bir arama kutusu: tarayıcınızın varsayılanı,
-Google, Bing, DuckDuckGo, Yandex, Brave, Ecosia, Startpage, Wikipedia,
-YouTube ya da GitHub. Tek adresle kendi motorunuzu ekleyin, listeyi
-sıralayın ya da kutuyu tamamen gizleyin.
+Ana sayfada arama kutusu. Tarayıcınızın arama motorunu kullanın ya da
+listeden başka bir motor seçin; tek adresle kendi motorunuzu ekleyin,
+listeyi sıralayın ya da kutuyu tamamen gizleyin.
 
 FARKI NE
 
@@ -274,9 +269,8 @@ Verileriniz
 - Hazır gruplar: tek tıkla örnek paket ekleyin (Günlük, Alışveriş,
   Geliştirici…); paketler açık GitHub deposunda
 - Yedek alma ve yükleme (klasör yapısıyla birlikte); dosyayı kendisi
-  tanıyan tek İçe Aktar düğmesi: WSD, FVD Speed Dial, Speed Dial 2,
-  Speed Dial (.spd), Group Speed Dial ya da yer imi HTML dosyası. FVD'nin
-  metin çıktısı doğrudan yapıştırılabilir
+  tanıyan tek İçe Aktar düğmesi: WSD yedeği, başka bir speed dial
+  eklentisinin yedeği ya da yer imi HTML dosyası
 - Geri yüklerken DEĞİŞTİR ya da BİRLEŞTİR: birleştirme aynı adlı grupları
   toplar, zaten olan siteleri tekrar eklemez
 - Mevcut tarayıcı yer imlerinizi içe aktarma: her üst klasör bir
@@ -322,20 +316,18 @@ WSD Speed Dial превращает новую вкладку в панель с
 действительно пользуетесь, — у каждого свой скриншот. Бесплатно,
 открытый код, без слежки.
 
-ПЕРЕХОДИТЕ С FVD SPEED DIAL, SPEED DIAL ИЛИ SPEED DIAL 2?
+ПЕРЕХОДИТЕ С ДРУГОГО SPEED DIAL?
 
-Перенесите всё в один клик: группы, плитки и их порядок. Из копий
-Speed Dial (.spd) переносятся и плитки с логотипами. В копиях FVD и
-Speed Dial 2 изображений нет — WSD предложит сделать скриншоты в фоне,
-не открывая окон. Так же работают копии Group Speed Dial и HTML-файл
-закладок, экспортированный из любого браузера.
+Перенесите всё в один клик из FVD Speed Dial и других расширений speed
+dial: группы, плитки и их порядок. Если в копии нет изображений, WSD
+предложит сделать снимки в фоне, не открывая окон. Так же работает
+HTML-файл закладок, экспортированный из любого браузера.
 
 ПОИСК ПРЯМО НА ГЛАВНОЙ
 
-Строка поиска на главной странице с выбором системы: Яндекс (по
-умолчанию), поисковик браузера, Google, Bing, DuckDuckGo, Brave,
-Ecosia, Startpage, Википедия, YouTube или GitHub. Добавьте свой
-поисковик одной ссылкой, измените порядок или скройте строку совсем.
+Строка поиска на главной странице. Выберите поисковую систему из
+списка, добавьте свою одной ссылкой, измените порядок или скройте
+строку совсем.
 
 ЧЕМ ОТЛИЧАЕТСЯ
 
@@ -407,9 +399,8 @@ Ecosia, Startpage, Википедия, YouTube или GitHub. Добавьте �
 - Готовые группы: набор для старта в один клик (Повседневное,
   Разработчику, Учёба…); наборы лежат в открытом репозитории GitHub
 - Резервное копирование и восстановление (со структурой папок); одна
-  кнопка «Импорт», которая сама распознаёт файл: WSD, FVD Speed Dial,
-  Speed Dial 2, Speed Dial (.spd), Group Speed Dial или HTML-файл
-  закладок. Текстовый экспорт FVD можно просто вставить
+  кнопка «Импорт», которая сама распознаёт файл: резервная копия WSD,
+  копия другого расширения speed dial или HTML-файл закладок
 - При восстановлении — ЗАМЕНИТЬ или ОБЪЕДИНИТЬ: объединение сливает
   одноимённые группы и пропускает уже имеющиеся сайты
 - Импорт закладок браузера: каждая папка верхнего уровня становится
@@ -531,7 +522,21 @@ Ekran görüntüsü için öneri sırası:
 4. Arama sonuçları
 5. Yinelenen kartlar ya da çöp kutusu
 
+### 1.5.6 ile yapılacaklar (mağaza paneli)
+
+- Yalnızca paket yüklenecek. Yeni izin yok, açıklamalar ve gizlilik
+  gerekçeleri değişmedi (Değerlendir / Öneri bağlantıları yalnızca
+  tıklanınca sekme açıyor; `management.getSelf` izin istemiyor).
+- Edge: 1.5.4 incelemeden çıkınca bu paket, düzeltilmiş açıklamalarla
+  (anahtar kelime listesi yok) gönderilecek.
+
 ### 1.5.5 ile yapılacaklar (mağaza paneli)
+
+- **Anahtar kelime spam'i (reddedildi, 17 Eki 2026):** arama motoru adlarının
+  listesi ve içe aktarma biçimlerinin uzun listesi (WSD, FVD, Speed Dial 2,
+  .spd, Group Speed Dial) "lüzumsuz anahtar kelime" sayıldı. İkisi de
+  genel ifadeye çevrildi. Kural: açıklamada marka/motor adlarını liste
+  halinde sıralama; taşıma paragrafındaki bir iki ad yeterli.
 
 - Uzun açıklamalar (EN/TR/RU) yenilendi: .spd taşıma, FVD'nin görsel
   taşımadığı (önceki metin "FVD görselleri de gelir" diyordu - yanlıştı),

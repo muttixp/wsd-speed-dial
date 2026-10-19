@@ -423,7 +423,23 @@ async function yedegiYukleIc(veri, temizle, ilerleme, urller) {
         grupIkonlari:  { ...(mevcut.grupIkonlari || {}),  ...yeniIkonlar },
         grupGorunumleri: { ...(mevcut.grupGorunumleri || {}), ...yeniGorunumler }
     };
-    if (y.ayarlar) yazilacak.ayarlar = { ...(mevcut.ayarlar || {}), ...y.ayarlar };
+    if (y.ayarlar) {
+        yazilacak.ayarlar = { ...(mevcut.ayarlar || {}), ...y.ayarlar };
+        // KAYDEDILEN TEMALAR SILINMEZ (1.5.6): yedekteki liste mevcudun
+        // ustune yazip kullanicinin temalarini siliyordu. Birlestir: ayni
+        // id yedektekiyle guncellenir, digerleri yerinde kalir.
+        const m = mevcut.ayarlar || {};
+        const temalar = new Map((Array.isArray(m.temaOzel) ? m.temaOzel : []).map(t => [t.id, t]));
+        for (const t of (Array.isArray(y.ayarlar.temaOzel) ? y.ayarlar.temaOzel : [])) {
+            if (t && t.id) temalar.set(t.id, t);
+        }
+        yazilacak.ayarlar.temaOzel = [...temalar.values()];
+        yazilacak.ayarlar.temaFiltreleri = { ...(m.temaFiltreleri || {}), ...(y.ayarlar.temaFiltreleri || {}) };
+        try {
+            const { iceAktarilanTemayiAyarla } = await import('./tema.js');
+            iceAktarilanTemayiAyarla(yazilacak.ayarlar, y.ayarlar);
+        } catch (e) { console.log('[WSD] ice aktarilan tema:', e); }
+    }
     // Adli etiketler: tanimlar id ile birlesiyor; kart listeleri birlesim
     if (y.etiketler && typeof y.etiketler === 'object') {
         yazilacak.etiketTanimlari = { ...(mevcut.etiketTanimlari || {}), ...(y.etiketler.tanimlar || {}) };

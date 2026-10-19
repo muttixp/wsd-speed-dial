@@ -267,6 +267,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         import('./yerimiictar.js').then(m => m.ictarPenceresiniKur()).catch(() => {})
         // Hazir gruplar (1.5.5)
         import('./paketler.js').then(m => m.paketPenceresiniKur()).catch(() => {});
+        // Hakkinda + Yenilikler (1.5.6)
+        import('./hakkinda.js').then(m => m.hakkindaKur()).catch(() => {});
         // Kirik isaretleri varsa yan seritteki dugme gorunsun
         import('./kirik.js').then(k => k.kirikDugmesiniTazele()).catch(() => {});
     } catch (e) {

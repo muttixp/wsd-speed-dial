@@ -60,6 +60,7 @@ export const VARSAYILAN = {
     kartOrani: 'o1610',         // 'o43' | 'o1610' | 'o169'
     gorselYerlesim: 'cover',    // 'cover' (kırp) | 'contain' (sığdır)
     maxSutun: 0,                // 0 = sinir yok, ekrana sigan kadar
+    kartHizalama: 'orta',       // 'orta' | 'sol' - satirlar (son satir dahil) ortalanir (1.5.6)
     kartZeminRengi: '#22262e',
     kartEn: 250,
     kartBoslukYatay: 3,
@@ -106,7 +107,8 @@ export const VARSAYILAN = {
     temaSonMod: 'koyu',         // en son uygulanan etkin mod
     temaRenkleri: {},           // { koyu: {tema, renkler}, acik: {...} } - mod gecisinde saklanan
     temaOzel: [],               // kullanicinin kaydettigi temalar [{ id, ad, mod, r }]
-    duvarVarsayilan: 'linear-gradient(135deg, #4aa3df, #2f6fd0)',   // gorsel yokken duvar
+    temaFiltreleri: {},         // { temaId: {filtreYontemi, ton, ...} } - zemin renklendirme temaya ozel (1.5.6)
+    duvarVarsayilan: 'radial-gradient(ellipse 60% 55% at 16% 18%, rgba(70,140,230,.38), transparent 70%), radial-gradient(ellipse 55% 60% at 88% 84%, rgba(120,80,220,.30), transparent 70%), radial-gradient(ellipse 38% 34% at 82% 10%, rgba(40,170,190,.20), transparent 70%), repeating-linear-gradient(135deg, rgba(255,255,255,.025) 0 1px, transparent 1px 14px), linear-gradient(135deg, #1a3a6e, #0d1730)',   // gorsel yokken duvar
 
     // Web arama cubugu (1.5.5) - yalnizca Ana Sayfa'da
     webAramaGoster: true,
@@ -171,7 +173,13 @@ export async function ayarYaz(degisiklikler) {
  * davranis ayarlari sifirlanir.
  */
 export async function ayarlariSifirla() {
-    onbellek = { ...VARSAYILAN };
+    // Kaydedilen temalar kullanicinin ESERI: sifirlamada kalir, yalnizca
+    // tek tek silinir (1.5.6). Filtreleri de onlarla birlikte.
+    const eski = (await chrome.storage.local.get('ayarlar')).ayarlar || {};
+    const temaOzel = Array.isArray(eski.temaOzel) ? eski.temaOzel : [];
+    const ids = new Set(temaOzel.map(t => t.id));
+    const temaFiltreleri = Object.fromEntries(Object.entries(eski.temaFiltreleri || {}).filter(([k]) => ids.has(k)));
+    onbellek = { ...VARSAYILAN, temaOzel, temaFiltreleri };
     await chrome.storage.local.set({ ayarlar: onbellek });
     return onbellek;
 }

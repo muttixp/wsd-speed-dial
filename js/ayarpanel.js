@@ -24,7 +24,7 @@ import { onaySor, onaylariGeriGetir } from './onay.js';
 // NOT: dosyanin BASINDA tanimli olmali. `const` yukari tasinmadigi icin
 // asagida tanimlandiginda gorunumuUygula() calisirken erisim hatasi
 // veriyor ve panel hic uygulanmiyordu (TDZ).
-const VARSAYILAN_DUVAR = 'linear-gradient(135deg, #4aa3df, #2f6fd0)';
+const VARSAYILAN_DUVAR = 'radial-gradient(ellipse 60% 55% at 16% 18%, rgba(70,140,230,.38), transparent 70%), radial-gradient(ellipse 55% 60% at 88% 84%, rgba(120,80,220,.30), transparent 70%), radial-gradient(ellipse 38% 34% at 82% 10%, rgba(40,170,190,.20), transparent 70%), repeating-linear-gradient(135deg, rgba(255,255,255,.025) 0 1px, transparent 1px 14px), linear-gradient(135deg, #1a3a6e, #0d1730)';
 
 // [ayar anahtari, eleman id, deger okuyucu]
 const ALANLAR = [
@@ -84,6 +84,7 @@ const ALANLAR = [
     ['kartOrani',        'ayKartOrani',        el => el.value],
     ['gorselYerlesim',   'ayGorselYerlesim',   el => el.value],
     ['maxSutun',         'ayMaxSutun',         el => +el.value],
+    ['kartHizalama',     'ayKartHizalama',     el => el.value],
     ['kartZeminRengi',   'ayKartZemin',        el => el.value],
     ['kartEn',           'ayKartEn',           el => +el.value],
     ['kartBoslukYatay',  'ayBoslukYatay',      el => +el.value],
@@ -339,6 +340,7 @@ function gorunumuUygula(ayar) {
 
     const basliklarKapali = ayar.baslikGoster === false;
     document.body.classList.toggle('basliklarKapali', basliklarKapali);
+    document.body.classList.toggle('kartlarOrtada', ayar.kartHizalama !== 'sol');
     document.body.classList.toggle('ekleKartiKapali', ayar.ekleKartiGoster === false);
     // 1.5.1: "kapat" kalkti; anahtar artik OTOMATIK GIZLEME. Kapaliyken serit hep acik
     document.body.classList.toggle('yanPanelSabit', ayar.yanPanelGizle === false);
@@ -409,6 +411,11 @@ function gorunumuUygula(ayar) {
     // zemine gore kendiliginden.
     document.documentElement.style.setProperty('--vurgu-yazi',
         ayar.grupAktifYaziRengi || (parlaklik > 0.62 ? '#16191e' : '#ffffff'));
+    // VURGU RENKLI YAZI (1.5.6): acik modda parlak vurgu (sari) acik zeminde
+    // okunmuyordu - yazi olarak kullanildiginda koyulastiriliyor.
+    const acikModda = document.documentElement.classList.contains('acikMod');
+    document.documentElement.style.setProperty('--vurgu-metin',
+        acikModda && parlaklik > 0.55 ? koyuTon(vurgu, 45) : acikTon(vurgu, 18));
     // GENEL KOSE YUVARLAKLIGI (1.5.1): eskiden yalnizca sekmeler icindi.
     // Artik kartlar, sekmeler, pencereler, menuler ve dugmeler hep buradan.
     // --k1/--k3 kucuk/buyuk ogeler icin ayni orandan turetiliyor (9 -> 6/9/14,
@@ -482,6 +489,7 @@ function gorunumuUygula(ayar) {
     // Duvar kagidi
     const katman = document.getElementById('zeminKatmani');
     const gorsel = document.getElementById('zeminGorsel');
+    const desen  = document.getElementById('zeminDesen');
     const duvarKapali = ayar.duvarAcik === false;
 
     if (katman && gorsel) {
@@ -496,11 +504,21 @@ function gorunumuUygula(ayar) {
                 gorsel.src = ayar.duvarGorsel;
                 gorsel.style.display = '';
                 katman.style.background = '';
+                if (desen) desen.style.display = 'none';
             } else {
-                // Gorsel yoksa gradyan: <img> gizlenip kaba arka plan veriliyor
+                // Gorsel yoksa gradyan: <img> gizlenip desen katmanina veriliyor.
+                // Katmanin kendisine degil - filtre (ton/doygunluk/aciklik)
+                // gorsele oldugu gibi desene de uygulansin (1.5.6).
                 gorsel.removeAttribute('src');
                 gorsel.style.display = 'none';
-                katman.style.background = ayar.duvarVarsayilan || VARSAYILAN_DUVAR;
+                const arka = ayar.duvarVarsayilan || VARSAYILAN_DUVAR;
+                if (desen) {
+                    desen.style.background = arka;
+                    desen.style.display = 'block';
+                    katman.style.background = '';
+                } else {
+                    katman.style.background = arka;
+                }
             }
         }
     }
@@ -1259,6 +1277,13 @@ function acikTon(hex, yuzde) {
     const [r, g, b] = m.slice(1).map(h => parseInt(h, 16));
     const ac = v => Math.round(v + (255 - v) * (yuzde / 100));
     return '#' + [ac(r), ac(g), ac(b)].map(v => v.toString(16).padStart(2, '0')).join('');
+}
+
+function koyuTon(hex, yuzde) {
+    const m = /^#?([\da-f]{2})([\da-f]{2})([\da-f]{2})$/i.exec(String(hex).trim());
+    if (!m) return hex;
+    return '#' + m.slice(1).map(h => Math.round(parseInt(h, 16) * (1 - yuzde / 100))
+        .toString(16).padStart(2, '0')).join('');
 }
 
 function rgba(hex, yuzde) {

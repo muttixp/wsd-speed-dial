@@ -3,6 +3,75 @@
 Sürüm numaraları [Semantic Versioning](https://semver.org/lang/tr/)
 kurallarına uyar.
 
+## [1.5.6] — 2026-10-19
+
+### Yeni
+- **Hakkında bölümü** (Ayarlar'ın en altı): sürüm, **Yenilikler** penceresi
+  (son üç sürümün öne çıkanları, TR/EN/RU, ağ isteği yok), Değerlendir
+  (eklenti hangi mağazadan kurulduysa orası), Öneri / hata bildir,
+  kaynak kod, gizlilik politikası.
+- **Güncelleme sonrası haber**: sürüm değişince bir kez "X yüklendi ·
+  Yenilikler" bildirimi ve ayarlar düğmesinde nokta; Yenilikler açılınca
+  söner. İlk kurulumda çıkmaz.
+- **Desenli varsayılan duvar kâğıtları**: her hazır temanın zemini düz
+  iki renkli geçiş yerine ışık lekeleri ve çok ince çapraz çizgi dokusu
+  (yalnızca CSS, dosya yok). Eski hazır zemini kullananlar kendiliğinden
+  yenisine geçer; "değiştirildi" rozeti çıkmaz. Kendi resmine dokunulmaz.
+- **Yaylı klasör artık kalıcı** (deneysel işareti kalktı).
+- **Kart Hizalama** (Kartlar): Ortaya (varsayılan) / Sola. Ortaya'da her
+  satır, son satır dahil, ortalanıyor; az kartlı grupta kartlar sola
+  yaslanıp sağda boşluk kalmıyor. (Kullanıcı isteği)
+- **16 yeni grup simgesi**: Wi-Fi, bilgisayar, telefon, bilgi, yardım, not,
+  sohbet, takvim, konum, uçuş, yemek, banka, spor, kilit, TV, resim.
+- **Kırmızı ve sarı temalar**: Yakut, Kehribar (koyu); Gül, Güneş (açık).
+- **Özel temayı güncelle**: kaydettiğin temada renk değiştirince
+  "değiştirildi" yerine **Güncelle** çıkıyor; tıklayınca değişiklik
+  (filtre dahil) o temaya yazılıyor.
+- **Renklendirme desenli zemine de uygulanıyor**: ton / doygunluk /
+  açıklık eskiden yalnızca kendi resmine etki ediyordu; artık hazır
+  desenli zemin de değişiyor.
+- **Renklendirme temaya özel**: her temanın filtresi ayrı hatırlanıyor.
+  Başka temaya geçince onun filtresi (yoksa nötr) geliyor, geri dönünce
+  eskisi yerinde. Kaydedilen özel temalar da filtresini saklıyor.
+
+### Düzeltildi
+- **Adres değişince kendi resmi kayboluyordu**: kart penceresi açılınca
+  "kendi resmi" işareti okunmuyordu, adres değiştirip kaydedince yeni
+  yakalama seçili resmi eziyordu. Artık: yakalanmış resim → yeni adresle
+  kendiliğinden yenilenir; kendi resmi → korunur, yeni sayfanın görüntüsü
+  yalnızca seçilebilir aday olarak eklenir. Yenile düğmesi her zaman
+  değiştirir.
+- **Açık şablonlarda aktif grup yazısı zayıftı**: Kâğıt, Kum, Buz, Nane ve
+  Pastel'de aktif grup rengi biraz koyulaştı (beyaz yazı kontrastı en az
+  4,6:1). Şablonu değiştirmemiş kullanıcılar yeni renge kendiliğinden geçer;
+  "değiştirildi" rozeti çıkmaz.
+- **Kaydedilen temalar içe aktarınca siliniyordu**: yedekteki tema
+  listesi mevcudun üstüne yazılıyordu. Artık birleştiriliyor (yedektekiler
+  eklenir, sizinkiler kalır). "Ayarları sıfırla" da kaydedilen temalara
+  dokunmuyor; yalnızca tek tek silinir.
+- **İçe aktarılan renkler temanın üstüne biniyordu**: yedekteki renkler
+  seçili temada "değiştirildi" görünüyor, Güncelle'ye basılırsa o tema
+  eziliyordu. Artık renkler bir temaya uyuyorsa o tema seçiliyor; hiçbirine
+  uymuyorsa **"İçe aktarılan"** adıyla yeni özel tema ekleniyor (istemezseniz
+  silin ya da yeni adla kaydedin).
+- Koyu modda grup menüsü şeridi zemine karışıyordu: buzlu cam artık arama
+  kutusuyla aynı koyulukta.
+- Açık modda parlak vurgu rengi (sarı gibi) yazı olarak kullanıldığında
+  (Geri al, bölüm başlıkları) koyulaştırılıyor; açık zeminde okunuyor.
+- **Açık modda yan panel simgeleri zor seçiliyordu**: renkli simgelerin
+  tonları koyu zemine göreydi. Açık modda aynı renklerin koyu tonları,
+  panel kapalıyken daha az soluk, cam zemin daha dolgun; ayar bölümü
+  başlıklarındaki simgeler de aynı şekilde.
+- **Kendi resmini seçince yakalama eziyordu** (kullanıcı bildirimi): yeni
+  kart eklerken yerel resim seçilse de yer imi önce oluşuyor, arka plan
+  görsel yok sanıp yakalamayı başlatıyor, bitince seçilen resmin yerine
+  ekran görüntüsünü yazıyordu ("2-3 denemede tutuyor"). Artık görsel yer
+  iminden önce yazılıyor; kullanıcının eklediği resim işaretleniyor ve
+  kendiliğinden başlayan yakalama onu değiştirmiyor (yalnızca aday olarak
+  ekleniyor). Kart düzenlemede her kayıtta yeniden yakalama da kalktı:
+  yalnızca adres değişip kendi resmi yoksa. Kartın "Yenile"si korumayı
+  kaldırıp yeni görüntüyü alıyor.
+
 ## [1.5.5] — 2026-10-17
 
 ### Yeni

@@ -1883,6 +1883,24 @@
   "mevcutVerilerSiliniyor": {
     "message": "Deleting existing data"
   },
+  "tema_yakut": {
+    "message": "Ruby"
+  },
+  "tema_gul": {
+    "message": "Rose"
+  },
+  "temaGuncelle": {
+    "message": "Update"
+  },
+  "temaGuncelleIpucu": {
+    "message": "Save the changes to this theme"
+  },
+  "tema_kehribar": {
+    "message": "Amber"
+  },
+  "tema_gunes": {
+    "message": "Sunshine"
+  },
   "tema_kontrast": {
     "message": "Contrast"
   },
@@ -1939,5 +1957,56 @@
   },
   "webAraYerTarayici": {
     "message": "Search the web or type an address"
+  },
+  "kartHizalama": {
+    "message": "Tile Alignment"
+  },
+  "hizaOrta": {
+    "message": "Center"
+  },
+  "hizaSol": {
+    "message": "Left"
+  },
+  "hakkinda": {
+    "message": "About"
+  },
+  "hakkindaAlt": {
+    "message": "Open source · No tracking · No account"
+  },
+  "yenilikler": {
+    "message": "What's new"
+  },
+  "degerlendir": {
+    "message": "Rate"
+  },
+  "oneriHataBildir": {
+    "message": "Suggest / report a bug"
+  },
+  "kaynakKod": {
+    "message": "Source code (GitHub)"
+  },
+  "gizlilikPolitikasi": {
+    "message": "Privacy policy"
+  },
+  "tumDegisiklikler": {
+    "message": "Full changelog (GitHub)"
+  },
+  "yenilikBuSurum": {
+    "message": "this version"
+  },
+  "yenilikYuklendi": {
+    "message": "WSD Speed Dial $1 installed"
+  },
+  "yenilikDil": {
+    "message": "en"
+  },
+  "yenilikYeni": {
+    "message": "New"
+  },
+  "yenilikDuzeltme": {
+    "message": "Fixed"
+  },
+  "temaIceAktarilan": {
+    "message": "Imported"
   }
 }
