@@ -231,7 +231,7 @@
     "message": "предыдущая / следующая группа"
   },
   "otomatikYedekGunde": {
-    "message": "Ежедневная резервная копия"
+    "message": "Автоматическое резервное копирование"
   },
   "ozelEmoji": {
     "message": "Свой эмодзи"
@@ -2008,5 +2008,107 @@
   },
   "temaIceAktarilan": {
     "message": "Импортированная"
+  },
+  "klasorYedekBaslik": {
+    "message": "Облачная папка (экспериментально)"
+  },
+  "klasorYedekAciklama": {
+    "message": "Копии записываются в выбранную папку. Выберите папку OneDrive, Google Диска, Яндекс Диска или Dropbox — приложение само загрузит их в облако; на другом компьютере восстановите из той же папки."
+  },
+  "klasorYedekAd": {
+    "message": "Имя копии"
+  },
+  "klasorYedekAdIpucu": {
+    "message": "Файлы копий получают это имя (wsd-имя-дата.json); в папке копий это и имя подпапки. Дайте каждому браузеру своё имя; одинаковое имя на двух компьютерах — общий набор копий."
+  },
+  "klasorYedekSiklik": {
+    "message": "Частота автокопирования"
+  },
+  "gundeBir": {
+    "message": "Раз в день"
+  },
+  "haftadaBir": {
+    "message": "Раз в неделю"
+  },
+  "klasorYedekGorselli": {
+    "message": "Включать изображения"
+  },
+  "klasorYedekSakla": {
+    "message": "Хранить копий"
+  },
+  "klasorYedekSimdi": {
+    "message": "Сохранить в папку сейчас"
+  },
+  "klasorYedekGeriYukle": {
+    "message": "Восстановить из папки"
+  },
+  "klasorYedekTumu": {
+    "message": "Показать копии всех браузеров"
+  },
+  "klasorYedekYukleDugme": {
+    "message": "Загрузить"
+  },
+  "klasorYedekSecilmedi": {
+    "message": "Папка не выбрана"
+  },
+  "klasorYedekDesteklenmiyor": {
+    "message": "Этот браузер не поддерживает запись в папки"
+  },
+  "klasorYedekSecilemedi": {
+    "message": "Не удалось использовать папку. Системные папки (например, корень «Документов») могут быть закрыты; выберите вложенную папку."
+  },
+  "klasorYedekKlasorYok": {
+    "message": "Сначала выберите папку для копий"
+  },
+  "klasorYedekIzinYok": {
+    "message": "Доступ к папке не предоставлен"
+  },
+  "klasorYedekYazildi": {
+    "message": "Сохранено плиток: $1 → $2"
+  },
+  "klasorYedekBos": {
+    "message": "В этой папке нет копий"
+  },
+  "klasorYedekBuCihaz": {
+    "message": "этот браузер"
+  },
+  "klasorYedekGorselsiz": {
+    "message": "без изображений"
+  },
+  "klasorYedekSon": {
+    "message": "Последняя копия: $1"
+  },
+  "klasorYedekIzin": {
+    "message": "Для автокопирования нужно обновить доступ к папке"
+  },
+  "klasorYedekIzinVer": {
+    "message": "Разрешить и сохранить"
+  },
+  "klasorYedekDahaYeni": {
+    "message": "Есть более новая копия ($1, $2)"
+  },
+  "klasorYedekGoster": {
+    "message": "Показать"
+  },
+  "yedekleniyor": {
+    "message": "Сохранение…"
+  },
+  "okunuyor": {
+    "message": "Чтение…"
+  },
+  "gelismis": {
+    "message": "Дополнительно"
+  },
+  "ayarAra": {
+    "message": "Поиск настроек…"
+  },
+  "ayarAraYok": {
+    "message": "Нет подходящих настроек"
+  },
+  "aradiginizKart": {
+    "message": "Вот эта плитка"
+  },
+  "klasorYedekSiklikKapali": {
+    "message": "Выкл. (только вручную)"
   }
 }

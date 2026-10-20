@@ -231,7 +231,7 @@
     "message": "previous / next group"
   },
   "otomatikYedekGunde": {
-    "message": "Auto Backup (daily)"
+    "message": "Automatic Backup"
   },
   "ozelEmoji": {
     "message": "Custom emoji"
@@ -2008,5 +2008,107 @@
   },
   "temaIceAktarilan": {
     "message": "Imported"
+  },
+  "klasorYedekBaslik": {
+    "message": "Cloud Folder (experimental)"
+  },
+  "klasorYedekAciklama": {
+    "message": "Backups are written to the folder you choose. Pick a OneDrive, Google Drive or Dropbox folder and its app uploads them for you; restore from the same folder on another computer."
+  },
+  "klasorYedekAd": {
+    "message": "Backup name"
+  },
+  "klasorYedekAdIpucu": {
+    "message": "Backup files carry this name (wsd-name-date.json); in the backup folder it is also the subfolder name. Give each browser its own name; the same name on two computers shares one backup set."
+  },
+  "klasorYedekSiklik": {
+    "message": "Automatic backup frequency"
+  },
+  "gundeBir": {
+    "message": "Once a day"
+  },
+  "haftadaBir": {
+    "message": "Once a week"
+  },
+  "klasorYedekGorselli": {
+    "message": "Include images"
+  },
+  "klasorYedekSakla": {
+    "message": "Backups to keep"
+  },
+  "klasorYedekSimdi": {
+    "message": "Back up to folder now"
+  },
+  "klasorYedekGeriYukle": {
+    "message": "Restore from folder"
+  },
+  "klasorYedekTumu": {
+    "message": "Show all browsers' backups"
+  },
+  "klasorYedekYukleDugme": {
+    "message": "Load"
+  },
+  "klasorYedekSecilmedi": {
+    "message": "No folder selected"
+  },
+  "klasorYedekDesteklenmiyor": {
+    "message": "This browser can't write to folders"
+  },
+  "klasorYedekSecilemedi": {
+    "message": "Couldn't use that folder. System folders (e.g. the Documents root) may be blocked; try a subfolder."
+  },
+  "klasorYedekKlasorYok": {
+    "message": "Choose a backup folder first"
+  },
+  "klasorYedekIzinYok": {
+    "message": "Folder access was not granted"
+  },
+  "klasorYedekYazildi": {
+    "message": "$1 tiles backed up → $2"
+  },
+  "klasorYedekBos": {
+    "message": "No backups in this folder"
+  },
+  "klasorYedekBuCihaz": {
+    "message": "this browser"
+  },
+  "klasorYedekGorselsiz": {
+    "message": "no images"
+  },
+  "klasorYedekSon": {
+    "message": "Last backup: $1"
+  },
+  "klasorYedekIzin": {
+    "message": "Folder access needs renewing for automatic backup"
+  },
+  "klasorYedekIzinVer": {
+    "message": "Allow and back up"
+  },
+  "klasorYedekDahaYeni": {
+    "message": "A newer backup is available ($1, $2)"
+  },
+  "klasorYedekGoster": {
+    "message": "Show"
+  },
+  "yedekleniyor": {
+    "message": "Backing up…"
+  },
+  "okunuyor": {
+    "message": "Reading…"
+  },
+  "gelismis": {
+    "message": "Advanced"
+  },
+  "ayarAra": {
+    "message": "Search settings…"
+  },
+  "ayarAraYok": {
+    "message": "No matching settings"
+  },
+  "aradiginizKart": {
+    "message": "Here it is"
+  },
+  "klasorYedekSiklikKapali": {
+    "message": "Off (manual only)"
   }
 }

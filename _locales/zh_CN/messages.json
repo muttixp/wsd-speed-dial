@@ -62,9 +62,6 @@
   "buKartlaIlgiliNotunuz": {
     "message": "关于此磁贴的备注..."
   },
-  "caprazVe": {
-    "message": "对角 2 和 3"
-  },
   "copKutusu": {
     "message": "回收站"
   },
@@ -1190,7 +1187,928 @@
   "grupAra": {
     "message": "搜索分组..."
   },
+  "altKlasorleriKoru": {
+    "message": "保留子文件夹（取消勾选则每个文件夹都成为单独的分组）"
+  },
+  "buKlasordeKartYok": {
+    "message": "此文件夹中没有磁贴"
+  },
+  "klasorGrupOldu": {
+    "message": "该文件夹已变为分组"
+  },
+  "klasorSilMetin": {
+    "message": "文件夹“$1”及其中的 $2 个磁贴和 $3 个子文件夹将移至回收站。"
+  },
+  "klasorSilindiNKart": {
+    "message": "文件夹已删除（$1 个磁贴）"
+  },
+  "klasorTasindi": {
+    "message": "文件夹已移动"
+  },
+  "klasoruSil": {
+    "message": "删除文件夹"
+  },
+  "klasoruTasi": {
+    "message": "移动文件夹"
+  },
+  "nAltKlasor": {
+    "message": "$1 个子文件夹"
+  },
+  "olustur": {
+    "message": "创建"
+  },
+  "ustDuzeyGrupOlarak": {
+    "message": "⬆ 作为顶级分组"
+  },
+  "ustKlasor": {
+    "message": "上级文件夹（Backspace）"
+  },
+  "yeniKlasor": {
+    "message": "新建文件夹"
+  },
+  "klasorKendiIcine": {
+    "message": "文件夹不能移动到其自身或其子文件夹中"
+  },
+  "klasoruDuzenle": {
+    "message": "编辑文件夹"
+  },
+  "buKlasordeNKart": {
+    "message": "此文件夹中有 <b>$1</b> 个磁贴"
+  },
+  "klasorAdiZatenVar": {
+    "message": "此处已存在名为“$1”的文件夹"
+  },
+  "bekleyenYenilemeler": {
+    "message": "待处理的刷新"
+  },
+  "nBekleyenIptalEdilsinMi": {
+    "message": "队列中仍有 $1 个之前的刷新在等待。要先取消它们吗？否则它们也会依次刷新。"
+  },
+  "iptalEt": {
+    "message": "取消它们"
+  },
+  "kalsin": {
+    "message": "保留"
+  },
+  "nBekleyenIptalEdildi": {
+    "message": "已取消 $1 个待处理的刷新"
+  },
+  "aktarimGorselsizN": {
+    "message": "$1 个导入的磁贴没有图片。未自动开始截图；请在分组菜单中使用“刷新分组图片”。"
+  },
+  "iceAktarmaTamamlandi": {
+    "message": "导入完成"
+  },
+  "nYeniGrup": {
+    "message": "$1 个新分组"
+  },
+  "yaziVePanel": {
+    "message": "文字和面板"
+  },
+  "davranis": {
+    "message": "行为"
+  },
+  "boyutVeYerlesim": {
+    "message": "尺寸和布局"
+  },
+  "renkVeCerceve": {
+    "message": "颜色和边框"
+  },
+  "gorunumAlt": {
+    "message": "外观"
+  },
+  "yakalamaYontemi": {
+    "message": "截图"
+  },
+  "goruntuAlt": {
+    "message": "图片"
+  },
+  "yedekAlt": {
+    "message": "备份"
+  },
+  "iceAktarAlt": {
+    "message": "导入"
+  },
+  "yedeklemeVeAktarma": {
+    "message": "备份和导入"
+  },
+  "tehlikeliIslemler": {
+    "message": "重置"
+  },
+  "tehlikeliAciklama": {
+    "message": "这些操作会批量更改你的数据或设置。建议先进行备份。"
+  },
+  "ustKlasoreCik": {
+    "message": "转到上级文件夹"
+  },
+  "geriIleri": {
+    "message": "后退 / 前进（鼠标侧键）"
+  },
+  "mSekmedeAc": {
+    "message": "在标签页中打开"
+  },
+  "mYeniSekmedeAc": {
+    "message": "在新标签页中打开"
+  },
+  "mGizliSekmedeAc": {
+    "message": "在隐私窗口中打开"
+  },
+  "mAdresiKopyala": {
+    "message": "复制地址"
+  },
+  "mGorseliYenile": {
+    "message": "刷新图片"
+  },
+  "mDuzenle": {
+    "message": "编辑…"
+  },
+  "mNotEkle": {
+    "message": "添加备注…"
+  },
+  "mTasi": {
+    "message": "移动…"
+  },
+  "mSil": {
+    "message": "删除"
+  },
+  "mAc": {
+    "message": "打开"
+  },
+  "mHepsiniAc": {
+    "message": "全部打开"
+  },
+  "mYeniPencerede": {
+    "message": "在新窗口中全部打开"
+  },
+  "mGorselleriYenile": {
+    "message": "刷新图片"
+  },
+  "mKartlariSirala": {
+    "message": "排序磁贴…"
+  },
+  "mGrubuDuzenle": {
+    "message": "编辑分组…"
+  },
+  "mBaskaGrubaTasi": {
+    "message": "移到其他分组…"
+  },
+  "mGruplariYonet": {
+    "message": "管理分组…"
+  },
+  "mKartEkle": {
+    "message": "添加磁贴…"
+  },
+  "mYeniKlasor": {
+    "message": "新建文件夹…"
+  },
+  "mYeniGrup": {
+    "message": "新建分组…"
+  },
+  "mYinelenenKartlar": {
+    "message": "重复磁贴"
+  },
+  "mCopKutusu": {
+    "message": "回收站"
+  },
+  "mAyarlar": {
+    "message": "设置"
+  },
+  "gorseliYenile": {
+    "message": "刷新图片"
+  },
+  "kapakResmi": {
+    "message": "封面图片"
+  },
+  "resimSec": {
+    "message": "选择图片…"
+  },
+  "kapakIpucu": {
+    "message": "将图片拖到这里，或按 Ctrl+V 粘贴"
+  },
+  "etiketler": {
+    "message": "标签"
+  },
+  "yeniEtiket": {
+    "message": "新建标签…"
+  },
+  "etiketiSil": {
+    "message": "删除标签"
+  },
+  "etiketiSilSoru": {
+    "message": "将从 $2 个磁贴中移除标签“$1”。磁贴本身不会被删除。"
+  },
+  "renk_kirmizi": {
+    "message": "红色"
+  },
+  "renk_turuncu": {
+    "message": "橙色"
+  },
+  "renk_sari": {
+    "message": "黄色"
+  },
+  "renk_yesil": {
+    "message": "绿色"
+  },
+  "renk_mavi": {
+    "message": "蓝色"
+  },
+  "renk_mor": {
+    "message": "紫色"
+  },
+  "renk_gri": {
+    "message": "灰色"
+  },
+  "renk_yok": {
+    "message": "无"
+  },
+  "koseYuvarlakligi": {
+    "message": "圆角程度"
+  },
+  "koseYuvarlakligiIpucu": {
+    "message": "磁贴、标签、窗口、菜单和按钮"
+  },
+  "yanPaneliGizle": {
+    "message": "自动隐藏侧边工具栏"
+  },
+  "buGruptaNKart": {
+    "message": "此分组中有 <b>$1</b> 个磁贴"
+  },
+  "dIkonRengi": {
+    "message": "图标颜色"
+  },
+  "dArkaPlanRengi": {
+    "message": "背景颜色"
+  },
+  "kirikDegil": {
+    "message": "未失效"
+  },
+  "kirikDegilIpucu": {
+    "message": "页面可以打开：以后扫描时跳过此地址"
+  },
+  "kirikDegilBildir": {
+    "message": "以后扫描失效链接时将跳过此地址"
+  },
+  "nUlasilamadi": {
+    "message": "$1 个无法访问"
+  },
+  "silinecekKirikYok": {
+    "message": "没有可删除的内容"
+  },
+  "klasorSec": {
+    "message": "选择文件夹"
+  },
+  "klasorSecMenu": {
+    "message": "选择文件夹…"
+  },
+  "klasorSecIpucu": {
+    "message": "点击名称即添加到该处 · ▸ 展开分支"
+  },
+  "sagTikMenusu": {
+    "message": "页面右键菜单"
+  },
+  "sagTikPencere": {
+    "message": "分组 + 选择文件夹…"
+  },
+  "sagTikAgac": {
+    "message": "嵌套菜单"
+  },
+  "sagTikGruplar": {
+    "message": "仅分组"
+  },
+  "asamaDosyaOkunuyor": {
+    "message": "正在读取文件"
+  },
+  "asamaMevcutSiliniyor": {
+    "message": "正在删除现有数据"
+  },
+  "asamaKartlarEkleniyor": {
+    "message": "正在添加磁贴"
+  },
+  "asamaKartlarSiliniyor": {
+    "message": "正在删除磁贴"
+  },
+  "asamaKaydediliyor": {
+    "message": "正在保存备注、颜色、标签和设置…"
+  },
+  "asamaTamamlaniyor": {
+    "message": "即将完成：正在将缺失的图片加入队列…"
+  },
+  "asamaYenileniyor": {
+    "message": "正在重新加载页面…"
+  },
+  "kiriklariSil": {
+    "message": "删除失效项"
+  },
+  "ulasilamayanlariSil": {
+    "message": "删除无法访问项"
+  },
+  "nUlasilamayanCopeTasinacak": {
+    "message": "$1 个无法访问的磁贴将移至回收站。其中有些可能只是暂时无法访问。可以恢复。"
+  },
+  "baslikAlt": {
+    "message": "标题"
+  },
+  "baslikRengi": {
+    "message": "标题颜色"
+  },
+  "baslikStili": {
+    "message": "标题样式"
+  },
+  "stilNormal": {
+    "message": "常规"
+  },
+  "stilKalin": {
+    "message": "粗体"
+  },
+  "stilItalik": {
+    "message": "斜体"
+  },
+  "stilKalinItalik": {
+    "message": "粗斜体"
+  },
+  "baslikGolgesi": {
+    "message": "标题阴影"
+  },
+  "baslikGolgeRengi": {
+    "message": "阴影颜色"
+  },
+  "menuYaziRengi": {
+    "message": "菜单文字颜色"
+  },
+  "aktifGrupYaziRengi": {
+    "message": "当前分组文字颜色"
+  },
+  "sistemBolum": {
+    "message": "系统"
+  },
+  "sagTikBaslik": {
+    "message": "右键菜单"
+  },
+  "simgeRenkSol": {
+    "message": "左侧描边颜色"
+  },
+  "simgeRenkSag": {
+    "message": "右侧描边颜色"
+  },
+  "simgeGolgesi": {
+    "message": "图标阴影"
+  },
+  "simgeZemini": {
+    "message": "图标背景"
+  },
+  "simgeZeminRengi": {
+    "message": "背景颜色"
+  },
   "aktarimdaYakala": {
     "message": "导入后自动截取缺失的缩略图"
+  },
+  "icindekiKartlardanSec": {
+    "message": "从其中的磁贴中选择"
+  },
+  "dosyadanIceAktar": {
+    "message": "导入"
+  },
+  "desteklenmeyenDosya": {
+    "message": "无法识别此文件。请选择 WSD、FVD、Speed Dial 2 或 Group Speed Dial 备份，或书签 HTML 文件"
+  },
+  "karsilamaIceAktarAciklama": {
+    "message": "导入：WSD 备份、其他快速拨号扩展的备份（FVD、Speed Dial .spd、Speed Dial 2、Group Speed Dial），或从任意浏览器导出的书签 HTML 文件。类型会自动识别。"
+  },
+  "karsilamaKapatDevam": {
+    "message": "关闭并继续"
+  },
+  "yerimlerinden": {
+    "message": "从书签"
+  },
+  "siteEkle": {
+    "message": "添加网站"
+  },
+  "metinYapistir": {
+    "message": "粘贴文本（FVD 等）"
+  },
+  "metinYapistirAciklama": {
+    "message": "从 FVD 设置中的导出框复制文本，或复制备份文件的内容，然后粘贴到这里。类型会自动识别。"
+  },
+  "onizlemeKisaltildi": {
+    "message": "预览已截断，将导入完整文本"
+  },
+  "mSekmeleriKaydet": {
+    "message": "将打开的标签页保存为分组…"
+  },
+  "tumunuSec": {
+    "message": "全选"
+  },
+  "kaydedilecekSekmeYok": {
+    "message": "此处没有可保存的打开标签页"
+  },
+  "sekmelerGrupAdi": {
+    "message": "标签页 $1"
+  },
+  "sekmeleriKaydetBaslik": {
+    "message": "将打开的标签页保存为分组"
+  },
+  "sekmeleriKaydetMetin": {
+    "message": "此窗口中的标签页将作为磁贴添加到新分组。取消勾选不需要的标签页。"
+  },
+  "nSekmeKaydedildi": {
+    "message": "已将 $1 个标签页保存到新分组"
+  },
+  "calismaAlanlari": {
+    "message": "工作区"
+  },
+  "alanKaydetBaslik": {
+    "message": "保存工作区"
+  },
+  "alanKaydetMetin": {
+    "message": "勾选要保存的标签页。如果窗口有多个部分（例如 Vivaldi/Opera 工作区），勾选部分标题上的复选框即可选中整个部分。"
+  },
+  "alanVarsayilanAd": {
+    "message": "工作区 $1"
+  },
+  "alanKaydedildi": {
+    "message": "已将 $1 个标签页保存到工作区"
+  },
+  "alanBos": {
+    "message": "此工作区为空"
+  },
+  "alanAc": {
+    "message": "打开"
+  },
+  "yenidenAdlandir": {
+    "message": "重命名"
+  },
+  "grubaDonustur": {
+    "message": "转换为分组"
+  },
+  "grubaDonusturMetin": {
+    "message": "“$1”将变为普通分组，并截取磁贴图片。"
+  },
+  "grubaDonusturuldu": {
+    "message": "已转换为分组"
+  },
+  "alanSil": {
+    "message": "删除工作区"
+  },
+  "alanSilMetin": {
+    "message": "“$1”（$2 个标签页）将被永久删除。"
+  },
+  "alanYok": {
+    "message": "还没有工作区。使用“保存标签页”保存打开的标签页，之后一键重新打开。"
+  },
+  "nSekme": {
+    "message": "$1 个标签页"
+  },
+  "yeniPencerede": {
+    "message": "在新窗口中"
+  },
+  "sekmeleriKaydet": {
+    "message": "保存标签页"
+  },
+  "alandanCikar": {
+    "message": "从工作区移除"
+  },
+  "nDahaGoster": {
+    "message": "+ 另外 $1 个标签页"
+  },
+  "dahaAzGoster": {
+    "message": "收起"
+  },
+  "alanAcIpucu": {
+    "message": "在此窗口中打开标签页"
+  },
+  "kayitliSekmeler": {
+    "message": "已保存的标签页"
+  },
+  "acikSekmeler": {
+    "message": "此窗口中打开的标签页"
+  },
+  "alanDuzenleBaslik": {
+    "message": "编辑工作区"
+  },
+  "alanDuzenleMetin": {
+    "message": "取消勾选的已保存标签页将被移除，勾选的打开标签页将被添加。"
+  },
+  "alanDuzenlendi": {
+    "message": "已添加 $1 个标签页，移除 $2 个标签页"
+  },
+  "etiketIpucu": {
+    "message": "用逗号分隔：工作, 研究"
+  },
+  "tumu": {
+    "message": "全部"
+  },
+  "renk": {
+    "message": "颜色"
+  },
+  "blokBasligi": {
+    "message": "$1 个标签页 · $2"
+  },
+  "mSekmeleriAlanaKaydet": {
+    "message": "将标签页保存到工作区…"
+  },
+  "webTarayiciMotoru": {
+    "message": "浏览器搜索引擎"
+  },
+  "webAraYer": {
+    "message": "使用 $1 搜索或输入网址"
+  },
+  "webVarsayilanYap": {
+    "message": "设为默认"
+  },
+  "anaSayfaBolum": {
+    "message": "主页"
+  },
+  "webAramaCubugu": {
+    "message": "搜索栏"
+  },
+  "webAramaGoster": {
+    "message": "显示搜索栏"
+  },
+  "webVarsayilanMotor": {
+    "message": "默认搜索引擎"
+  },
+  "webMotorListesi": {
+    "message": "列表中显示的搜索引擎"
+  },
+  "webMotorEkle": {
+    "message": "添加自定义搜索引擎"
+  },
+  "webYeniAd": {
+    "message": "名称"
+  },
+  "webYeniKisa": {
+    "message": "快捷词"
+  },
+  "webYeniAdres": {
+    "message": "https://site.com/search?q=%s"
+  },
+  "webYeniIpucu": {
+    "message": "在搜索词的位置填入 %s。快捷词可选，用法为“ab 关键词”。"
+  },
+  "webYeniAdGerek": {
+    "message": "请输入搜索引擎名称"
+  },
+  "webYeniAdresGecersiz": {
+    "message": "地址必须以 http(s):// 开头并包含 %s"
+  },
+  "webYeniKisaVar": {
+    "message": "此快捷词已被使用或包含空格"
+  },
+  "webYeniEklendi": {
+    "message": "已添加 $1"
+  },
+  "ekrandanSec": {
+    "message": "从屏幕上取色"
+  },
+  "arayuzAlt": {
+    "message": "界面"
+  },
+  "renkliSimgeler": {
+    "message": "彩色图标"
+  },
+  "temaBaslik": {
+    "message": "主题"
+  },
+  "temaMod": {
+    "message": "模式"
+  },
+  "temaKoyu": {
+    "message": "深色"
+  },
+  "temaAcik": {
+    "message": "浅色"
+  },
+  "temaSistem": {
+    "message": "跟随系统"
+  },
+  "temaIpucu": {
+    "message": "预设会统一设置各项颜色；你仍可在下方单独修改每种颜色。壁纸图片会保留。"
+  },
+  "temaUygulandi": {
+    "message": "已应用“$1”主题"
+  },
+  "temaDegistirildi": {
+    "message": "已修改"
+  },
+  "temaDegistirildiIpucu": {
+    "message": "颜色已手动修改。点击恢复为预设。"
+  },
+  "tema_gece": {
+    "message": "夜色"
+  },
+  "tema_grafit": {
+    "message": "石墨"
+  },
+  "tema_okyanus": {
+    "message": "海洋"
+  },
+  "tema_orman": {
+    "message": "森林"
+  },
+  "tema_mor": {
+    "message": "紫罗兰"
+  },
+  "tema_gunbatimi": {
+    "message": "日落"
+  },
+  "tema_kagit": {
+    "message": "纸张"
+  },
+  "tema_kum": {
+    "message": "沙滩"
+  },
+  "tema_buz": {
+    "message": "冰川"
+  },
+  "tema_nane": {
+    "message": "薄荷"
+  },
+  "tema_pastel": {
+    "message": "粉彩"
+  },
+  "temaKaydet": {
+    "message": "保存"
+  },
+  "temaKaydetIpucu": {
+    "message": "将当前颜色保存为自定义主题"
+  },
+  "temaKaydetMetin": {
+    "message": "当前颜色将以此名称保存。如已有同名主题，则会更新该主题。"
+  },
+  "temaOzelAd": {
+    "message": "我的主题 $1"
+  },
+  "temaKaydedildi": {
+    "message": "已保存“$1”"
+  },
+  "temaSilindi": {
+    "message": "已删除“$1”"
+  },
+  "temaSinir": {
+    "message": "最多可保存 $1 个主题"
+  },
+  "anaSayfaSilinemez": {
+    "message": "无法删除“主页”"
+  },
+  "anaSayfaAdiDegismez": {
+    "message": "无法重命名“主页”"
+  },
+  "camGorunum": {
+    "message": "毛玻璃效果"
+  },
+  "aktifIkonRengi": {
+    "message": "当前分组图标颜色"
+  },
+  "aktarimGorselBaslik": {
+    "message": "磁贴图片"
+  },
+  "aktarimGorselMetin": {
+    "message": "$1 个导入的磁贴没有图片；备份文件中不包含图片。\n\n要在后台截取吗？不会打开任何窗口，期间可以继续使用 WSD。根据磁贴数量可能需要一些时间，浏览器顶部可能会显示“调试”提示。"
+  },
+  "arkaPlandaAl": {
+    "message": "在后台截取"
+  },
+  "simdiDegil": {
+    "message": "以后再说"
+  },
+  "kartKelime": {
+    "message": "磁贴"
+  },
+  "copGeriYukle": {
+    "message": "恢复"
+  },
+  "sonYedekKisa": {
+    "message": "上次备份：$1（$2，$3 个磁贴）"
+  },
+  "mevcutVerilerSiliniyor": {
+    "message": "正在删除现有数据"
+  },
+  "tema_yakut": {
+    "message": "红宝石"
+  },
+  "tema_gul": {
+    "message": "玫瑰"
+  },
+  "temaGuncelle": {
+    "message": "更新"
+  },
+  "temaGuncelleIpucu": {
+    "message": "将更改保存到此主题"
+  },
+  "tema_kehribar": {
+    "message": "琥珀"
+  },
+  "tema_gunes": {
+    "message": "阳光"
+  },
+  "tema_kontrast": {
+    "message": "高对比度"
+  },
+  "tema_murekkep": {
+    "message": "墨水"
+  },
+  "webAramaYeri": {
+    "message": "显示位置"
+  },
+  "webYerAnaSayfa": {
+    "message": "仅在主页"
+  },
+  "webYerIlkGrup": {
+    "message": "在第一个分组中"
+  },
+  "webYerHepsi": {
+    "message": "在所有分组中"
+  },
+  "kucukPencere": {
+    "message": "角落小窗口（实验性）"
+  },
+  "gizliKipBilgi": {
+    "message": "在此模式下，Chrome 会在顶部显示“WSD Speed Dial 已开始调试此浏览器”提示栏。这是 Chrome 在不打开窗口截取页面截图时的强制提示；该权限仅用于截图。截图结束后提示栏会消失。"
+  },
+  "hazirGruplar": {
+    "message": "预制分组"
+  },
+  "hazirGruplarAciklama": {
+    "message": "所选的资源包将作为新分组添加；现有磁贴不受影响。之后可以编辑这些磁贴。"
+  },
+  "tumDiller": {
+    "message": "显示所有语言的资源包"
+  },
+  "paketOner": {
+    "message": "推荐资源包（GitHub）"
+  },
+  "paketListesiAlinamadi": {
+    "message": "无法加载资源包列表。"
+  },
+  "nKartKisa": {
+    "message": "$1 个磁贴"
+  },
+  "eklendi": {
+    "message": "已添加"
+  },
+  "paketEklendi": {
+    "message": "已添加“$1” · $2 个磁贴"
+  },
+  "paketEklenemedi": {
+    "message": "无法添加资源包"
+  },
+  "yukleniyor": {
+    "message": "正在加载…"
+  },
+  "webAraYerTarayici": {
+    "message": "搜索网页或输入网址"
+  },
+  "kartHizalama": {
+    "message": "磁贴对齐"
+  },
+  "hizaOrta": {
+    "message": "居中"
+  },
+  "hizaSol": {
+    "message": "左对齐"
+  },
+  "hakkinda": {
+    "message": "关于"
+  },
+  "hakkindaAlt": {
+    "message": "开源 · 无跟踪 · 无需账户"
+  },
+  "yenilikler": {
+    "message": "新功能"
+  },
+  "degerlendir": {
+    "message": "评分"
+  },
+  "oneriHataBildir": {
+    "message": "建议 / 报告问题"
+  },
+  "kaynakKod": {
+    "message": "源代码（GitHub）"
+  },
+  "gizlilikPolitikasi": {
+    "message": "隐私政策"
+  },
+  "tumDegisiklikler": {
+    "message": "完整更新日志（GitHub）"
+  },
+  "yenilikBuSurum": {
+    "message": "此版本"
+  },
+  "yenilikYuklendi": {
+    "message": "已安装 WSD Speed Dial $1"
+  },
+  "yenilikDil": {
+    "message": "en"
+  },
+  "yenilikYeni": {
+    "message": "新增"
+  },
+  "yenilikDuzeltme": {
+    "message": "修复"
+  },
+  "temaIceAktarilan": {
+    "message": "已导入"
+  },
+  "klasorYedekBaslik": {
+    "message": "云文件夹（实验性）"
+  },
+  "klasorYedekAciklama": {
+    "message": "备份会写入你选择的文件夹。选择 OneDrive、Google Drive 或 Dropbox 文件夹，其客户端会自动上传；在另一台电脑上从同一文件夹恢复即可。"
+  },
+  "klasorYedekAd": {
+    "message": "备份名称"
+  },
+  "klasorYedekAdIpucu": {
+    "message": "备份文件使用此名称（wsd-名称-日期.json）；在备份文件夹中它也是子文件夹的名称。请为每个浏览器设置不同的名称；两台电脑使用相同名称将共享同一组备份。"
+  },
+  "klasorYedekSiklik": {
+    "message": "自动备份频率"
+  },
+  "gundeBir": {
+    "message": "每天一次"
+  },
+  "haftadaBir": {
+    "message": "每周一次"
+  },
+  "klasorYedekGorselli": {
+    "message": "包含图片"
+  },
+  "klasorYedekSakla": {
+    "message": "保留的备份数"
+  },
+  "klasorYedekSimdi": {
+    "message": "立即备份到文件夹"
+  },
+  "klasorYedekGeriYukle": {
+    "message": "从文件夹恢复"
+  },
+  "klasorYedekTumu": {
+    "message": "显示所有浏览器的备份"
+  },
+  "klasorYedekYukleDugme": {
+    "message": "加载"
+  },
+  "klasorYedekSecilmedi": {
+    "message": "未选择文件夹"
+  },
+  "klasorYedekDesteklenmiyor": {
+    "message": "此浏览器无法写入文件夹"
+  },
+  "klasorYedekSecilemedi": {
+    "message": "无法使用该文件夹。系统文件夹（例如“文档”根目录）可能被阻止；请尝试子文件夹。"
+  },
+  "klasorYedekKlasorYok": {
+    "message": "请先选择备份文件夹"
+  },
+  "klasorYedekIzinYok": {
+    "message": "未授予文件夹访问权限"
+  },
+  "klasorYedekYazildi": {
+    "message": "已备份 $1 个磁贴 → $2"
+  },
+  "klasorYedekBos": {
+    "message": "此文件夹中没有备份"
+  },
+  "klasorYedekBuCihaz": {
+    "message": "此浏览器"
+  },
+  "klasorYedekGorselsiz": {
+    "message": "无图片"
+  },
+  "klasorYedekSon": {
+    "message": "上次备份：$1"
+  },
+  "klasorYedekIzin": {
+    "message": "自动备份需要重新授予文件夹访问权限"
+  },
+  "klasorYedekIzinVer": {
+    "message": "授权并备份"
+  },
+  "klasorYedekDahaYeni": {
+    "message": "有更新的备份可用（$1，$2）"
+  },
+  "klasorYedekGoster": {
+    "message": "显示"
+  },
+  "yedekleniyor": {
+    "message": "正在备份…"
+  },
+  "okunuyor": {
+    "message": "正在读取…"
+  },
+  "gelismis": {
+    "message": "高级"
+  },
+  "ayarAra": {
+    "message": "搜索设置…"
+  },
+  "ayarAraYok": {
+    "message": "没有匹配的设置"
+  },
+  "aradiginizKart": {
+    "message": "在这里"
+  },
+  "klasorYedekSiklikKapali": {
+    "message": "关闭（仅手动）"
   }
 }

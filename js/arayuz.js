@@ -27,6 +27,29 @@ let bildirimZaman = null;
  * @param metin  gosterilecek yazi
  * @param eylem  {etiket, calistir} - bildirimde dugme gosterir (Geri Al gibi)
  */
+/**
+ * MESGUL DUGME (1.5.7): uzun islem (yedek) suresince dugme kilitli, uzerinde
+ * "Yedekleniyor… %40" yazar. Sessiz bekleme "calismiyor" sanilip tekrar
+ * tiklaniyordu. `is(ilerle)`: ilerle(yapilan, toplam) cagrilabilir.
+ */
+export async function mesgulDugme(btn, metin, is) {
+    if (!btn || btn.dataset.mesgul) return;
+    const yazi = btn.querySelector('span') || btn;
+    const eski = yazi.textContent;
+    btn.dataset.mesgul = '1';
+    btn.disabled = true;
+    btn.classList.add('mesgul');
+    yazi.textContent = metin;
+    const ilerle = (y, t) => { if (t) yazi.textContent = `${metin} %${Math.min(100, Math.round(y / t * 100))}`; };
+    try { return await is(ilerle); }
+    finally {
+        yazi.textContent = eski;
+        btn.disabled = false;
+        btn.classList.remove('mesgul');
+        delete btn.dataset.mesgul;
+    }
+}
+
 export function bildir(metin, eylem = null) {
     const b = el('bildirim');
     if (!b) return;

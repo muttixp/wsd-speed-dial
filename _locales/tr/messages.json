@@ -231,7 +231,7 @@
     "message": "önceki / sonraki grup"
   },
   "otomatikYedekGunde": {
-    "message": "Otomatik Yedek (Günde 1)"
+    "message": "Otomatik Yedek"
   },
   "ozelEmoji": {
     "message": "Özel emoji"
@@ -2008,5 +2008,107 @@
   },
   "temaIceAktarilan": {
     "message": "İçe aktarılan"
+  },
+  "klasorYedekBaslik": {
+    "message": "Bulut Klasörü (deneysel)"
+  },
+  "klasorYedekAciklama": {
+    "message": "Yedekler seçtiğiniz klasöre yazılır. OneDrive, Google Drive ya da Dropbox klasörü seçerseniz bulut programı yedeği kendisi yükler; başka bilgisayarda aynı klasörden geri yüklersiniz."
+  },
+  "klasorYedekAd": {
+    "message": "Yedek adı"
+  },
+  "klasorYedekAdIpucu": {
+    "message": "Yedek dosyaları bu adı taşır (wsd-ad-tarih.json); klasör yedeğinde de alt klasör adı olur. Birden çok tarayıcıya ayrı ad verin; iki bilgisayarda aynı ad ortak yedek setidir."
+  },
+  "klasorYedekSiklik": {
+    "message": "Otomatik yedek sıklığı"
+  },
+  "gundeBir": {
+    "message": "Günde 1"
+  },
+  "haftadaBir": {
+    "message": "Haftada 1"
+  },
+  "klasorYedekGorselli": {
+    "message": "Görseller dahil"
+  },
+  "klasorYedekSakla": {
+    "message": "Saklanacak yedek sayısı"
+  },
+  "klasorYedekSimdi": {
+    "message": "Klasöre şimdi yedekle"
+  },
+  "klasorYedekGeriYukle": {
+    "message": "Klasörden geri yükle"
+  },
+  "klasorYedekTumu": {
+    "message": "Tüm tarayıcıların yedeklerini göster"
+  },
+  "klasorYedekYukleDugme": {
+    "message": "Yükle"
+  },
+  "klasorYedekSecilmedi": {
+    "message": "Klasör seçilmedi"
+  },
+  "klasorYedekDesteklenmiyor": {
+    "message": "Bu tarayıcı klasöre yazmayı desteklemiyor"
+  },
+  "klasorYedekSecilemedi": {
+    "message": "Klasör seçilemedi. Sistem klasörleri (ör. Belgeler kökü) seçilemeyebilir; içinde bir alt klasör deneyin."
+  },
+  "klasorYedekKlasorYok": {
+    "message": "Önce bir yedek klasörü seçin"
+  },
+  "klasorYedekIzinYok": {
+    "message": "Klasöre erişim izni verilmedi"
+  },
+  "klasorYedekYazildi": {
+    "message": "$1 kart yedeklendi → $2"
+  },
+  "klasorYedekBos": {
+    "message": "Bu klasörde yedek yok"
+  },
+  "klasorYedekBuCihaz": {
+    "message": "bu tarayıcı"
+  },
+  "klasorYedekGorselsiz": {
+    "message": "görselsiz"
+  },
+  "klasorYedekSon": {
+    "message": "Son yedek: $1"
+  },
+  "klasorYedekIzin": {
+    "message": "Otomatik yedek için klasör izni yenilenmeli"
+  },
+  "klasorYedekIzinVer": {
+    "message": "İzin ver ve yedekle"
+  },
+  "klasorYedekDahaYeni": {
+    "message": "Daha yeni yedek var ($1, $2)"
+  },
+  "klasorYedekGoster": {
+    "message": "Göster"
+  },
+  "yedekleniyor": {
+    "message": "Yedekleniyor…"
+  },
+  "okunuyor": {
+    "message": "Okunuyor…"
+  },
+  "gelismis": {
+    "message": "Gelişmiş"
+  },
+  "ayarAra": {
+    "message": "Ayar ara…"
+  },
+  "ayarAraYok": {
+    "message": "Eşleşen ayar yok"
+  },
+  "aradiginizKart": {
+    "message": "Aradığınız kart"
+  },
+  "klasorYedekSiklikKapali": {
+    "message": "Kapalı (yalnızca elle)"
   }
 }

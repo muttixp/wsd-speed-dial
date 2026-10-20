@@ -45,7 +45,7 @@
     "message": "Mesmo separador"
   },
   "basaKaydir": {
-    "message": "Rolar para o início"
+    "message": "Deslocar para o início"
   },
   "baslik": {
     "message": "Título"
@@ -61,9 +61,6 @@
   },
   "buKartlaIlgiliNotunuz": {
     "message": "A sua nota sobre este bloco..."
-  },
-  "caprazVe": {
-    "message": "Diagonal 2 e 3"
   },
   "copKutusu": {
     "message": "Reciclagem"
@@ -99,7 +96,7 @@
     "message": "Usar configuração geral"
   },
   "gerekirsePencereyiOneAl": {
-    "message": "Trazer a janela para frente se necessário"
+    "message": "Trazer a janela para a frente se necessário"
   },
   "gizliHataAyiklamaCubuguCikar": {
     "message": "Oculto (mostra barra de depuração)"
@@ -129,7 +126,7 @@
     "message": "Criar grupo"
   },
   "gruplariYonet": {
-    "message": "gerenciar grupos"
+    "message": "gerir grupos"
   },
   "hazirBoyutlar": {
     "message": "Tamanhos prontos"
@@ -276,7 +273,7 @@
     "message": "Lembrar último grupo"
   },
   "sonaKaydir": {
-    "message": "Rolar para o fim"
+    "message": "Deslocar para o fim"
   },
   "tasi": {
     "message": "Mover"
@@ -408,7 +405,7 @@
     "message": "Redefinir definições"
   },
   "tumGorunumVeDavranisAyarlariVarsayilana": {
-    "message": "Todas as definições de aparência e comportamento voltarão ao padrão. Os os seus blocos, grupos e imagens não são alterados."
+    "message": "Todas as definições de aparência e comportamento voltarão ao padrão. Os seus blocos, grupos e imagens não são alterados."
   },
   "sifirla": {
     "message": "Redefinir"
@@ -564,7 +561,7 @@
     "message": "Eliminar grupo"
   },
   "grupVeIcindekiTumKartlarCop": {
-    "message": "O grupo e todos os os seus blocos serão movidos para a reciclagem."
+    "message": "O grupo e todos os seus blocos serão movidos para a reciclagem."
   },
   "hepsiniYenile": {
     "message": "Atualizar todos"
@@ -618,7 +615,7 @@
     "message": "Grupo eliminado ($1 blocos)"
   },
   "nKayitKaliciSilinecek": {
-    "message": "$1 registros serão eliminados permanentemente."
+    "message": "$1 registos serão eliminados permanentemente."
   },
   "nGrupNKartSilindi": {
     "message": "$1 grupos, $2 blocos eliminados"
@@ -738,7 +735,7 @@
     "message": "Capture-as com \"Atualizar imagens do grupo\" no menu do grupo."
   },
   "buKartlarPaylasir": {
-    "message": "Estes blocos compartilham imagem, nota e cor."
+    "message": "Estes blocos partilham imagem, nota e cor."
   },
   "yinelenenKartlariAc": {
     "message": "Abrir blocos duplicados"
@@ -798,7 +795,7 @@
     "message": "Recomendamos fazer uma cópia e limpar os dados não usados."
   },
   "kartlarinizaDokunulmaz": {
-    "message": "Os os seus blocos, grupos e imagens não são alterados."
+    "message": "Os seus blocos, grupos e imagens não são alterados."
   },
   "kaliciSilinecekCopeGitmez": {
     "message": "serão eliminados permanentemente. Eles não vão para a reciclagem e não podem ser recuperados."
@@ -807,7 +804,7 @@
     "message": "vazio"
   },
   "nKayit": {
-    "message": "$1 registros"
+    "message": "$1 registos"
   },
   "nKartSilinmisGrup": {
     "message": "$1 blocos · grupo eliminado"
@@ -1101,7 +1098,7 @@
     "message": "Estes endereços retornaram 404/410; a página não existe mais."
   },
   "supheliAciklama": {
-    "message": "Não foi possível acessar estes endereços, mas o resultado é inconclusivo (tempo esgotado, erro de rede ou proteção contra bots). Não foram marcados."
+    "message": "Não foi possível aceder a estes endereços, mas o resultado é inconclusivo (tempo esgotado, erro de rede ou proteção contra bots). Não foram marcados."
   },
   "kirikKartlariGoster": {
     "message": "Mostrar blocos quebrados"
@@ -1190,7 +1187,928 @@
   "grupAra": {
     "message": "Pesquisar grupos..."
   },
+  "altKlasorleriKoru": {
+    "message": "Manter subpastas (se desmarcado, cada pasta torna-se um grupo separado)"
+  },
+  "buKlasordeKartYok": {
+    "message": "Esta pasta não tem blocos"
+  },
+  "klasorGrupOldu": {
+    "message": "A pasta passou a ser um grupo"
+  },
+  "klasorSilMetin": {
+    "message": "A pasta \"$1\" será movida para a reciclagem com os seus $2 blocos e $3 subpastas."
+  },
+  "klasorSilindiNKart": {
+    "message": "Pasta eliminada ($1 blocos)"
+  },
+  "klasorTasindi": {
+    "message": "Pasta movida"
+  },
+  "klasoruSil": {
+    "message": "Eliminar pasta"
+  },
+  "klasoruTasi": {
+    "message": "Mover pasta"
+  },
+  "nAltKlasor": {
+    "message": "$1 subpastas"
+  },
+  "olustur": {
+    "message": "Criar"
+  },
+  "ustDuzeyGrupOlarak": {
+    "message": "⬆ Como grupo de nível superior"
+  },
+  "ustKlasor": {
+    "message": "Pasta superior (Backspace)"
+  },
+  "yeniKlasor": {
+    "message": "Nova pasta"
+  },
+  "klasorKendiIcine": {
+    "message": "Uma pasta não pode ser movida para dentro de si própria nem de uma subpasta"
+  },
+  "klasoruDuzenle": {
+    "message": "Editar pasta"
+  },
+  "buKlasordeNKart": {
+    "message": "Esta pasta tem <b>$1</b> blocos"
+  },
+  "klasorAdiZatenVar": {
+    "message": "Já existe aqui uma pasta chamada \"$1\""
+  },
+  "bekleyenYenilemeler": {
+    "message": "Atualizações pendentes"
+  },
+  "nBekleyenIptalEdilsinMi": {
+    "message": "Ainda há $1 atualizações anteriores na fila. Cancelá-las primeiro? Caso contrário, também serão atualizadas pela ordem."
+  },
+  "iptalEt": {
+    "message": "Cancelá-las"
+  },
+  "kalsin": {
+    "message": "Manter"
+  },
+  "nBekleyenIptalEdildi": {
+    "message": "$1 atualizações pendentes canceladas"
+  },
+  "aktarimGorselsizN": {
+    "message": "$1 blocos importados não têm imagem. A captura não foi iniciada automaticamente; use \"Atualizar imagens do grupo\" no menu do grupo."
+  },
+  "iceAktarmaTamamlandi": {
+    "message": "Importação concluída"
+  },
+  "nYeniGrup": {
+    "message": "$1 grupos novos"
+  },
+  "yaziVePanel": {
+    "message": "Texto e painel"
+  },
+  "davranis": {
+    "message": "Comportamento"
+  },
+  "boyutVeYerlesim": {
+    "message": "Tamanho e disposição"
+  },
+  "renkVeCerceve": {
+    "message": "Cor e borda"
+  },
+  "gorunumAlt": {
+    "message": "Aparência"
+  },
+  "yakalamaYontemi": {
+    "message": "Captura"
+  },
+  "goruntuAlt": {
+    "message": "Imagem"
+  },
+  "yedekAlt": {
+    "message": "Cópia de segurança"
+  },
+  "iceAktarAlt": {
+    "message": "Importar"
+  },
+  "yedeklemeVeAktarma": {
+    "message": "Cópia de segurança e importação"
+  },
+  "tehlikeliIslemler": {
+    "message": "Redefinir"
+  },
+  "tehlikeliAciklama": {
+    "message": "Estas ações alteram os seus dados ou definições em massa. Recomenda-se fazer uma cópia primeiro."
+  },
+  "ustKlasoreCik": {
+    "message": "ir para a pasta superior"
+  },
+  "geriIleri": {
+    "message": "retroceder / avançar (botões laterais do rato)"
+  },
+  "mSekmedeAc": {
+    "message": "Abrir no separador"
+  },
+  "mYeniSekmedeAc": {
+    "message": "Abrir num novo separador"
+  },
+  "mGizliSekmedeAc": {
+    "message": "Abrir em janela anónima"
+  },
+  "mAdresiKopyala": {
+    "message": "Copiar endereço"
+  },
+  "mGorseliYenile": {
+    "message": "Atualizar imagem"
+  },
+  "mDuzenle": {
+    "message": "Editar…"
+  },
+  "mNotEkle": {
+    "message": "Adicionar nota…"
+  },
+  "mTasi": {
+    "message": "Mover…"
+  },
+  "mSil": {
+    "message": "Eliminar"
+  },
+  "mAc": {
+    "message": "Abrir"
+  },
+  "mHepsiniAc": {
+    "message": "Abrir todos"
+  },
+  "mYeniPencerede": {
+    "message": "Abrir todos numa nova janela"
+  },
+  "mGorselleriYenile": {
+    "message": "Atualizar imagens"
+  },
+  "mKartlariSirala": {
+    "message": "Ordenar blocos…"
+  },
+  "mGrubuDuzenle": {
+    "message": "Editar grupo…"
+  },
+  "mBaskaGrubaTasi": {
+    "message": "Mover para outro grupo…"
+  },
+  "mGruplariYonet": {
+    "message": "Gerir grupos…"
+  },
+  "mKartEkle": {
+    "message": "Adicionar bloco…"
+  },
+  "mYeniKlasor": {
+    "message": "Nova pasta…"
+  },
+  "mYeniGrup": {
+    "message": "Novo grupo…"
+  },
+  "mYinelenenKartlar": {
+    "message": "Blocos duplicados"
+  },
+  "mCopKutusu": {
+    "message": "Reciclagem"
+  },
+  "mAyarlar": {
+    "message": "Definições"
+  },
+  "gorseliYenile": {
+    "message": "Atualizar imagem"
+  },
+  "kapakResmi": {
+    "message": "Imagem de capa"
+  },
+  "resimSec": {
+    "message": "Escolher imagem…"
+  },
+  "kapakIpucu": {
+    "message": "Arraste uma imagem para aqui ou cole com Ctrl+V"
+  },
+  "etiketler": {
+    "message": "Etiquetas"
+  },
+  "yeniEtiket": {
+    "message": "Nova etiqueta…"
+  },
+  "etiketiSil": {
+    "message": "Eliminar etiqueta"
+  },
+  "etiketiSilSoru": {
+    "message": "A etiqueta \"$1\" será removida de $2 blocos. Os blocos não são eliminados."
+  },
+  "renk_kirmizi": {
+    "message": "Vermelho"
+  },
+  "renk_turuncu": {
+    "message": "Laranja"
+  },
+  "renk_sari": {
+    "message": "Amarelo"
+  },
+  "renk_yesil": {
+    "message": "Verde"
+  },
+  "renk_mavi": {
+    "message": "Azul"
+  },
+  "renk_mor": {
+    "message": "Roxo"
+  },
+  "renk_gri": {
+    "message": "Cinzento"
+  },
+  "renk_yok": {
+    "message": "Nenhuma"
+  },
+  "koseYuvarlakligi": {
+    "message": "Arredondamento dos cantos"
+  },
+  "koseYuvarlakligiIpucu": {
+    "message": "Blocos, separadores, janelas, menus e botões"
+  },
+  "yanPaneliGizle": {
+    "message": "Ocultar automaticamente a barra lateral"
+  },
+  "buGruptaNKart": {
+    "message": "Este grupo tem <b>$1</b> blocos"
+  },
+  "dIkonRengi": {
+    "message": "Cor do ícone"
+  },
+  "dArkaPlanRengi": {
+    "message": "Cor de fundo"
+  },
+  "kirikDegil": {
+    "message": "Não está quebrado"
+  },
+  "kirikDegilIpucu": {
+    "message": "A página abre: ignorar este endereço nas próximas verificações"
+  },
+  "kirikDegilBildir": {
+    "message": "Este endereço será ignorado nas próximas procuras de links quebrados"
+  },
+  "nUlasilamadi": {
+    "message": "$1 sem acesso"
+  },
+  "silinecekKirikYok": {
+    "message": "Nada para eliminar"
+  },
+  "klasorSec": {
+    "message": "Escolher pasta"
+  },
+  "klasorSecMenu": {
+    "message": "Escolher pasta…"
+  },
+  "klasorSecIpucu": {
+    "message": "Clique num nome para adicionar aí · ▸ abre o ramo"
+  },
+  "sagTikMenusu": {
+    "message": "Menu de contexto da página"
+  },
+  "sagTikPencere": {
+    "message": "Grupos + Escolher pasta…"
+  },
+  "sagTikAgac": {
+    "message": "Menus encadeados"
+  },
+  "sagTikGruplar": {
+    "message": "Só grupos"
+  },
+  "asamaDosyaOkunuyor": {
+    "message": "A ler o ficheiro"
+  },
+  "asamaMevcutSiliniyor": {
+    "message": "A eliminar os dados existentes"
+  },
+  "asamaKartlarEkleniyor": {
+    "message": "A adicionar blocos"
+  },
+  "asamaKartlarSiliniyor": {
+    "message": "A eliminar blocos"
+  },
+  "asamaKaydediliyor": {
+    "message": "A guardar notas, cores, etiquetas e definições…"
+  },
+  "asamaTamamlaniyor": {
+    "message": "A concluir: a colocar imagens em falta na fila…"
+  },
+  "asamaYenileniyor": {
+    "message": "A recarregar a página…"
+  },
+  "kiriklariSil": {
+    "message": "Eliminar quebrados"
+  },
+  "ulasilamayanlariSil": {
+    "message": "Eliminar sem acesso"
+  },
+  "nUlasilamayanCopeTasinacak": {
+    "message": "$1 blocos sem acesso serão movidos para a reciclagem. Alguns podem estar apenas temporariamente em baixo. Pode restaurá-los."
+  },
+  "baslikAlt": {
+    "message": "Título"
+  },
+  "baslikRengi": {
+    "message": "Cor do título"
+  },
+  "baslikStili": {
+    "message": "Estilo do título"
+  },
+  "stilNormal": {
+    "message": "Normal"
+  },
+  "stilKalin": {
+    "message": "Negrito"
+  },
+  "stilItalik": {
+    "message": "Itálico"
+  },
+  "stilKalinItalik": {
+    "message": "Negrito itálico"
+  },
+  "baslikGolgesi": {
+    "message": "Sombra do título"
+  },
+  "baslikGolgeRengi": {
+    "message": "Cor da sombra"
+  },
+  "menuYaziRengi": {
+    "message": "Cor do texto do menu"
+  },
+  "aktifGrupYaziRengi": {
+    "message": "Cor do texto do grupo ativo"
+  },
+  "sistemBolum": {
+    "message": "Sistema"
+  },
+  "sagTikBaslik": {
+    "message": "Menu de contexto"
+  },
+  "simgeRenkSol": {
+    "message": "Cor do traço esquerdo"
+  },
+  "simgeRenkSag": {
+    "message": "Cor do traço direito"
+  },
+  "simgeGolgesi": {
+    "message": "Sombra do ícone"
+  },
+  "simgeZemini": {
+    "message": "Fundo do ícone"
+  },
+  "simgeZeminRengi": {
+    "message": "Cor de fundo"
+  },
   "aktarimdaYakala": {
     "message": "Capturar miniaturas em falta após importar"
+  },
+  "icindekiKartlardanSec": {
+    "message": "Escolher entre os blocos do grupo"
+  },
+  "dosyadanIceAktar": {
+    "message": "Importar"
+  },
+  "desteklenmeyenDosya": {
+    "message": "Este ficheiro não foi reconhecido. Escolha uma cópia do WSD, FVD, Speed Dial 2 ou Group Speed Dial, ou um ficheiro HTML de marcadores"
+  },
+  "karsilamaIceAktarAciklama": {
+    "message": "Importar: uma cópia do WSD, uma cópia de outro speed dial (FVD, Speed Dial .spd, Speed Dial 2, Group Speed Dial) ou um ficheiro HTML de marcadores exportado de qualquer navegador. O tipo é detetado automaticamente."
+  },
+  "karsilamaKapatDevam": {
+    "message": "Fechar e continuar"
+  },
+  "yerimlerinden": {
+    "message": "Dos marcadores"
+  },
+  "siteEkle": {
+    "message": "Adicionar site"
+  },
+  "metinYapistir": {
+    "message": "Colar texto (FVD, etc.)"
+  },
+  "metinYapistirAciklama": {
+    "message": "Copie o texto da caixa de exportação nas definições do FVD, ou o conteúdo de um ficheiro de cópia, e cole-o aqui. O tipo é detetado automaticamente."
+  },
+  "onizlemeKisaltildi": {
+    "message": "pré-visualização encurtada; o texto completo será importado"
+  },
+  "mSekmeleriKaydet": {
+    "message": "Guardar separadores abertos como grupo…"
+  },
+  "tumunuSec": {
+    "message": "Selecionar tudo"
+  },
+  "kaydedilecekSekmeYok": {
+    "message": "Não há separadores abertos para guardar aqui"
+  },
+  "sekmelerGrupAdi": {
+    "message": "Separadores $1"
+  },
+  "sekmeleriKaydetBaslik": {
+    "message": "Guardar separadores abertos como grupo"
+  },
+  "sekmeleriKaydetMetin": {
+    "message": "Os separadores desta janela serão adicionados a um novo grupo como blocos. Desmarque os que não quer."
+  },
+  "nSekmeKaydedildi": {
+    "message": "$1 separadores guardados num novo grupo"
+  },
+  "calismaAlanlari": {
+    "message": "Espaços de trabalho"
+  },
+  "alanKaydetBaslik": {
+    "message": "Guardar espaço de trabalho"
+  },
+  "alanKaydetMetin": {
+    "message": "Marque os separadores que quer guardar. Se a janela tiver várias secções (p. ex. espaços de trabalho do Vivaldi/Opera), a caixa no cabeçalho de uma secção seleciona a secção inteira."
+  },
+  "alanVarsayilanAd": {
+    "message": "Espaço de trabalho $1"
+  },
+  "alanKaydedildi": {
+    "message": "$1 separadores guardados no espaço de trabalho"
+  },
+  "alanBos": {
+    "message": "Este espaço de trabalho está vazio"
+  },
+  "alanAc": {
+    "message": "Abrir"
+  },
+  "yenidenAdlandir": {
+    "message": "Mudar o nome"
+  },
+  "grubaDonustur": {
+    "message": "Converter em grupo"
+  },
+  "grubaDonusturMetin": {
+    "message": "\"$1\" passará a ser um grupo normal e as imagens dos blocos serão capturadas."
+  },
+  "grubaDonusturuldu": {
+    "message": "Convertido em grupo"
+  },
+  "alanSil": {
+    "message": "Eliminar espaço de trabalho"
+  },
+  "alanSilMetin": {
+    "message": "\"$1\" ($2 separadores) será eliminado permanentemente."
+  },
+  "alanYok": {
+    "message": "Ainda não há espaços de trabalho. Use \"Guardar separadores\" para manter os separadores abertos e reabra-os com um clique."
+  },
+  "nSekme": {
+    "message": "$1 separadores"
+  },
+  "yeniPencerede": {
+    "message": "Numa nova janela"
+  },
+  "sekmeleriKaydet": {
+    "message": "Guardar separadores"
+  },
+  "alandanCikar": {
+    "message": "Remover do espaço de trabalho"
+  },
+  "nDahaGoster": {
+    "message": "+$1 separadores"
+  },
+  "dahaAzGoster": {
+    "message": "Mostrar menos"
+  },
+  "alanAcIpucu": {
+    "message": "Abrir separadores nesta janela"
+  },
+  "kayitliSekmeler": {
+    "message": "Separadores guardados"
+  },
+  "acikSekmeler": {
+    "message": "Separadores abertos nesta janela"
+  },
+  "alanDuzenleBaslik": {
+    "message": "Editar espaço de trabalho"
+  },
+  "alanDuzenleMetin": {
+    "message": "Os separadores guardados desmarcados são removidos; os separadores abertos marcados são adicionados."
+  },
+  "alanDuzenlendi": {
+    "message": "$1 separadores adicionados, $2 separadores removidos"
+  },
+  "etiketIpucu": {
+    "message": "separadas por vírgulas: trabalho, pesquisa"
+  },
+  "tumu": {
+    "message": "Todos"
+  },
+  "renk": {
+    "message": "Cor"
+  },
+  "blokBasligi": {
+    "message": "$1 separadores · $2"
+  },
+  "mSekmeleriAlanaKaydet": {
+    "message": "Guardar separadores num espaço de trabalho…"
+  },
+  "webTarayiciMotoru": {
+    "message": "Motor de pesquisa do navegador"
+  },
+  "webAraYer": {
+    "message": "Pesquisar com $1 ou escrever um endereço"
+  },
+  "webVarsayilanYap": {
+    "message": "Predefinir"
+  },
+  "anaSayfaBolum": {
+    "message": "Início"
+  },
+  "webAramaCubugu": {
+    "message": "Barra de pesquisa"
+  },
+  "webAramaGoster": {
+    "message": "Mostrar barra de pesquisa"
+  },
+  "webVarsayilanMotor": {
+    "message": "Motor de pesquisa predefinido"
+  },
+  "webMotorListesi": {
+    "message": "Motores mostrados na lista"
+  },
+  "webMotorEkle": {
+    "message": "Adicionar o seu motor de pesquisa"
+  },
+  "webYeniAd": {
+    "message": "Nome"
+  },
+  "webYeniKisa": {
+    "message": "Atalho"
+  },
+  "webYeniAdres": {
+    "message": "https://site.com/search?q=%s"
+  },
+  "webYeniIpucu": {
+    "message": "Coloque %s onde vai o termo de pesquisa. O atalho é opcional: usado como \"ab termo\"."
+  },
+  "webYeniAdGerek": {
+    "message": "Escreva um nome para o motor"
+  },
+  "webYeniAdresGecersiz": {
+    "message": "O endereço deve começar por http(s):// e conter %s"
+  },
+  "webYeniKisaVar": {
+    "message": "Este atalho já está em uso ou contém um espaço"
+  },
+  "webYeniEklendi": {
+    "message": "$1 adicionado"
+  },
+  "ekrandanSec": {
+    "message": "Escolher uma cor do ecrã"
+  },
+  "arayuzAlt": {
+    "message": "Interface"
+  },
+  "renkliSimgeler": {
+    "message": "Ícones coloridos"
+  },
+  "temaBaslik": {
+    "message": "Tema"
+  },
+  "temaMod": {
+    "message": "Modo"
+  },
+  "temaKoyu": {
+    "message": "Escuro"
+  },
+  "temaAcik": {
+    "message": "Claro"
+  },
+  "temaSistem": {
+    "message": "Sistema"
+  },
+  "temaIpucu": {
+    "message": "Uma predefinição aplica as cores em conjunto; pode continuar a alterar cada cor abaixo. A imagem do papel de parede é mantida."
+  },
+  "temaUygulandi": {
+    "message": "Tema $1 aplicado"
+  },
+  "temaDegistirildi": {
+    "message": "modificado"
+  },
+  "temaDegistirildiIpucu": {
+    "message": "As cores foram alteradas manualmente. Clique para voltar à predefinição."
+  },
+  "tema_gece": {
+    "message": "Noite"
+  },
+  "tema_grafit": {
+    "message": "Grafite"
+  },
+  "tema_okyanus": {
+    "message": "Oceano"
+  },
+  "tema_orman": {
+    "message": "Floresta"
+  },
+  "tema_mor": {
+    "message": "Violeta"
+  },
+  "tema_gunbatimi": {
+    "message": "Pôr do sol"
+  },
+  "tema_kagit": {
+    "message": "Papel"
+  },
+  "tema_kum": {
+    "message": "Areia"
+  },
+  "tema_buz": {
+    "message": "Gelo"
+  },
+  "tema_nane": {
+    "message": "Menta"
+  },
+  "tema_pastel": {
+    "message": "Pastel"
+  },
+  "temaKaydet": {
+    "message": "Guardar"
+  },
+  "temaKaydetIpucu": {
+    "message": "Guardar as cores atuais como tema próprio"
+  },
+  "temaKaydetMetin": {
+    "message": "As cores atuais serão guardadas com este nome. Um tema com o mesmo nome é atualizado."
+  },
+  "temaOzelAd": {
+    "message": "O meu tema $1"
+  },
+  "temaKaydedildi": {
+    "message": "\"$1\" guardado"
+  },
+  "temaSilindi": {
+    "message": "\"$1\" eliminado"
+  },
+  "temaSinir": {
+    "message": "Pode guardar até $1 temas"
+  },
+  "anaSayfaSilinemez": {
+    "message": "Não é possível eliminar o grupo Início"
+  },
+  "anaSayfaAdiDegismez": {
+    "message": "Não é possível mudar o nome do grupo Início"
+  },
+  "camGorunum": {
+    "message": "Aspeto de vidro fosco"
+  },
+  "aktifIkonRengi": {
+    "message": "Cor do ícone do grupo ativo"
+  },
+  "aktarimGorselBaslik": {
+    "message": "Imagens dos blocos"
+  },
+  "aktarimGorselMetin": {
+    "message": "$1 blocos importados não têm imagem; o ficheiro de cópia não contém imagens.\n\nCapturá-las em segundo plano? Não serão abertas janelas e pode continuar a usar o WSD entretanto. Pode demorar algum tempo, consoante o número de blocos, e o navegador pode mostrar um aviso de \"depuração\" no topo."
+  },
+  "arkaPlandaAl": {
+    "message": "Capturar em segundo plano"
+  },
+  "simdiDegil": {
+    "message": "Agora não"
+  },
+  "kartKelime": {
+    "message": "blocos"
+  },
+  "copGeriYukle": {
+    "message": "Restaurar"
+  },
+  "sonYedekKisa": {
+    "message": "Última cópia: $1 ($2, $3 blocos)"
+  },
+  "mevcutVerilerSiliniyor": {
+    "message": "A eliminar os dados existentes"
+  },
+  "tema_yakut": {
+    "message": "Rubi"
+  },
+  "tema_gul": {
+    "message": "Rosa"
+  },
+  "temaGuncelle": {
+    "message": "Atualizar"
+  },
+  "temaGuncelleIpucu": {
+    "message": "Guardar as alterações neste tema"
+  },
+  "tema_kehribar": {
+    "message": "Âmbar"
+  },
+  "tema_gunes": {
+    "message": "Sol"
+  },
+  "tema_kontrast": {
+    "message": "Contraste"
+  },
+  "tema_murekkep": {
+    "message": "Tinta"
+  },
+  "webAramaYeri": {
+    "message": "Onde mostrar"
+  },
+  "webYerAnaSayfa": {
+    "message": "Só no Início"
+  },
+  "webYerIlkGrup": {
+    "message": "No primeiro grupo"
+  },
+  "webYerHepsi": {
+    "message": "Em todos os grupos"
+  },
+  "kucukPencere": {
+    "message": "Janela pequena no canto (experimental)"
+  },
+  "gizliKipBilgi": {
+    "message": "Neste modo, o Chrome mostra no topo a barra \"WSD Speed Dial começou a depurar este navegador\". É o aviso obrigatório do Chrome para capturar uma página sem abrir uma janela; a permissão é usada apenas para a captura. A barra desaparece quando a captura termina."
+  },
+  "hazirGruplar": {
+    "message": "Grupos prontos"
+  },
+  "hazirGruplarAciklama": {
+    "message": "O pacote escolhido é adicionado como um novo grupo; os blocos existentes não são alterados. Pode editar os blocos depois."
+  },
+  "tumDiller": {
+    "message": "Mostrar pacotes em todos os idiomas"
+  },
+  "paketOner": {
+    "message": "Sugerir um pacote (GitHub)"
+  },
+  "paketListesiAlinamadi": {
+    "message": "Não foi possível carregar a lista de pacotes."
+  },
+  "nKartKisa": {
+    "message": "$1 blocos"
+  },
+  "eklendi": {
+    "message": "Adicionado"
+  },
+  "paketEklendi": {
+    "message": "\"$1\" adicionado · $2 blocos"
+  },
+  "paketEklenemedi": {
+    "message": "Não foi possível adicionar o pacote"
+  },
+  "yukleniyor": {
+    "message": "A carregar…"
+  },
+  "webAraYerTarayici": {
+    "message": "Pesquisar na Web ou escrever um endereço"
+  },
+  "kartHizalama": {
+    "message": "Alinhamento dos blocos"
+  },
+  "hizaOrta": {
+    "message": "Centro"
+  },
+  "hizaSol": {
+    "message": "Esquerda"
+  },
+  "hakkinda": {
+    "message": "Acerca de"
+  },
+  "hakkindaAlt": {
+    "message": "Código aberto · Sem rastreio · Sem conta"
+  },
+  "yenilikler": {
+    "message": "Novidades"
+  },
+  "degerlendir": {
+    "message": "Avaliar"
+  },
+  "oneriHataBildir": {
+    "message": "Sugerir / comunicar um erro"
+  },
+  "kaynakKod": {
+    "message": "Código-fonte (GitHub)"
+  },
+  "gizlilikPolitikasi": {
+    "message": "Política de privacidade"
+  },
+  "tumDegisiklikler": {
+    "message": "Registo completo de alterações (GitHub)"
+  },
+  "yenilikBuSurum": {
+    "message": "esta versão"
+  },
+  "yenilikYuklendi": {
+    "message": "WSD Speed Dial $1 instalado"
+  },
+  "yenilikDil": {
+    "message": "en"
+  },
+  "yenilikYeni": {
+    "message": "Novo"
+  },
+  "yenilikDuzeltme": {
+    "message": "Corrigido"
+  },
+  "temaIceAktarilan": {
+    "message": "Importado"
+  },
+  "klasorYedekBaslik": {
+    "message": "Pasta na nuvem (experimental)"
+  },
+  "klasorYedekAciklama": {
+    "message": "As cópias são gravadas na pasta que escolher. Escolha uma pasta do OneDrive, Google Drive ou Dropbox e a respetiva aplicação carrega-as por si; restaure a partir da mesma pasta noutro computador."
+  },
+  "klasorYedekAd": {
+    "message": "Nome da cópia"
+  },
+  "klasorYedekAdIpucu": {
+    "message": "Os ficheiros de cópia têm este nome (wsd-nome-data.json); na pasta de cópias é também o nome da subpasta. Dê um nome próprio a cada navegador; o mesmo nome em dois computadores partilha um conjunto de cópias."
+  },
+  "klasorYedekSiklik": {
+    "message": "Frequência da cópia automática"
+  },
+  "gundeBir": {
+    "message": "Uma vez por dia"
+  },
+  "haftadaBir": {
+    "message": "Uma vez por semana"
+  },
+  "klasorYedekGorselli": {
+    "message": "Incluir imagens"
+  },
+  "klasorYedekSakla": {
+    "message": "Cópias a manter"
+  },
+  "klasorYedekSimdi": {
+    "message": "Fazer cópia na pasta agora"
+  },
+  "klasorYedekGeriYukle": {
+    "message": "Restaurar da pasta"
+  },
+  "klasorYedekTumu": {
+    "message": "Mostrar cópias de todos os navegadores"
+  },
+  "klasorYedekYukleDugme": {
+    "message": "Carregar"
+  },
+  "klasorYedekSecilmedi": {
+    "message": "Nenhuma pasta selecionada"
+  },
+  "klasorYedekDesteklenmiyor": {
+    "message": "Este navegador não consegue gravar em pastas"
+  },
+  "klasorYedekSecilemedi": {
+    "message": "Não foi possível usar essa pasta. As pastas de sistema (p. ex. a raiz de Documentos) podem estar bloqueadas; experimente uma subpasta."
+  },
+  "klasorYedekKlasorYok": {
+    "message": "Escolha primeiro uma pasta de cópias"
+  },
+  "klasorYedekIzinYok": {
+    "message": "O acesso à pasta não foi concedido"
+  },
+  "klasorYedekYazildi": {
+    "message": "$1 blocos copiados → $2"
+  },
+  "klasorYedekBos": {
+    "message": "Não há cópias nesta pasta"
+  },
+  "klasorYedekBuCihaz": {
+    "message": "este navegador"
+  },
+  "klasorYedekGorselsiz": {
+    "message": "sem imagens"
+  },
+  "klasorYedekSon": {
+    "message": "Última cópia: $1"
+  },
+  "klasorYedekIzin": {
+    "message": "É necessário renovar o acesso à pasta para a cópia automática"
+  },
+  "klasorYedekIzinVer": {
+    "message": "Permitir e fazer cópia"
+  },
+  "klasorYedekDahaYeni": {
+    "message": "Há uma cópia mais recente disponível ($1, $2)"
+  },
+  "klasorYedekGoster": {
+    "message": "Mostrar"
+  },
+  "yedekleniyor": {
+    "message": "A fazer cópia…"
+  },
+  "okunuyor": {
+    "message": "A ler…"
+  },
+  "gelismis": {
+    "message": "Avançadas"
+  },
+  "ayarAra": {
+    "message": "Pesquisar definições…"
+  },
+  "ayarAraYok": {
+    "message": "Nenhuma definição corresponde"
+  },
+  "aradiginizKart": {
+    "message": "Está aqui"
+  },
+  "klasorYedekSiklikKapali": {
+    "message": "Desligado (só manual)"
   }
 }

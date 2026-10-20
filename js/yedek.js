@@ -133,9 +133,14 @@ function urlAnahtariMi(anahtar) {
     return /^(https?|file|chrome|chrome-extension|edge|vivaldi):/i.test(anahtar);
 }
 
-/** Yedegi dosya olarak indirir. */
-export async function yedegiIndir(ilerleme) {
+/**
+ * Yedegi Blob olarak uretir (indirme ve klasore yazma ortak, 1.5.7).
+ * `kaynak`: klasor yedeginde hangi tarayici/cihazdan geldigi; `ozet` ve
+ * `kaynak` dosyanin BASINDA - listede tum dosyayi okumadan gosterilsin.
+ */
+export async function yedekBlobu(ilerleme, { gorseller = true, kaynak = null } = {}) {
     const isk = await yedekIskeleti();
+    const sayi = isk.gruplar.reduce((t, g) => t + g.kartlar.length, 0);
 
     // JSON'u PARCA PARCA uretip her partiyi hemen Blob'a ceviriyoruz.
     // Boylece veri JS yiginindan cikip tarayicinin blob deposuna gidiyor;
@@ -144,6 +149,8 @@ export async function yedegiIndir(ilerleme) {
     parcalar.push('{"wsd":{');
     parcalar.push(`"surum":${JSON.stringify(SURUM)},`);
     parcalar.push(`"tarih":${JSON.stringify(new Date().toISOString())},`);
+    parcalar.push(`"ozet":${JSON.stringify({ grup: isk.gruplar.length, kart: sayi, gorselli: !!gorseller })},`);
+    if (kaynak) parcalar.push(`"kaynak":${JSON.stringify(kaynak)},`);
     parcalar.push(`"gruplar":${JSON.stringify(isk.gruplar)},`);
     parcalar.push(`"notlar":${JSON.stringify(isk.notlar)},`);
     parcalar.push(`"renkler":${JSON.stringify(isk.renkler)},`);
@@ -153,7 +160,7 @@ export async function yedegiIndir(ilerleme) {
     parcalar.push(`"calismaAlanlari":${JSON.stringify(isk.calismaAlanlari || [])},`);
     parcalar.push('"gorseller":{');
 
-    const anahtarlar = [...isk.yasayan];
+    const anahtarlar = gorseller ? [...isk.yasayan] : [];
     const PARTI = 20;
     let ilk = true, yazilan = 0;
 
@@ -186,24 +193,31 @@ export async function yedegiIndir(ilerleme) {
     parcalar.push('}}}');
 
     const blob = new Blob(parcalar, { type: 'application/json' });
+    return { blob, isk, sayi, yazilan };
+}
+
+/** Yedegi dosya olarak indirir. */
+export async function yedegiIndir(ilerleme) {
+    // YEDEK ADI (1.5.7): indirilen dosya da klasor yedegiyle ayni adla -
+    // birden cok tarayicinin yedekleri ayni yerde karismasin
+    // Ad/kaynak alinamazsa (depo dolu, pencere yok) yedek yine de insin
+    let k = null, yAyar = { ad: 'WSD' }, kaynak = null;
+    try {
+        k = await import('./yedekklasor.js');
+        yAyar = await k.ayarAl();
+        kaynak = k.kaynakBilgisi(yAyar);
+    } catch (e) { console.log('[WSD] yedek adi alinamadi:', e); }
+    const { blob, isk, sayi, yazilan } = await yedekBlobu(ilerleme, { kaynak });
     const url = URL.createObjectURL(blob);
 
-    // WSD-27-8-2026-1457 : gun-ay-yil-saatdakika
-    // Yerel saat kullaniyoruz; toISOString UTC verip gun kaydirabiliyor.
-    const t = new Date();
-    const iki = n => String(n).padStart(2, '0');
-    const ad = `WSD-${t.getDate()}-${t.getMonth() + 1}-${t.getFullYear()}-` +
-               `${iki(t.getHours())}${iki(t.getMinutes())}`;
-
-    const dosyaAdi = ad + '.json';
+    // wsd-<yedek adi>-YYYY-AA-GG-SSDD.json (yerel saat; siralayinca tarih sirasi)
+    const dosyaAdi = k ? k.dosyaAdi(yAyar.ad) : `wsd-WSD-${new Date().toISOString().slice(0, 16).replace(/[-:T]/g, '')}.json`;
     const a = document.createElement('a');
     a.href = url;
     a.download = dosyaAdi;
     a.click();
 
     setTimeout(() => URL.revokeObjectURL(url), 60000);   // buyuk dosya yazilirken erken iptal olmasin
-
-    const sayi = isk.gruplar.reduce((t, g) => t + g.kartlar.length, 0);
 
     // Son yedegin izi: veri kaybi uyarisinda "hangi dosyayi arayacaksin"
     // sorusunun cevabi.
@@ -1079,8 +1093,25 @@ export async function otomatikYedekDene() {
         const { depoDurumu, UYARI_ESIGI } = await import('./depo.js');
         const ayar = await ayarlariAl();
 
-        const d = await chrome.storage.local.get([SON_YEDEK, SON_ACIL]);
+        const d = await chrome.storage.local.get([SON_YEDEK, SON_ACIL, 'sonKlasorIzinSorusu']);
         const bugun = new Date().toDateString();
+
+        // 0) BULUT KLASORU (1.5.7) - kendi sikligiyla, "Otomatik Yedek"
+        // anahtarindan bagimsiz. Klasor seciliyse Indirilenler'e otomatik
+        // yedek yazilmaz (ayni yedek iki yerde birikmesin).
+        const { klasorOtomatikYedek } = await import('./yedekklasor.js');
+        const k = await klasorOtomatikYedek();
+        if (k === 'yazildi') {
+            await chrome.storage.local.set({ [SON_YEDEK]: new Date().toISOString() });
+            return { acil: false };
+        }
+        if (k === 'izin') {
+            // Izin bildirimi gunde bir kez - her yeni sekmede degil
+            if (d.sonKlasorIzinSorusu === bugun) return null;
+            await chrome.storage.local.set({ sonKlasorIzinSorusu: bugun });
+            return { izinGerekli: true };
+        }
+        if (k === 'bekle' || k === 'kapali') return null;
 
         // 1) ALAN AZALIYORSA yedegi KENDILIGINDEN INDIRMIYORUZ.
         //

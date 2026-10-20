@@ -12,7 +12,7 @@
 // WSD Speed Dial - ayar paneli baglantilari
 
 import { moduSinifla } from './tema.js';
-import { tazelemeBastirildiMi, bildir } from './arayuz.js';
+import { tazelemeBastirildiMi, bildir, mesgulDugme } from './arayuz.js';
 import { ayarlariAl, ayarYaz, ayarlariSifirla } from './ayar.js';
 import { c } from './dil.js';
 import { filtreZinciri, ikiRenkKatmanlari } from './filtre.js';
@@ -238,6 +238,7 @@ export async function ayarPaneliniKur() {
     duvarAraclariniKur();
     yontemSegmentiniKur();
     bolumleriKur();
+    import('./ayarara.js').then(m => m.ayarAramaKur()).catch(e => console.log('[WSD] ayar arama:', e));
     grupGosterimSegmenti();
     yedekAraclariniKur();
     depoDurumunuCiz();
@@ -612,7 +613,8 @@ function bolumleriKur() {
         let b = bolumler.findIndex(x => x.classList.contains('acik'));
         // Sifirlama acik birakilsa da sonraki acilista kapali gelsin.
         if (b >= 0 && bolumler[b].classList.contains('tehlikeBolum')) b = -1;
-        const a = altlar.findIndex(x => x.classList.contains('acik'));
+        let a = altlar.findIndex(x => x.classList.contains('acik'));
+        if (a >= 0 && altlar[a].classList.contains('altSifirla')) a = -1;
         try { localStorage.setItem(ANAHTAR, JSON.stringify({ b, a })); } catch (e) { /* dolu/kapali */ }
     };
     if (durum && typeof durum.b === 'number') {
@@ -858,26 +860,26 @@ function yedekAraclariniKur() {
         setTimeout(() => b.classList.remove('gorunur'), 3200);
     };
 
-    document.getElementById('ayYedekAl')?.addEventListener('click', async () => {
-        try {
-            const s = await yedegiIndir();
+    document.getElementById('ayYedekAl')?.addEventListener('click', async e => {
+        await mesgulDugme(e.currentTarget, c('yedekleniyor'), async ilerle => { try {
+            const s = await yedegiIndir(i => ilerle(i.yapilan, i.toplam));
             bildir(c('nGrupNKartYedeklendi', s.grup, s.kart, s.dosya));
             depoDurumunuCiz();
         } catch (e) {
             console.log('[WSD] yedek alinamadi:', e);
             bildir(c('yedekAlinamadi'));
-        }
+        } });
     });
 
     // Bakim bolumundeki acil yedek dugmesi
-    document.getElementById('depoYedekAl')?.addEventListener('click', async () => {
-        try {
-            const s = await yedegiIndir();
+    document.getElementById('depoYedekAl')?.addEventListener('click', async e => {
+        await mesgulDugme(e.currentTarget, c('yedekleniyor'), async ilerle => { try {
+            const s = await yedegiIndir(i => ilerle(i.yapilan, i.toplam));
             bildir(c('yedekAlindiDosya', s.dosya));
             depoDurumunuCiz();
         } catch (e) {
             bildir(c('yedekAlinamadi'));
-        }
+        } });
     });
 
     document.getElementById('ayHtmlCikti')?.addEventListener('click', async () => {
@@ -955,6 +957,10 @@ function yedekAraclariniKur() {
             bildir(c('yedekYuklenemedi') + (err.message || ''));
         }
     }
+
+    // Klasor yedeginden geri yukleme ayni yoldan (1.5.7)
+    document.addEventListener('wsd-metin-ice-aktar', e => metniIceAktar(e.detail?.metin || ''));
+    import('./yedekklasor.js').then(m => m.klasorYedekKur()).catch(e => console.log('[WSD] klasor yedek:', e));
 
     secici?.addEventListener('change', async e => {
         const dosya = e.target.files && e.target.files[0];

@@ -3,6 +3,73 @@
 Sürüm numaraları [Semantic Versioning](https://semver.org/lang/tr/)
 kurallarına uyar.
 
+## [1.5.7] — 2026-10-20
+
+### Yeni
+- **Tüm arayüz dilleri tamamlandı**: Portekizce (Brezilya ve Portekiz),
+  İspanyolca, Ukraynaca ve Çince'de 1.4.2'den beri eksik kalan 306'şar metin
+  çevrildi (çalışma alanları, temalar, arama
+  kutusu, Hazır Gruplar, Hakkında, Bulut Klasörü…); eskiden bu kısımlar
+  İngilizce görünüyordu. Portekizce (Portekiz) dosyasındaki Brezilya
+  Portekizcesi kelimeler ve "Os os" tekrarları düzeltildi.
+- **Aranan kart artık belli oluyor**: aramadan gruba gidince diğer kartlar
+  soluklaşıyor, aranan kart büyüyüp çift çerçeveyle öne çıkıyor ve altında
+  "Aradığınız kart" etiketi beliriyor. Tıklama, tuş, tekerlek ya da 6 sn
+  sonra normale döner. Kart bir klasörün içindeyse klasör işaretlenir.
+- **Ayarlarda arama**: panelin üstünde "Ayar ara…" kutusu. Yazınca yalnızca
+  eşleşen ayarlar kalır, ilgili bölüm ve alt bölümler açılır; Türkçe
+  karakterler ve büyük/küçük harf fark etmez ("golge" → Gölge). Esc temizler.
+- **Kartlar ve Görüntü Yakalama da alt bölümlü**: Kartlar → Davranış, Boyut ve
+  Yerleşim, Başlık, Renk ve Çerçeve; Görüntü Yakalama → Yakalama, Gelişmiş
+  (kaydırma, bekleme, küçük pencere, öne alma), Görüntü.
+- **Sadeleşen ayarlar**: ana bölüm sayısı 11'den 7'ye indi. Görünüm; Tema,
+  Arka Plan, Grup Menüsü (eskiden ayrı bölümdü), Yazı ve Panel, Arayüz açılır
+  alt bölümlerine ayrıldı (her birinin renkli simgesi var). Bakım ve
+  Sıfırlama, Sistem'in açılır alt bölümleri oldu (Sistem en alta, Hakkında'nın
+  üstüne taşındı); Yedekleme ve Aktarma da Yedek / Bulut Klasörü / İçe Aktar
+  alt bölümlerine ayrıldı. Depo dolu uyarısındaki "Bakım" düğmesi Sistem ›
+  Bakım'ı açıyor.
+- **Bulut Klasörü (deneysel)** (Yedekleme ve Aktarma › açılır alt bölüm, bulut simgeli; Yedek ve İçe Aktar da açılır oldu): yedekler seçilen klasöre
+  yazılıyor — yerel klasör ya da OneDrive / Google Drive / Dropbox klasörü
+  (bulut programı kendisi yükler). Sunucu, hesap, yeni izin yok.
+  - Her tarayıcı **Yedek adı** ile kendi alt klasörüne yazar
+    (`<klasör>/<ad>/wsd-<ad>-YYYY-AA-GG-SSDD.json`); varsayılan ad tarayıcı
+    adı. Aynı ad iki bilgisayarda = ortak yedek seti.
+  - Otomatik yedek klasöre gider; sıklık günde 1 / haftada 1; görseller
+    dahil ya da değil; son N yedek saklanır, eskiler silinir.
+  - **Klasörden geri yükle**: tarih, grup / kart sayısı, boyutla liste;
+    "tüm tarayıcılar" seçeneği; Ekle / Değiştir her zamanki yoldan.
+  - Başka bilgisayardan aynı ada daha yeni yedek gelince bir kez haber
+    verir; kendiliğinden yüklemez.
+  - Tarayıcı yeniden açılınca klasör izni bir tıklamayla yenilenir.
+- **Yedek adı her yedekte**: Yedekle ile indirilen dosya da artık
+  `wsd-<yedek adı>-YYYY-AA-GG-SSDD.json` (eskiden `WSD-gün-ay-yıl-saat`);
+  ayar klasör seçmeden de görünüyor. Birden çok tarayıcının yedekleri aynı
+  yerde karışmıyor.
+- **Yedek alırken geri bildirim**: Yedekle / Klasöre şimdi yedekle
+  düğmesi iş bitene kadar kilitli ve üzerinde "Yedekleniyor… %40" yazıyor;
+  sessiz bekleyişte tekrar tekrar tıklanıyordu. Klasörden yüklerken
+  "Okunuyor…".
+- Yedek dosyasının başına özet (grup / kart sayısı) ve kaynak (ad, sürüm)
+  eklendi; liste tüm dosyayı okumadan çiziliyor.
+
+### Düzeltildi
+- **Bulut klasörü (yayın öncesi denetim)**: eski yedekler dosya ADINA göre
+  siliniyordu — büyük/küçük harf farklı adda ya da başka saat dilimindeki
+  cihazda en yeni yedek silinebilirdi; artık dosya zamanına göre. Klasör
+  otomatik yedeği "Otomatik Yedek" anahtarından bağımsız, kendi sıklığıyla
+  (Kapalı / Günde 1 / Haftada 1) çalışıyor; klasör seçiliyken İndirilenler'e
+  ayrıca yedek yazılmıyor. İzin bildirimi günde bir kez. Varsayılan yedek adı
+  tarayıcı + kısa cihaz eki (iki bilgisayardaki aynı tarayıcı aynı sete
+  yazmasın). Listede yalnızca `wsd-…json` dosyaları; "." ile biten adlar
+  temizleniyor. Elle indirilen yedek, ad alınamasa bile iniyor.
+- Aranan kart bir klasörün kartıysa da öne çıkıyor; ayar araması açıkken
+  "Bakım"a yönlendirme aramayı temizliyor; tümden elenen düğme satırları
+  boş kalmıyor.
+- **Kart Hizalama "Ortaya"yken arama etiketleri alt alta diziliyordu**: kart
+  olmayan öğeler (etiket şeridi, çöp kutusu / kopyalar başlıkları, boş durum
+  kutuları) kart genişliğine sıkışıyordu; artık tam satır.
+
 ## [1.5.6] — 2026-10-19
 
 ### Yeni

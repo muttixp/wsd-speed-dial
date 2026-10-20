@@ -62,9 +62,6 @@
   "buKartlaIlgiliNotunuz": {
     "message": "Ваша нотатка до цієї плитки..."
   },
-  "caprazVe": {
-    "message": "Діагональ 2 і 3"
-  },
   "copKutusu": {
     "message": "Кошик"
   },
@@ -1190,7 +1187,928 @@
   "grupAra": {
     "message": "Пошук груп..."
   },
+  "altKlasorleriKoru": {
+    "message": "Зберегти вкладені папки (якщо зняти позначку, кожна папка стане окремою групою)"
+  },
+  "buKlasordeKartYok": {
+    "message": "У цій папці немає плиток"
+  },
+  "klasorGrupOldu": {
+    "message": "Папка стала групою"
+  },
+  "klasorSilMetin": {
+    "message": "Папку «$1» разом із плитками ($2) і вкладеними папками ($3) буде переміщено в кошик."
+  },
+  "klasorSilindiNKart": {
+    "message": "Папку видалено (плиток: $1)"
+  },
+  "klasorTasindi": {
+    "message": "Папку переміщено"
+  },
+  "klasoruSil": {
+    "message": "Видалити папку"
+  },
+  "klasoruTasi": {
+    "message": "Перемістити папку"
+  },
+  "nAltKlasor": {
+    "message": "Вкладених папок: $1"
+  },
+  "olustur": {
+    "message": "Створити"
+  },
+  "ustDuzeyGrupOlarak": {
+    "message": "⬆ Як групу верхнього рівня"
+  },
+  "ustKlasor": {
+    "message": "Батьківська папка (Backspace)"
+  },
+  "yeniKlasor": {
+    "message": "Нова папка"
+  },
+  "klasorKendiIcine": {
+    "message": "Папку не можна перемістити в неї саму або у вкладену папку"
+  },
+  "klasoruDuzenle": {
+    "message": "Змінити папку"
+  },
+  "buKlasordeNKart": {
+    "message": "У цій папці плиток: <b>$1</b>"
+  },
+  "klasorAdiZatenVar": {
+    "message": "Папка «$1» тут уже є"
+  },
+  "bekleyenYenilemeler": {
+    "message": "Очікувані оновлення"
+  },
+  "nBekleyenIptalEdilsinMi": {
+    "message": "У черзі ще чекають попередні оновлення ($1). Спочатку скасувати їх? Якщо ні, їх теж буде оновлено по черзі."
+  },
+  "iptalEt": {
+    "message": "Скасувати їх"
+  },
+  "kalsin": {
+    "message": "Залишити"
+  },
+  "nBekleyenIptalEdildi": {
+    "message": "Скасовано очікуваних оновлень: $1"
+  },
+  "aktarimGorselsizN": {
+    "message": "Імпортовані плитки без зображень: $1. Знімки не запускалися автоматично — скористайтеся «Оновити зображення групи» в меню групи."
+  },
+  "iceAktarmaTamamlandi": {
+    "message": "Імпорт завершено"
+  },
+  "nYeniGrup": {
+    "message": "Нових груп: $1"
+  },
+  "yaziVePanel": {
+    "message": "Текст і панель"
+  },
+  "davranis": {
+    "message": "Поведінка"
+  },
+  "boyutVeYerlesim": {
+    "message": "Розмір і розташування"
+  },
+  "renkVeCerceve": {
+    "message": "Колір і рамка"
+  },
+  "gorunumAlt": {
+    "message": "Вигляд"
+  },
+  "yakalamaYontemi": {
+    "message": "Знімок"
+  },
+  "goruntuAlt": {
+    "message": "Зображення"
+  },
+  "yedekAlt": {
+    "message": "Резервна копія"
+  },
+  "iceAktarAlt": {
+    "message": "Імпорт"
+  },
+  "yedeklemeVeAktarma": {
+    "message": "Резервна копія та імпорт"
+  },
+  "tehlikeliIslemler": {
+    "message": "Скидання"
+  },
+  "tehlikeliAciklama": {
+    "message": "Ці дії масово змінюють дані або налаштування. Радимо спершу зробити резервну копію."
+  },
+  "ustKlasoreCik": {
+    "message": "перейти до батьківської папки"
+  },
+  "geriIleri": {
+    "message": "назад / вперед (бічні кнопки миші)"
+  },
+  "mSekmedeAc": {
+    "message": "Відкрити у вкладці"
+  },
+  "mYeniSekmedeAc": {
+    "message": "Відкрити в новій вкладці"
+  },
+  "mGizliSekmedeAc": {
+    "message": "Відкрити в анонімному режимі"
+  },
+  "mAdresiKopyala": {
+    "message": "Копіювати адресу"
+  },
+  "mGorseliYenile": {
+    "message": "Оновити зображення"
+  },
+  "mDuzenle": {
+    "message": "Змінити…"
+  },
+  "mNotEkle": {
+    "message": "Додати нотатку…"
+  },
+  "mTasi": {
+    "message": "Перемістити…"
+  },
+  "mSil": {
+    "message": "Видалити"
+  },
+  "mAc": {
+    "message": "Відкрити"
+  },
+  "mHepsiniAc": {
+    "message": "Відкрити всі"
+  },
+  "mYeniPencerede": {
+    "message": "Відкрити всі в новому вікні"
+  },
+  "mGorselleriYenile": {
+    "message": "Оновити зображення"
+  },
+  "mKartlariSirala": {
+    "message": "Сортувати плитки…"
+  },
+  "mGrubuDuzenle": {
+    "message": "Змінити групу…"
+  },
+  "mBaskaGrubaTasi": {
+    "message": "Перемістити в іншу групу…"
+  },
+  "mGruplariYonet": {
+    "message": "Керування групами…"
+  },
+  "mKartEkle": {
+    "message": "Додати плитку…"
+  },
+  "mYeniKlasor": {
+    "message": "Нова папка…"
+  },
+  "mYeniGrup": {
+    "message": "Нова група…"
+  },
+  "mYinelenenKartlar": {
+    "message": "Повторювані плитки"
+  },
+  "mCopKutusu": {
+    "message": "Кошик"
+  },
+  "mAyarlar": {
+    "message": "Налаштування"
+  },
+  "gorseliYenile": {
+    "message": "Оновити зображення"
+  },
+  "kapakResmi": {
+    "message": "Обкладинка"
+  },
+  "resimSec": {
+    "message": "Вибрати зображення…"
+  },
+  "kapakIpucu": {
+    "message": "Перетягніть сюди зображення або вставте через Ctrl+V"
+  },
+  "etiketler": {
+    "message": "Мітки"
+  },
+  "yeniEtiket": {
+    "message": "Нова мітка…"
+  },
+  "etiketiSil": {
+    "message": "Видалити мітку"
+  },
+  "etiketiSilSoru": {
+    "message": "Мітку «$1» буде знято з плиток ($2). Самі плитки не видаляються."
+  },
+  "renk_kirmizi": {
+    "message": "Червоний"
+  },
+  "renk_turuncu": {
+    "message": "Помаранчевий"
+  },
+  "renk_sari": {
+    "message": "Жовтий"
+  },
+  "renk_yesil": {
+    "message": "Зелений"
+  },
+  "renk_mavi": {
+    "message": "Синій"
+  },
+  "renk_mor": {
+    "message": "Фіолетовий"
+  },
+  "renk_gri": {
+    "message": "Сірий"
+  },
+  "renk_yok": {
+    "message": "Немає"
+  },
+  "koseYuvarlakligi": {
+    "message": "Заокруглення кутів"
+  },
+  "koseYuvarlakligiIpucu": {
+    "message": "Плитки, вкладки, вікна, меню й кнопки"
+  },
+  "yanPaneliGizle": {
+    "message": "Автоприховування бічної панелі"
+  },
+  "buGruptaNKart": {
+    "message": "У цій групі плиток: <b>$1</b>"
+  },
+  "dIkonRengi": {
+    "message": "Колір значка"
+  },
+  "dArkaPlanRengi": {
+    "message": "Колір фону"
+  },
+  "kirikDegil": {
+    "message": "Не бите"
+  },
+  "kirikDegilIpucu": {
+    "message": "Сторінка відкривається: пропускати цю адресу під час наступних перевірок"
+  },
+  "kirikDegilBildir": {
+    "message": "Цю адресу буде пропущено під час перевірки битих посилань"
+  },
+  "nUlasilamadi": {
+    "message": "Недоступних: $1"
+  },
+  "silinecekKirikYok": {
+    "message": "Нічого видаляти"
+  },
+  "klasorSec": {
+    "message": "Вибрати папку"
+  },
+  "klasorSecMenu": {
+    "message": "Вибрати папку…"
+  },
+  "klasorSecIpucu": {
+    "message": "Натисніть назву, щоб додати туди · ▸ розгортає гілку"
+  },
+  "sagTikMenusu": {
+    "message": "Контекстне меню сторінки"
+  },
+  "sagTikPencere": {
+    "message": "Групи + «Вибрати папку…»"
+  },
+  "sagTikAgac": {
+    "message": "Вкладені меню"
+  },
+  "sagTikGruplar": {
+    "message": "Лише групи"
+  },
+  "asamaDosyaOkunuyor": {
+    "message": "Читання файлу"
+  },
+  "asamaMevcutSiliniyor": {
+    "message": "Видалення наявних даних"
+  },
+  "asamaKartlarEkleniyor": {
+    "message": "Додавання плиток"
+  },
+  "asamaKartlarSiliniyor": {
+    "message": "Видалення плиток"
+  },
+  "asamaKaydediliyor": {
+    "message": "Збереження нотаток, кольорів, міток і налаштувань…"
+  },
+  "asamaTamamlaniyor": {
+    "message": "Завершення: відсутні зображення ставляться в чергу…"
+  },
+  "asamaYenileniyor": {
+    "message": "Перезавантаження сторінки…"
+  },
+  "kiriklariSil": {
+    "message": "Видалити биті"
+  },
+  "ulasilamayanlariSil": {
+    "message": "Видалити недоступні"
+  },
+  "nUlasilamayanCopeTasinacak": {
+    "message": "Недоступні плитки ($1) буде переміщено в кошик. Деякі з них можуть бути недоступні лише тимчасово. Їх можна відновити."
+  },
+  "baslikAlt": {
+    "message": "Заголовок"
+  },
+  "baslikRengi": {
+    "message": "Колір заголовка"
+  },
+  "baslikStili": {
+    "message": "Стиль заголовка"
+  },
+  "stilNormal": {
+    "message": "Звичайний"
+  },
+  "stilKalin": {
+    "message": "Жирний"
+  },
+  "stilItalik": {
+    "message": "Курсив"
+  },
+  "stilKalinItalik": {
+    "message": "Жирний курсив"
+  },
+  "baslikGolgesi": {
+    "message": "Тінь заголовка"
+  },
+  "baslikGolgeRengi": {
+    "message": "Колір тіні"
+  },
+  "menuYaziRengi": {
+    "message": "Колір тексту панелі груп"
+  },
+  "aktifGrupYaziRengi": {
+    "message": "Колір тексту активної групи"
+  },
+  "sistemBolum": {
+    "message": "Система"
+  },
+  "sagTikBaslik": {
+    "message": "Контекстне меню"
+  },
+  "simgeRenkSol": {
+    "message": "Колір лівої лінії"
+  },
+  "simgeRenkSag": {
+    "message": "Колір правої лінії"
+  },
+  "simgeGolgesi": {
+    "message": "Тінь значка"
+  },
+  "simgeZemini": {
+    "message": "Фон значка"
+  },
+  "simgeZeminRengi": {
+    "message": "Колір фону"
+  },
   "aktarimdaYakala": {
     "message": "Створювати відсутні мініатюри після імпорту"
+  },
+  "icindekiKartlardanSec": {
+    "message": "Вибрати з плиток усередині"
+  },
+  "dosyadanIceAktar": {
+    "message": "Імпорт"
+  },
+  "desteklenmeyenDosya": {
+    "message": "Файл не розпізнано. Виберіть резервну копію WSD, FVD, Speed Dial 2 або Group Speed Dial чи HTML-файл закладок"
+  },
+  "karsilamaIceAktarAciklama": {
+    "message": "Імпорт: резервна копія WSD, копія іншого Speed Dial (FVD, Speed Dial .spd, Speed Dial 2, Group Speed Dial) або HTML-файл закладок, експортований з будь-якого браузера. Тип визначається автоматично."
+  },
+  "karsilamaKapatDevam": {
+    "message": "Закрити й продовжити"
+  },
+  "yerimlerinden": {
+    "message": "Із закладок"
+  },
+  "siteEkle": {
+    "message": "Додати сайт"
+  },
+  "metinYapistir": {
+    "message": "Вставити текст (FVD тощо)"
+  },
+  "metinYapistirAciklama": {
+    "message": "Скопіюйте текст із поля експорту в налаштуваннях FVD або вміст файлу резервної копії та вставте сюди. Тип визначається автоматично."
+  },
+  "onizlemeKisaltildi": {
+    "message": "попередній перегляд скорочено, буде імпортовано весь текст"
+  },
+  "mSekmeleriKaydet": {
+    "message": "Зберегти вкладки як групу…"
+  },
+  "tumunuSec": {
+    "message": "Вибрати всі"
+  },
+  "kaydedilecekSekmeYok": {
+    "message": "Тут немає відкритих вкладок для збереження"
+  },
+  "sekmelerGrupAdi": {
+    "message": "Вкладки $1"
+  },
+  "sekmeleriKaydetBaslik": {
+    "message": "Зберегти відкриті вкладки як групу"
+  },
+  "sekmeleriKaydetMetin": {
+    "message": "Вкладки цього вікна буде додано до нової групи як плитки. Зніміть позначку з непотрібних."
+  },
+  "nSekmeKaydedildi": {
+    "message": "Створено нову групу (вкладок: $1)"
+  },
+  "calismaAlanlari": {
+    "message": "Робочі простори"
+  },
+  "alanKaydetBaslik": {
+    "message": "Зберегти робочий простір"
+  },
+  "alanKaydetMetin": {
+    "message": "Позначте вкладки, які потрібно зберегти. Якщо у вікні кілька розділів (наприклад, робочі простори Vivaldi/Opera), прапорець у заголовку розділу вибирає весь розділ."
+  },
+  "alanVarsayilanAd": {
+    "message": "Робочий простір $1"
+  },
+  "alanKaydedildi": {
+    "message": "Робочий простір збережено (вкладок: $1)"
+  },
+  "alanBos": {
+    "message": "Цей робочий простір порожній"
+  },
+  "alanAc": {
+    "message": "Відкрити"
+  },
+  "yenidenAdlandir": {
+    "message": "Перейменувати"
+  },
+  "grubaDonustur": {
+    "message": "Перетворити на групу"
+  },
+  "grubaDonusturMetin": {
+    "message": "«$1» стане звичайною групою, для плиток буде зроблено знімки."
+  },
+  "grubaDonusturuldu": {
+    "message": "Перетворено на групу"
+  },
+  "alanSil": {
+    "message": "Видалити робочий простір"
+  },
+  "alanSilMetin": {
+    "message": "«$1» (вкладок: $2) буде видалено назавжди."
+  },
+  "alanYok": {
+    "message": "Робочих просторів поки немає. Натисніть «Зберегти вкладки», щоб зберегти відкриті вкладки й потім відкрити їх одним клацанням."
+  },
+  "nSekme": {
+    "message": "Вкладок: $1"
+  },
+  "yeniPencerede": {
+    "message": "У новому вікні"
+  },
+  "sekmeleriKaydet": {
+    "message": "Зберегти вкладки"
+  },
+  "alandanCikar": {
+    "message": "Прибрати з робочого простору"
+  },
+  "nDahaGoster": {
+    "message": "Ще вкладок: $1"
+  },
+  "dahaAzGoster": {
+    "message": "Згорнути"
+  },
+  "alanAcIpucu": {
+    "message": "Відкрити вкладки в цьому вікні"
+  },
+  "kayitliSekmeler": {
+    "message": "Збережені вкладки"
+  },
+  "acikSekmeler": {
+    "message": "Відкриті вкладки в цьому вікні"
+  },
+  "alanDuzenleBaslik": {
+    "message": "Змінити робочий простір"
+  },
+  "alanDuzenleMetin": {
+    "message": "Збережені вкладки без позначки буде видалено, позначені відкриті — додано."
+  },
+  "alanDuzenlendi": {
+    "message": "Додано вкладок: $1, видалено: $2"
+  },
+  "etiketIpucu": {
+    "message": "через кому: робота, навчання"
+  },
+  "tumu": {
+    "message": "Усі"
+  },
+  "renk": {
+    "message": "Колір"
+  },
+  "blokBasligi": {
+    "message": "Вкладок: $1 · $2"
+  },
+  "mSekmeleriAlanaKaydet": {
+    "message": "Зберегти вкладки в робочий простір…"
+  },
+  "webTarayiciMotoru": {
+    "message": "Пошукова система браузера"
+  },
+  "webAraYer": {
+    "message": "Шукати в $1 або ввести адресу"
+  },
+  "webVarsayilanYap": {
+    "message": "Зробити основною"
+  },
+  "anaSayfaBolum": {
+    "message": "Головна"
+  },
+  "webAramaCubugu": {
+    "message": "Рядок пошуку"
+  },
+  "webAramaGoster": {
+    "message": "Показувати рядок пошуку"
+  },
+  "webVarsayilanMotor": {
+    "message": "Пошукова система за замовчуванням"
+  },
+  "webMotorListesi": {
+    "message": "Пошукові системи у списку"
+  },
+  "webMotorEkle": {
+    "message": "Додати свою пошукову систему"
+  },
+  "webYeniAd": {
+    "message": "Назва"
+  },
+  "webYeniKisa": {
+    "message": "Ключове слово"
+  },
+  "webYeniAdres": {
+    "message": "https://site.com/search?q=%s"
+  },
+  "webYeniIpucu": {
+    "message": "Вкажіть %s на місці пошукового запиту. Ключове слово необов'язкове: використовується як «ab запит»."
+  },
+  "webYeniAdGerek": {
+    "message": "Введіть назву системи"
+  },
+  "webYeniAdresGecersiz": {
+    "message": "Адреса має починатися з http(s):// і містити %s"
+  },
+  "webYeniKisaVar": {
+    "message": "Це ключове слово вже зайняте або містить пробіл"
+  },
+  "webYeniEklendi": {
+    "message": "Додано: $1"
+  },
+  "ekrandanSec": {
+    "message": "Взяти колір з екрана"
+  },
+  "arayuzAlt": {
+    "message": "Інтерфейс"
+  },
+  "renkliSimgeler": {
+    "message": "Кольорові значки"
+  },
+  "temaBaslik": {
+    "message": "Тема"
+  },
+  "temaMod": {
+    "message": "Режим"
+  },
+  "temaKoyu": {
+    "message": "Темна"
+  },
+  "temaAcik": {
+    "message": "Світла"
+  },
+  "temaSistem": {
+    "message": "Системна"
+  },
+  "temaIpucu": {
+    "message": "Готова тема задає всі кольори разом; нижче кожен колір можна змінити окремо. Зображення шпалер зберігається."
+  },
+  "temaUygulandi": {
+    "message": "Тему «$1» застосовано"
+  },
+  "temaDegistirildi": {
+    "message": "змінено"
+  },
+  "temaDegistirildiIpucu": {
+    "message": "Кольори змінено вручну. Натисніть, щоб повернути готову тему."
+  },
+  "tema_gece": {
+    "message": "Ніч"
+  },
+  "tema_grafit": {
+    "message": "Графіт"
+  },
+  "tema_okyanus": {
+    "message": "Океан"
+  },
+  "tema_orman": {
+    "message": "Ліс"
+  },
+  "tema_mor": {
+    "message": "Фіалка"
+  },
+  "tema_gunbatimi": {
+    "message": "Захід сонця"
+  },
+  "tema_kagit": {
+    "message": "Папір"
+  },
+  "tema_kum": {
+    "message": "Пісок"
+  },
+  "tema_buz": {
+    "message": "Лід"
+  },
+  "tema_nane": {
+    "message": "М'ята"
+  },
+  "tema_pastel": {
+    "message": "Пастель"
+  },
+  "temaKaydet": {
+    "message": "Зберегти"
+  },
+  "temaKaydetIpucu": {
+    "message": "Зберегти поточні кольори як власну тему"
+  },
+  "temaKaydetMetin": {
+    "message": "Поточні кольори буде збережено під цією назвою. Тему з такою самою назвою буде оновлено."
+  },
+  "temaOzelAd": {
+    "message": "Моя тема $1"
+  },
+  "temaKaydedildi": {
+    "message": "«$1» збережено"
+  },
+  "temaSilindi": {
+    "message": "«$1» видалено"
+  },
+  "temaSinir": {
+    "message": "Можна зберегти не більше $1 тем"
+  },
+  "anaSayfaSilinemez": {
+    "message": "«Головну» не можна видалити"
+  },
+  "anaSayfaAdiDegismez": {
+    "message": "«Головну» не можна перейменувати"
+  },
+  "camGorunum": {
+    "message": "Ефект матового скла"
+  },
+  "aktifIkonRengi": {
+    "message": "Колір значка активної групи"
+  },
+  "aktarimGorselBaslik": {
+    "message": "Зображення плиток"
+  },
+  "aktarimGorselMetin": {
+    "message": "Імпортовані плитки без зображень: $1 — файл резервної копії їх не містить.\n\nЗробити знімки у фоні? Вікна не відкриватимуться, WSD можна користуватися як зазвичай. Це може зайняти час залежно від кількості плиток, а вгорі браузера може з'явитися повідомлення про «налагодження»."
+  },
+  "arkaPlandaAl": {
+    "message": "Зняти у фоні"
+  },
+  "simdiDegil": {
+    "message": "Не зараз"
+  },
+  "kartKelime": {
+    "message": "плитки"
+  },
+  "copGeriYukle": {
+    "message": "Відновити"
+  },
+  "sonYedekKisa": {
+    "message": "Остання копія: $1 ($2, плиток: $3)"
+  },
+  "mevcutVerilerSiliniyor": {
+    "message": "Видалення наявних даних"
+  },
+  "tema_yakut": {
+    "message": "Рубін"
+  },
+  "tema_gul": {
+    "message": "Троянда"
+  },
+  "temaGuncelle": {
+    "message": "Оновити"
+  },
+  "temaGuncelleIpucu": {
+    "message": "Зберегти зміни в цій темі"
+  },
+  "tema_kehribar": {
+    "message": "Бурштин"
+  },
+  "tema_gunes": {
+    "message": "Сонце"
+  },
+  "tema_kontrast": {
+    "message": "Контраст"
+  },
+  "tema_murekkep": {
+    "message": "Чорнило"
+  },
+  "webAramaYeri": {
+    "message": "Де показувати"
+  },
+  "webYerAnaSayfa": {
+    "message": "Лише на «Головній»"
+  },
+  "webYerIlkGrup": {
+    "message": "У першій групі"
+  },
+  "webYerHepsi": {
+    "message": "В усіх групах"
+  },
+  "kucukPencere": {
+    "message": "Маленьке вікно в кутку (експериментально)"
+  },
+  "gizliKipBilgi": {
+    "message": "У цьому режимі Chrome показує вгорі панель «WSD Speed Dial почав налагодження цього браузера». Це обов'язкове повідомлення Chrome під час знімка сторінки без відкриття вікна; дозвіл використовується лише для знімка. Панель зникає після завершення знімання."
+  },
+  "hazirGruplar": {
+    "message": "Готові групи"
+  },
+  "hazirGruplarAciklama": {
+    "message": "Вибраний набір додається як нова група; наявні плитки не змінюються. Плитки потім можна редагувати."
+  },
+  "tumDiller": {
+    "message": "Показати набори всіма мовами"
+  },
+  "paketOner": {
+    "message": "Запропонувати набір (GitHub)"
+  },
+  "paketListesiAlinamadi": {
+    "message": "Не вдалося завантажити список наборів."
+  },
+  "nKartKisa": {
+    "message": "плиток: $1"
+  },
+  "eklendi": {
+    "message": "Додано"
+  },
+  "paketEklendi": {
+    "message": "«$1» додано · плиток: $2"
+  },
+  "paketEklenemedi": {
+    "message": "Не вдалося додати набір"
+  },
+  "yukleniyor": {
+    "message": "Завантаження…"
+  },
+  "webAraYerTarayici": {
+    "message": "Пошук в інтернеті або адреса"
+  },
+  "kartHizalama": {
+    "message": "Вирівнювання плиток"
+  },
+  "hizaOrta": {
+    "message": "По центру"
+  },
+  "hizaSol": {
+    "message": "За лівим краєм"
+  },
+  "hakkinda": {
+    "message": "Про розширення"
+  },
+  "hakkindaAlt": {
+    "message": "Відкритий код · Без стеження · Без облікового запису"
+  },
+  "yenilikler": {
+    "message": "Що нового"
+  },
+  "degerlendir": {
+    "message": "Оцінити"
+  },
+  "oneriHataBildir": {
+    "message": "Пропозиція / помилка"
+  },
+  "kaynakKod": {
+    "message": "Вихідний код (GitHub)"
+  },
+  "gizlilikPolitikasi": {
+    "message": "Політика конфіденційності"
+  },
+  "tumDegisiklikler": {
+    "message": "Усі зміни (GitHub)"
+  },
+  "yenilikBuSurum": {
+    "message": "ця версія"
+  },
+  "yenilikYuklendi": {
+    "message": "WSD Speed Dial $1 встановлено"
+  },
+  "yenilikDil": {
+    "message": "en"
+  },
+  "yenilikYeni": {
+    "message": "Нове"
+  },
+  "yenilikDuzeltme": {
+    "message": "Виправлено"
+  },
+  "temaIceAktarilan": {
+    "message": "Імпортована"
+  },
+  "klasorYedekBaslik": {
+    "message": "Хмарна папка (експериментально)"
+  },
+  "klasorYedekAciklama": {
+    "message": "Копії записуються у вибрану папку. Виберіть папку OneDrive, Google Drive або Dropbox — їхній застосунок сам завантажить копії в хмару; на іншому комп'ютері відновіть із тієї самої папки."
+  },
+  "klasorYedekAd": {
+    "message": "Назва копії"
+  },
+  "klasorYedekAdIpucu": {
+    "message": "Файли копій отримують цю назву (wsd-назва-дата.json); у папці копій це також назва підпапки. Дайте кожному браузеру власну назву; однакова назва на двох комп'ютерах — спільний набір копій."
+  },
+  "klasorYedekSiklik": {
+    "message": "Частота автоматичного копіювання"
+  },
+  "gundeBir": {
+    "message": "Раз на день"
+  },
+  "haftadaBir": {
+    "message": "Раз на тиждень"
+  },
+  "klasorYedekGorselli": {
+    "message": "Включати зображення"
+  },
+  "klasorYedekSakla": {
+    "message": "Зберігати копій"
+  },
+  "klasorYedekSimdi": {
+    "message": "Зберегти в папку зараз"
+  },
+  "klasorYedekGeriYukle": {
+    "message": "Відновити з папки"
+  },
+  "klasorYedekTumu": {
+    "message": "Показати копії всіх браузерів"
+  },
+  "klasorYedekYukleDugme": {
+    "message": "Завантажити"
+  },
+  "klasorYedekSecilmedi": {
+    "message": "Папку не вибрано"
+  },
+  "klasorYedekDesteklenmiyor": {
+    "message": "Цей браузер не підтримує запис у папки"
+  },
+  "klasorYedekSecilemedi": {
+    "message": "Не вдалося використати цю папку. Системні папки (наприклад, корінь «Документів») можуть бути заблоковані; виберіть вкладену папку."
+  },
+  "klasorYedekKlasorYok": {
+    "message": "Спочатку виберіть папку для копій"
+  },
+  "klasorYedekIzinYok": {
+    "message": "Доступ до папки не надано"
+  },
+  "klasorYedekYazildi": {
+    "message": "Збережено плиток: $1 → $2"
+  },
+  "klasorYedekBos": {
+    "message": "У цій папці немає копій"
+  },
+  "klasorYedekBuCihaz": {
+    "message": "цей браузер"
+  },
+  "klasorYedekGorselsiz": {
+    "message": "без зображень"
+  },
+  "klasorYedekSon": {
+    "message": "Остання копія: $1"
+  },
+  "klasorYedekIzin": {
+    "message": "Для автоматичного копіювання потрібно поновити доступ до папки"
+  },
+  "klasorYedekIzinVer": {
+    "message": "Дозволити й зберегти"
+  },
+  "klasorYedekDahaYeni": {
+    "message": "Є новіша копія ($1, $2)"
+  },
+  "klasorYedekGoster": {
+    "message": "Показати"
+  },
+  "yedekleniyor": {
+    "message": "Збереження…"
+  },
+  "okunuyor": {
+    "message": "Читання…"
+  },
+  "gelismis": {
+    "message": "Додатково"
+  },
+  "ayarAra": {
+    "message": "Пошук налаштувань…"
+  },
+  "ayarAraYok": {
+    "message": "Немає відповідних налаштувань"
+  },
+  "aradiginizKart": {
+    "message": "Ось ця плитка"
+  },
+  "klasorYedekSiklikKapali": {
+    "message": "Вимк. (лише вручну)"
   }
 }

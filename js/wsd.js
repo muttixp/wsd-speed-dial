@@ -124,13 +124,18 @@ function bakimBolumunuAc() {
 
     // Panel acilis animasyonu bitmeden kaydirmak ise yaramiyor
     setTimeout(() => {
-        const bolumler = [...document.querySelectorAll('.bolum')];
-        const bakim = bolumler.find(b =>
-            b.querySelector('.bolumAd')?.textContent.trim() === c('bakim'));
-        if (!bakim) return;
-        bolumler.forEach(b => b.classList.remove('acik'));
+        // 1.5.7: Bakim, Sistem bolumunun alt bolumu. Acik bir ayar aramasi
+        // Bakim'i gizliyor olabilir - once temizle.
+        const ara = document.getElementById('ayarAra');
+        if (ara && ara.value) { ara.value = ''; ara.dispatchEvent(new Event('input')); }
+        const sistem = document.querySelector('#ayarPanel .sistemBolum');
+        const bakim = document.querySelector('#ayarPanel .altBakim');
+        if (!sistem || !bakim) return;
+        document.querySelectorAll('#ayarPanel .bolum').forEach(b => b.classList.remove('acik'));
+        document.querySelectorAll('#ayarPanel .altAcilir').forEach(b => b.classList.remove('acik'));
+        sistem.classList.add('acik');
         bakim.classList.add('acik');
-        bakim.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        setTimeout(() => bakim.scrollIntoView({ behavior: 'smooth', block: 'start' }), 260);
     }, 240);
 }
 
@@ -252,7 +257,20 @@ document.addEventListener('DOMContentLoaded', async () => {
                         sure: 25000,
                         calistir: () => bakimBolumunuAc()
                     });
+            } else if (sonuc && sonuc.izinGerekli) {
+                // Klasore yedek (1.5.7): tarayici yeniden acilinca klasor
+                // izni bir tiklamayla yenileniyor
+                const { bildir } = await import('./etkilesim.js');
+                bildir(c('klasorYedekIzin'), {
+                    etiket: c('klasorYedekIzinVer'), sure: 20000,
+                    calistir: async () => {
+                        const m = await import('./yedekklasor.js');
+                        await m.klasoreYedekleBildir(null);
+                    }
+                });
             }
+            // Ayni ada baska cihazdan daha yeni yedek geldiyse haber ver
+            import('./yedekklasor.js').then(m => m.yeniYedekDenetle()).catch(() => {});
         }, 3000);
         copuSuz();
         // Soru cevaplanmadan sayfa kapandiysa: bu acilista sor

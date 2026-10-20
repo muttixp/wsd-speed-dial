@@ -315,20 +315,41 @@ body {
 /* Sag tiklanan kart */
 .kart.menuHedef .kartGorsel { box-shadow: inset 0 0 0 100vmax rgba(0,0,0,.6); }
 
-/* Aramadan gruba gidilince ARANAN KART (1.5.3). `outline` bilerek:
-   kartin cerceve/hover golgeleri box-shadow kullaniyor, ayni ozellige
-   yazsaydik birbirini ezerdi. */
+/* Aramadan gruba gidilince ARANAN KART (1.5.7): spot isigi. Diger kartlar
+   soluk, aranan kart buyuk + cift cerceve (beyaz + vurgu) + etiket.
+   `outline` bilerek: kart golgeleri box-shadow kullaniyor. */
+.kart { transition: opacity 280ms ease, filter 280ms ease, transform 280ms cubic-bezier(.2,.8,.3,1); }
+body.kartOdakta .kart:not(.aramaBulunan) { opacity: .22; filter: grayscale(.7); }
+.kart.aramaBulunan { z-index: 6; transform: scale(1.08); }
 .kart.aramaBulunan .kartGorsel {
-    outline: 3px solid var(--vurgu-parlak, var(--vurgu));
+    outline: 3px solid #fff;
     outline-offset: 3px;
-    animation: aramaBulunan 1s ease-in-out 4;
+    box-shadow: 0 0 0 9px var(--vurgu), 0 18px 48px rgba(0, 0, 0, .55) !important;
+    animation: aramaBulunan 900ms ease-in-out 3;
 }
 @keyframes aramaBulunan {
-    0%, 100% { outline-offset: 3px; outline-color: var(--vurgu-parlak, var(--vurgu)); }
-    50%      { outline-offset: 7px; outline-color: transparent; }
+    0%, 100% { outline-offset: 3px; }
+    50%      { outline-offset: 9px; }
 }
+.bulunanEtiket {
+    position: absolute; left: 50%; top: 0; z-index: 7;
+    transform: translate(-50%, calc(-100% - 16px));
+    padding: 4px 11px; border-radius: 999px; white-space: nowrap;
+    background: var(--vurgu); color: var(--vurgu-yazi, #fff);
+    font-size: 12px; font-weight: 700; letter-spacing: .02em;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, .35);
+    animation: etiketGel 260ms cubic-bezier(.2,.8,.3,1);
+    pointer-events: none;
+}
+.bulunanEtiket::after {
+    content: ''; position: absolute; left: 50%; bottom: -5px; width: 10px; height: 10px;
+    background: inherit; transform: translateX(-50%) rotate(45deg); border-radius: 2px;
+}
+.bulunanEtiket.gidiyor { opacity: 0; transition: opacity 280ms ease; }
+@keyframes etiketGel { from { opacity: 0; transform: translate(-50%, calc(-100% - 4px)); } }
 @media (prefers-reduced-motion: reduce) {
-    .kart.aramaBulunan .kartGorsel { animation: none; }
+    .kart.aramaBulunan .kartGorsel, .bulunanEtiket { animation: none; }
+    .kart.aramaBulunan { transform: none; }
 }
 
 /* Gorseli yenilenen kart */
@@ -3528,7 +3549,11 @@ body.zeminAcik.camGorunum #webArama::before { background: rgba(var(--yuzey-rgb),
    yasliyordu; son satir da hep soldaydi. "Ortaya": esnek satirlar,
    her satir (sonuncu dahil) ortalanir. Kart genisligi aynen kalir. */
 body.kartlarOrtada .kartIzgara { display: flex; flex-wrap: wrap; justify-content: center; }
-body.kartlarOrtada .kartIzgara > * { flex: 0 0 var(--kart-en); width: var(--kart-en); }
+body.kartlarOrtada .kartIzgara > :is(.kart, .klasorKart) { flex: 0 0 var(--kart-en); width: var(--kart-en); }
+/* Kart OLMAYAN cocuklar (arama etiket seridi, cop/calisma alani basliklari,
+   bos durum kutulari...) izgarada `grid-column: 1 / -1` ile tam satirdi;
+   ortali duzende de tam satir kalsin - kart eninde sikisip kayiyordu */
+body.kartlarOrtada .kartIzgara > :not(.kart, .klasorKart) { flex: 0 0 100%; max-width: 100%; }
 
 /* ---------- Acik modda yan panel ve bolum simgeleri (1.5.6) ----------
    Renkli simgelerin tonlari koyu zemin icin acikti; acik camda solgun
@@ -3602,3 +3627,247 @@ body:not(.renkliSimgeler) .hakkindaBolum .bolumSimge { color: currentColor !impo
 .yenilikTur.duzeltme { background: rgba(240, 160, 70, .16); color: #f0a046; }
 html.acikMod .yenilikTur.yeni { color: #1f8a4c; }
 html.acikMod .yenilikTur.duzeltme { color: #b0640f; }
+
+/* ============ Yedek klasoru (1.5.7, deneysel) ============ */
+.kyKlasorSatir { gap: 10px; }
+.kyKlasorAd { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    color: var(--metin-sonuk); font-size: 12.5px; }
+.kyDugmeler { display: flex; gap: 6px; flex: none; }
+.kyDugmeler .dugme { padding: 5px 10px; font-size: 12.5px; }
+.kyAdKutu { width: 150px; }
+#kySakla { width: 64px; }
+#klasorYedekPencere .pencereIc { width: min(560px, calc(100vw - 32px)); }
+.kyListe { max-height: min(55vh, 460px); overflow-y: auto; margin: var(--b2) 0; display: flex; flex-direction: column; gap: 6px; }
+.kySatir { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border: 1px solid var(--cerceve);
+    border-radius: var(--k2); background: rgba(var(--on), .03); }
+.kyBilgi { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.kyBilgi b { font-size: 13px; }
+.kyBilgi span { font-size: 12px; color: var(--metin-sonuk); }
+.kySatir .dugme { flex: none; }
+.kyDugmeler [hidden] { display: none !important; }
+.yedekBolum .ayarGrup > .kucukBilgi, #kyAyrinti > .kucukBilgi { margin: 2px var(--b2) var(--b2); }
+.ayarSatir input.kyAdKutu {
+    background: rgba(var(--on), .05); color: var(--metin); border: 1px solid var(--cerceve);
+    border-radius: var(--k1); padding: 6px 9px; font: inherit; font-size: 13px;
+}
+.ayarSatir input.kyAdKutu:focus { outline: none; border-color: var(--vurgu); }
+
+/* Mesgul dugme (1.5.7): yedek suresince */
+.mesgul { cursor: progress !important; opacity: .85; }
+.mesgul .dugmeSimge { animation: mesgulNabiz 1s ease-in-out infinite; }
+@keyframes mesgulNabiz { 50% { opacity: .35; } }
+
+/* Yedekleme alt bolumleri (1.5.7): Sistem gibi acilir, simgeleri renkli */
+.yedekBolum .altAcilir:first-child { border-top: 0; margin-top: 0; padding-top: 0; }
+body.renkliSimgeler .yedekBolum .altYedek    .altAd > svg { color: #29c5ff; }
+body.renkliSimgeler .yedekBolum .altBulut    .altAd > svg { color: #8ea2ff; }
+body.renkliSimgeler .yedekBolum .altIceAktar .altAd > svg { color: #4cd07d; }
+html.acikMod body.renkliSimgeler .yedekBolum .altYedek    .altAd > svg { color: #0b84b8; }
+html.acikMod body.renkliSimgeler .yedekBolum .altBulut    .altAd > svg { color: #4a5bd6; }
+html.acikMod body.renkliSimgeler .yedekBolum .altIceAktar .altAd > svg { color: #1f8a4c; }
+.altBulut .altIc .kucukBilgi, .altYedek .altIc .kucukBilgi { margin: 2px var(--b2) var(--b2); }
+
+/* Bakim ve Sifirlama Sistem'in icinde (1.5.7) */
+body.renkliSimgeler .sistemBolum .altBakim .altAd > svg { color: #4cd07d; }
+html.acikMod body.renkliSimgeler .sistemBolum .altBakim .altAd > svg { color: #1f8a4c; }
+.sistemBolum .altSifirla .altAd, .sistemBolum .altSifirla .altAd > svg { color: #e2706c; }
+html.acikMod .sistemBolum .altSifirla .altAd, html.acikMod .sistemBolum .altSifirla .altAd > svg { color: #c0392b; }
+.altSifirla .kucukBilgi { margin: var(--b2) var(--b2) var(--b3); }
+
+/* Gorunum alt bolumleri (1.5.7) - Grup Menusu de burada */
+.gorunumBolum .altAcilir:first-child { border-top: 0; margin-top: 0; padding-top: 0; }
+body.renkliSimgeler .gorunumBolum .altTema     .altAd > svg { color: #f5b041; }
+body.renkliSimgeler .gorunumBolum .altArka     .altAd > svg { color: #f06292; }
+body.renkliSimgeler .gorunumBolum .altGrupMenu .altAd > svg { color: #5aa9ff; }
+body.renkliSimgeler .gorunumBolum .altYazi     .altAd > svg { color: #ff8a65; }
+body.renkliSimgeler .gorunumBolum .altArayuz   .altAd > svg { color: #4fd1c5; }
+html.acikMod body.renkliSimgeler .gorunumBolum .altTema     .altAd > svg { color: #c27c12; }
+html.acikMod body.renkliSimgeler .gorunumBolum .altArka     .altAd > svg { color: #c2185b; }
+html.acikMod body.renkliSimgeler .gorunumBolum .altGrupMenu .altAd > svg { color: #1f63c4; }
+html.acikMod body.renkliSimgeler .gorunumBolum .altYazi     .altAd > svg { color: #d84315; }
+html.acikMod body.renkliSimgeler .gorunumBolum .altArayuz   .altAd > svg { color: #0f8577; }
+
+/* Kartlar ve Goruntu Yakalama alt bolumleri (1.5.7) */
+:is(.kartBolum, .yakalamaBolum) .altAcilir:first-child { border-top: 0; margin-top: 0; padding-top: 0; }
+body.renkliSimgeler .altKDavranis .altAd > svg { color: #5aa9ff; }
+body.renkliSimgeler .altKBoyut    .altAd > svg { color: #4fd1c5; }
+body.renkliSimgeler .altKBaslik   .altAd > svg { color: #ff8a65; }
+body.renkliSimgeler .altKRenk     .altAd > svg { color: #b48cff; }
+body.renkliSimgeler .altYYakala   .altAd > svg { color: #f06292; }
+body.renkliSimgeler .altYGelismis .altAd > svg { color: #a0a7b4; }
+body.renkliSimgeler .altYGoruntu  .altAd > svg { color: #f5b041; }
+html.acikMod body.renkliSimgeler .altKDavranis .altAd > svg { color: #1f63c4; }
+html.acikMod body.renkliSimgeler .altKBoyut    .altAd > svg { color: #0f8577; }
+html.acikMod body.renkliSimgeler .altKBaslik   .altAd > svg { color: #d84315; }
+html.acikMod body.renkliSimgeler .altKRenk     .altAd > svg { color: #7445d6; }
+html.acikMod body.renkliSimgeler .altYYakala   .altAd > svg { color: #c2185b; }
+html.acikMod body.renkliSimgeler .altYGelismis .altAd > svg { color: #5b6270; }
+html.acikMod body.renkliSimgeler .altYGoruntu  .altAd > svg { color: #c27c12; }
+.altYYakala .kucukBilgi { margin: 2px var(--b2) var(--b2); }
+
+/* ============ Ayar arama (1.5.7) ============ */
+.ayarAraKutu {
+    position: sticky; top: calc(-1 * var(--b4)); z-index: 3;
+    display: flex; align-items: center; gap: 8px;
+    margin: 0 var(--b2) var(--b2); padding: 7px 11px;
+    background: var(--yuzey); border: 1px solid var(--cerceve); border-radius: var(--k2);
+}
+.ayarAraKutu:focus-within { border-color: var(--vurgu); }
+.ayarAraKutu svg { width: 16px; height: 16px; flex: none; color: var(--metin-sonuk); }
+.ayarAraKutu input { flex: 1; min-width: 0; border: 0; background: none; outline: none;
+    color: var(--metin); font: inherit; font-size: 13.5px; }
+.ayarAraYok { margin: var(--b3) var(--b3); color: var(--metin-sonuk); font-size: 13px; }
+/* Arama sirasinda: eslesmeyen gizli, eslesen bolum/alt bolum acik */
+.ayarAramada .araGizli { display: none !important; }
+.ayarAramada .bolum.araEsles .bolumIc,
+.ayarAramada .altAcilir.araEsles .altIc { grid-template-rows: 1fr; }
+.ayarAramada .bolum.araEsles .bolumOk,
+.ayarAramada .altAcilir.araEsles .altOk { transform: rotate(180deg); }
+.ayarAramada .altAcilir.araEsles .altIc > div { padding-bottom: var(--b3); }
+.ayarAramada .ayarSatir.araEsles { box-shadow: inset 3px 0 0 var(--vurgu); }
+/* Ayar arama kutusu web arama kutusuyla ayni: buzlu, saydam (1.5.7).
+   Yapiskan oldugu icin kaydirilan ayarlar altinda bulaniklasiyor. */
+.ayarAraKutu { border-radius: var(--grup-kose); padding: 9px 12px; transition: background var(--gecis), border-color var(--gecis); }
+body.camGorunum .ayarAraKutu {
+    background: rgba(var(--yuzey-rgb), .32);
+    -webkit-backdrop-filter: blur(16px) saturate(1.4);
+    backdrop-filter: blur(16px) saturate(1.4);
+    border-color: rgba(255, 255, 255, .12);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, .16), inset 0 1px 0 rgba(255, 255, 255, .06);
+}
+body.camGorunum .ayarAraKutu:focus-within { background: rgba(var(--yuzey-rgb), .55); border-color: var(--vurgu); }
+html.acikMod body.camGorunum .ayarAraKutu {
+    background: rgba(255, 255, 255, .5); border-color: rgba(255, 255, 255, .6);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, .06), inset 0 1px 0 rgba(255, 255, 255, .6);
+}
+html.acikMod body.camGorunum .ayarAraKutu:focus-within { background: rgba(255, 255, 255, .75); border-color: var(--vurgu); }
+.ayarAraKutu { top: calc(8px - var(--b4)); }
+/* Ayar arama kutusu: sade, saydam - zemin hafif koyu, golge yok, kenar
+   neredeyse gorunmez (web arama kutusunun duvar kagidi uzerindeki hali) */
+body.camGorunum .ayarAraKutu {
+    background: rgba(0, 0, 0, .14);
+    border-color: rgba(255, 255, 255, .07);
+    box-shadow: none;
+}
+body.camGorunum .ayarAraKutu:focus-within { background: rgba(0, 0, 0, .2); border-color: rgba(255, 255, 255, .16); }
+html.acikMod body.camGorunum .ayarAraKutu {
+    background: rgba(255, 255, 255, .35);
+    border-color: rgba(0, 0, 0, .07);
+    box-shadow: none;
+}
+html.acikMod body.camGorunum .ayarAraKutu:focus-within { background: rgba(255, 255, 255, .6); border-color: rgba(0, 0, 0, .14); }
+/* Ayar arama kutusu: bolum basliklariyla AYNI zemin (1.5.7) */
+.ayarAraKutu,
+body.camGorunum .ayarAraKutu,
+html.acikMod body.camGorunum .ayarAraKutu {
+    background: rgba(var(--on), .045);
+    border-color: transparent;
+    border-radius: var(--k1);
+    box-shadow: none;
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+}
+.ayarAraKutu:focus-within,
+body.camGorunum .ayarAraKutu:focus-within,
+html.acikMod body.camGorunum .ayarAraKutu:focus-within {
+    background: rgba(var(--on), .07);
+    border-color: transparent;
+}
+/* Ayar arama kutusu = web arama kutusu (1.5.7): koyu yari saydam cam,
+   ince acik kenar, grup koseleri. Panel zemininden KOYU durur. */
+.ayarAraKutu,
+body.camGorunum .ayarAraKutu {
+    background: rgba(var(--yuzey-rgb), .55);
+    border: 1px solid rgba(255, 255, 255, .08);
+    border-radius: var(--grup-kose);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .04);
+    -webkit-backdrop-filter: blur(16px) saturate(1.4);
+    backdrop-filter: blur(16px) saturate(1.4);
+}
+.ayarAraKutu:focus-within,
+body.camGorunum .ayarAraKutu:focus-within { background: rgba(var(--yuzey-rgb), .75); border-color: rgba(255, 255, 255, .14); }
+html.acikMod .ayarAraKutu,
+html.acikMod body.camGorunum .ayarAraKutu {
+    background: rgba(255, 255, 255, .5);
+    border-color: rgba(255, 255, 255, .35);
+    box-shadow: 0 1px 0 rgba(0, 0, 0, .04);
+}
+html.acikMod .ayarAraKutu:focus-within,
+html.acikMod body.camGorunum .ayarAraKutu:focus-within { background: rgba(255, 255, 255, .75); border-color: rgba(0, 0, 0, .1); }
+/* DUZELTME: kutudaki backdrop-filter, panelin kendi caminin ICINDE ikinci
+   bir cam katmani aciyordu; arkasindaki duvar kagidi yerine panelin duz
+   rengini goruyor ve OPAK duruyordu. Bulaniklik kaldirildi; zemin yalnizca
+   hafif koyu tul - panelden sizan duvar kagidi kutudan da gorunur. */
+.ayarAraKutu,
+body.camGorunum .ayarAraKutu,
+html.acikMod .ayarAraKutu,
+html.acikMod body.camGorunum .ayarAraKutu {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+}
+.ayarAraKutu, body.camGorunum .ayarAraKutu { background: rgba(0, 0, 0, .22); }
+.ayarAraKutu:focus-within, body.camGorunum .ayarAraKutu:focus-within { background: rgba(0, 0, 0, .32); }
+html.acikMod .ayarAraKutu, html.acikMod body.camGorunum .ayarAraKutu { background: rgba(255, 255, 255, .4); }
+html.acikMod .ayarAraKutu:focus-within, html.acikMod body.camGorunum .ayarAraKutu:focus-within { background: rgba(255, 255, 255, .65); }
+/* Biraz daha saydam (1.5.7) */
+.ayarAraKutu, body.camGorunum .ayarAraKutu { background: rgba(0, 0, 0, .12); }
+.ayarAraKutu:focus-within, body.camGorunum .ayarAraKutu:focus-within { background: rgba(0, 0, 0, .2); }
+html.acikMod .ayarAraKutu, html.acikMod body.camGorunum .ayarAraKutu { background: rgba(255, 255, 255, .25); }
+html.acikMod .ayarAraKutu:focus-within, html.acikMod body.camGorunum .ayarAraKutu:focus-within { background: rgba(255, 255, 255, .5); }
+/* Daha saydam zemin + koyu, golge gibi cerceve (1.5.7) */
+.ayarAraKutu, body.camGorunum .ayarAraKutu {
+    background: rgba(0, 0, 0, .06);
+    border-color: rgba(0, 0, 0, .35);
+    box-shadow: 0 1px 6px rgba(0, 0, 0, .25), inset 0 1px 2px rgba(0, 0, 0, .18);
+}
+.ayarAraKutu:focus-within, body.camGorunum .ayarAraKutu:focus-within { background: rgba(0, 0, 0, .14); border-color: rgba(0, 0, 0, .5); }
+html.acikMod .ayarAraKutu, html.acikMod body.camGorunum .ayarAraKutu {
+    background: rgba(255, 255, 255, .15);
+    border-color: rgba(0, 0, 0, .14);
+    box-shadow: 0 1px 6px rgba(0, 0, 0, .08), inset 0 1px 2px rgba(0, 0, 0, .06);
+}
+html.acikMod .ayarAraKutu:focus-within, html.acikMod body.camGorunum .ayarAraKutu:focus-within { background: rgba(255, 255, 255, .45); border-color: rgba(0, 0, 0, .22); }
+/* Golge azaltildi (1.5.7) */
+.ayarAraKutu, body.camGorunum .ayarAraKutu {
+    border-color: rgba(0, 0, 0, .25);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .12), inset 0 1px 1px rgba(0, 0, 0, .08);
+}
+html.acikMod .ayarAraKutu, html.acikMod body.camGorunum .ayarAraKutu {
+    border-color: rgba(0, 0, 0, .1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .04), inset 0 1px 1px rgba(0, 0, 0, .03);
+}
+.ayarAraKutu, body.camGorunum .ayarAraKutu {
+    border-color: rgba(0, 0, 0, .18);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .06);
+}
+html.acikMod .ayarAraKutu, html.acikMod body.camGorunum .ayarAraKutu {
+    border-color: rgba(0, 0, 0, .08);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .02);
+}
+.ayarAraKutu, body.camGorunum .ayarAraKutu { border-color: rgba(0, 0, 0, .12); box-shadow: none; }
+html.acikMod .ayarAraKutu, html.acikMod body.camGorunum .ayarAraKutu { border-color: rgba(0, 0, 0, .06); box-shadow: none; }
+/* Yapiskan degil: icerikle birlikte kayar (yapiskanken saydam kutunun
+   altindan gecen ayarlar hatali gibi gorunuyordu) */
+.ayarAraKutu { position: static; }
+/* Etiket kartin ALTINDA: ustte kart basligini ortuyordu */
+.bulunanEtiket { top: 100%; transform: translate(-50%, 14px); }
+.bulunanEtiket::after { bottom: auto; top: -5px; }
+@keyframes etiketGel { from { opacity: 0; transform: translate(-50%, 4px); } }
+/* Buzlu modda grup seridinin ic boslugu sifir (1.5.7): sekmelerin ust ve
+   altindaki bant kalkti, serit sekmelerin kendisi kadar. Sekmeler ayni
+   yukseklikte kalsin diye serit 4px asagi (eski ust 4 + ic 4). */
+body.camGorunum #ustSerit { padding: 0; top: 8px; }
+/* Ic bosluk sifirken seridin kosesi de sekmeninkiyle ayni (+1px kenar):
+   eskiden "kose + 6px" sabitti; Kose Yuvarlakligi 0'da sekmeler kare,
+   serit yuvarlak kaliyordu */
+body.camGorunum #ustSerit { border-radius: calc(var(--grup-kose) + 1px); }
+
+/* Arama odagi klasor kartlarinda da (1.5.7) */
+body.kartOdakta .klasorKart:not(.aramaBulunan) { opacity: .22; filter: grayscale(.7); }
+.klasorKart { transition: opacity 280ms ease, filter 280ms ease, transform 280ms cubic-bezier(.2,.8,.3,1); }
+.klasorKart.aramaBulunan {
+    position: relative; z-index: 6; transform: scale(1.08);
+    outline: 3px solid #fff; outline-offset: 3px;
+    box-shadow: 0 0 0 9px var(--vurgu), 0 18px 48px rgba(0, 0, 0, .55);
+    animation: aramaBulunan 900ms ease-in-out 3;
+}

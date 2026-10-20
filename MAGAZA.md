@@ -97,6 +97,11 @@ one, add it to the other, and you end up with a single collection.
 The backup is a complete file on your own disk, thumbnails included.
 It is free: there is no paid sync service and nothing held back.
 
+Want it automatic? Pick a folder once — for example your OneDrive or
+Google Drive folder — and WSD writes the backup there on its own; on
+another computer you restore from the same folder in one click. Each
+browser keeps its own named set, so several browsers never mix.
+
 SAVE YOUR OPEN TABS AS WORKSPACES
 
 Working on something for a day or a project? Save the open tabs as a
@@ -226,6 +231,11 @@ Birinden yedek alın, diğerine ekleyin; tek bir koleksiyonunuz olur.
 Yedek, kendi diskinizde duran eksiksiz bir dosyadır; görseller de
 içindedir. Ücretsizdir: ücretli bir eşitleme servisi yok, dışarıda
 bırakılan veri yok.
+
+Otomatik olsun mu? Bir kez bir klasör seçin — örneğin OneDrive ya da
+Google Drive klasörünüz — WSD yedeği oraya kendisi yazar; başka
+bilgisayarda aynı klasörden tek tıkla geri yüklersiniz. Her tarayıcı
+kendi adıyla ayrı set tutar, birden çok tarayıcı birbirine karışmaz.
 
 AÇIK SEKMELERİ ÇALIŞMA ALANI OLARAK SAKLAYIN
 
@@ -357,6 +367,11 @@ HTML-файл закладок, экспортированный из любог
 
 Резервная копия — полный файл на вашем диске, скриншоты включены.
 Бесплатно: никакой платной синхронизации, ничего не урезано.
+
+Хотите автоматически? Один раз выберите папку — например, папку
+Яндекс Диска или OneDrive — и WSD сам будет сохранять туда копии; на
+другом компьютере восстановление из той же папки — один клик. Каждый
+браузер хранит свой набор под своим именем, ничего не смешивается.
 
 СОХРАНЯЙТЕ ОТКРЫТЫЕ ВКЛАДКИ КАК РАБОЧИЕ ОБЛАСТИ
 
@@ -521,6 +536,18 @@ Ekran görüntüsü için öneri sırası:
 3. Kart düzenleme penceresi
 4. Arama sonuçları
 5. Yinelenen kartlar ya da çöp kutusu
+
+### 1.5.7 ile yapılacaklar (mağaza paneli)
+
+- Paket yüklenecek. Yeni izin YOK (klasöre yazma tarayıcının dosya erişim
+  özelliğiyle, izin kullanıcı klasör seçerken veriliyor; manifest değişmedi).
+- Uzun açıklamalar (EN/TR/RU) yeniden yapıştırılacak: yedek bölümüne
+  "otomatik klasör yedeği" paragrafı eklendi. Bulut adları liste halinde
+  değil, tek cümle içinde iki ad (anahtar kelime spam kuralı).
+- Gizlilik: PRIVACY.md madde 7 (yedek klasörü) eklendi; mağaza formundaki
+  veri beyanları değişmiyor (veri hâlâ kullanıcının kendi klasöründe).
+- Arayüz dilleri artık tam: pt-BR, pt-PT, es, uk, zh-CN (eksik 306'şar metin).
+- Edge: 1.5.6 onaylanınca bu paket aynı açıklamalarla.
 
 ### 1.5.6 ile yapılacaklar (mağaza paneli)
 

@@ -79,6 +79,12 @@ seçtiğiniz paket, eklentinin kendi GitHub deposundan
 eklentinin içindeki kopya kullanılır. Gönderilen bir veri yoktur;
 pencereyi açmazsanız bu istek olmaz.
 
+**7. Yedek klasörü kullanırken** — Ayarlar › Yedekleme'de bir klasör
+seçerseniz yedekler yalnızca o klasöre yazılır. Eklenti hiçbir sunucuya
+bağlanmaz; klasör bir bulut programının (OneDrive, Google Drive, Dropbox
+vb.) klasörüyse yüklemeyi o program yapar. Klasör seçmezseniz böyle bir
+yazma olmaz.
+
 ---
 
 ## İzinler ve gerekçeleri

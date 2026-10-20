@@ -170,8 +170,26 @@ blok başlığındaki kutu o bloğun tamamını seçer.
 
 ## Yedekleme ve taşıma
 
-**Ayarlar → Yedekleme → Yedek al** ile tüm veriniz tek bir JSON dosyasına iner.
-`WSD-27-8-2026-1457.json` biçiminde adlandırılır.
+**Ayarlar → Yedekleme ve Aktarma → Yedek → Yedekle** ile tüm veriniz tek bir
+JSON dosyasına iner. Dosya **Yedek adı**nı taşır: `wsd-<ad>-2026-10-20-1457.json`
+(ad boşsa tarayıcı adı ve kısa bir cihaz eki).
+
+### Bulut klasörü (deneysel)
+
+**Yedekleme ve Aktarma → Bulut Klasörü**'nden bir klasör seçin — yerel bir
+klasör ya da OneDrive / Google Drive / Dropbox klasörü. WSD yedeği
+`<klasör>/<yedek adı>/` altına kendisi yazar (günde 1, haftada 1 ya da yalnızca
+elle); bulut programı dosyayı yükler. Başka bilgisayarda aynı klasörü seçip
+**Klasörden geri yükle** ile listeden tek tıkla yüklersiniz.
+
+- Sunucu, hesap, ek izin yok: tarayıcının dosya erişim özelliği kullanılır.
+  Klasör izni tarayıcı yeniden açılınca bir kez onay isteyebilir.
+- Her tarayıcı kendi adıyla ayrı alt klasöre yazar; iki bilgisayarda **aynı
+  ad** verirseniz ortak yedek setini kullanırlar ve öteki taraftan daha yeni
+  yedek gelince haber verilir (kendiliğinden yüklenmez).
+- Saklanacak yedek sayısı ayarlanır, eskiler silinir; görseller isteğe bağlı.
+- Chrome, Edge, Vivaldi ve Opera'da çalışır; Brave bu özelliği varsayılan
+  olarak kapatabilir.
 
 **Yedekten yükle** dört biçimi tanır:
 
@@ -218,16 +236,18 @@ kaçırdıysanız boş alan menüsünden **Çöp Kutusu**'na girin.
 
 ## Ayarlar
 
-| Bölüm | İçerik |
+Panelin en üstündeki **Ayar ara** kutusu eşleşen ayarları süzer ve ilgili
+bölümleri açar. Her bölüm açılır alt bölümlerden oluşur:
+
+| Bölüm | Alt bölümler |
 |---|---|
-| Görünüm | Arka Plan (duvar kâğıdı, arka plan rengi, zemin renklendirme) · Yazı ve Panel (köşe yuvarlaklığı, metin rengi, yan paneli gizle) |
-| Grup Menüsü | Davranış · Görünüm (sekme ve yazı renkleri) |
+| Görünüm | Tema · Arka Plan · Grup Menüsü · Yazı ve Panel · Arayüz |
+| Ana Sayfa | Davranış · Arama Çubuğu · Anasayfa Kurulumu |
 | Kartlar | Davranış · Boyut ve Yerleşim · Başlık · Renk ve Çerçeve |
-| Görüntü Yakalama | Yakalama · Görüntü |
-| Sistem | Uzantı Simgesi (simge renkleri) · Anasayfa Kurulumu (ev butonu için adres) · Sağ Tık Menüsü · Kısayollar (klavye kısayolları listesi) |
-| Yedekleme ve Aktarma | Yedek (al/yükle, otomatik, HTML dışa aktar) · İçe Aktar (yer imleri, HTML) |
-| Bakım | depo durumu, kullanılmayan veriler, kırık bağlantı taraması, tutarlılık kontrolü, çöp kutusu, bekleyen yakalamaları iptal et |
-| Sıfırlama | ayarları sıfırla, silmeyi geri al, tüm verileri sil |
+| Görüntü Yakalama | Yakalama · Gelişmiş · Görüntü |
+| Yedekleme ve Aktarma | Yedek · Bulut Klasörü · İçe Aktar |
+| Sistem | Uzantı Simgesi · Sağ Tık Menüsü · Kısayollar · Bakım · Sıfırlama |
+| Hakkında | sürüm, Yenilikler, değerlendir, öneri / hata bildir |
 
 Panel son açık bölümü hatırlar.
 

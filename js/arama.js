@@ -228,19 +228,55 @@ async function grubaGit(grupId, baglam, kartId = null) {
  * Izgara cizimi bir-iki kare surebiliyor; kart hemen bulunamazsa kisa
  * araliklarla birkac kez deniyoruz.
  */
-function bulunanKartiGoster(kartId, deneme = 0) {
-    const kart = [...document.querySelectorAll('.kart')].find(k => k.dataset.kartId === String(kartId));
+/*
+ * ODAK (1.5.7): yalnizca cerceve yanip sonmesi kalabalik grupta fark
+ * edilmiyordu. Simdi: diger kartlar soluklasiyor, aranan kart one cikip
+ * buyuyor, uzerinde "Aradığınız kart" etiketi; tiklama / tus / tekerlek
+ * ya da 6 sn sonra yumusakca normale doner.
+ * Kart bir klasorun icindeyse klasor isaretleniyor.
+ */
+async function bulunanKartiGoster(kartId, deneme = 0) {
+    const bul = id => [...document.querySelectorAll('.kart, .klasorKart')]
+        .find(k => k.dataset.kartId === String(id) || k.dataset.klasorId === String(id));
+    let kart = bul(kartId);
     if (!kart) {
-        if (deneme < 12) setTimeout(() => bulunanKartiGoster(kartId, deneme + 1), 80);
-        return;
+        if (deneme < 12) { setTimeout(() => bulunanKartiGoster(kartId, deneme + 1), 80); return; }
+        // Klasorun icindeki kart: ust klasorlerden gorunur olani isaretle
+        try {
+            let id = kartId;
+            for (let i = 0; i < 6 && !kart; i++) {
+                const [d] = await chrome.bookmarks.get(String(id));
+                if (!d || !d.parentId) break;
+                id = d.parentId;
+                kart = bul(id);
+            }
+        } catch (e) { /* silinmis */ }
+        if (!kart) return;
     }
-    document.querySelectorAll('.kart.aramaBulunan').forEach(k => k.classList.remove('aramaBulunan'));
+    odagiKaldir(true);
     kart.scrollIntoView({ block: 'center', behavior: 'smooth' });
     kart.classList.add('aramaBulunan');
-    const kaldir = () => kart.classList.remove('aramaBulunan');
-    setTimeout(kaldir, 4000);
-    // Kullanici bir yere tiklarsa isaret hemen kalksin
-    document.addEventListener('pointerdown', kaldir, { once: true, capture: true });
+    document.body.classList.add('kartOdakta');
+    const etiket = document.createElement('span');
+    etiket.className = 'bulunanEtiket';
+    etiket.textContent = c('aradiginizKart');
+    kart.appendChild(etiket);
+    // Tiklama bu isaretin acildigi tiklamayla karismasin
+    setTimeout(() => {
+        for (const o of ['pointerdown', 'keydown', 'wheel']) document.addEventListener(o, odagiKaldir, { once: true, capture: true });
+    }, 400);
+    clearTimeout(bulunanKartiGoster.z);
+    bulunanKartiGoster.z = setTimeout(odagiKaldir, 6000);
+}
+
+function odagiKaldir(hemen = false) {
+    document.body.classList.remove('kartOdakta');
+    for (const k of document.querySelectorAll('.aramaBulunan')) {
+        k.classList.remove('aramaBulunan');
+        const e = k.querySelector('.bulunanEtiket');
+        if (e) { if (hemen === true) e.remove(); else { e.classList.add('gidiyor'); setTimeout(() => e.remove(), 300); } }
+    }
+    for (const o of ['pointerdown', 'keydown', 'wheel']) document.removeEventListener(o, odagiKaldir, { capture: true });
 }
 
 function kapat(baglam) {
