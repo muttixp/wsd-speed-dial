@@ -3,6 +3,36 @@
 Sürüm numaraları [Semantic Versioning](https://semver.org/lang/tr/)
 kurallarına uyar.
 
+## [1.5.8] — 2026-10-22
+
+### Yeni
+- **Açılış Grubu** (Ana Sayfa › Davranış; kullanıcı isteği): yeni sekme
+  hangi grupla açılsın — Son açılan grup (varsayılan), İlk grup ya da
+  listeden seçilen bir grup. Eski "Son Grubu Hatırla" anahtarının yerini
+  aldı; ayarı kapalı olanlar "İlk grup"la devam eder. Seçilen grup silinirse
+  "Son açılan grup"a döner.
+  Kısayollar: Grubu Düzenle penceresinde "Yeni sekmede bu grup
+  açılsın" kutusu; Grupları Yönet listesinde her satırda ev simgesi (dolu
+  olan açılış grubu, tıklayınca değişir).
+- **FVD'den görselleriyle geçiş rehberi** (`araclar/FVD.md`, TR/EN/RU):
+  FVD sekmesinde çalışan, yalnızca okuyan kısa kod; gruplar, kartlar ve
+  görseller tek dosyada WSD'ye gelir. İçe Aktar'da "FVD'den taşı" düğmesi rehberi açar.
+- Ayar ve pencere metinleri kısaltıldı (8 dil).
+- İçe aktarmada dosya önce tanınır: "✓ Tanındı: FVD Speed Dial · 37 grup ·
+  1135 kart". Tanınmazsa "Bildir" düğmesi GitHub'da hazır destek isteği açar;
+  isteğe yalnızca dosyanın yapısı (alan adları) eklenir, veri eklenmez.
+  İçe Aktar bölümünde tanınan yedek türleri yazıyor.
+- Kurulumdan 14 gün sonra bir kez, kapatılabilir değerlendirme bildirimi
+  (güncelleme duyurusuyla aynı açılışta çıkmaz).
+- Mağaza adı ve kısa açıklama pt_BR, pt_PT, es, uk, zh_CN dillerinde.
+
+### Düzeltmeler
+- Grupları Yönet'te kalemle açılan Grubu Düzenle penceresindeki değişiklikler
+  (ad, simge, renk, açıklama) kaydedilmiyordu.
+- Yedek, açılış grubunu grubun kendisiyle taşıyor (ham yer imi kimliği değil):
+  geri yüklemede doğru grup açılır, başka profile eklemede o profilin
+  kendi seçimi korunur.
+
 ## [1.5.7] — 2026-10-20
 
 ### Yeni

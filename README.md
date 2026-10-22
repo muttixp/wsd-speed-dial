@@ -3,6 +3,9 @@
 Yer imlerinizi görsel kartlar hâlinde gösteren hızlı erişim sayfası.
 Chromium tabanlı tarayıcılar için (Chrome, Edge, Vivaldi, Brave, Opera).
 
+> **Ücretsiz ve açık kaynak; hesap, abonelik ve izleme yok.** Verileriniz
+> her zaman sizde: görselleri dahil tamamı tek dosyaya aktarılır.
+
 ![Lisans](https://img.shields.io/badge/lisans-GPL--3.0-blue)
 ![Manifest](https://img.shields.io/badge/manifest-v3-green)
 ![Bağımlılık](https://img.shields.io/badge/bağımlılık-yok-lightgrey)
@@ -200,9 +203,18 @@ elle); bulut programı dosyayı yükler. Başka bilgisayarda aynı klasörü se�
 | FVD Speed Dial (`fvd-full`) | gruplar, kartlar, görseller |
 | FVD Speed Dial (özgün dışa aktarma) | gruplar, kartlar, tıklama sayıları |
 
+Dosya yüklenmeden önce türü gösterilir ("✓ Tanındı: … · N grup · N kart").
+Tanınmayan bir yedekte **Bildir** düğmesi bu depoda hazır bir destek isteği
+açar; isteğe yalnızca dosyanın yapısı (alan adları) eklenir, içerik eklenmez.
+
 FVD'nin özgün yedeğinde görseller taşınamaz: dosya yolu olarak saklandıkları
 için başka bir eklenti onlara erişemez. Kartlar eklenir, görselleri yeniden
 yakalanır.
+
+**FVD'den görselleriyle geçiş:** [`araclar/FVD.md`](araclar/FVD.md) —
+FVD sekmesinde konsola yapıştırılan kısa bir kod (yalnızca okur) grupları,
+kartları ve görselleri `fvd-full` dosyasına yazar; WSD bunu doğrudan içe
+aktarır. Rehber Türkçe, İngilizce ve Rusça.
 
 FVD yedeğini dosya olarak değil, ayarlarındaki bir metin kutusunda verir.
 O metni kopyalayıp **Ayarlar › Yedekleme › Metin yapıştır** ile doğrudan

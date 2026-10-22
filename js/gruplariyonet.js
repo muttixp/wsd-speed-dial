@@ -25,6 +25,8 @@ import { onaySor } from './onay.js';
 const el = id => document.getElementById(id);
 let silinecekler = new Set();
 let bitince = null;
+let acilisId = '';           // 1.5.8: ev simgesiyle secilen acilis grubu (Kaydet'te yazilir)
+let acilisIlk = '';
 
 /**
  * Grup ARAMA: cok gruplu kurulumlarda (100+) aradigin grubu gozle
@@ -113,6 +115,8 @@ export async function yonetPenceresiniAc(tamamlandi) {
     const gruplar = (await gruplariAl()).filter(g => g.id !== kok);  // kok tasinamaz
     const sayilar = await kartSayilariAl(gruplar.map(g => g.id));
     const ikonlar = await ikonlariAl();
+    const { ayarlariAl } = await import('./ayar.js');
+    acilisId = acilisIlk = (await ayarlariAl()).acilisGrubu || '';
 
     for (const g of gruplar) {
         liste.appendChild(satirOlustur(g, sayilar[g.id] || 0, ikonlar[g.id]));
@@ -161,8 +165,15 @@ function satirOlustur(g, adet, ikonDeger) {
         // Bekleyen ad degisikligi varsa once onu yaziyoruz ki pencere
         // eski adi gostermesin
         const yeniAd = adAlan.value.trim();
+        // Bekleyen ev simgesi secimi kaybolmasin
+        if (acilisId !== acilisIlk && !silinecekler.has(acilisId)) {
+            const { ayarYaz } = await import('./ayar.js');
+            await ayarYaz({ acilisGrubu: acilisId });
+            document.dispatchEvent(new CustomEvent('wsd-ayar-tazele'));
+        }
         kapat(true);
-        await grupPenceresiniAc({ id: g.id, baslik: yeniAd || g.baslik });
+        const { grubuDuzenle } = await import('./etkilesim.js');
+        await grubuDuzenle(g.id, yeniAd || g.baslik);
     });
 
     // YENILE: bu grubun tum kartlarinin gorselini yeniden yakalar.
@@ -179,6 +190,25 @@ function satirOlustur(g, adet, ikonDeger) {
         yenile.disabled = true;
         try { await grubunGorselleriniYenile(g.id); }
         finally { yenile.disabled = false; }
+    });
+
+    // ACILIS GRUBU (1.5.8): ev simgesi - secili olan dolu; tiklayinca bu
+    // grup acilis grubu olur, secili olana tiklayinca birakilir.
+    const acilis = document.createElement('button');
+    acilis.className = 'yonetAcilis';
+    acilis.type = 'button';
+    acilis.title = c('acilisBuGrup');
+    acilis.innerHTML = '<svg viewBox="0 0 16 16" width="14" height="14" fill="none" ' +
+        'stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">' +
+        '<path d="M2.5 7.2 8 2.6l5.5 4.6"/><path d="M3.8 6.3v7.2h8.4V6.3"/></svg>';
+    acilis.classList.toggle('secili', g.id === acilisId);
+    acilis.addEventListener('click', () => {
+        // Birakilinca grup disi secim (son/ilk) varsa ona donulur
+        const bos = acilisIlk === 'son' || acilisIlk === 'ilk' ? acilisIlk : '';
+        acilisId = acilisId === g.id ? bos : g.id;
+        for (const b of el('yonetListe').querySelectorAll('.yonetAcilis')) {
+            b.classList.toggle('secili', b.closest('.yonetSatir').dataset.grupId === acilisId);
+        }
     });
 
     // GIT: yonet penceresini kapatip o grubu aciyor
@@ -213,10 +243,12 @@ function satirOlustur(g, adet, ikonDeger) {
         // Hemen SILMIYORUZ: Kaydet'e basilinca uygulanacak, boylece
         // kullanici Vazgec diyerek geri donebiliyor.
         silinecekler.add(g.id);
+        // Silinen grup acilis grubu olamaz: secim oncekine doner
+        if (acilisId === g.id) acilisId = acilisIlk === g.id ? '' : acilisIlk;
         li.remove();
     });
 
-    li.append(tut, ikon, adAlan, sayiEl, yenile, git, duzenle, sil);
+    li.append(tut, ikon, adAlan, sayiEl, acilis, yenile, git, duzenle, sil);
     return li;
 }
 
@@ -287,6 +319,15 @@ async function kaydet() {
 
         // Sira - listedeki konum = yeni index
         await sirayiUygula(kok, satirlar.map(li => li.dataset.grupId));
+
+        // Acilis grubu degistiyse. Silinen grup secili kalamaz (sil
+        // dugmesi secimi geri aliyor); kendisi silinen eski secim bosalir.
+        if (silinecekler.has(acilisId)) acilisId = '';
+        if (acilisId !== acilisIlk) {
+            const { ayarYaz } = await import('./ayar.js');
+            await ayarYaz({ acilisGrubu: acilisId });
+            document.dispatchEvent(new CustomEvent('wsd-ayar-tazele'));
+        }
     } catch (e) {
         console.log('[WSD] gruplar guncellenemedi:', e);
     }

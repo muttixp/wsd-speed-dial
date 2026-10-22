@@ -255,7 +255,8 @@ chrome.runtime.onInstalled.addListener(menuyuTazele);
 // YENILIKLER (1.5.6): yeni kullaniciya "guncellendi" bildirimi cikmasin
 chrome.runtime.onInstalled.addListener(({ reason }) => {
     if (reason !== 'install') return;
-    chrome.storage.local.set({ sonGorulenSurum: chrome.runtime.getManifest().version }).catch(() => {});
+    chrome.storage.local.set({ sonGorulenSurum: chrome.runtime.getManifest().version,
+                               kurulumTarihi: Date.now() }).catch(() => {});
 });
 
 chrome.runtime.onInstalled.addListener(async ({ reason }) => {

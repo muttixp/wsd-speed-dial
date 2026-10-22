@@ -8,6 +8,23 @@
 
 export const YENILIKLER = [
     {
+        surum: '1.5.8',
+        yeni: {
+            tr: ["Açılış Grubu: yeni sekmede hangi grubun açılacağını seçin (Ayarlar › Ana Sayfa)", "FVD'den görselleriyle geçiş rehberi (Ayarlar › Yedekleme ve Aktarma › İçe Aktar)", "İçe aktarmada yedeğin türü önceden gösterilir; desteklenmeyen dosya tek tıkla bildirilir"],
+            en: ["Start Group: choose which group opens in new tabs (Settings › Home)", "Guide for moving from FVD with thumbnails (Settings › Backup and Import › Import)", "Import shows what the backup is before loading it; unsupported files can be reported in one click"],
+            ru: ["Группа при открытии: выберите, какая группа открывается в новой вкладке (Настройки › Главная)", "Инструкция по переносу из FVD с изображениями (Настройки › Резервная копия и импорт › Импорт)", "Импорт заранее показывает тип копии; неподдерживаемый файл можно сообщить одним щелчком"],
+            pt_BR: ["Grupo inicial: escolha qual grupo abre nas novas abas (Configurações › Início)", "Guia para migrar do FVD com miniaturas (Configurações › Backup e importação › Importar)", "A importação mostra o tipo do backup antes de carregar; arquivos não suportados podem ser informados com um clique"],
+            es: ["Grupo inicial: elige qué grupo se abre en las pestañas nuevas (Ajustes › Inicio)", "Guía para migrar desde FVD con miniaturas (Ajustes › Copia e importación › Importar)", "La importación muestra el tipo de copia antes de cargarla; un archivo no compatible se informa con un clic"],
+        },
+        duzeltme: {
+            tr: ["Grupları Yönet'te kalemle açılan düzenleme penceresindeki değişiklikler kaydedilmiyordu"],
+            en: ["Changes made in Edit Group opened from the pencil in Manage Groups were not saved"],
+            ru: ["Изменения в окне «Изменить группу», открытом карандашом из «Управления группами», не сохранялись"],
+            pt_BR: ["Alterações em Editar grupo aberto pelo lápis em Gerenciar grupos não eram salvas"],
+            es: ["Los cambios en Editar grupo abierto con el lápiz de Gestionar grupos no se guardaban"],
+        },
+    },
+    {
         surum: '1.5.7',
         yeni: {
             tr: [
@@ -133,125 +150,6 @@ export const YENILIKLER = [
                 "La imagen que elegiste para un mosaico se sustituía por una nueva captura o al cambiar la dirección",
                 "Los iconos del panel lateral se veían mal en el modo claro",
                 "Los temas guardados se perdían al importar o restablecer los ajustes",
-            ],
-        },
-    },
-    {
-        surum: '1.5.5',
-        yeni: {
-            tr: [
-                "Ana sayfada web arama kutusu: motor seçimi, kendi motorunu ekleme, nerede görüneceği",
-                "Temalar: Koyu / Açık / Sistem ve hazır renk şablonları",
-                "Hazır Gruplar: örnek kart paketlerini tek tıkla ekleme",
-                "Başka speed dial eklentilerinin yedeklerinden içe aktarma; görseli olmayan kartlar arka planda yakalanır",
-                "Buzlu cam görünüm ve renkli simgeler",
-            ],
-            en: [
-                "Web search box on the home page: pick an engine, add your own, choose where it appears",
-                "Themes: Dark / Light / System with ready-made color presets",
-                "Ready-made Groups: add sample tile packs in one click",
-                "Import from other speed dial backups; tiles without images are captured in the background",
-                "Frosted glass look and colored icons",
-            ],
-            ru: [
-                "Поле веб-поиска на главной: выбор поисковика, свой поисковик, где показывать",
-                "Темы: тёмная / светлая / системная и готовые цветовые наборы",
-                "Готовые группы: добавление наборов плиток одним нажатием",
-                "Импорт из резервных копий других speed dial; плитки без изображений снимаются в фоне",
-                "Эффект матового стекла и цветные значки",
-            ],
-            pt_BR: [
-                "Caixa de pesquisa na web na página inicial: escolha o buscador, adicione o seu, defina onde aparece",
-                "Temas: escuro / claro / sistema com predefinições de cores",
-                "Grupos prontos: adicione pacotes de blocos de exemplo com um clique",
-                "Importação de backups de outras extensões de speed dial; blocos sem imagem são capturados em segundo plano",
-                "Visual de vidro fosco e ícones coloridos",
-            ],
-            es: [
-                "Cuadro de búsqueda web en la página de inicio: elige el buscador, añade el tuyo, decide dónde aparece",
-                "Temas: oscuro / claro / sistema con colores predefinidos",
-                "Grupos listos: añade paquetes de mosaicos de ejemplo con un clic",
-                "Importación de copias de otras extensiones de speed dial; los mosaicos sin imagen se capturan en segundo plano",
-                "Aspecto de vidrio esmerilado e iconos de colores",
-            ],
-        },
-        duzeltme: {
-            tr: [
-                "Gizli kipte bazı kartlar boş kalıyordu",
-                "Rusça çeviri gözden geçirildi",
-            ],
-            en: [
-                "Some tiles stayed blank in hidden capture mode",
-                "Russian translation reviewed",
-            ],
-            ru: [
-                "В скрытом режиме некоторые плитки оставались пустыми",
-                "Русский перевод вычитан",
-            ],
-            pt_BR: [
-                "Alguns blocos ficavam em branco no modo de captura oculto",
-                "Tradução para o russo revisada",
-            ],
-            es: [
-                "Algunos mosaicos quedaban en blanco en el modo de captura oculto",
-                "Traducción al ruso revisada",
-            ],
-        },
-    },
-    {
-        surum: '1.5.4',
-        yeni: {
-            tr: [
-                "Çalışma alanları: açık sekmeleri adıyla saklayıp sonra tek tıkla açma",
-                "Araç çubuğu simgesine sağ tık → sekmeleri çalışma alanına kaydet",
-                "Boş alana sağ tık → açık sekmeleri gruba kaydet",
-                "Arama sonuçları eşleşme gücüne göre sıralanıyor",
-            ],
-            en: [
-                "Workspaces: save open tabs under a name and reopen them in one click",
-                "Right-click the toolbar icon → save tabs to a workspace",
-                "Right-click empty space → save open tabs to a group",
-                "Search results are sorted by how well they match",
-            ],
-            ru: [
-                "Рабочие области: сохраните открытые вкладки под именем и откройте их одним нажатием",
-                "Правый клик по значку на панели → сохранить вкладки в рабочую область",
-                "Правый клик по пустому месту → сохранить открытые вкладки в группу",
-                "Результаты поиска упорядочены по точности совпадения",
-            ],
-            pt_BR: [
-                "Espaços de trabalho: salve as abas abertas com um nome e reabra-as com um clique",
-                "Clique direito no ícone da barra → salvar abas num espaço de trabalho",
-                "Clique direito num espaço vazio → salvar as abas abertas num grupo",
-                "Resultados da pesquisa ordenados pela relevância",
-            ],
-            es: [
-                "Espacios de trabajo: guarda las pestañas abiertas con un nombre y vuelve a abrirlas con un clic",
-                "Clic derecho en el icono de la barra → guardar pestañas en un espacio de trabajo",
-                "Clic derecho en un espacio vacío → guardar las pestañas abiertas en un grupo",
-                "Resultados de búsqueda ordenados por coincidencia",
-            ],
-        },
-        duzeltme: {
-            tr: [
-                "Gizli kipte başarısız yakalama pencere açıyordu",
-                "\"Bekleyen yakalamaları iptal et\" işlenen kartı durdurmuyordu",
-            ],
-            en: [
-                "A failed hidden capture opened a window",
-                "\"Cancel pending captures\" did not stop the tile in progress",
-            ],
-            ru: [
-                "Неудачный скрытый снимок открывал окно",
-                "«Отменить ожидающие снимки» не останавливал текущую плитку",
-            ],
-            pt_BR: [
-                "Uma captura oculta com falha abria uma janela",
-                "\"Cancelar capturas pendentes\" não parava o bloco em andamento",
-            ],
-            es: [
-                "Una captura oculta fallida abría una ventana",
-                "\"Cancelar capturas pendientes\" no detenía el mosaico en curso",
             ],
         },
     },

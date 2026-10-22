@@ -789,7 +789,7 @@
     "message": "$1 images"
   },
   "ayrilanAlanDoldu": {
-    "message": "Storage is full. New images cannot be saved. Back up first, then clean unused data or delete tiles you no longer need."
+    "message": "Storage is full; new images can't be saved. Back up, then clean up in Maintenance."
   },
   "yedekAlipTemizlemenizOnerilir": {
     "message": "We recommend making a backup and cleaning unused data."
@@ -1098,7 +1098,7 @@
     "message": "These addresses returned 404/410; the page no longer exists. Their tiles are marked with a red exclamation."
   },
   "supheliAciklama": {
-    "message": "These addresses could not be reached at all (no such domain, timeout or server error). Tiles were not deleted; check them one by one."
+    "message": "These addresses could not be reached. Tiles were not deleted; check them one by one."
   },
   "kirikKartlariGoster": {
     "message": "Show tiles"
@@ -1120,6 +1120,27 @@
   },
   "yerimlerindenIctar": {
     "message": "Import from bookmarks"
+  },
+  "fvdRehber": {
+    "message": "Moving from FVD with thumbnails: guide"
+  },
+  "fvdTasi": {
+    "message": "Move from FVD"
+  },
+  "desteklenenYedekler": {
+    "message": "Recognised backups: WSD, FVD Speed Dial, Speed Dial 2, Speed Dial (.spd), Group Speed Dial, Yet Another Speed Dial and bookmark HTML files from any browser."
+  },
+  "dosyaTaninmadi": {
+    "message": "This file is not supported yet"
+  },
+  "dosyaTaninmadiMetin": {
+    "message": "Tell us which extension made this backup and we will add support as soon as possible. Only the file structure (field names) is included, not your data."
+  },
+  "bildir": {
+    "message": "Report"
+  },
+  "yedekTanindi": {
+    "message": "✓ Recognised: $1 · $2 groups · $3 tiles"
   },
   "htmlDosyasindanIctar": {
     "message": "Import from HTML file"
@@ -1242,7 +1263,7 @@
     "message": "Pending refreshes"
   },
   "nBekleyenIptalEdilsinMi": {
-    "message": "$1 earlier refreshes are still waiting in the queue. Cancel them first? If not, they will also be refreshed in turn."
+    "message": "$1 refreshes are waiting in the queue. Cancel them? If not, they run in turn."
   },
   "iptalEt": {
     "message": "Cancel them"
@@ -1254,7 +1275,7 @@
     "message": "$1 pending refreshes cancelled"
   },
   "aktarimGorselsizN": {
-    "message": "$1 imported cards have no image. Capture was not started automatically; use \"Refresh group images\" from the group menu."
+    "message": "$1 tiles have no image. Use \"Refresh group images\" in the group menu to capture them."
   },
   "iceAktarmaTamamlandi": {
     "message": "Import complete"
@@ -1503,7 +1524,7 @@
     "message": "Delete unreachable"
   },
   "nUlasilamayanCopeTasinacak": {
-    "message": "$1 unreachable tiles will be moved to the trash. Some of them may only be temporarily down. You can restore them."
+    "message": "$1 unreachable tiles will be moved to the trash (some may be only temporarily down). You can restore them."
   },
   "baslikAlt": {
     "message": "Title"
@@ -1572,7 +1593,7 @@
     "message": "This file was not recognised. Choose a WSD, FVD, Speed Dial 2 or Group Speed Dial backup, or a bookmarks HTML file"
   },
   "karsilamaIceAktarAciklama": {
-    "message": "Import: a WSD backup, a backup from another speed dial (FVD, Speed Dial .spd, Speed Dial 2, Group Speed Dial), or a bookmarks HTML file exported from any browser. The type is detected automatically."
+    "message": "Import: a WSD backup, a backup from another speed dial (FVD, .spd, Speed Dial 2, Group Speed Dial) or a bookmarks HTML file. The type is detected automatically."
   },
   "karsilamaKapatDevam": {
     "message": "Close this and continue"
@@ -1620,7 +1641,7 @@
     "message": "Save workspace"
   },
   "alanKaydetMetin": {
-    "message": "Tick the tabs you want to save. If the window has several sections (e.g. Vivaldi/Opera workspaces), the box on a section header selects the whole section."
+    "message": "Tick the tabs to save. The box on a section header selects the whole section."
   },
   "alanVarsayilanAd": {
     "message": "Workspace $1"
@@ -1653,7 +1674,7 @@
     "message": "\"$1\" ($2 tabs) will be deleted permanently."
   },
   "alanYok": {
-    "message": "No workspaces yet. Use \"Save tabs\" to keep your open tabs, then reopen them with one click."
+    "message": "No workspaces yet. Use \"Save tabs\" to keep your open tabs."
   },
   "nSekme": {
     "message": "$1 tabs"
@@ -1782,7 +1803,7 @@
     "message": "System"
   },
   "temaIpucu": {
-    "message": "A preset sets the colors together; you can still change each color below. Your wallpaper image is kept."
+    "message": "A preset sets all colors at once; you can then change each one."
   },
   "temaUygulandi": {
     "message": "$1 theme applied"
@@ -1863,7 +1884,7 @@
     "message": "Card images"
   },
   "aktarimGorselMetin": {
-    "message": "$1 imported cards have no image; the backup file does not contain images.\n\nCapture them in the background? No windows will open and you can keep using WSD meanwhile. It may take a while depending on the number of cards, and the browser may show a \"debugging\" notice at the top."
+    "message": "$1 tiles have no image.\n\nCapture them in the background? You can keep using WSD; a \"debugging\" notice may appear at the top."
   },
   "arkaPlandaAl": {
     "message": "Capture in background"
@@ -1923,13 +1944,13 @@
     "message": "Small Window in the Corner (experimental)"
   },
   "gizliKipBilgi": {
-    "message": "In this mode Chrome shows a \"WSD Speed Dial started debugging this browser\" bar at the top. It is Chrome's mandatory notice for taking a page screenshot without opening a window; the permission is used only to take the screenshot. The bar disappears when capturing ends."
+    "message": "While capturing, Chrome shows a \"debugging\" bar at the top. It is a mandatory notice; the permission is used only for screenshots and the bar disappears when done."
   },
   "hazirGruplar": {
     "message": "Ready-made Groups"
   },
   "hazirGruplarAciklama": {
-    "message": "The pack you pick is added as a new group; your existing tiles are not touched. You can edit the tiles afterwards."
+    "message": "The pack is added as a new group; your existing tiles are not touched."
   },
   "tumDiller": {
     "message": "Show packs in all languages"
@@ -1979,6 +2000,9 @@
   "degerlendir": {
     "message": "Rate"
   },
+  "degerlendirmeIstegi": {
+    "message": "If WSD is useful to you, a store review helps a lot."
+  },
   "oneriHataBildir": {
     "message": "Suggest / report a bug"
   },
@@ -2013,13 +2037,13 @@
     "message": "Cloud Folder (experimental)"
   },
   "klasorYedekAciklama": {
-    "message": "Backups are written to the folder you choose. Pick a OneDrive, Google Drive or Dropbox folder and its app uploads them for you; restore from the same folder on another computer."
+    "message": "Backups are written to the folder you choose. Pick a cloud folder (OneDrive, Google Drive, Dropbox) to restore on another computer."
   },
   "klasorYedekAd": {
     "message": "Backup name"
   },
   "klasorYedekAdIpucu": {
-    "message": "Backup files carry this name (wsd-name-date.json); in the backup folder it is also the subfolder name. Give each browser its own name; the same name on two computers shares one backup set."
+    "message": "Name of the backup files and subfolder. Give each browser its own name; the same name means a shared backup."
   },
   "klasorYedekSiklik": {
     "message": "Automatic backup frequency"
@@ -2055,7 +2079,7 @@
     "message": "This browser can't write to folders"
   },
   "klasorYedekSecilemedi": {
-    "message": "Couldn't use that folder. System folders (e.g. the Documents root) may be blocked; try a subfolder."
+    "message": "Couldn't use that folder. Try a subfolder."
   },
   "klasorYedekKlasorYok": {
     "message": "Choose a backup folder first"
@@ -2110,5 +2134,17 @@
   },
   "klasorYedekSiklikKapali": {
     "message": "Off (manual only)"
+  },
+  "acilisGrubu": {
+    "message": "Start Group"
+  },
+  "acilisBuGrup": {
+    "message": "Open this group in new tabs"
+  },
+  "acilisSon": {
+    "message": "Last opened group"
+  },
+  "acilisIlk": {
+    "message": "First group"
   }
 }

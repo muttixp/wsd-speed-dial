@@ -92,16 +92,16 @@ function kapat() {
     if (!el('ayarPanel')?.classList.contains('acik')) el('perde')?.classList.remove('acik');
 }
 
-/** Guncellendiyse bir kez haber ver */
+/** Guncellendiyse bir kez haber ver. Duyurduysa true doner. */
 async function guncellemeyiDuyur() {
     let kayit;
-    try { kayit = (await chrome.storage.local.get('sonGorulenSurum')).sonGorulenSurum; } catch (e) { return; }
+    try { kayit = (await chrome.storage.local.get('sonGorulenSurum')).sonGorulenSurum; } catch (e) { return false; }
     const simdiki = surum();
-    if (kayit === simdiki) return;
+    if (kayit === simdiki) return false;
     // Yalnizca listede yer alan bir surum icin duyur (yama surumleri sessiz)
     if (!YENILIKLER.some(s => s.surum === simdiki)) {
         try { await chrome.storage.local.set({ sonGorulenSurum: simdiki }); } catch (e) { /* */ }
-        return;
+        return false;
     }
     el('ayarBtn')?.classList.add('yeniNokta');
     el('ayYenilikler')?.classList.add('yeniNokta');
@@ -112,6 +112,33 @@ async function guncellemeyiDuyur() {
         calistir: yenilikPenceresiniAc,
         sure: 12000,
     }), 1500);
+    return true;
+}
+
+/**
+ * DEGERLENDIRME ISTEGI (1.5.8): kurulumdan 14 gun sonra BIR KEZ, kisa
+ * bildirim. Kapatilsa da tiklansa da bir daha cikmaz; odul/zorlama yok.
+ * Kurulum tarihi yoksa (eski kullanici) bugunden sayilir.
+ */
+const DEGERLENDIRME_GUN = 14;
+async function degerlendirmeIste() {
+    let d;
+    try { d = await chrome.storage.local.get(['kurulumTarihi', 'degerlendirmeSoruldu']); } catch (e) { return; }
+    if (d.degerlendirmeSoruldu) return;
+    const simdi = Date.now();
+    if (!d.kurulumTarihi) {
+        try { await chrome.storage.local.set({ kurulumTarihi: simdi }); } catch (e) { /* */ }
+        return;
+    }
+    if (simdi - d.kurulumTarihi < DEGERLENDIRME_GUN * 864e5) return;
+    // Once isaretle: ayni anda acik baska sekme de sormasin
+    try { await chrome.storage.local.set({ degerlendirmeSoruldu: simdi }); } catch (e) { return; }
+    const { bildir } = await import('./arayuz.js');
+    setTimeout(() => bildir(c('degerlendirmeIstegi'), {
+        etiket: c('degerlendir'),
+        calistir: async () => ac(await degerlendirmeAdresi()),
+        sure: 15000,
+    }), 4000);
 }
 
 export function hakkindaKur() {
@@ -122,11 +149,14 @@ export function hakkindaKur() {
     el('ayDegerlendir')?.addEventListener('click', async () => ac(await degerlendirmeAdresi()));
     el('ayOneri')?.addEventListener('click', () => ac(DEPO + '/issues'));
     el('ayKaynak')?.addEventListener('click', () => ac(DEPO));
+    // FVD'den gorselleriyle gecis rehberi (1.5.8) - Ice Aktar dugmeleri arasinda
+    el('ayFvdRehber')?.addEventListener('click', () => ac(DEPO + '/blob/main/araclar/FVD.md'));
     el('ayGizlilik')?.addEventListener('click', () => ac(DEPO + '/blob/main/PRIVACY.md'));
     el('yenilikTumu')?.addEventListener('click', () => ac(DEPO + '/blob/main/CHANGELOG.md'));
     el('yenilikKapat')?.addEventListener('click', kapat);
     document.addEventListener('keydown', e => {
         if (e.key === 'Escape' && el('yenilikPencere') && !el('yenilikPencere').hidden) kapat();
     });
-    guncellemeyiDuyur();
+    // Ayni acilista iki bildirim olmasin: guncelleme duyurusu onceliklidir
+    guncellemeyiDuyur().then(duyurdu => { if (!duyurdu) degerlendirmeIste(); }).catch(() => {});
 }

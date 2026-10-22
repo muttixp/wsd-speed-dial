@@ -174,10 +174,10 @@
     "message": "Kart Boyutu"
   },
   "kartCerceveRengi": {
-    "message": "Kart Çerçeve Rengi"
+    "message": "Çerçeve Rengi"
   },
   "kartCerceveRengiUzerineGelince": {
-    "message": "Kart Çerçeve Rengi (Üzerine Gelince)"
+    "message": "Çerçeve Rengi (Üzerine Gelince)"
   },
   "kartCercevesi": {
     "message": "Kart Çerçevesi"
@@ -201,10 +201,10 @@
     "message": "Kartı Taşı"
   },
   "kartlarArasiBoslukDikey": {
-    "message": "Kartlar Arası Boşluk (Dikey)"
+    "message": "Dikey Boşluk"
   },
   "kartlarArasiBoslukYatay": {
-    "message": "Kartlar Arası Boşluk (Yatay)"
+    "message": "Yatay Boşluk"
   },
   "kartlariSirala": {
     "message": "Kartları Sırala"
@@ -789,7 +789,7 @@
     "message": "$1 görsel"
   },
   "ayrilanAlanDoldu": {
-    "message": "Ayrılan alan doldu. Yeni görseller kaydedilemiyor. Önce yedek alın, sonra kullanılmayan verileri temizleyin ya da gerekmeyen kartları silin."
+    "message": "Alan doldu, yeni görseller kaydedilemiyor. Yedek alın, sonra Bakım'dan temizlik yapın."
   },
   "yedekAlipTemizlemenizOnerilir": {
     "message": "Bir yedek alıp kullanılmayan verileri temizlemeniz önerilir."
@@ -924,7 +924,7 @@
     "message": "Zemin Renklendirme"
   },
   "kurulumAciklama": {
-    "message": "Tarayıcının anasayfa (ev) butonuna basınca WSD açılsın istiyorsanız, aşağıdaki adresi kopyalayıp Ayarlar → Başlangıç → Ana Sayfa alanına yapıştırın."
+    "message": "Ev düğmesi WSD'yi açsın istiyorsanız bu adresi Ayarlar → Başlangıç → Ana Sayfa alanına yapıştırın."
   },
   "gruplar": {
     "message": "Gruplar"
@@ -1098,7 +1098,7 @@
     "message": "Bu adresler 404/410 döndü; sayfa artık yok. Kartları kadranda kırmızı ünlemle işaretlendi."
   },
   "supheliAciklama": {
-    "message": "Bu adreslere hiç ulaşılamadı (alan adı yok, zaman aşımı ya da sunucu hatası). Kartlar silinmedi; tek tek kontrol edin."
+    "message": "Bu adreslere ulaşılamadı. Kartlar silinmedi; tek tek kontrol edin."
   },
   "kirikKartlariGoster": {
     "message": "Kartları göster"
@@ -1120,6 +1120,27 @@
   },
   "yerimlerindenIctar": {
     "message": "Yer imlerinden içe aktar"
+  },
+  "fvdRehber": {
+    "message": "FVD'den görselleriyle taşıma rehberi"
+  },
+  "fvdTasi": {
+    "message": "FVD'den taşı"
+  },
+  "desteklenenYedekler": {
+    "message": "Tanınan yedekler: WSD, FVD Speed Dial, Speed Dial 2, Speed Dial (.spd), Group Speed Dial, Yet Another Speed Dial ve tarayıcıların yer imi HTML dosyası."
+  },
+  "dosyaTaninmadi": {
+    "message": "Bu dosya henüz desteklenmiyor"
+  },
+  "dosyaTaninmadiMetin": {
+    "message": "Hangi eklentinin yedeği olduğunu bildirin, desteğini en kısa sürede ekleyelim. Bildirime dosyanızın içeriği değil, yalnızca yapısı (alan adları) eklenir."
+  },
+  "bildir": {
+    "message": "Bildir"
+  },
+  "yedekTanindi": {
+    "message": "✓ Tanındı: $1 · $2 grup · $3 kart"
   },
   "htmlDosyasindanIctar": {
     "message": "HTML dosyasından içe aktar"
@@ -1242,7 +1263,7 @@
     "message": "Bekleyen yenilemeler"
   },
   "nBekleyenIptalEdilsinMi": {
-    "message": "Kuyrukta daha önce başlatılmış $1 yenileme bekliyor. Önce onlar iptal edilsin mi? İptal edilmezse onlar da sırayla yenilenir."
+    "message": "Kuyrukta $1 yenileme bekliyor. İptal edilsin mi? Edilmezse sırayla yenilenir."
   },
   "iptalEt": {
     "message": "İptal et"
@@ -1254,7 +1275,7 @@
     "message": "$1 bekleyen yenileme iptal edildi"
   },
   "aktarimGorselsizN": {
-    "message": "İçe aktarılan $1 kartın görseli yok. Otomatik başlatılmadı; görselleri almak için grup menüsünden \"Grubun görsellerini yenile\"yi kullanın."
+    "message": "$1 kartın görseli yok. Almak için grup menüsünden \"Grubun görsellerini yenile\"yi kullanın."
   },
   "iceAktarmaTamamlandi": {
     "message": "İçe aktarma tamamlandı"
@@ -1503,7 +1524,7 @@
     "message": "Ulaşılamayanları sil"
   },
   "nUlasilamayanCopeTasinacak": {
-    "message": "$1 ulaşılamayan kart çöp kutusuna taşınacak. Bunların bir kısmı yalnızca geçici olarak kapalı olabilir. Geri alabilirsiniz."
+    "message": "$1 ulaşılamayan kart çöp kutusuna taşınacak (bazıları geçici kapalı olabilir). Geri alabilirsiniz."
   },
   "baslikAlt": {
     "message": "Başlık"
@@ -1560,7 +1581,7 @@
     "message": "Zemin Rengi"
   },
   "aktarimdaYakala": {
-    "message": "İçe Aktarınca Eksik Görselleri Yakala"
+    "message": "Aktarımda Görselleri Yakala"
   },
   "icindekiKartlardanSec": {
     "message": "İçindeki kartlardan seç"
@@ -1572,7 +1593,7 @@
     "message": "Bu dosya tanınmadı. WSD, FVD, Speed Dial 2 ya da Group Speed Dial yedeği veya yer imi HTML dosyası seçin"
   },
   "karsilamaIceAktarAciklama": {
-    "message": "İçe Aktar: WSD yedeği, başka bir Speed Dial eklentisinin yedeği (FVD, Speed Dial .spd, Speed Dial 2, Group Speed Dial) ya da herhangi bir tarayıcıdan dışa aktarılmış yer imi HTML dosyası. Türü kendiliğinden tanınır."
+    "message": "İçe Aktar: WSD yedeği, başka Speed Dial eklentilerinin yedekleri (FVD, .spd, Speed Dial 2, Group Speed Dial) ya da yer imi HTML dosyası. Tür kendiliğinden tanınır."
   },
   "karsilamaKapatDevam": {
     "message": "Bu pencereyi kapat ve devam et"
@@ -1620,7 +1641,7 @@
     "message": "Çalışma alanı kaydet"
   },
   "alanKaydetMetin": {
-    "message": "Kaydetmek istediğiniz sekmeleri işaretleyin. Pencerede birden fazla bölüm varsa (Vivaldi/Opera çalışma alanları gibi) bölüm başlığındaki kutu o bölümün tamamını seçer."
+    "message": "Kaydedilecek sekmeleri işaretleyin. Bölüm başlığındaki kutu o bölümün tümünü seçer."
   },
   "alanVarsayilanAd": {
     "message": "Çalışma alanı $1"
@@ -1653,7 +1674,7 @@
     "message": "\"$1\" ($2 sekme) kalıcı olarak silinecek."
   },
   "alanYok": {
-    "message": "Henüz çalışma alanı yok. \"Sekmeleri kaydet\" ile açık sekmelerinizi saklayın, sonra tek tıkla geri açın."
+    "message": "Henüz çalışma alanı yok. Açık sekmeleri \"Sekmeleri kaydet\" ile saklayın."
   },
   "nSekme": {
     "message": "$1 sekme"
@@ -1782,7 +1803,7 @@
     "message": "Sistem"
   },
   "temaIpucu": {
-    "message": "Şablon renkleri birlikte ayarlar; sonra her rengi aşağıdan tek tek değiştirebilirsiniz. Duvar kâğıdı resmine dokunulmaz."
+    "message": "Şablon tüm renkleri birlikte ayarlar; sonra tek tek değiştirebilirsiniz."
   },
   "temaUygulandi": {
     "message": "$1 teması uygulandı"
@@ -1863,7 +1884,7 @@
     "message": "Kart görselleri"
   },
   "aktarimGorselMetin": {
-    "message": "İçe aktarılan $1 kartın görseli yok; yedek dosyası görsel içermiyor.\n\nArka planda alınsın mı? Pencere açılmaz, bu sırada WSD'yi kullanmaya devam edebilirsiniz. Kart sayısına göre uzun sürebilir ve tarayıcının üstünde \"hata ayıklama\" uyarısı görünebilir."
+    "message": "$1 kartın görseli yok.\n\nArka planda alınsın mı? Bu sırada WSD'yi kullanabilirsiniz; üstte \"hata ayıklama\" uyarısı görünebilir."
   },
   "arkaPlandaAl": {
     "message": "Arka planda al"
@@ -1923,13 +1944,13 @@
     "message": "Küçük Pencere, Köşede (deneysel)"
   },
   "gizliKipBilgi": {
-    "message": "Bu kipte Chrome üstte \"WSD Speed Dial hata ayıklamaya başladı\" çubuğu gösterir. Bu, pencere açmadan sayfanın görüntüsünü almak için Chrome'un zorunlu bildirimidir; izin yalnızca ekran görüntüsü almak için kullanılır. Çubuk yakalama bitince kaybolur."
+    "message": "Yakalarken Chrome üstte \"hata ayıklama\" çubuğu gösterir. Bu zorunlu bir bildirimdir; izin yalnızca görüntü almak için kullanılır, çubuk iş bitince kaybolur."
   },
   "hazirGruplar": {
     "message": "Hazır Gruplar"
   },
   "hazirGruplarAciklama": {
-    "message": "Seçtiğiniz paket yeni bir grup olarak eklenir; mevcut kartlarınıza dokunulmaz. Kartları sonra dilediğiniz gibi düzenleyebilirsiniz."
+    "message": "Paket yeni bir grup olarak eklenir; mevcut kartlarınıza dokunulmaz."
   },
   "tumDiller": {
     "message": "Tüm dillerdeki paketleri göster"
@@ -1979,6 +2000,9 @@
   "degerlendir": {
     "message": "Değerlendir"
   },
+  "degerlendirmeIstegi": {
+    "message": "WSD işinize yaradıysa mağazada değerlendirmeniz çok yardımcı olur."
+  },
   "oneriHataBildir": {
     "message": "Öneri / hata bildir"
   },
@@ -2013,13 +2037,13 @@
     "message": "Bulut Klasörü (deneysel)"
   },
   "klasorYedekAciklama": {
-    "message": "Yedekler seçtiğiniz klasöre yazılır. OneDrive, Google Drive ya da Dropbox klasörü seçerseniz bulut programı yedeği kendisi yükler; başka bilgisayarda aynı klasörden geri yüklersiniz."
+    "message": "Yedekler seçtiğiniz klasöre yazılır. Bulut klasörü (OneDrive, Google Drive, Dropbox) seçerseniz başka bilgisayardan geri yükleyebilirsiniz."
   },
   "klasorYedekAd": {
     "message": "Yedek adı"
   },
   "klasorYedekAdIpucu": {
-    "message": "Yedek dosyaları bu adı taşır (wsd-ad-tarih.json); klasör yedeğinde de alt klasör adı olur. Birden çok tarayıcıya ayrı ad verin; iki bilgisayarda aynı ad ortak yedek setidir."
+    "message": "Yedek dosyalarının ve alt klasörün adı. Her tarayıcıya ayrı ad verin; aynı ad ortak yedektir."
   },
   "klasorYedekSiklik": {
     "message": "Otomatik yedek sıklığı"
@@ -2055,7 +2079,7 @@
     "message": "Bu tarayıcı klasöre yazmayı desteklemiyor"
   },
   "klasorYedekSecilemedi": {
-    "message": "Klasör seçilemedi. Sistem klasörleri (ör. Belgeler kökü) seçilemeyebilir; içinde bir alt klasör deneyin."
+    "message": "Klasör seçilemedi. İçinde bir alt klasör deneyin."
   },
   "klasorYedekKlasorYok": {
     "message": "Önce bir yedek klasörü seçin"
@@ -2110,5 +2134,17 @@
   },
   "klasorYedekSiklikKapali": {
     "message": "Kapalı (yalnızca elle)"
+  },
+  "acilisGrubu": {
+    "message": "Açılış Grubu"
+  },
+  "acilisBuGrup": {
+    "message": "Yeni sekmede bu grup açılsın"
+  },
+  "acilisSon": {
+    "message": "Son açılan grup"
+  },
+  "acilisIlk": {
+    "message": "İlk grup"
   }
 }

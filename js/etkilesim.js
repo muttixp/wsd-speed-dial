@@ -1880,8 +1880,8 @@ async function grupMenuEylemi(e) {
  * Grup duzenleme penceresi. Grup sekmesinin sag tik menusunden ve
  * (1.5.3) bos alan menusundeki "Grubu duzenle"den cagriliyor.
  */
-async function grubuDuzenleAc(id) {
-    const mevcut = document.querySelector(`[data-grup-id="${id}"] .grupAd`)?.textContent || '';
+async function grubuDuzenleAc(id, baslik = null) {
+    const mevcut = baslik || document.querySelector(`[data-grup-id="${id}"] .grupAd`)?.textContent || '';
     // Ana Sayfa = WSD kok klasoru. Adi degisirse yer imlerindeki "WSD"
     // klasorunun adi degisir ve WSD verisini bulamaz; ad kutusu kilitli.
     const kokMu = id === await kokKlasoruAl();
@@ -1899,6 +1899,9 @@ async function grubuDuzenleAc(id) {
         bildir(c('yenidenAdlandirilamadi'));
     }
 }
+
+/** Gruplari Yonet'teki kalem (1.5.8): pencere sonucu da uygulansin */
+export { grubuDuzenleAc as grubuDuzenle };
 
 async function bosMenuEylemi(e) {
     const oge = e.target.closest('li');

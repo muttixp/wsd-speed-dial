@@ -16,7 +16,7 @@ import { tazelemeBastirildiMi, bildir, mesgulDugme } from './arayuz.js';
 import { ayarlariAl, ayarYaz, ayarlariSifirla } from './ayar.js';
 import { c } from './dil.js';
 import { filtreZinciri, ikiRenkKatmanlari } from './filtre.js';
-import { yedegiIndir, yedegiYukle, oksuzleriTemizle, herSeyiSil,
+import { yedegiIndir, yedegiYukle, yedekTuru, yapiOzeti, oksuzleriTemizle, herSeyiSil,
          silmeYedegiAl, silmeYedegiBilgisi, silmeYedeginiGeriAl } from './yedek.js';
 import { depoDurumu, mb, UYARI_ESIGI } from './depo.js';
 import { onaySor, onaylariGeriGetir } from './onay.js';
@@ -71,7 +71,7 @@ const ALANLAR = [
     ['grupAktifIkonRengi', 'ayGrupAktifIkonRengi', el => el.value],
     ['grupKose',         'ayGrupKose',       el => +el.value],
     ['grupBoyut',        'ayGrupBoyut',      el => +el.value],
-    ['grubuHatirla',     'ayGrubuHatirla',   el => el.checked],
+    ['acilisGrubu',      'ayAcilisGrubu',    el => el.value],
     ['renkliSimgeler',   'ayRenkliSimgeler', el => el.checked],
     ['camGorunum',       'ayCamGorunum',     el => el.checked],
     ['simgeRenkA',       'aySimgeA',         el => el.value],
@@ -167,12 +167,16 @@ export async function ayarPaneliniKur() {
     document.getElementById('ayYakalamaKipi')?.addEventListener('change', gizliBilgisi);
     girdileriDoldur(ayar);
     gorunumuUygula(ayar);
+    acilisGrubuListesi();
+    const acilisKutu = document.getElementById('ayAcilisGrubu');
+    acilisKutu?.addEventListener('focus', acilisGrubuListesi);
 
     // Tema sablonu / geri al birden cok ayari degistirdi: kutular ve gorunum
     document.addEventListener('wsd-ayar-tazele', async () => {
         const a = await ayarlariAl();
         girdileriDoldur(a);
         gorunumuUygula(a);
+        acilisGrubuListesi();
     });
 
     // Degisiklikler aninda kaydediliyor - ayri "Kaydet" dugmesi yok
@@ -923,16 +927,19 @@ function yedekAraclariniKur() {
             try { veri = JSON.parse(bas); } catch (err) { veri = null; }
         }
         ilerPencere.hidden = true;               // soru penceresi icin
-        if (!veri) {
-            document.getElementById('perde')?.classList.remove('acik');
-            bildir(c('desteklenmeyenDosya'));
+        // TANIMA (1.5.8): once ne tanindigi soylenir; taninmazsa destek
+        // istegi icin GitHub'a yalnizca dosyanin YAPISI gider.
+        const tur = veri ? yedekTuru(veri) : null;
+        if (!tur) {
+            await taninmadiBildir(veri ? yapiOzeti(veri) : 'not JSON');
             return;
         }
 
         // Mevcut veriyi silmek geri alinamaz - acikca soruyoruz
         const temizle = await onaySor({
             baslik: c('yedektenYukleBd'),
-            metin: c('mevcutGruplarSilinsinMiHayirDerseniz'),
+            metin: c('yedekTanindi', tur.ad, tur.grup, tur.kart) + '\n\n' +
+                   c('mevcutGruplarSilinsinMiHayirDerseniz'),
             evet: c('silVeYukle'), hayir: c('ekle'), tehlikeli: true
         });
 
@@ -956,6 +963,20 @@ function yedekAraclariniKur() {
             console.log('[WSD] yedek yuklenemedi:', err);
             bildir(c('yedekYuklenemedi') + (err.message || ''));
         }
+    }
+
+    async function taninmadiBildir(ozet) {
+        document.getElementById('perde')?.classList.remove('acik');
+        const evet = await onaySor({
+            baslik: c('dosyaTaninmadi'), metin: c('dosyaTaninmadiMetin'),
+            evet: c('bildir'), hayir: c('kapat')
+        });
+        if (!evet) return;
+        const govde = 'Extension name and version:\n\n\n' +
+            `File structure (field names only, no data) - WSD ${chrome.runtime.getManifest().version}:\n` +
+            '```\n' + ozet + '\n```';
+        chrome.tabs.create({ url: 'https://github.com/muttixp/wsd-speed-dial/issues/new?title=' +
+            encodeURIComponent('Import support: ') + '&body=' + encodeURIComponent(govde) });
     }
 
     // Klasor yedeginden geri yukleme ayni yoldan (1.5.7)
@@ -1305,4 +1326,38 @@ function ciktiTazele(id) {
     const el  = document.getElementById(id);
     const hedef = document.getElementById(tanim[0]);
     if (el && hedef) hedef.textContent = tanim[1](+el.value);
+}
+
+/* ACILIS GRUBU (1.5.8): secenek listesi gruplarla doluyor. Kutu her
+   acilisinda (odak) tazelenir - grup eklenip silinince liste guncel kalsin. */
+async function acilisGrubuListesi() {
+    const kutu = document.getElementById('ayAcilisGrubu');
+    if (!kutu) return;
+    const { gorunurGruplariAl } = await import('./yerimi.js');
+    const ayar = await ayarlariAl();
+    const secili = ayar.acilisGrubu || (ayar.grubuHatirla === false ? 'ilk' : 'son');
+    const gruplar = await gorunurGruplariAl().catch(() => []);
+    for (const o of [...kutu.querySelectorAll('option[data-grup]')]) o.remove();
+    for (const g of gruplar) {
+        const o = document.createElement('option');
+        o.value = g.id; o.dataset.grup = '1';
+        o.textContent = g.baslik || g.title || '';
+        kutu.appendChild(o);
+    }
+    // Listede olmayan ama YASAYAN bir klasor (alt klasore tasinmis grup)
+    // seciliyse adiyla gosterilir - yeni sekme gercekten orada aciliyor.
+    // Silinmisse ya da gizli Ana Sayfa ise acilis zaten "son"a duser.
+    if (![...kutu.options].some(o => o.value === secili) && secili !== 'son' && secili !== 'ilk') {
+        try {
+            const { kokKlasoruAl } = await import('./yerimi.js');
+            const [d] = await chrome.bookmarks.get(secili);
+            if (d && !d.url && d.id !== await kokKlasoruAl()) {
+                const o = document.createElement('option');
+                o.value = d.id; o.dataset.grup = '1';
+                o.textContent = d.title || '';
+                kutu.appendChild(o);
+            }
+        } catch (e) { /* silinmis */ }
+    }
+    kutu.value = [...kutu.options].some(o => o.value === secili) ? secili : 'son';
 }

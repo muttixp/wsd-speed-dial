@@ -95,10 +95,16 @@ export async function yedekIskeleti() {
     // geri yuklerken yer imi id'leri farkli olacak.
     const ikonlar = kucukler.grupIkonlari || {};
     const gorunumler = kucukler.grupGorunumleri || {};
+    // ACILIS GRUBU (1.5.8): yer imi id'si baska profilde/geri yuklemede
+    // anlamsiz - grubun kendisi isaretleniyor, ayarda id tasinmiyor
+    const ayarlar = { ...(await ayarlariAl()) };
+    const acilisIdMi = v => !!v && v !== 'son' && v !== 'ilk';
     gruplar.forEach((g, i) => {
         disaGruplar[i].ikon = ikonlar[g.id] || null;
         disaGruplar[i].gorunum = gorunumler[g.id] || null;
+        if (acilisIdMi(ayarlar.acilisGrubu) && g.id === ayarlar.acilisGrubu) disaGruplar[i].acilis = true;
     });
+    if (acilisIdMi(ayarlar.acilisGrubu)) ayarlar.acilisGrubu = '';
 
     return {
         gruplar: disaGruplar,
@@ -109,7 +115,7 @@ export async function yedekIskeleti() {
         // Adli etiketler (1.5.1)
         etiketler: { tanimlar: kucukler.etiketTanimlari || {},
                      kartlar: suz(kucukler.kartEtiketleri, yasayanUrlIer) },
-        ayarlar: await ayarlariAl(),
+        ayarlar,
         // Calisma alanlari (1.5.4) - WSD agacinin disinda, ayri bolum
         calismaAlanlari: await calismaAlanlariniAl()
     };
@@ -350,6 +356,7 @@ async function yedegiYukleIc(veri, temizle, ilerleme, urller) {
     };
     const klasorAdresleri = new Map();     // klasorId -> Set(adres)
 
+    let acilisHedef = null;               // yedekte isaretli acilis grubunun YENI id'si
     for (const g of y.gruplar) {
         let hedefId, yeniGrup = false;
         if (g.kokMu) {
@@ -367,6 +374,8 @@ async function yedegiYukleIc(veri, temizle, ilerleme, urller) {
                 mevcutGruplar.set(adAnahtari(g.baslik), hedefId);
             }
         }
+
+        if (g.acilis) acilisHedef = hedefId;
 
         // Ikon/gorunum yalnizca YENI acilan gruba yaziliyor; var olan
         // grubun kendi ikonu yedektekiyle ezilmesin
@@ -449,6 +458,13 @@ async function yedegiYukleIc(veri, temizle, ilerleme, urller) {
         }
         yazilacak.ayarlar.temaOzel = [...temalar.values()];
         yazilacak.ayarlar.temaFiltreleri = { ...(m.temaFiltreleri || {}), ...(y.ayarlar.temaFiltreleri || {}) };
+        // ACILIS GRUBU (1.5.8): Ekle kipinde kullanicinin kendi secimi
+        // kalir; Sil-ve-yukle kipinde yedektekine (yeni id ile) gecilir.
+        // Yedekteki ham id hicbir zaman yazilmaz.
+        const yedekAcilis = y.ayarlar.acilisGrubu;
+        const kipMi = v => v === '' || v === 'son' || v === 'ilk';
+        if (!temizle) yazilacak.ayarlar.acilisGrubu = m.acilisGrubu || '';
+        else yazilacak.ayarlar.acilisGrubu = acilisHedef || (kipMi(yedekAcilis) ? yedekAcilis : '');
         try {
             const { iceAktarilanTemayiAyarla } = await import('./tema.js');
             iceAktarilanTemayiAyarla(yazilacak.ayarlar, y.ayarlar);
@@ -486,15 +502,14 @@ function adAnahtari(ad) {
 /* ============ Bicim cozumleme ============ */
 
 /**
- * Uc bicim destekleniyor:
- *   - kendi yedegimiz  { wsd: {...} }
- *   - onceki eklenti   { yasd: {...} }
- *   - FVD Speed Dial   { source: 'fvd-full', groups, dials }
+/**
+ * BICIM TANIMA (1.5.8): [gorunen ad, cevirici]. Ice aktarmadan ONCE
+ * kullaniciya ne tanindigini gostermek icin ayri; cevirme ayni yoldan.
  */
-function bicimiCoz(veri) {
+function bicimBul(veri) {
     if (!veri || typeof veri !== 'object') return null;
-    if (veri.wsd) return veri.wsd;
-    if (veri.yasd) return eskiyiCevir(veri.yasd);
+    if (veri.wsd) return ['WSD Speed Dial', () => veri.wsd];
+    if (veri.yasd) return ['Yet Another Speed Dial', () => eskiyiCevir(veri.yasd)];
 
     // SPEED DIAL 2 (1.5.3): dials[].idgroup, groups[].title.
     // ("Speed Dial" - Speed Dial Dev - farkli: .spd, bkz. spdCevir) FVD'den ONCE bakilmali:
@@ -504,27 +519,70 @@ function bicimiCoz(veri) {
     if (Array.isArray(veri.dials) && Array.isArray(veri.groups) &&
         (veri.dials.some(d => d && 'idgroup' in d) ||
          veri.groups.some(g => g && 'title' in g && !('name' in g)))) {
-        return sd2Cevir(veri);
+        return ['Speed Dial 2', () => sd2Cevir(veri)];
     }
 
     // GROUP SPEED DIAL (1.5.3): kartlar grubun ICINDE (groups[].dials[])
     if (!Array.isArray(veri.dials) && Array.isArray(veri.groups) &&
         veri.groups.some(g => g && Array.isArray(g.dials))) {
-        return gsdCevir(veri);
+        return ['Group Speed Dial', () => gsdCevir(veri)];
     }
 
     // FVD "full" bicimi: `source` alani olmayabiliyor, yapidan da taniyoruz
     const fvdMi = veri.source === 'fvd-full' ||
         (Array.isArray(veri.groups) && Array.isArray(veri.dials));
-    if (fvdMi) return fvdCevir(veri);
+    if (fvdMi) return ['FVD Speed Dial', () => fvdCevir(veri)];
 
     // FVD ORIJINAL bicimi: { db: {dials, groups}, prefs: {...} }
-    if (veri.db && Array.isArray(veri.db.dials)) return fvdHamCevir(veri);
+    if (veri.db && Array.isArray(veri.db.dials)) return ['FVD Speed Dial', () => fvdHamCevir(veri)];
 
     // "SPEED DIAL" .spd (1.5.5): { categories, links, opts }
-    if (Array.isArray(veri.categories) && Array.isArray(veri.links)) return spdCevir(veri);
+    if (Array.isArray(veri.categories) && Array.isArray(veri.links)) return ['Speed Dial (.spd)', () => spdCevir(veri)];
 
     return null;
+}
+
+function bicimiCoz(veri) {
+    const b = bicimBul(veri);
+    return b ? b[1]() : null;
+}
+
+/** Yuklemeden once: { ad, grup, kart } ya da tanınmadiysa null */
+export function yedekTuru(veri) {
+    const b = bicimBul(veri);
+    if (!b) return null;
+    let y;
+    try { y = b[1](); } catch (e) { return null; }
+    if (!y || !Array.isArray(y.gruplar)) return null;
+    const kart = y.gruplar.reduce((t, g) => t + (Array.isArray(g.kartlar) ? g.kartlar.length : 0), 0);
+    return { ad: b[0], grup: y.gruplar.filter(g => !g.kokMu).length, kart };
+}
+
+/**
+ * Taninmayan dosyanin YAPISI (yalnizca alan adlari ve dizi boylari -
+ * hicbir deger yok): destek istegine eklenir, kisisel veri tasimaz.
+ */
+export function yapiOzeti(veri) {
+    const tur = v => Array.isArray(v) ? 'array' : v === null ? 'null' : typeof v;
+    const anahtarlar = o => Object.keys(o).slice(0, 15).join(', ') + (Object.keys(o).length > 15 ? ', …' : '');
+    const satir = (ad, v, girinti) => {
+        if (Array.isArray(v)) {
+            const ilk = v.find(x => x && typeof x === 'object' && !Array.isArray(x));
+            return `${girinti}${ad}: array[${v.length}]` + (ilk ? ` of {${anahtarlar(ilk)}}` : '');
+        }
+        if (v && typeof v === 'object') return `${girinti}${ad}: {${anahtarlar(v)}}`;
+        return `${girinti}${ad}: ${tur(v)}`;
+    };
+    if (!veri || typeof veri !== 'object') return 'not JSON';
+    const kok = Array.isArray(veri) ? { '(root)': veri } : veri;
+    const satirlar = [];
+    for (const [k, v] of Object.entries(kok).slice(0, 25)) {
+        satirlar.push(satir(k, v, ''));
+        if (v && typeof v === 'object' && !Array.isArray(v)) {
+            for (const [k2, v2] of Object.entries(v).slice(0, 12)) satirlar.push(satir(k2, v2, '  '));
+        }
+    }
+    return satirlar.join('\n').slice(0, 1800);
 }
 
 /* ============ Speed Dial 2 / Speed Dial (1.5.3) ============

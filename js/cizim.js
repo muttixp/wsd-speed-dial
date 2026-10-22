@@ -99,11 +99,21 @@ export async function arayuzuKur() {
         }
     }
 
-    // Son grubu hatirlama kapaliysa her acilista Ana Sayfa'dan basla
+    // ACILIS GRUBU (1.5.8, kullanici istegi): 'son' son bakilan, 'ilk'
+    // seritteki ilk grup, ya da secilen bir grup. Eski "Son Grubu Hatirla"
+    // anahtari bos degerde gecerli. Secilen grup silinmisse 'son'a duser.
     const ayar = await ayarlariAl();
-    if (ayar.grubuHatirla === false) {
+    const acilis = ayar.acilisGrubu || (ayar.grubuHatirla === false ? 'ilk' : 'son');
+    if (acilis === 'ilk') {
         await grubuAc(gruplar[0].id);
         return;
+    }
+    if (acilis !== 'son') {
+        const zincir = await klasorZinciri(acilis).catch(() => null);
+        if (zincir && gruplar.some(g => g.id === zincir[0].id)) {
+            await grubuAc(acilis);
+            return;
+        }
     }
 
     // Son acilan yer bir ALT KLASOR olabilir: zincirinin basi gorunur

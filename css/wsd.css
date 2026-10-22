@@ -1264,6 +1264,7 @@ body.grupSayiKapali .grupSayi { display: none; }
 }
 .kucukBilgi[hidden] { display: none; }
 .kucukBilgi b { color: var(--metin); }
+.desteklenenYedekler { margin: var(--b2) var(--b1) 0; line-height: 1.45; }
 
 /* ikiSutun icinde tam genislik alan (select / renk) */
 .alan.ikiSutun .genisAlan { width: 100%; }
@@ -1398,6 +1399,7 @@ select option:hover {
 .yonetSil:hover { color: #ff8b87; }
 
 /* Satirdaki "git" ve "duzenle" dugmeleri */
+.yonetAcilis,
 .yonetYenile,
 .yonetGit,
 .yonetDuzenle {
@@ -1417,6 +1419,11 @@ select option:hover {
 .yonetGit:hover,
 .yonetDuzenle:hover { color: var(--vurgu-metin, var(--vurgu-parlak)); }
 .yonetYenile:disabled { opacity: .4; cursor: default; }
+.yonetAcilis { opacity: .45; }
+.yonetAcilis:hover { opacity: 1; }
+.yonetAcilis.secili { opacity: 1; color: var(--vurgu-metin, var(--vurgu-parlak)); }
+.yonetAcilis.secili svg { fill: currentColor; fill-opacity: .25; }
+.gpAcilis { margin: -2px 0 14px; }
 
 /* --- Grup seridinde surukleme --- */
 .grupSekme.tasiniyor { opacity: .4; }

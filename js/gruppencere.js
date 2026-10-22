@@ -337,6 +337,16 @@ export async function grupPenceresiniAc(grup = null, { klasor = null } = {}) {
     el('gpFavicon').value = '';
     secimiGoster();
 
+    // ACILIS GRUBU (1.5.8): yalnizca var olan grupta (klasor/yeni grup degil)
+    const acilisSatir = el('gpAcilisSatir');
+    if (acilisSatir) {
+        acilisSatir.hidden = !grup || !!klasor;
+        if (grup && !klasor) {
+            const { ayarlariAl } = await import('./ayar.js');
+            el('gpAcilis').checked = (await ayarlariAl()).acilisGrubu === grup.id;
+        }
+    }
+
     el('gpUyari').hidden = true;
     el('grupPencere').hidden = false;
     document.getElementById('perde').classList.add('acik');
@@ -369,6 +379,10 @@ async function kaydet() {
         return;
     }
 
+    if (duzenlenenGrup && !el('gpAcilisSatir')?.hidden) {
+        await acilisGrubuYaz(duzenlenenGrup.id, el('gpAcilis').checked);
+    }
+
     const renkEl = el('gpIkonRengi');
     kapat({
         ad,
@@ -383,6 +397,21 @@ async function kaydet() {
             kapak: secilenKapak
         } : {})
     });
+}
+
+/**
+ * Grubu acilis grubu yapar ya da birakir (Grubu Duzenle ve Gruplari Yonet
+ * ortak). Birakilirsa ayar bosalir: eski "Son Grubu Hatirla" ayarina gore (varsayilan son acilan).
+ */
+export async function acilisGrubuYaz(id, acik) {
+    const { ayarlariAl, ayarYaz } = await import('./ayar.js');
+    const simdiki = (await ayarlariAl()).acilisGrubu;
+    let yeni = simdiki;
+    if (acik) yeni = id;
+    else if (simdiki === id) yeni = '';
+    if (yeni === simdiki) return;
+    await ayarYaz({ acilisGrubu: yeni });
+    document.dispatchEvent(new CustomEvent('wsd-ayar-tazele'));
 }
 
 function kapat(sonuc) {

@@ -1,9 +1,9 @@
 {
   "extName": {
-    "message": "WSD Speed Dial"
+    "message": "WSD Speed Dial – Nueva Pestaña y Marcadores"
   },
   "extDesc": {
-    "message": "Una página de acceso rápido que muestra tus marcadores como mosaicos visuales."
+    "message": "Speed dial en la nueva pestaña: marcadores visuales, carpetas, áreas de trabajo y búsqueda. Importa de FVD y Speed Dial. Sin cuenta."
   },
   "actionTitle": {
     "message": "Añadir a WSD Speed Dial"
@@ -789,7 +789,7 @@
     "message": "$1 imágenes"
   },
   "ayrilanAlanDoldu": {
-    "message": "El almacenamiento está lleno. No se pueden guardar nuevas imágenes. Haz una copia primero y luego limpia los datos no usados o elimina mosaicos que no necesites."
+    "message": "El almacenamiento está lleno; no se pueden guardar nuevas imágenes. Haz una copia y luego limpia en Mantenimiento."
   },
   "yedekAlipTemizlemenizOnerilir": {
     "message": "Recomendamos hacer una copia y limpiar los datos no usados."
@@ -1098,7 +1098,7 @@
     "message": "Estas direcciones devolvieron 404/410; la página ya no existe."
   },
   "supheliAciklama": {
-    "message": "No se pudo acceder a estas direcciones, pero el resultado no es concluyente (tiempo de espera, error de red o protección antibots). No se marcaron."
+    "message": "No se pudo acceder a estas direcciones. Los mosaicos no se eliminaron; revísalos uno a uno."
   },
   "kirikKartlariGoster": {
     "message": "Mostrar mosaicos rotos"
@@ -1120,6 +1120,27 @@
   },
   "yerimlerindenIctar": {
     "message": "Importar desde marcadores"
+  },
+  "fvdRehber": {
+    "message": "Migrar desde FVD con miniaturas: guía"
+  },
+  "fvdTasi": {
+    "message": "Migrar desde FVD"
+  },
+  "desteklenenYedekler": {
+    "message": "Copias reconocidas: WSD, FVD Speed Dial, Speed Dial 2, Speed Dial (.spd), Group Speed Dial, Yet Another Speed Dial y archivos HTML de marcadores de cualquier navegador."
+  },
+  "dosyaTaninmadi": {
+    "message": "Este archivo aún no es compatible"
+  },
+  "dosyaTaninmadiMetin": {
+    "message": "Dinos qué extensión creó esta copia y añadiremos soporte lo antes posible. Solo se incluye la estructura del archivo (nombres de campos), no tus datos."
+  },
+  "bildir": {
+    "message": "Informar"
+  },
+  "yedekTanindi": {
+    "message": "✓ Reconocido: $1 · $2 grupos · $3 mosaicos"
   },
   "htmlDosyasindanIctar": {
     "message": "Importar desde archivo HTML"
@@ -1242,7 +1263,7 @@
     "message": "Actualizaciones pendientes"
   },
   "nBekleyenIptalEdilsinMi": {
-    "message": "Aún hay $1 actualizaciones anteriores en cola. ¿Cancelarlas primero? Si no, también se actualizarán por turno."
+    "message": "Hay $1 actualizaciones en cola. ¿Cancelarlas? Si no, se harán por turno."
   },
   "iptalEt": {
     "message": "Cancelarlas"
@@ -1254,7 +1275,7 @@
     "message": "$1 actualizaciones pendientes canceladas"
   },
   "aktarimGorselsizN": {
-    "message": "$1 mosaicos importados no tienen imagen. La captura no se inició automáticamente; usa «Actualizar imágenes del grupo» desde el menú del grupo."
+    "message": "$1 mosaicos no tienen imagen. Usa «Actualizar imágenes del grupo» en el menú del grupo."
   },
   "iceAktarmaTamamlandi": {
     "message": "Importación completada"
@@ -1503,7 +1524,7 @@
     "message": "Eliminar sin acceso"
   },
   "nUlasilamayanCopeTasinacak": {
-    "message": "$1 mosaicos sin acceso se moverán a la papelera. Algunos pueden estar caídos solo temporalmente. Puedes restaurarlos."
+    "message": "$1 mosaicos sin acceso se moverán a la papelera (algunos pueden estar caídos temporalmente). Puedes restaurarlos."
   },
   "baslikAlt": {
     "message": "Título"
@@ -1572,7 +1593,7 @@
     "message": "No se reconoció este archivo. Elige una copia de WSD, FVD, Speed Dial 2 o Group Speed Dial, o un archivo HTML de marcadores"
   },
   "karsilamaIceAktarAciklama": {
-    "message": "Importar: una copia de WSD, una copia de otro speed dial (FVD, Speed Dial .spd, Speed Dial 2, Group Speed Dial) o un archivo HTML de marcadores exportado desde cualquier navegador. El tipo se detecta automáticamente."
+    "message": "Importar: copia de WSD, copia de otro speed dial (FVD, .spd, Speed Dial 2, Group Speed Dial) o archivo HTML de marcadores. El tipo se detecta automáticamente."
   },
   "karsilamaKapatDevam": {
     "message": "Cerrar y continuar"
@@ -1620,7 +1641,7 @@
     "message": "Guardar espacio de trabajo"
   },
   "alanKaydetMetin": {
-    "message": "Marca las pestañas que quieras guardar. Si la ventana tiene varias secciones (p. ej., espacios de trabajo de Vivaldi/Opera), la casilla del encabezado de una sección selecciona toda la sección."
+    "message": "Marca las pestañas que quieres guardar. La casilla del encabezado de una sección la selecciona entera."
   },
   "alanVarsayilanAd": {
     "message": "Espacio de trabajo $1"
@@ -1653,7 +1674,7 @@
     "message": "«$1» ($2 pestañas) se eliminará permanentemente."
   },
   "alanYok": {
-    "message": "Aún no hay espacios de trabajo. Usa «Guardar pestañas» para conservar tus pestañas abiertas y vuelve a abrirlas con un clic."
+    "message": "Aún no hay espacios de trabajo. Usa «Guardar pestañas» para conservar tus pestañas abiertas."
   },
   "nSekme": {
     "message": "$1 pestañas"
@@ -1782,7 +1803,7 @@
     "message": "Sistema"
   },
   "temaIpucu": {
-    "message": "Un tema predefinido ajusta los colores a la vez; aún puedes cambiar cada color abajo. Tu imagen de fondo de pantalla se conserva."
+    "message": "Una plantilla ajusta todos los colores a la vez; luego puedes cambiar cada uno."
   },
   "temaUygulandi": {
     "message": "Tema $1 aplicado"
@@ -1863,7 +1884,7 @@
     "message": "Imágenes de mosaicos"
   },
   "aktarimGorselMetin": {
-    "message": "$1 mosaicos importados no tienen imagen; el archivo de copia no contiene imágenes.\n\n¿Capturarlas en segundo plano? No se abrirá ninguna ventana y podrás seguir usando WSD mientras tanto. Puede tardar según el número de mosaicos, y el navegador puede mostrar un aviso de «depuración» en la parte superior."
+    "message": "$1 mosaicos no tienen imagen.\n\n¿Capturarlas en segundo plano? Puedes seguir usando WSD; puede aparecer arriba un aviso de «depuración»."
   },
   "arkaPlandaAl": {
     "message": "Capturar en segundo plano"
@@ -1923,13 +1944,13 @@
     "message": "Ventana pequeña en la esquina (experimental)"
   },
   "gizliKipBilgi": {
-    "message": "En este modo, Chrome muestra arriba la barra «WSD Speed Dial ha iniciado la depuración de este navegador». Es el aviso obligatorio de Chrome para capturar una página sin abrir una ventana; el permiso solo se usa para hacer la captura. La barra desaparece al terminar la captura."
+    "message": "Al capturar, Chrome muestra arriba una barra de «depuración». Es un aviso obligatorio; el permiso solo se usa para capturas y la barra desaparece al terminar."
   },
   "hazirGruplar": {
     "message": "Grupos predefinidos"
   },
   "hazirGruplarAciklama": {
-    "message": "El paquete que elijas se añade como un grupo nuevo; tus mosaicos existentes no se tocan. Después puedes editar los mosaicos."
+    "message": "El paquete se añade como un grupo nuevo; tus mosaicos actuales no se tocan."
   },
   "tumDiller": {
     "message": "Mostrar paquetes en todos los idiomas"
@@ -1979,6 +2000,9 @@
   "degerlendir": {
     "message": "Valorar"
   },
+  "degerlendirmeIstegi": {
+    "message": "Si WSD te resulta útil, una reseña en la tienda ayuda mucho."
+  },
   "oneriHataBildir": {
     "message": "Sugerir / informar de un error"
   },
@@ -2013,13 +2037,13 @@
     "message": "Carpeta en la nube (experimental)"
   },
   "klasorYedekAciklama": {
-    "message": "Las copias se guardan en la carpeta que elijas. Elige una carpeta de OneDrive, Google Drive o Dropbox y su aplicación las subirá por ti; restaura desde la misma carpeta en otro equipo."
+    "message": "Las copias se guardan en la carpeta que elijas. Elige una carpeta en la nube (OneDrive, Google Drive, Dropbox) para restaurar en otro equipo."
   },
   "klasorYedekAd": {
     "message": "Nombre de la copia"
   },
   "klasorYedekAdIpucu": {
-    "message": "Los archivos de copia llevan este nombre (wsd-nombre-fecha.json); en la carpeta de copias también es el nombre de la subcarpeta. Da a cada navegador su propio nombre; el mismo nombre en dos equipos comparte un mismo conjunto de copias."
+    "message": "Nombre de los archivos de copia y de la subcarpeta. Da a cada navegador su propio nombre; el mismo nombre es una copia compartida."
   },
   "klasorYedekSiklik": {
     "message": "Frecuencia de copia automática"
@@ -2055,7 +2079,7 @@
     "message": "Este navegador no puede escribir en carpetas"
   },
   "klasorYedekSecilemedi": {
-    "message": "No se pudo usar esa carpeta. Las carpetas del sistema (p. ej., la raíz de Documentos) pueden estar bloqueadas; prueba con una subcarpeta."
+    "message": "No se pudo usar esa carpeta. Prueba con una subcarpeta."
   },
   "klasorYedekKlasorYok": {
     "message": "Elige primero una carpeta de copias"
@@ -2110,5 +2134,17 @@
   },
   "klasorYedekSiklikKapali": {
     "message": "Desactivado (solo manual)"
+  },
+  "acilisGrubu": {
+    "message": "Grupo inicial"
+  },
+  "acilisBuGrup": {
+    "message": "Abrir este grupo en pestañas nuevas"
+  },
+  "acilisSon": {
+    "message": "Último grupo abierto"
+  },
+  "acilisIlk": {
+    "message": "Primer grupo"
   }
 }

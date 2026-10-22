@@ -88,7 +88,8 @@ export const VARSAYILAN = {
     grupAktifIkonRengi: '',     // bos = aktif sekme yazi rengi (zemine gore) - 1.5.5
     grupKose: 9,                // grup sekmesi kose yaricapi
     grupBoyut: 100,             // sekme olcegi (%) - yazi, ikon ve dolgu birlikte
-    grubuHatirla: true,         // acilista son bakilan grup mu, Ana Sayfa mi
+    grubuHatirla: true,         // (eski) acilista son bakilan grup mu, Ana Sayfa mi
+    acilisGrubu: '',            // 1.5.8: '' = grubuHatirla'ya gore | 'son' | 'ilk' | grup kimligi
 
     // Uzanti simgesi - dort kare, capraz iki renk
     simgeRenkA: '#5d93c2',      // capraz 1 ve 4

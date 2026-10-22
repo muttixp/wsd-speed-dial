@@ -1,9 +1,9 @@
 {
   "extName": {
-    "message": "WSD Speed Dial"
+    "message": "WSD Speed Dial – Nova Aba e Favoritos Visuais"
   },
   "extDesc": {
-    "message": "Uma página de acesso rápido que mostra seus favoritos como blocos visuais."
+    "message": "Speed dial para a nova aba: favoritos visuais, pastas, espaços de trabalho e busca na web. Importe do FVD e Speed Dial. Sem conta."
   },
   "actionTitle": {
     "message": "Adicionar ao WSD Speed Dial"
@@ -789,7 +789,7 @@
     "message": "$1 imagens"
   },
   "ayrilanAlanDoldu": {
-    "message": "O armazenamento está cheio. Novas imagens não podem ser salvas. Faça um backup primeiro e depois limpe os dados não usados ou exclua blocos desnecessários."
+    "message": "O armazenamento está cheio; novas imagens não podem ser salvas. Faça um backup e depois limpe em Manutenção."
   },
   "yedekAlipTemizlemenizOnerilir": {
     "message": "Recomendamos fazer um backup e limpar os dados não usados."
@@ -1098,7 +1098,7 @@
     "message": "Estes endereços retornaram 404/410; a página não existe mais."
   },
   "supheliAciklama": {
-    "message": "Não foi possível acessar estes endereços, mas o resultado é inconclusivo (tempo esgotado, erro de rede ou proteção contra bots). Não foram marcados."
+    "message": "Não foi possível acessar estes endereços. Os blocos não foram excluídos; verifique um a um."
   },
   "kirikKartlariGoster": {
     "message": "Mostrar blocos quebrados"
@@ -1120,6 +1120,27 @@
   },
   "yerimlerindenIctar": {
     "message": "Importar dos favoritos"
+  },
+  "fvdRehber": {
+    "message": "Migrar do FVD com miniaturas: guia"
+  },
+  "fvdTasi": {
+    "message": "Migrar do FVD"
+  },
+  "desteklenenYedekler": {
+    "message": "Backups reconhecidos: WSD, FVD Speed Dial, Speed Dial 2, Speed Dial (.spd), Group Speed Dial, Yet Another Speed Dial e arquivos HTML de favoritos de qualquer navegador."
+  },
+  "dosyaTaninmadi": {
+    "message": "Este arquivo ainda não é compatível"
+  },
+  "dosyaTaninmadiMetin": {
+    "message": "Diga qual extensão criou este backup e adicionaremos suporte o quanto antes. Só a estrutura do arquivo (nomes dos campos) é incluída, não seus dados."
+  },
+  "bildir": {
+    "message": "Informar"
+  },
+  "yedekTanindi": {
+    "message": "✓ Reconhecido: $1 · $2 grupos · $3 blocos"
   },
   "htmlDosyasindanIctar": {
     "message": "Importar de arquivo HTML"
@@ -1242,7 +1263,7 @@
     "message": "Atualizações pendentes"
   },
   "nBekleyenIptalEdilsinMi": {
-    "message": "$1 atualizações anteriores ainda estão na fila. Cancelá-las primeiro? Se não, elas também serão atualizadas em sequência."
+    "message": "Há $1 atualizações na fila. Cancelá-las? Se não, serão feitas em sequência."
   },
   "iptalEt": {
     "message": "Cancelar"
@@ -1254,7 +1275,7 @@
     "message": "$1 atualizações pendentes canceladas"
   },
   "aktarimGorselsizN": {
-    "message": "$1 blocos importados não têm imagem. A captura não foi iniciada automaticamente; use \"Atualizar imagens do grupo\" no menu do grupo."
+    "message": "$1 blocos não têm imagem. Use \"Atualizar imagens do grupo\" no menu do grupo."
   },
   "iceAktarmaTamamlandi": {
     "message": "Importação concluída"
@@ -1503,7 +1524,7 @@
     "message": "Excluir sem acesso"
   },
   "nUlasilamayanCopeTasinacak": {
-    "message": "$1 blocos sem acesso serão movidos para a lixeira. Alguns podem estar fora do ar só temporariamente. Você pode restaurá-los."
+    "message": "$1 blocos sem acesso serão movidos para a lixeira (alguns podem estar fora do ar temporariamente). Você pode restaurá-los."
   },
   "baslikAlt": {
     "message": "Título"
@@ -1572,7 +1593,7 @@
     "message": "Este arquivo não foi reconhecido. Escolha um backup do WSD, FVD, Speed Dial 2 ou Group Speed Dial, ou um arquivo HTML de favoritos"
   },
   "karsilamaIceAktarAciklama": {
-    "message": "Importar: um backup do WSD, um backup de outro speed dial (FVD, Speed Dial .spd, Speed Dial 2, Group Speed Dial) ou um arquivo HTML de favoritos exportado de qualquer navegador. O tipo é detectado automaticamente."
+    "message": "Importar: backup do WSD, backup de outro speed dial (FVD, .spd, Speed Dial 2, Group Speed Dial) ou arquivo HTML de favoritos. O tipo é detectado automaticamente."
   },
   "karsilamaKapatDevam": {
     "message": "Fechar e continuar"
@@ -1620,7 +1641,7 @@
     "message": "Salvar espaço de trabalho"
   },
   "alanKaydetMetin": {
-    "message": "Marque as abas que deseja salvar. Se a janela tiver várias seções (ex.: espaços de trabalho do Vivaldi/Opera), a caixa no cabeçalho de uma seção seleciona a seção inteira."
+    "message": "Marque as abas a salvar. A caixa no cabeçalho de uma seção seleciona a seção inteira."
   },
   "alanVarsayilanAd": {
     "message": "Espaço de trabalho $1"
@@ -1653,7 +1674,7 @@
     "message": "\"$1\" ($2 abas) será excluído permanentemente."
   },
   "alanYok": {
-    "message": "Ainda não há espaços de trabalho. Use \"Salvar abas\" para guardar suas abas abertas e reabri-las com um clique."
+    "message": "Ainda não há espaços de trabalho. Use \"Salvar abas\" para guardar suas abas abertas."
   },
   "nSekme": {
     "message": "$1 abas"
@@ -1782,7 +1803,7 @@
     "message": "Sistema"
   },
   "temaIpucu": {
-    "message": "Uma predefinição ajusta as cores em conjunto; você ainda pode alterar cada cor abaixo. Sua imagem de papel de parede é mantida."
+    "message": "Um modelo define todas as cores de uma vez; depois você pode mudar cada uma."
   },
   "temaUygulandi": {
     "message": "Tema $1 aplicado"
@@ -1863,7 +1884,7 @@
     "message": "Imagens dos blocos"
   },
   "aktarimGorselMetin": {
-    "message": "$1 blocos importados não têm imagem; o arquivo de backup não contém imagens.\n\nCapturá-las em segundo plano? Nenhuma janela será aberta e você pode continuar usando o WSD enquanto isso. Pode demorar dependendo da quantidade de blocos, e o navegador pode mostrar um aviso de \"depuração\" no topo."
+    "message": "$1 blocos não têm imagem.\n\nCapturá-las em segundo plano? Você pode continuar usando o WSD; um aviso de \"depuração\" pode aparecer no topo."
   },
   "arkaPlandaAl": {
     "message": "Capturar em segundo plano"
@@ -1923,13 +1944,13 @@
     "message": "Janela pequena no canto (experimental)"
   },
   "gizliKipBilgi": {
-    "message": "Neste modo, o Chrome mostra no topo a barra \"WSD Speed Dial começou a depurar este navegador\". É o aviso obrigatório do Chrome para capturar uma página sem abrir uma janela; a permissão é usada apenas para a captura de tela. A barra desaparece quando a captura termina."
+    "message": "Durante a captura, o Chrome mostra no topo uma barra de \"depuração\". É um aviso obrigatório; a permissão é usada só para capturas e a barra some ao terminar."
   },
   "hazirGruplar": {
     "message": "Grupos prontos"
   },
   "hazirGruplarAciklama": {
-    "message": "O pacote escolhido é adicionado como um novo grupo; seus blocos atuais não são alterados. Você pode editar os blocos depois."
+    "message": "O pacote é adicionado como um novo grupo; seus blocos atuais não são alterados."
   },
   "tumDiller": {
     "message": "Mostrar pacotes em todos os idiomas"
@@ -1979,6 +2000,9 @@
   "degerlendir": {
     "message": "Avaliar"
   },
+  "degerlendirmeIstegi": {
+    "message": "Se o WSD é útil para você, uma avaliação na loja ajuda muito."
+  },
   "oneriHataBildir": {
     "message": "Sugerir / relatar um erro"
   },
@@ -2013,13 +2037,13 @@
     "message": "Pasta na nuvem (experimental)"
   },
   "klasorYedekAciklama": {
-    "message": "Os backups são gravados na pasta que você escolher. Escolha uma pasta do OneDrive, Google Drive ou Dropbox e o aplicativo dele faz o upload por você; restaure da mesma pasta em outro computador."
+    "message": "Os backups são gravados na pasta escolhida. Escolha uma pasta na nuvem (OneDrive, Google Drive, Dropbox) para restaurar em outro computador."
   },
   "klasorYedekAd": {
     "message": "Nome do backup"
   },
   "klasorYedekAdIpucu": {
-    "message": "Os arquivos de backup levam este nome (wsd-nome-data.json); na pasta de backup ele também é o nome da subpasta. Dê a cada navegador um nome próprio; o mesmo nome em dois computadores compartilha um único conjunto de backups."
+    "message": "Nome dos arquivos de backup e da subpasta. Dê a cada navegador um nome próprio; o mesmo nome é um backup compartilhado."
   },
   "klasorYedekSiklik": {
     "message": "Frequência do backup automático"
@@ -2055,7 +2079,7 @@
     "message": "Este navegador não consegue gravar em pastas"
   },
   "klasorYedekSecilemedi": {
-    "message": "Não foi possível usar essa pasta. Pastas do sistema (ex.: a raiz de Documentos) podem estar bloqueadas; tente uma subpasta."
+    "message": "Não foi possível usar essa pasta. Tente uma subpasta."
   },
   "klasorYedekKlasorYok": {
     "message": "Escolha uma pasta de backup primeiro"
@@ -2110,5 +2134,17 @@
   },
   "klasorYedekSiklikKapali": {
     "message": "Desligado (só manual)"
+  },
+  "acilisGrubu": {
+    "message": "Grupo inicial"
+  },
+  "acilisBuGrup": {
+    "message": "Abrir este grupo em novas abas"
+  },
+  "acilisSon": {
+    "message": "Último grupo aberto"
+  },
+  "acilisIlk": {
+    "message": "Primeiro grupo"
   }
 }

@@ -1,9 +1,9 @@
 {
   "extName": {
-    "message": "WSD Speed Dial"
+    "message": "WSD Speed Dial – 新标签页与可视化书签"
   },
   "extDesc": {
-    "message": "以可视化磁贴显示书签的快速访问页面。"
+    "message": "新标签页快速拨号：可视化书签、文件夹、工作区和网页搜索。可从 FVD 和 Speed Dial 导入。无需账户。"
   },
   "actionTitle": {
     "message": "添加到 WSD Speed Dial"
@@ -789,7 +789,7 @@
     "message": "$1 张图片"
   },
   "ayrilanAlanDoldu": {
-    "message": "存储空间已满，无法保存新图片。请先备份，然后清理未使用的数据或删除不需要的磁贴。"
+    "message": "存储空间已满，无法保存新图片。请先备份，然后在“维护”中清理。"
   },
   "yedekAlipTemizlemenizOnerilir": {
     "message": "建议备份并清理未使用的数据。"
@@ -1098,7 +1098,7 @@
     "message": "这些地址返回 404/410，页面已不存在。"
   },
   "supheliAciklama": {
-    "message": "无法访问这些地址，但结果不确定（超时、网络错误或反机器人保护）。未做标记。"
+    "message": "无法访问这些地址。磁贴未删除，请逐一检查。"
   },
   "kirikKartlariGoster": {
     "message": "显示失效磁贴"
@@ -1120,6 +1120,27 @@
   },
   "yerimlerindenIctar": {
     "message": "从书签导入"
+  },
+  "fvdRehber": {
+    "message": "从 FVD 连同缩略图迁移：指南"
+  },
+  "fvdTasi": {
+    "message": "从 FVD 迁移"
+  },
+  "desteklenenYedekler": {
+    "message": "可识别的备份：WSD, FVD Speed Dial, Speed Dial 2, Speed Dial (.spd), Group Speed Dial, Yet Another Speed Dial，以及任意浏览器导出的书签 HTML 文件。"
+  },
+  "dosyaTaninmadi": {
+    "message": "暂不支持此文件"
+  },
+  "dosyaTaninmadiMetin": {
+    "message": "告诉我们这是哪个扩展生成的备份，我们会尽快添加支持。报告中只包含文件结构（字段名），不包含你的数据。"
+  },
+  "bildir": {
+    "message": "报告"
+  },
+  "yedekTanindi": {
+    "message": "✓ 已识别：$1 · $2 个分组 · $3 个磁贴"
   },
   "htmlDosyasindanIctar": {
     "message": "从 HTML 文件导入"
@@ -1242,7 +1263,7 @@
     "message": "待处理的刷新"
   },
   "nBekleyenIptalEdilsinMi": {
-    "message": "队列中仍有 $1 个之前的刷新在等待。要先取消它们吗？否则它们也会依次刷新。"
+    "message": "队列中有 $1 个刷新在等待。要取消吗？否则将依次刷新。"
   },
   "iptalEt": {
     "message": "取消它们"
@@ -1254,7 +1275,7 @@
     "message": "已取消 $1 个待处理的刷新"
   },
   "aktarimGorselsizN": {
-    "message": "$1 个导入的磁贴没有图片。未自动开始截图；请在分组菜单中使用“刷新分组图片”。"
+    "message": "$1 个磁贴没有图片。请在分组菜单中使用“刷新分组图片”。"
   },
   "iceAktarmaTamamlandi": {
     "message": "导入完成"
@@ -1503,7 +1524,7 @@
     "message": "删除无法访问项"
   },
   "nUlasilamayanCopeTasinacak": {
-    "message": "$1 个无法访问的磁贴将移至回收站。其中有些可能只是暂时无法访问。可以恢复。"
+    "message": "$1 个无法访问的磁贴将移至回收站（有些可能只是暂时无法访问）。可以恢复。"
   },
   "baslikAlt": {
     "message": "标题"
@@ -1572,7 +1593,7 @@
     "message": "无法识别此文件。请选择 WSD、FVD、Speed Dial 2 或 Group Speed Dial 备份，或书签 HTML 文件"
   },
   "karsilamaIceAktarAciklama": {
-    "message": "导入：WSD 备份、其他快速拨号扩展的备份（FVD、Speed Dial .spd、Speed Dial 2、Group Speed Dial），或从任意浏览器导出的书签 HTML 文件。类型会自动识别。"
+    "message": "导入：WSD 备份、其他快速拨号扩展的备份（FVD、.spd、Speed Dial 2、Group Speed Dial）或书签 HTML 文件。类型自动识别。"
   },
   "karsilamaKapatDevam": {
     "message": "关闭并继续"
@@ -1620,7 +1641,7 @@
     "message": "保存工作区"
   },
   "alanKaydetMetin": {
-    "message": "勾选要保存的标签页。如果窗口有多个部分（例如 Vivaldi/Opera 工作区），勾选部分标题上的复选框即可选中整个部分。"
+    "message": "勾选要保存的标签页。分区标题上的复选框可选中整个分区。"
   },
   "alanVarsayilanAd": {
     "message": "工作区 $1"
@@ -1653,7 +1674,7 @@
     "message": "“$1”（$2 个标签页）将被永久删除。"
   },
   "alanYok": {
-    "message": "还没有工作区。使用“保存标签页”保存打开的标签页，之后一键重新打开。"
+    "message": "还没有工作区。使用“保存标签页”保存打开的标签页。"
   },
   "nSekme": {
     "message": "$1 个标签页"
@@ -1782,7 +1803,7 @@
     "message": "跟随系统"
   },
   "temaIpucu": {
-    "message": "预设会统一设置各项颜色；你仍可在下方单独修改每种颜色。壁纸图片会保留。"
+    "message": "模板会同时设置所有颜色；之后可逐一修改。"
   },
   "temaUygulandi": {
     "message": "已应用“$1”主题"
@@ -1863,7 +1884,7 @@
     "message": "磁贴图片"
   },
   "aktarimGorselMetin": {
-    "message": "$1 个导入的磁贴没有图片；备份文件中不包含图片。\n\n要在后台截取吗？不会打开任何窗口，期间可以继续使用 WSD。根据磁贴数量可能需要一些时间，浏览器顶部可能会显示“调试”提示。"
+    "message": "$1 个磁贴没有图片。\n\n要在后台截取吗？期间可继续使用 WSD；顶部可能显示“调试”提示。"
   },
   "arkaPlandaAl": {
     "message": "在后台截取"
@@ -1923,13 +1944,13 @@
     "message": "角落小窗口（实验性）"
   },
   "gizliKipBilgi": {
-    "message": "在此模式下，Chrome 会在顶部显示“WSD Speed Dial 已开始调试此浏览器”提示栏。这是 Chrome 在不打开窗口截取页面截图时的强制提示；该权限仅用于截图。截图结束后提示栏会消失。"
+    "message": "截图时 Chrome 会在顶部显示“调试”提示栏。这是强制提示；该权限仅用于截图，完成后提示栏会消失。"
   },
   "hazirGruplar": {
     "message": "预制分组"
   },
   "hazirGruplarAciklama": {
-    "message": "所选的资源包将作为新分组添加；现有磁贴不受影响。之后可以编辑这些磁贴。"
+    "message": "所选包将作为新分组添加；现有磁贴不受影响。"
   },
   "tumDiller": {
     "message": "显示所有语言的资源包"
@@ -1979,6 +2000,9 @@
   "degerlendir": {
     "message": "评分"
   },
+  "degerlendirmeIstegi": {
+    "message": "如果 WSD 对你有帮助，在商店留下评价会很有帮助。"
+  },
   "oneriHataBildir": {
     "message": "建议 / 报告问题"
   },
@@ -2013,13 +2037,13 @@
     "message": "云文件夹（实验性）"
   },
   "klasorYedekAciklama": {
-    "message": "备份会写入你选择的文件夹。选择 OneDrive、Google Drive 或 Dropbox 文件夹，其客户端会自动上传；在另一台电脑上从同一文件夹恢复即可。"
+    "message": "备份写入你选择的文件夹。选择云盘文件夹（OneDrive、Google Drive、Dropbox）即可在另一台电脑上恢复。"
   },
   "klasorYedekAd": {
     "message": "备份名称"
   },
   "klasorYedekAdIpucu": {
-    "message": "备份文件使用此名称（wsd-名称-日期.json）；在备份文件夹中它也是子文件夹的名称。请为每个浏览器设置不同的名称；两台电脑使用相同名称将共享同一组备份。"
+    "message": "备份文件和子文件夹的名称。每个浏览器请使用不同名称；名称相同即共享备份。"
   },
   "klasorYedekSiklik": {
     "message": "自动备份频率"
@@ -2055,7 +2079,7 @@
     "message": "此浏览器无法写入文件夹"
   },
   "klasorYedekSecilemedi": {
-    "message": "无法使用该文件夹。系统文件夹（例如“文档”根目录）可能被阻止；请尝试子文件夹。"
+    "message": "无法使用该文件夹。请尝试其中的子文件夹。"
   },
   "klasorYedekKlasorYok": {
     "message": "请先选择备份文件夹"
@@ -2110,5 +2134,17 @@
   },
   "klasorYedekSiklikKapali": {
     "message": "关闭（仅手动）"
+  },
+  "acilisGrubu": {
+    "message": "启动分组"
+  },
+  "acilisBuGrup": {
+    "message": "新标签页打开此分组"
+  },
+  "acilisSon": {
+    "message": "上次打开的分组"
+  },
+  "acilisIlk": {
+    "message": "第一个分组"
   }
 }

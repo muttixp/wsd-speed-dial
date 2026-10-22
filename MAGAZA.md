@@ -15,6 +15,13 @@ Aramada en çok ağırlık taşıyan alan; listelerde ~45 karakterden sonrası k
 | EN (varsayılan) | WSD Speed Dial – New Tab & Visual Bookmarks |
 | TR | WSD Speed Dial – Yeni Sekme, Görsel Yer İmleri |
 | RU | WSD Speed Dial – визуальные закладки |
+| PT-BR | WSD Speed Dial – Nova Aba e Favoritos Visuais |
+| PT-PT | WSD Speed Dial – Novo Separador e Marcadores |
+| ES | WSD Speed Dial – Nueva Pestaña y Marcadores |
+| UK | WSD Speed Dial – візуальні закладки |
+| ZH-CN | WSD Speed Dial – 新标签页与可视化书签 |
+
+1.5.8'den itibaren kısa açıklama da bu dillerde pakette (`extDesc`).
 
 ## Kısa açıklama (132 karakter sınırı)
 
@@ -60,6 +67,8 @@ Bring everything over in one click from FVD Speed Dial and other speed
 dial extensions: groups, tiles and their order. If a backup carries no
 images, WSD offers to capture them in the background, without opening
 windows. A bookmarks HTML file from any browser works the same way.
+Moving from FVD Speed Dial? A short guide brings your thumbnails over
+too (Settings › Backup and Import › Import).
 
 SEARCH THE WEB FROM THE HOME PAGE
 
@@ -126,6 +135,7 @@ Tiles
 
 Groups and folders
 - Groups in the top bar; reorder by dragging
+- Start group: choose which group every new tab opens with
 - NESTED FOLDERS inside groups, exactly like your bookmark folders:
   a folder tile shows a preview of its first four sites, click to go
   in, a path bar shows where you are
@@ -193,7 +203,9 @@ BAŞKA BİR SPEED DIAL'DAN MI GELİYORSUNUZ?
 FVD Speed Dial ve diğer speed dial eklentilerinden her şeyi tek tıkla
 taşıyın: gruplar, kartlar ve sıraları. Yedekte görsel yoksa WSD bunları
 pencere açmadan arka planda almayı önerir. Herhangi bir tarayıcıdan dışa
-aktarılmış yer imi HTML dosyası da aynı şekilde.
+aktarılmış yer imi HTML dosyası da aynı şekilde. FVD Speed Dial'dan mı
+geliyorsunuz? Kısa bir rehberle görselleriniz de gelir (Ayarlar ›
+Yedekleme ve Aktarma › İçe Aktar).
 
 ANA SAYFADAN WEB ARAMASI
 
@@ -262,6 +274,7 @@ Kartlar
 
 Gruplar ve klasörler
 - Gruplar üst şeritte; sürükleyerek sıralanır
+- Açılış grubu: her yeni sekmenin hangi grupla açılacağını seçin
 - Grupların içinde İÇ İÇE KLASÖRLER, yer imi klasörlerinizin
   birebir aynısı: klasör kutusu içindeki ilk dört sitenin
   önizlemesini gösterir, tıklayınca içine girersiniz, üstteki yol
@@ -331,7 +344,9 @@ WSD Speed Dial превращает новую вкладку в панель с
 Перенесите всё в один клик из FVD Speed Dial и других расширений speed
 dial: группы, плитки и их порядок. Если в копии нет изображений, WSD
 предложит сделать снимки в фоне, не открывая окон. Так же работает
-HTML-файл закладок, экспортированный из любого браузера.
+HTML-файл закладок, экспортированный из любого браузера. Переходите с
+FVD Speed Dial? Короткая инструкция перенесёт и изображения (Настройки ›
+Резервная копия и импорт › Импорт).
 
 ПОИСК ПРЯМО НА ГЛАВНОЙ
 
@@ -398,6 +413,8 @@ HTML-файл закладок, экспортированный из любог
 
 Группы и папки
 - Группы в верхней панели; порядок меняется перетаскиванием
+- Группа при открытии: выберите, с какой группы открывается каждая
+  новая вкладка
 - ВЛОЖЕННЫЕ ПАПКИ внутри групп, точно как папки закладок: плитка
   папки показывает превью первых четырёх сайтов, клик открывает её,
   строка пути показывает, где вы находитесь
@@ -453,11 +470,468 @@ https://github.com/muttixp/wsd-speed-dial
 Написано с нуля, без стороннего кода. Переводы приветствуются.
 ```
 
+### Ek diller (1.5.8)
+
+Mağaza panelinde dil ekleyip uzun açıklamaya yapıştırın; kısa açıklama pakette.
+
+**Portekizce (Brezilya)**
+
+```
+WSD Speed Dial transforma a página de nova aba em um painel com os
+sites que você realmente usa, cada um com sua própria captura de tela.
+Gratuito, de código aberto e sem rastreamento.
+
+VEIO DE OUTRO SPEED DIAL?
+
+Traga tudo em um clique do FVD Speed Dial e de outras extensões de
+speed dial: grupos, blocos e a ordem deles. Se o backup não tiver
+imagens, o WSD se oferece para capturá-las em segundo plano, sem abrir
+janelas. Um arquivo HTML de favoritos de qualquer navegador funciona
+do mesmo jeito. Está saindo do FVD Speed Dial? Um guia curto traz
+também suas miniaturas (Configurações › Backup e importação ›
+Importar).
+
+PESQUISE NA WEB PELA PÁGINA INICIAL
+
+Uma barra de pesquisa na página inicial. Use o mecanismo de pesquisa
+padrão do navegador ou escolha outro da lista; adicione seu próprio
+mecanismo com um único endereço, reordene a lista ou oculte a barra
+por completo.
+
+O QUE O TORNA DIFERENTE
+
+Seus blocos ficam guardados como favoritos comuns do navegador, e não
+em um banco de dados controlado por nós. Daí vêm três vantagens:
+
+• A sincronização do navegador funciona de imediato. Adicione um
+  bloco em um computador e ele aparece no outro.
+• Seus dados nunca ficam presos. Abra o gerenciador de favoritos a
+  qualquer momento e eles estão lá.
+• Desinstalar não apaga nada. Os favoritos continuam lá.
+
+MUDE SEM PERDER NADA — SEM SERVIÇO DE SINCRONIZAÇÃO
+
+Você não precisa de um serviço de sincronização. Um único arquivo de
+backup (JSON) leva tudo para outro computador ou outro navegador, e um
+clique restaura tudo. Blocos, grupos, pastas, miniaturas, anotações,
+tags e configurações vão juntos. Sem conta e sem servidor — então não
+há login para perder nem falha de sincronização que apague seus
+blocos.
+
+MESCLE EM VEZ DE SOBRESCREVER
+
+Ao restaurar, há duas opções: substituir o que você tem ou ADICIONAR.
+"Adicionar" mantém seus blocos intactos e mescla o backup: grupos com
+o mesmo nome são combinados, e um site que já está naquele grupo não é
+duplicado. Tem blocos em dois navegadores? Faça backup de um,
+adicione-o ao outro e fique com uma coleção única.
+
+O backup é um arquivo completo no seu próprio disco, com miniaturas.
+É gratuito: não há serviço de sincronização pago e nada fica de fora.
+
+Quer que seja automático? Escolha uma pasta uma vez — por exemplo, a
+pasta do OneDrive ou do Google Drive — e o WSD grava o backup lá
+sozinho; em outro computador, você restaura da mesma pasta com um
+clique. Cada navegador mantém seu próprio conjunto com nome, então
+vários navegadores nunca se misturam.
+
+SALVE SUAS ABAS ABERTAS COMO ESPAÇOS DE TRABALHO
+
+Trabalhando em algo por um dia ou em um projeto? Salve as abas abertas
+como um espaço de trabalho e feche-as. Reabra tudo depois com um
+clique, na janela atual ou em uma nova. Edite um espaço de trabalho a
+partir das abas abertas, adicione tags, uma anotação e uma cor,
+reordene arrastando. As abas não são fechadas ao salvar. Quando valer
+a pena guardar, transforme-o em um grupo comum com miniaturas; quando
+terminar, exclua-o. Os espaços de trabalho são guardados como
+favoritos e entram nos backups.
+
+O QUE ELE FAZ
+
+Blocos
+- Capturas de tela automáticas ao adicionar uma página
+- Não gostou da imagem? Escolha outra opção, envie um arquivo ou
+  informe o endereço de uma imagem
+- Anotações, etiquetas de cor, contador de visitas
+- Tags com nome e cores próprias, várias por bloco; abra a pesquisa
+  para ver todas as tags e clique em uma para listar seus blocos em
+  todos os grupos
+- Arraste para reordenar ou para mover entre grupos
+- Ordenação pontual por nome, visitas ou data de inclusão
+
+Grupos e pastas
+- Grupos na barra superior; reordene arrastando
+- Grupo inicial: escolha com qual grupo cada nova aba abre
+- PASTAS ANINHADAS dentro dos grupos, exatamente como suas pastas de
+  favoritos: o bloco da pasta mostra uma prévia dos quatro primeiros
+  sites, clique para entrar e uma barra de caminho mostra onde você
+  está
+- Voltar / avançar como em um explorador de arquivos: botões laterais
+  do mouse, Alt+Left / Alt+Right; Backspace sobe uma pasta
+- Arraste blocos para uma pasta para movê-los; arraste pastas para
+  reordenar ou colocar uma dentro da outra
+- 22 ícones, emoji personalizado ou o favicon de um site para grupos e
+  pastas; anotações, etiquetas de cor, cor de fundo e imagem de capa
+  para pastas
+- A janela Mover mostra grupos e pastas em árvore; a pesquisa também
+  encontra pastas
+
+Seus dados
+- Grupos prontos: adicione um pacote inicial (Dia a dia,
+  Desenvolvedor, Estudos…) com um clique; os pacotes ficam no
+  repositório aberto do GitHub
+- Backup e restauração (com a estrutura de pastas); um único botão
+  Importar que reconhece o arquivo: backup do WSD, backup de outra
+  extensão de speed dial ou arquivo HTML de favoritos
+- A restauração pode SUBSTITUIR ou MESCLAR: mesclar combina grupos com
+  o mesmo nome e ignora sites que você já tem
+- Importe os favoritos que você já tem no navegador: cada pasta de
+  nível superior vira um grupo e suas subpastas continuam como pastas
+- Verificação de links quebrados
+- Exportação como página HTML independente
+- Lixeira: blocos e grupos excluídos ficam guardados por 30 dias
+- Monitor de armazenamento com aviso antes de o espaço acabar
+- Verificação de consistência que encontra imagens ausentes e
+  duplicados
+- As abas abertas ficam sincronizadas entre si
+
+Aparência
+- Modo claro e escuro, temas prontos, salve seu próprio tema
+- Efeito de vidro fosco opcional para menus, painéis e barra de
+  pesquisa
+- Papel de parede, tonalização do fundo (deslocar matiz ou duas cores)
+- Proporção, tamanho, espaçamento e bordas dos blocos
+- Um único ajuste de cantos para blocos, abas, menus, janelas e botões
+- Cores do menu de grupos (incluindo cores do texto) e tamanho; a
+  barra lateral pode se ocultar automaticamente
+
+PRIVACIDADE
+
+Sem conta. Sem servidores. Sem análises. Nada sai do seu navegador.
+Requisições externas vão apenas aonde suas próprias ações apontam: a
+página que você pediu para capturar, a busca de um favicon se você
+escolher um como ícone de grupo, a busca de um logo se você clicar em
+"Capturar logo", a verificação de links quebrados, o mecanismo de
+pesquisa que você escolher na barra de pesquisa (sua consulta e o
+ícone desse mecanismo, baixado uma vez) e a lista de pacotes do
+repositório do projeto no GitHub quando você abre Grupos prontos.
+
+CÓDIGO ABERTO
+
+GPL-3.0. Código-fonte completo em:
+https://github.com/muttixp/wsd-speed-dial
+
+Escrito do zero, sem código de terceiros. Traduções são bem-vindas.
+```
+
+**İspanyolca**
+
+```
+WSD Speed Dial convierte la página de nueva pestaña en un panel con
+los sitios que de verdad usas, cada uno con su propia captura.
+Gratuito, de código abierto y sin rastreo.
+
+¿VIENES DE OTRO SPEED DIAL?
+
+Trae todo con un clic desde FVD Speed Dial y otras extensiones de
+speed dial: grupos, mosaicos y su orden. Si una copia no incluye
+imágenes, WSD se ofrece a capturarlas en segundo plano, sin abrir
+ventanas. Un archivo HTML de marcadores de cualquier navegador
+funciona igual. ¿Te pasas desde FVD Speed Dial? Una guía breve trae
+también tus miniaturas (Ajustes › Copia e importación › Importar).
+
+BUSCA EN LA WEB DESDE LA PÁGINA DE INICIO
+
+Una barra de búsqueda en la página de inicio. Usa el buscador
+predeterminado del navegador o elige otro de la lista; añade tu propio
+buscador con una sola dirección, reordena la lista u oculta la barra
+por completo.
+
+POR QUÉ ES DIFERENTE
+
+Tus mosaicos se guardan como marcadores normales del navegador, no en
+una base de datos que controlemos nosotros. De ahí se derivan tres
+cosas:
+
+• La sincronización del navegador funciona sin configurar nada. Añade
+  un mosaico en un equipo y aparece en el otro.
+• Tus datos nunca quedan atrapados. Abre el administrador de
+  marcadores cuando quieras y ahí están.
+• Desinstalar no te hace perder nada. Los marcadores se quedan.
+
+CAMBIA DE EQUIPO SIN PERDER NADA — SIN SERVICIO DE SINCRONIZACIÓN
+
+No necesitas un servicio de sincronización. Un solo archivo de copia
+(JSON) lleva todo a otro equipo o a otro navegador, y un clic lo
+restaura. Mosaicos, grupos, carpetas, miniaturas, notas, etiquetas y
+ajustes viajan juntos. Sin cuenta ni servidor: no hay inicio de
+sesión que perder ni fallos de sincronización que borren tus mosaicos.
+
+COMBINA, NO SOBRESCRIBAS
+
+Al restaurar tienes dos opciones: reemplazar lo que tienes o AÑADIR.
+«Añadir» deja intactos tus mosaicos y combina la copia con ellos: los
+grupos con el mismo nombre se unen y un sitio que ya tienes en ese
+grupo no se duplica. ¿Tienes mosaicos en dos navegadores? Haz una
+copia de uno, añádela al otro y tendrás una sola colección.
+
+La copia es un archivo completo en tu propio disco, con miniaturas.
+Es gratis: no hay servicio de sincronización de pago y no se deja nada
+fuera.
+
+¿Lo quieres automático? Elige una carpeta una vez —por ejemplo, tu
+carpeta de OneDrive o Google Drive— y WSD guardará la copia ahí por
+su cuenta; en otro equipo restauras desde la misma carpeta con un
+clic. Cada navegador conserva su propio conjunto con nombre, así que
+varios navegadores nunca se mezclan.
+
+GUARDA TUS PESTAÑAS ABIERTAS COMO ESPACIOS DE TRABAJO
+
+¿Trabajas en algo durante un día o en un proyecto? Guarda las
+pestañas abiertas como espacio de trabajo y ciérralas. Vuelve a
+abrirlas más tarde con un clic, en la ventana actual o en una nueva.
+Edita un espacio de trabajo a partir de tus pestañas abiertas, añade
+etiquetas, una nota y un color, y reordena arrastrando. Las pestañas
+no se cierran al guardar. Cuando valga la pena conservarlo,
+conviértelo en un grupo normal con miniaturas; cuando termines,
+elimínalo. Los espacios de trabajo se guardan como marcadores y se
+incluyen en las copias.
+
+QUÉ HACE
+
+Mosaicos
+- Capturas automáticas al añadir una página
+- ¿No te gusta la imagen? Elige otra opción, sube un archivo o indica
+  la dirección de una imagen
+- Notas, etiquetas de color, contador de visitas
+- Etiquetas con nombre y tus propios colores, varias por mosaico;
+  abre la búsqueda para ver todas las etiquetas y haz clic en una para
+  listar sus mosaicos en todos los grupos
+- Arrastra para reordenar o para mover entre grupos
+- Ordenación puntual por nombre, visitas o fecha de alta
+
+Grupos y carpetas
+- Grupos en la barra superior; reordénalos arrastrando
+- Grupo inicial: elige con qué grupo se abre cada nueva pestaña
+- CARPETAS ANIDADAS dentro de los grupos, igual que tus carpetas de
+  marcadores: el mosaico de una carpeta muestra una vista previa de
+  sus cuatro primeros sitios, haz clic para entrar y una barra de ruta
+  indica dónde estás
+- Atrás / adelante como en un explorador de archivos: botones
+  laterales del ratón, Alt+Left / Alt+Right; Retroceso sube una
+  carpeta
+- Arrastra mosaicos sobre una carpeta para moverlos; arrastra carpetas
+  para reordenarlas o meter una dentro de otra
+- 22 iconos, emoji personalizado o el favicon de un sitio para grupos
+  y carpetas; notas, etiquetas de color, color de fondo e imagen de
+  portada para carpetas
+- La ventana Mover muestra grupos y carpetas en árbol; la búsqueda
+  también encuentra carpetas
+
+Tus datos
+- Grupos predefinidos: añade un paquete inicial (Día a día,
+  Desarrollador, Aprendizaje…) con un clic; los paquetes se mantienen
+  en el repositorio abierto de GitHub
+- Copia y restauración (incluida la estructura de carpetas); un único
+  botón Importar que reconoce el archivo: una copia de WSD, una copia
+  de otra extensión de speed dial o un archivo HTML de marcadores
+- La restauración puede REEMPLAZAR o COMBINAR: al combinar se unen los
+  grupos con el mismo nombre y se omiten los sitios que ya tienes
+- Importa los marcadores que ya tienes en el navegador: cada carpeta
+  de primer nivel se convierte en un grupo y sus subcarpetas siguen
+  siendo carpetas
+- Búsqueda de enlaces rotos
+- Exportación como página HTML independiente
+- Papelera: los mosaicos y grupos eliminados se conservan 30 días
+- Monitor de almacenamiento con aviso antes de quedarse sin espacio
+- Comprobación de coherencia que detecta imágenes faltantes y
+  duplicados
+- Las pestañas abiertas se mantienen sincronizadas entre sí
+
+Aspecto
+- Modo claro y oscuro, temas predefinidos, guarda tu propio tema
+- Efecto de vidrio esmerilado opcional para menús, paneles y la barra
+  de búsqueda
+- Fondo de pantalla, tinte del fondo (desplazar tono o dos colores)
+- Proporción, tamaño, espaciado y bordes de los mosaicos
+- Un solo ajuste de esquinas para mosaicos, pestañas, menús, ventanas
+  y botones
+- Colores del menú de grupos (incluido el color del texto) y tamaño;
+  la barra lateral puede ocultarse automáticamente
+
+PRIVACIDAD
+
+Sin cuenta. Sin servidores. Sin analíticas. Nada sale de tu navegador.
+Las solicitudes externas solo van adonde apuntan tus propias acciones:
+la página que pediste capturar, la búsqueda de un favicon si eliges
+uno como icono de grupo, la búsqueda de un logo si pulsas «Capturar
+logo», la búsqueda de enlaces rotos, el buscador que elijas en la
+barra de búsqueda (tu consulta y el icono de ese buscador, descargado
+una sola vez) y la lista de paquetes del repositorio del proyecto en
+GitHub cuando abres Grupos predefinidos.
+
+CÓDIGO ABIERTO
+
+GPL-3.0. Código fuente completo en:
+https://github.com/muttixp/wsd-speed-dial
+
+Escrito desde cero, sin código de terceros. Las traducciones son
+bienvenidas.
+```
+
+**Ukraynaca**
+
+```
+WSD Speed Dial перетворює сторінку нової вкладки на дошку із сайтами,
+якими ви справді користуєтеся, — кожен зі своїм знімком. Безкоштовно,
+з відкритим кодом, без стеження.
+
+ПЕРЕХОДИТЕ З ІНШОГО SPEED DIAL?
+
+Перенесіть усе одним клацанням із FVD Speed Dial та інших розширень
+speed dial: групи, плитки та їхній порядок. Якщо в копії немає
+зображень, WSD запропонує зняти їх у фоновому режимі, не відкриваючи
+вікон. Так само працює HTML-файл закладок із будь-якого браузера.
+Переходите з FVD Speed Dial? Коротка інструкція допоможе перенести й
+мініатюри (Налаштування › Резервна копія та імпорт › Імпорт).
+
+ПОШУК В ІНТЕРНЕТІ З ДОМАШНЬОЇ СТОРІНКИ
+
+Рядок пошуку на домашній сторінці. Використовуйте пошукову систему
+браузера за замовчуванням або виберіть іншу зі списку; додайте власну
+систему за однією адресою, змініть порядок списку або зовсім
+приховайте рядок.
+
+ЧИМ ВІН ІНШИЙ
+
+Ваші плитки зберігаються як звичайні закладки браузера, а не в базі
+даних, яку контролюємо ми. Звідси три наслідки:
+
+• Синхронізація браузера працює одразу. Додайте плитку на одному
+  комп'ютері — вона з'явиться на іншому.
+• Ваші дані ніколи не опиняються в пастці. Відкрийте менеджер
+  закладок будь-коли — і вони там.
+• Видалення розширення нічого не стирає. Закладки залишаються.
+
+ПЕРЕЇЗД БЕЗ ВТРАТ — БЕЗ СЕРВІСУ СИНХРОНІЗАЦІЇ
+
+Сервіс синхронізації не потрібен. Один файл копії (JSON) переносить
+усе на інший комп'ютер чи в інший браузер, а одне клацання відновлює
+його. Плитки, групи, папки, мініатюри, нотатки, мітки й налаштування
+переїжджають разом. Без облікового запису й без сервера — тож немає
+входу, який можна втратити, і збою синхронізації, що зітре ваші
+плитки.
+
+ОБ'ЄДНУЙТЕ, А НЕ ПЕРЕЗАПИСУЙТЕ
+
+Під час відновлення є два варіанти: замінити наявне або ДОДАТИ до
+нього. «Додати» не чіпає ваших плиток і об'єднує з ними копію: групи
+з однаковою назвою зливаються, а сайт, який уже є в цій групі, не
+дублюється. Маєте плитки у двох браузерах? Зробіть копію в одному,
+додайте її в інший — і матимете одну спільну колекцію.
+
+Копія — це повний файл на вашому диску, разом із мініатюрами.
+Безкоштовно: жодного платного сервісу синхронізації, нічого не
+приховано.
+
+Хочете автоматично? Один раз виберіть папку — наприклад, папку
+OneDrive чи Google Drive, — і WSD сам записуватиме туди копію; на
+іншому комп'ютері ви відновлюєте з тієї самої папки одним клацанням.
+Кожен браузер має власний іменований набір, тож копії кількох
+браузерів ніколи не змішуються.
+
+ЗБЕРІГАЙТЕ ВІДКРИТІ ВКЛАДКИ ЯК РОБОЧІ ПРОСТОРИ
+
+Працюєте над чимось один день чи над проєктом? Збережіть відкриті
+вкладки як робочий простір і закрийте їх. Пізніше відкрийте їх одним
+клацанням — у поточному вікні або в новому. Змінюйте робочий простір
+із відкритих вкладок, додавайте мітки, нотатку й колір, змінюйте
+порядок перетягуванням. Під час збереження вкладки не закриваються.
+Якщо простір вартий того, перетворіть його на звичайну групу з
+мініатюрами; коли закінчите — видаліть. Робочі простори зберігаються
+як закладки й потрапляють у резервні копії.
+
+ЩО ВІН ВМІЄ
+
+Плитки
+- Знімки створюються автоматично, коли ви додаєте сторінку
+- Не подобається зображення? Виберіть інший варіант, завантажте файл
+  або вкажіть адресу зображення
+- Нотатки, кольорові мітки, лічильник відвідувань
+- Іменовані мітки з власними кольорами, кілька на плитку; відкрийте
+  пошук, щоб побачити всі мітки, і клацніть одну, щоб показати її
+  плитки в усіх групах
+- Перетягуйте, щоб змінити порядок або перемістити в іншу групу
+- Разове сортування за назвою, відвідуваннями чи датою додавання
+
+Групи й папки
+- Групи у верхній панелі; порядок змінюється перетягуванням
+- Група під час відкриття: виберіть, з якою групою відкривається
+  кожна нова вкладка
+- ВКЛАДЕНІ ПАПКИ всередині груп — точнісінько як папки закладок:
+  плитка папки показує мініатюри перших чотирьох сайтів, клацніть,
+  щоб увійти, а рядок шляху показує, де ви
+- Назад / вперед, як у файловому менеджері: бічні кнопки миші,
+  Alt+Left / Alt+Right; Backspace — на папку вище
+- Перетягуйте плитки на папку, щоб перемістити їх; перетягуйте папки,
+  щоб змінити порядок або вкласти одну в іншу
+- 22 значки, свій емодзі або favicon сайту для груп і папок; нотатки,
+  кольорові мітки, колір фону й обкладинка для папок
+- Вікно «Перемістити» показує групи й папки деревом; пошук знаходить
+  і папки
+
+Ваші дані
+- Готові групи: додайте стартовий набір (Повсякденне, Розробнику,
+  Навчання…) одним клацанням; набори зберігаються у відкритому
+  репозиторії на GitHub
+- Резервна копія й відновлення (зі структурою папок); одна кнопка
+  «Імпорт», яка сама розпізнає файл: копію WSD, копію з іншого
+  розширення speed dial або HTML-файл закладок
+- Відновлення може ЗАМІНИТИ або ОБ'ЄДНАТИ: об'єднання зливає групи з
+  однаковою назвою й пропускає сайти, які у вас уже є
+- Імпорт наявних закладок браузера: кожна папка верхнього рівня стає
+  групою, а її підпапки залишаються папками
+- Перевірка битих посилань
+- Експорт в окрему HTML-сторінку
+- Кошик: видалені плитки й групи зберігаються 30 днів
+- Контроль сховища з попередженням, перш ніж закінчиться місце
+- Перевірка цілісності, яка знаходить відсутні зображення й дублікати
+- Відкриті вкладки синхронізуються між собою
+
+Вигляд
+- Світлий і темний режими, готові теми, збереження власної теми
+- Необов'язковий ефект матового скла для меню, панелей і рядка пошуку
+- Шпалери, тонування фону (зсув відтінку або два кольори)
+- Пропорції, розмір, відступи й рамки плиток
+- Одне налаштування заокруглення кутів для плиток, вкладок, меню,
+  вікон і кнопок
+- Кольори панелі груп (зокрема кольори тексту) і розмір; бічна панель
+  може автоматично ховатися
+
+КОНФІДЕНЦІЙНІСТЬ
+
+Без облікового запису. Без серверів. Без аналітики. Ніщо не залишає
+ваш браузер. Зовнішні запити йдуть лише туди, куди ведуть ваші власні
+дії: на сторінку, знімок якої ви попросили зробити, пошук favicon,
+якщо ви вибрали його значком групи, пошук логотипу, якщо ви натиснули
+«Зняти логотип», перевірка битих посилань, пошукова система, яку ви
+обрали в рядку пошуку (ваш запит і значок цієї системи, завантажений
+один раз), а також список наборів із репозиторію проєкту на GitHub,
+коли ви відкриваєте «Готові групи».
+
+ВІДКРИТИЙ КОД
+
+GPL-3.0. Повний вихідний код:
+https://github.com/muttixp/wsd-speed-dial
+
+Написано з нуля, без стороннього коду. Переклади вітаються.
+```
+
 ---
 
 ## Kategori
 
-`Productivity` (Verimlilik)
+`Verimlilik › İş Akışı ve Planlama` (Productivity › Workflow & Planning) — rakiplerin çoğu burada
 
 ---
 
@@ -536,6 +1010,15 @@ Ekran görüntüsü için öneri sırası:
 3. Kart düzenleme penceresi
 4. Arama sonuçları
 5. Yinelenen kartlar ya da çöp kutusu
+
+### 1.5.8 ile yapılacaklar (mağaza paneli)
+
+- Uzun açıklama (EN/TR/RU): "FVD'den görselleriyle" cümlesi ve
+  "Açılış grubu" maddesi eklendi — üç dilde de yapıştır.
+- Yeni diller: pt_BR, es, uk uzun açıklama (yukarıda "Ek diller"; kısa açıklama pakette).
+  Mağaza panelinde Mağaza girişi › dil ekle › metni yapıştır.
+- Yorum yanıtları (Boris Konev, guraynsj): 1.5.8 yayına girince
+  "с версии 1.5.8" diye.
 
 ### 1.5.7 ile yapılacaklar (mağaza paneli)
 
