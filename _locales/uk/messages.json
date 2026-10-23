@@ -881,6 +881,18 @@
   "sekmeBoyutu": {
     "message": "Розмір вкладок"
   },
+  "menuKonumu": {
+    "message": "Положення меню"
+  },
+  "konumNormal": {
+    "message": "Звичайно"
+  },
+  "konumKosede": {
+    "message": "У куті"
+  },
+  "menuKonumuIpucu": {
+    "message": "У куті: панель груп у лівому верхньому куті сторінки"
+  },
   "yakalamaKipi": {
     "message": "Режим знімка"
   },
@@ -1997,6 +2009,12 @@
   "yenilikler": {
     "message": "Що нового"
   },
+  "ozellikler": {
+    "message": "Можливості"
+  },
+  "goster": {
+    "message": "Показати"
+  },
   "degerlendir": {
     "message": "Оцінити"
   },
@@ -2034,7 +2052,7 @@
     "message": "Імпортована"
   },
   "klasorYedekBaslik": {
-    "message": "Хмарна папка (експериментально)"
+    "message": "Папка для копій"
   },
   "klasorYedekAciklama": {
     "message": "Копії записуються у вибрану папку. Виберіть хмарну папку (OneDrive, Google Drive, Dropbox), щоб відновити їх на іншому комп'ютері."

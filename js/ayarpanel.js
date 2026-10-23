@@ -337,6 +337,7 @@ function gorunumuUygula(ayar) {
     document.body.classList.toggle('araclarKapali', kapali);
     document.body.classList.toggle('renkliSimgeler', ayar.renkliSimgeler !== false);
     document.body.classList.toggle('camGorunum', ayar.camGorunum !== false);
+    document.body.classList.toggle('seritUstte', ayar.seritUstte === true);
     moduSinifla(ayar);
     hazirSecimiGoster(ayar.yakalamaEn, ayar.yakalamaBoy);
 
@@ -445,6 +446,9 @@ function gorunumuUygula(ayar) {
 
     for (const b of document.querySelectorAll('#ayGrupGosterim .segBtn')) {
         b.classList.toggle('secili', b.dataset.deger === mod);
+    }
+    for (const b of document.querySelectorAll('#ayMenuKonumu .segBtn')) {
+        b.classList.toggle('secili', b.dataset.deger === (ayar.seritUstte === true ? 'kose' : 'normal'));
     }
 
     // Metin rengi ve baslik boyutu - kok degiskenler uzerinden
@@ -1234,6 +1238,12 @@ function grupGosterimSegmenti() {
     for (const b of document.querySelectorAll('#ayGrupGosterim .segBtn')) {
         b.addEventListener('click', async () => {
             gorunumuUygula(await ayarYaz({ grupGosterim: b.dataset.deger }));
+        });
+    }
+    // MENU KONUMU (1.5.9): Normal | Kosede - ayar adi seritUstte (true = kose)
+    for (const b of document.querySelectorAll('#ayMenuKonumu .segBtn')) {
+        b.addEventListener('click', async () => {
+            gorunumuUygula(await ayarYaz({ seritUstte: b.dataset.deger === 'kose' }));
         });
     }
 }

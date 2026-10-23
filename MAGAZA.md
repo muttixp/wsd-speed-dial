@@ -1011,6 +1011,10 @@ Ekran görüntüsü için öneri sırası:
 4. Arama sonuçları
 5. Yinelenen kartlar ya da çöp kutusu
 
+### 1.5.9 ile yapılacaklar (mağaza paneli)
+
+- Yalnızca paket; açıklamalar değişmedi. Yeni izin yok.
+
 ### 1.5.8 ile yapılacaklar (mağaza paneli)
 
 - Uzun açıklama (EN/TR/RU): "FVD'den görselleriyle" cümlesi ve

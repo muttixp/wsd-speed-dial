@@ -38,19 +38,19 @@ export const SABLONLAR = {
     koyu: [
         { id: 'gece', r: koyu({ zeminRengi: '#14161a', metinRengi: '#e8eaed', kartZeminRengi: '#22262e',
             kartCerceveRengi: '#6a6a6a', kartCerceveHoverRengi: '#576a80', grupIkonRengi: '#9db4cc',
-            grupAktifRengi: '#576a80', baslikGolgeRengi: '#4d4c4c',
+            grupAktifRengi: '#6f8fb8', baslikGolgeRengi: '#4d4c4c',
             duvarVarsayilan: 'radial-gradient(ellipse 60% 55% at 16% 18%, rgba(70,140,230,.38), transparent 70%), radial-gradient(ellipse 55% 60% at 88% 84%, rgba(120,80,220,.30), transparent 70%), radial-gradient(ellipse 38% 34% at 82% 10%, rgba(40,170,190,.20), transparent 70%), repeating-linear-gradient(135deg, rgba(255,255,255,.025) 0 1px, transparent 1px 14px), linear-gradient(135deg, #1a3a6e, #0d1730)' }) },
         { id: 'grafit', r: koyu({ zeminRengi: '#111214', metinRengi: '#e6e6e6', kartZeminRengi: '#1d1e21',
             kartCerceveRengi: '#3a3b3f', kartCerceveHoverRengi: '#8a8d93', grupIkonRengi: '#b8bcc4',
-            grupZeminOpaklik: 7, grupAktifRengi: '#4a4d55', baslikGolgeRengi: '#000000',
+            grupZeminOpaklik: 7, grupAktifRengi: '#6e737e', baslikGolgeRengi: '#000000',
             duvarVarsayilan: 'radial-gradient(ellipse 60% 55% at 16% 18%, rgba(255,255,255,.09), transparent 70%), radial-gradient(ellipse 55% 60% at 88% 84%, rgba(130,140,160,.14), transparent 70%), radial-gradient(ellipse 38% 34% at 82% 10%, rgba(255,255,255,.05), transparent 70%), repeating-linear-gradient(135deg, rgba(255,255,255,.025) 0 1px, transparent 1px 14px), linear-gradient(135deg, #2b2d33, #121316)' }) },
         { id: 'okyanus', r: koyu({ zeminRengi: '#0d1b26', metinRengi: '#e3f1fb', kartZeminRengi: '#12283a',
             kartCerceveRengi: '#24455f', kartCerceveHoverRengi: '#3fa7d6', grupIkonRengi: '#8fd0f2',
-            grupZeminOpaklik: 8, grupAktifRengi: '#1f6f9f', baslikGolgeRengi: '#06121b',
+            grupZeminOpaklik: 8, grupAktifRengi: '#2b8fca', baslikGolgeRengi: '#06121b',
             duvarVarsayilan: 'radial-gradient(ellipse 60% 55% at 16% 18%, rgba(63,167,214,.45), transparent 70%), radial-gradient(ellipse 55% 60% at 88% 84%, rgba(20,140,170,.35), transparent 70%), radial-gradient(ellipse 38% 34% at 82% 10%, rgba(140,220,240,.22), transparent 70%), repeating-linear-gradient(135deg, rgba(255,255,255,.03) 0 1px, transparent 1px 14px), linear-gradient(135deg, #0f4c75, #0b2233)' }) },
         { id: 'orman', r: koyu({ zeminRengi: '#0f1a14', metinRengi: '#e4f1e8', kartZeminRengi: '#17271e',
             kartCerceveRengi: '#2d4a38', kartCerceveHoverRengi: '#5fb37c', grupIkonRengi: '#9fd3b0',
-            grupZeminOpaklik: 7, grupAktifRengi: '#2f7a4d', baslikGolgeRengi: '#07110b',
+            grupZeminOpaklik: 7, grupAktifRengi: '#3b9a62', baslikGolgeRengi: '#07110b',
             duvarVarsayilan: 'radial-gradient(ellipse 60% 55% at 16% 18%, rgba(95,179,124,.42), transparent 70%), radial-gradient(ellipse 55% 60% at 88% 84%, rgba(40,110,80,.40), transparent 70%), radial-gradient(ellipse 38% 34% at 82% 10%, rgba(210,225,130,.18), transparent 70%), repeating-linear-gradient(135deg, rgba(255,255,255,.03) 0 1px, transparent 1px 14px), linear-gradient(135deg, #2f6b4a, #0e2418)' }) },
         { id: 'mor', r: koyu({ zeminRengi: '#16121f', metinRengi: '#ece6f7', kartZeminRengi: '#221b31',
             kartCerceveRengi: '#3d3157', kartCerceveHoverRengi: '#9a7cf0', grupIkonRengi: '#c3b2f2',
@@ -58,7 +58,7 @@ export const SABLONLAR = {
             duvarVarsayilan: 'radial-gradient(ellipse 60% 55% at 16% 18%, rgba(154,124,240,.48), transparent 70%), radial-gradient(ellipse 55% 60% at 88% 84%, rgba(240,100,180,.26), transparent 70%), radial-gradient(ellipse 38% 34% at 82% 10%, rgba(110,170,255,.22), transparent 70%), repeating-linear-gradient(135deg, rgba(255,255,255,.03) 0 1px, transparent 1px 14px), linear-gradient(135deg, #5b3fa8, #1d1433)' }) },
         { id: 'gunbatimi', r: koyu({ zeminRengi: '#1a1214', metinRengi: '#f6e9e4', kartZeminRengi: '#2a1c1f',
             kartCerceveRengi: '#4b3036', kartCerceveHoverRengi: '#f08a5d', grupIkonRengi: '#f5b9a0',
-            grupZeminOpaklik: 7, grupAktifRengi: '#c0563a', baslikGolgeRengi: '#0f0809',
+            grupZeminOpaklik: 7, grupAktifRengi: '#e06a45', baslikGolgeRengi: '#0f0809',
             duvarVarsayilan: 'radial-gradient(ellipse 60% 55% at 16% 18%, rgba(255,175,95,.48), transparent 70%), radial-gradient(ellipse 55% 60% at 88% 84%, rgba(200,60,120,.36), transparent 70%), radial-gradient(ellipse 38% 34% at 82% 10%, rgba(255,220,150,.25), transparent 70%), repeating-linear-gradient(135deg, rgba(255,255,255,.03) 0 1px, transparent 1px 14px), linear-gradient(135deg, #c0563a, #3a1a2a)' }) },
         // Grafit'in tersi: siyah zemin, aktif grup BEYAZ, yazisi siyah
         { id: 'kontrast', r: koyu({ zeminRengi: '#000000', metinRengi: '#ffffff', kartZeminRengi: '#0e0e0e',
@@ -131,11 +131,13 @@ function duvarGoc(r) {
 /* OKUNURLUK (1.5.6): acik sablonlarda aktif grup rengi beyaz yaziyla
    4.5:1'in altindaydi; biraz koyulasti. Sablonu degistirmemis kullanici
    "degistirildi" rozeti gormesin diye eski -> yeni. */
-const ESKI_AKTIF = { kagit: '#4d7ea8', kum: '#b8864b', buz: '#2f8fcf', nane: '#2f9d6a', pastel: '#8b6cd6' };
+const ESKI_AKTIF = { kagit: '#4d7ea8', kum: '#b8864b', buz: '#2f8fcf', nane: '#2f9d6a', pastel: '#8b6cd6',
+    // 1.5.9: koyu temalarda aktif grup zeminle karisiyordu - daha parlak tonlar
+    gece: '#576a80', grafit: '#4a4d55', okyanus: '#1f6f9f', orman: '#2f7a4d', gunbatimi: '#c0563a' };
 function aktifGoc(r, temaId) {
     const eski = ESKI_AKTIF[temaId];
     if (!r || !eski || String(r.grupAktifRengi).toLowerCase() !== eski) return null;
-    return SABLONLAR.acik.find(x => x.id === temaId)?.r.grupAktifRengi || null;
+    return [...SABLONLAR.koyu, ...SABLONLAR.acik].find(x => x.id === temaId)?.r.grupAktifRengi || null;
 }
 async function eskiDuvarlariTasi() {
     const a = await ayarlariAl();

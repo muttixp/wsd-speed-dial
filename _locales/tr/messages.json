@@ -881,6 +881,18 @@
   "sekmeBoyutu": {
     "message": "Menü Boyutu"
   },
+  "menuKonumu": {
+    "message": "Menü Konumu"
+  },
+  "konumNormal": {
+    "message": "Normal"
+  },
+  "konumKosede": {
+    "message": "Köşede"
+  },
+  "menuKonumuIpucu": {
+    "message": "Köşede: grup menüsü sayfanın sol üst köşesine oturur"
+  },
   "yakalamaKipi": {
     "message": "Yakalama Kipi"
   },
@@ -1997,6 +2009,12 @@
   "yenilikler": {
     "message": "Yenilikler"
   },
+  "ozellikler": {
+    "message": "Özellikler"
+  },
+  "goster": {
+    "message": "Göster"
+  },
   "degerlendir": {
     "message": "Değerlendir"
   },
@@ -2034,7 +2052,7 @@
     "message": "İçe aktarılan"
   },
   "klasorYedekBaslik": {
-    "message": "Bulut Klasörü (deneysel)"
+    "message": "Yedek Klasörü"
   },
   "klasorYedekAciklama": {
     "message": "Yedekler seçtiğiniz klasöre yazılır. Bulut klasörü (OneDrive, Google Drive, Dropbox) seçerseniz başka bilgisayardan geri yükleyebilirsiniz."

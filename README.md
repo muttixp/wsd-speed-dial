@@ -177,9 +177,9 @@ blok başlığındaki kutu o bloğun tamamını seçer.
 JSON dosyasına iner. Dosya **Yedek adı**nı taşır: `wsd-<ad>-2026-10-20-1457.json`
 (ad boşsa tarayıcı adı ve kısa bir cihaz eki).
 
-### Bulut klasörü (deneysel)
+### Yedek klasörü
 
-**Yedekleme ve Aktarma → Bulut Klasörü**'nden bir klasör seçin — yerel bir
+**Yedekleme ve Aktarma → Yedek Klasörü**'nden bir klasör seçin — yerel bir
 klasör ya da OneDrive / Google Drive / Dropbox klasörü. WSD yedeği
 `<klasör>/<yedek adı>/` altına kendisi yazar (günde 1, haftada 1 ya da yalnızca
 elle); bulut programı dosyayı yükler. Başka bilgisayarda aynı klasörü seçip
@@ -257,7 +257,7 @@ bölümleri açar. Her bölüm açılır alt bölümlerden oluşur:
 | Ana Sayfa | Davranış · Arama Çubuğu · Anasayfa Kurulumu |
 | Kartlar | Davranış · Boyut ve Yerleşim · Başlık · Renk ve Çerçeve |
 | Görüntü Yakalama | Yakalama · Gelişmiş · Görüntü |
-| Yedekleme ve Aktarma | Yedek · Bulut Klasörü · İçe Aktar |
+| Yedekleme ve Aktarma | Yedek · Yedek Klasörü · İçe Aktar |
 | Sistem | Uzantı Simgesi · Sağ Tık Menüsü · Kısayollar · Bakım · Sıfırlama |
 | Hakkında | sürüm, Yenilikler, değerlendir, öneri / hata bildir |
 

@@ -881,6 +881,18 @@
   "sekmeBoyutu": {
     "message": "Menu Size"
   },
+  "menuKonumu": {
+    "message": "Menu Position"
+  },
+  "konumNormal": {
+    "message": "Normal"
+  },
+  "konumKosede": {
+    "message": "Corner"
+  },
+  "menuKonumuIpucu": {
+    "message": "Corner: the group menu sits in the top-left corner of the page"
+  },
   "yakalamaKipi": {
     "message": "Capture Mode"
   },
@@ -1997,6 +2009,12 @@
   "yenilikler": {
     "message": "What's new"
   },
+  "ozellikler": {
+    "message": "Features"
+  },
+  "goster": {
+    "message": "Show"
+  },
   "degerlendir": {
     "message": "Rate"
   },
@@ -2034,7 +2052,7 @@
     "message": "Imported"
   },
   "klasorYedekBaslik": {
-    "message": "Cloud Folder (experimental)"
+    "message": "Backup Folder"
   },
   "klasorYedekAciklama": {
     "message": "Backups are written to the folder you choose. Pick a cloud folder (OneDrive, Google Drive, Dropbox) to restore on another computer."

@@ -755,7 +755,8 @@ body.pencereAcik { overflow: hidden; }
     width: 17px;
     height: 17px;
     flex-shrink: 0;
-    color: var(--menu-ikon-rengi, #6cc04a);
+    /* Temanin ana rengi (1.5.9) - metin icin ayarlanmis tonu, her modda okunur */
+    color: var(--menu-ikon-rengi, var(--vurgu-metin, var(--vurgu-parlak, #6cc04a)));
 }
 .menuIkonlu li.yikici svg { color: #e2706c; }
 
@@ -959,8 +960,11 @@ body.ayarAcik #yanArac { opacity: 0; pointer-events: none; }
     background: #fff;
     transition: transform var(--gecis);
 }
-/* Sabit renk: aktif grup rengi beyaz secilince anahtar okunmuyordu */
-.anahtar:checked { background: #4d7ea8; }
+/* Temanin ana rengi (1.5.9). Eskiden sabit maviydi: beyaz vurguda dugme
+   okunmuyordu - artik topuz vurgunun ustundeki yazi renginde (beyaz
+   vurguda koyu topuz). */
+.anahtar:checked { background: var(--vurgu, #4d7ea8); }
+.anahtar:checked::after { background: var(--vurgu-yazi, #fff); }
 .anahtar:checked::after { transform: translateX(17px); }
 
 /* --- Renk kutusu --- */
@@ -1084,7 +1088,8 @@ body.ayarAcik #yanArac { opacity: 0; pointer-events: none; }
     transition: background var(--gecis), color var(--gecis);
 }
 .segBtn:hover  { background: rgba(var(--on), .07); color: var(--metin); }
-.segBtn.secili { background: rgba(var(--on), .14); color: var(--metin); }
+/* Secili secenek temanin ana renginde (1.5.9) - acma/kapama anahtariyla ayni */
+.segBtn.secili { background: var(--vurgu, rgba(var(--on), .14)); color: var(--vurgu-yazi, var(--metin)); }
 
 #ayFiltreKutu[hidden], #ayTonKutu[hidden], #ayIkiKutu[hidden] { display: none; }
 
@@ -1361,7 +1366,7 @@ select option:hover {
 }
 .yonetTut:active { cursor: grabbing; }
 
-.yonetIkon { display: inline-flex; width: 20px; justify-content: center; flex-shrink: 0; }
+.yonetIkon { display: inline-flex; width: 20px; justify-content: center; flex-shrink: 0; color: var(--grup-ikon-rengi, #9db4cc); }
 .yonetIkon svg { width: 15px; height: 15px; }
 
 .yonetAd {
@@ -3878,3 +3883,46 @@ body.kartOdakta .klasorKart:not(.aramaBulunan) { opacity: .22; filter: grayscale
     box-shadow: 0 0 0 9px var(--vurgu), 0 18px 48px rgba(0, 0, 0, .55);
     animation: aramaBulunan 900ms ease-in-out 3;
 }
+
+/* USTE YASLA (1.5.9): grup menusu sayfanin sol ust kosesinde - bosluk yok.
+   Buzlu modda seridin ust kenari ve ust koseleri sayfa kenarina oturur. */
+body.seritUstte #ustSerit { padding-top: 2px; padding-left: 2px; }
+body.camGorunum.seritUstte #ustSerit { padding: 0; }
+body.seritUstte:not(.camGorunum) #kartAlani { padding-top: 44px; }
+/* Sol ust koseye oturur: ust ve sol kenar cizgisi yok, yalnizca sag alt
+   kose yuvarlak */
+body.camGorunum.seritUstte #ustSerit {
+    top: 0;
+    left: 0;
+    max-width: calc(100vw - var(--yan-gorunur, 0px));
+    border-top-width: 0;
+    border-left-width: 0;
+    border-radius: 0 0 calc(var(--grup-kose) + 1px) 0;
+}
+body.camGorunum.seritUstte #kartAlani { padding-top: 56px; }
+
+/* Grubu Duzenle: secili ikon secilen renkte (1.5.9) */
+#gpIkonlar .ikonKutu.secili { color: var(--gp-ikon-renk, inherit); }
+
+/* KOYU TEMADA AKTIF GRUP (1.5.9): aktif sekme ayni tondaki duvar kagidiyla
+   karisiyordu (Gece, Okyanus, Orman...). Ince acik halka + golge ayirir. */
+html:not(.acikMod) .grupSekme.aktif {
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .30), 0 2px 10px rgba(0, 0, 0, .35);
+}
+
+/* ============ Ozellikler penceresi (1.5.9, deneysel) ============ */
+.ozellikGrup + .ozellikGrup { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--cerceve); }
+.ozellikGrup h3 { margin: 0 0 6px; font-size: 13px; color: var(--vurgu-metin, var(--metin)); }
+.ozellikGrup ul { margin: 0; padding: 0; list-style: none; }
+.ozellikGrup li { display: flex; align-items: center; gap: 10px; padding: 4px 0; font-size: 13px; line-height: 1.4; color: var(--metin); }
+.ozellikGrup li span { flex: 1; }
+.ozellikGrup li span::before { content: '•'; margin-right: 7px; color: var(--metin-sonuk); }
+.ozGoster {
+    flex: none; border: 1px solid var(--cerceve); background: transparent; color: var(--vurgu-metin, var(--metin));
+    border-radius: var(--k1); padding: 2px 9px; font: inherit; font-size: 11.5px; cursor: pointer;
+}
+.ozGoster:hover { background: var(--vurgu); color: var(--vurgu-yazi, #fff); border-color: transparent; }
+/* "Goster" ile acilan ayar kisa sure vurgulanir */
+@keyframes ozellikVurgu { 0%, 60% { box-shadow: inset 0 0 0 2px var(--vurgu-metin, var(--vurgu)); } 100% { box-shadow: inset 0 0 0 2px transparent; } }
+.ozellikVurgu { animation: ozellikVurgu 2.4s ease; border-radius: var(--k1); }
+

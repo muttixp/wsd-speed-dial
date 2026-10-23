@@ -881,6 +881,18 @@
   "sekmeBoyutu": {
     "message": "标签大小"
   },
+  "menuKonumu": {
+    "message": "菜单位置"
+  },
+  "konumNormal": {
+    "message": "常规"
+  },
+  "konumKosede": {
+    "message": "贴角"
+  },
+  "menuKonumuIpucu": {
+    "message": "贴角：分组菜单位于页面左上角"
+  },
   "yakalamaKipi": {
     "message": "截图模式"
   },
@@ -1997,6 +2009,12 @@
   "yenilikler": {
     "message": "新功能"
   },
+  "ozellikler": {
+    "message": "功能"
+  },
+  "goster": {
+    "message": "显示"
+  },
   "degerlendir": {
     "message": "评分"
   },
@@ -2034,7 +2052,7 @@
     "message": "已导入"
   },
   "klasorYedekBaslik": {
-    "message": "云文件夹（实验性）"
+    "message": "备份文件夹"
   },
   "klasorYedekAciklama": {
     "message": "备份写入你选择的文件夹。选择云盘文件夹（OneDrive、Google Drive、Dropbox）即可在另一台电脑上恢复。"

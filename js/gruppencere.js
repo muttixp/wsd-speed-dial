@@ -63,9 +63,11 @@ export function grupPenceresiniKur() {
         // Bos deger = genel ayari kullan
         el('gpIkonRengi').dataset.bos = '1';
         el('gpIkonRengi').value = '#9db4cc';
+        renkOnizle();
     });
     el('gpIkonRengi')?.addEventListener('input', () => {
         delete el('gpIkonRengi').dataset.bos;
+        renkOnizle();
     });
 
     // KLASOR ARKA PLANI VE KAPAK RESMI (1.5.1)
@@ -255,10 +257,17 @@ function kapakGoster() {
     el('gpKapakKaldir').hidden = !secilenKapak;
 }
 
+/** Secili ikon, secilen ikon renginde (1.5.9) - kaydetmeden onizleme */
+function renkOnizle() {
+    const r = el('gpIkonRengi');
+    el('gpIkonlar')?.style.setProperty('--gp-ikon-renk', r && !r.dataset.bos ? r.value : '');
+}
+
 function secimiGoster() {
     for (const b of el('gpIkonlar').children) {
         b.classList.toggle('secili', b.dataset.ikon === secilenIkon);
     }
+    renkOnizle();
 
     // Ozel alanlarin onizlemesi
     const emojiBtn = el('gpEmojiSec');

@@ -881,6 +881,18 @@
   "sekmeBoyutu": {
     "message": "Tamanho dos separadores"
   },
+  "menuKonumu": {
+    "message": "Posição do menu"
+  },
+  "konumNormal": {
+    "message": "Normal"
+  },
+  "konumKosede": {
+    "message": "No canto"
+  },
+  "menuKonumuIpucu": {
+    "message": "No canto: a barra de grupos fica no canto superior esquerdo da página"
+  },
   "yakalamaKipi": {
     "message": "Modo de captura"
   },
@@ -1997,6 +2009,12 @@
   "yenilikler": {
     "message": "Novidades"
   },
+  "ozellikler": {
+    "message": "Funcionalidades"
+  },
+  "goster": {
+    "message": "Mostrar"
+  },
   "degerlendir": {
     "message": "Avaliar"
   },
@@ -2034,7 +2052,7 @@
     "message": "Importado"
   },
   "klasorYedekBaslik": {
-    "message": "Pasta na nuvem (experimental)"
+    "message": "Pasta de cópias"
   },
   "klasorYedekAciklama": {
     "message": "As cópias são gravadas na pasta escolhida. Escolha uma pasta na nuvem (OneDrive, Google Drive, Dropbox) para restaurar noutro computador."

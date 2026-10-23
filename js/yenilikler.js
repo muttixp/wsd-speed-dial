@@ -8,6 +8,16 @@
 
 export const YENILIKLER = [
     {
+        surum: '1.5.9',
+        yeni: {
+            tr: ["Özellikler penceresi: neler yapabildiğini tek listede görün, \"Göster\" ile ayara gidin (Ayarlar › Hakkında)", "Menü Konumu: grup menüsü sol üst köşede, boşluksuz (Ayarlar › Görünüm › Grup Menüsü)", "Menü simgeleri ve açma/kapama anahtarları artık temanın renginde", "Koyu temalarda aktif grup daha belirgin", "Bulut Klasörü artık Yedek Klasörü: yerel klasör ya da bulut klasörü, ikisi de olur"],
+            en: ["Features window: see everything WSD can do in one list, \"Show\" takes you to the setting (Settings › About)", "Menu Position: the group menu can sit in the top-left corner with no gap (Settings › Appearance › Group Menu)", "Menu icons and toggles now follow the theme colour", "The active group stands out more in dark themes", "Cloud Folder is now Backup Folder: a local folder or a cloud folder, both work"],
+            ru: ["Окно «Возможности»: всё, что умеет WSD, в одном списке; «Показать» открывает настройку (Настройки › О расширении)", "Положение меню: панель групп может стоять в левом верхнем углу без отступов (Настройки › Внешний вид › Панель групп)", "Значки меню и переключатели теперь в цвете темы", "Активная группа заметнее в тёмных темах", "«Облачная папка» теперь «Папка для копий»: подходит и локальная, и облачная папка"],
+            pt_BR: ["Janela Recursos: tudo o que o WSD faz numa lista; \"Mostrar\" leva à configuração (Configurações › Sobre)", "Posição do menu: a barra de grupos pode ficar no canto superior esquerdo, sem espaço (Configurações › Aparência › Barra de grupos)", "Os ícones dos menus e os interruptores agora seguem a cor do tema", "O grupo ativo se destaca mais nos temas escuros", "Pasta na nuvem agora é Pasta de backup: pode ser uma pasta local ou na nuvem"],
+            es: ["Ventana Funciones: todo lo que hace WSD en una lista; \"Mostrar\" lleva al ajuste (Ajustes › Acerca de)", "Posición del menú: la barra de grupos puede ir en la esquina superior izquierda, sin margen (Ajustes › Apariencia › Barra de grupos)", "Los iconos de los menús y los interruptores siguen ahora el color del tema", "El grupo activo destaca más en los temas oscuros", "Carpeta en la nube ahora es Carpeta de copias: sirve una carpeta local o en la nube"],
+        },
+    },
+    {
         surum: '1.5.8',
         yeni: {
             tr: ["Açılış Grubu: yeni sekmede hangi grubun açılacağını seçin (Ayarlar › Ana Sayfa)", "FVD'den görselleriyle geçiş rehberi (Ayarlar › Yedekleme ve Aktarma › İçe Aktar)", "İçe aktarmada yedeğin türü önceden gösterilir; desteklenmeyen dosya tek tıkla bildirilir"],
@@ -28,35 +38,35 @@ export const YENILIKLER = [
         surum: '1.5.7',
         yeni: {
             tr: [
-                "Bulut Klasörü (deneysel): yedekleri yerel ya da OneDrive / Google Drive / Dropbox klasörüne yazın, başka bilgisayarda aynı klasörden geri yükleyin",
+                "Yedek Klasörü: yedekleri yerel ya da OneDrive / Google Drive / Dropbox klasörüne yazın, başka bilgisayarda aynı klasörden geri yükleyin",
                 "Her tarayıcı kendi adıyla ayrı alt klasöre yazar; aynı ad iki bilgisayarda ortak yedek setidir",
                 "Daha sade ayarlar: 7 ana bölüm, açılır alt bölümler ve en üstte \"Ayar ara\" kutusu",
                 "Aramadan gruba gidince aranan kart öne çıkar, diğerleri soluklaşır",
                 "Portekizce (Brezilya) ve İspanyolca arayüz tamamlandı",
             ],
             en: [
-                "Cloud Folder (experimental): write backups to a local, OneDrive, Google Drive or Dropbox folder and restore them on another computer",
+                "Backup Folder: write backups to a local, OneDrive, Google Drive or Dropbox folder and restore them on another computer",
                 "Each browser writes to its own named subfolder; the same name on two computers shares one backup set",
                 "Simpler settings: 7 main sections, collapsible subsections and a \"Search settings\" box at the top",
                 "Jumping from search to a group now spotlights the tile you were looking for",
                 "Portuguese (Brazil) and Spanish interface completed",
             ],
             ru: [
-                "Облачная папка (экспериментально): сохраняйте копии в локальную папку или папку OneDrive, Google Диска, Яндекс Диска, Dropbox и восстанавливайте на другом компьютере",
+                "Папка для копий: сохраняйте копии в локальную папку или папку OneDrive, Google Диска, Яндекс Диска, Dropbox и восстанавливайте на другом компьютере",
                 "Каждый браузер пишет в свою подпапку; одинаковое имя на двух компьютерах — общий набор копий",
                 "Настройки проще: 7 разделов, раскрывающиеся подразделы и поле «Поиск настроек» вверху",
                 "При переходе из поиска в группу найденная плитка выделяется, остальные затемняются",
                 "Интерфейс на португальском (Бразилия) и испанском завершён",
             ],
             pt_BR: [
-                "Pasta na nuvem (experimental): salve backups numa pasta local, do OneDrive, Google Drive ou Dropbox e restaure em outro computador",
+                "Pasta de backup: salve backups numa pasta local, do OneDrive, Google Drive ou Dropbox e restaure em outro computador",
                 "Cada navegador grava na sua própria subpasta; o mesmo nome em dois computadores compartilha um conjunto de backups",
                 "Configurações mais simples: 7 seções, subseções recolhíveis e uma caixa \"Pesquisar configurações\" no topo",
                 "Ao ir da pesquisa para um grupo, o bloco procurado fica em destaque",
                 "Interface em português (Brasil) e espanhol completa",
             ],
             es: [
-                "Carpeta en la nube (experimental): guarda copias en una carpeta local, de OneDrive, Google Drive o Dropbox y restáuralas en otro equipo",
+                "Carpeta de copias: guarda copias en una carpeta local, de OneDrive, Google Drive o Dropbox y restáuralas en otro equipo",
                 "Cada navegador escribe en su propia subcarpeta; el mismo nombre en dos equipos comparte un conjunto de copias",
                 "Ajustes más simples: 7 secciones, subsecciones plegables y un cuadro \"Buscar ajustes\" arriba",
                 "Al ir de la búsqueda a un grupo, el mosaico buscado se resalta",

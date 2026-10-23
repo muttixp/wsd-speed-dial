@@ -154,6 +154,7 @@ export function hakkindaKur() {
     el('ayGizlilik')?.addEventListener('click', () => ac(DEPO + '/blob/main/PRIVACY.md'));
     el('yenilikTumu')?.addEventListener('click', () => ac(DEPO + '/blob/main/CHANGELOG.md'));
     el('yenilikKapat')?.addEventListener('click', kapat);
+    import('./ozellikler.js').then(m => m.ozelliklerKur()).catch(() => {});
     document.addEventListener('keydown', e => {
         if (e.key === 'Escape' && el('yenilikPencere') && !el('yenilikPencere').hidden) kapat();
     });

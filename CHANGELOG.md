@@ -3,6 +3,32 @@
 Sürüm numaraları [Semantic Versioning](https://semver.org/lang/tr/)
 kurallarına uyar.
 
+## [1.5.9] — 2026-10-23
+
+### Yeni
+- **Özellikler penceresi** (deneysel; Ayarlar › Hakkında › Özellikler): tüm
+  özellikler gruplar halinde, tek satırla; ayarı olan maddede "Göster" o
+  ayarı açıp vurgular. TR / EN / RU (diğer diller İngilizce).
+- **Menü Konumu: Normal | Köşede** (Görünüm › Grup Menüsü): Köşede'de grup
+  menüsü sayfanın sol üst köşesine oturur, üstte ve solda boşluk yok. Buzlu
+  modda yalnızca sağ alt köşe yuvarlak. Varsayılan Normal.
+- **Bulut Klasörü → Yedek Klasörü**, artık deneysel değil: yerel klasör
+  (otomatik yerel yedek) ya da OneDrive / Google Drive / Dropbox klasörü
+  (bulut yedeği) için aynı özellik; adı ikisini de kapsıyor, simgesi klasör.
+- **Menü simgeleri temanın renginde**: sağ tık menülerindeki simgeler sabit
+  yeşil yerine temanın ana rengini alır (açık modda okunur tonu). Silme gibi
+  yıkıcı işlemler kırmızı kalır.
+- **Açma/kapama anahtarları temanın renginde** (eskiden sabit mavi). Beyaz ya
+  da açık vurgulu temada topuz koyu, her temada okunur.
+- Çok seçenekli düğmelerde (Gösterim, Mod, Menü Konumu…) seçili olan da
+  temanın renginde.
+- Grupları Yönet listesinde grup simgeleri kendi renginde (gruba özel renk ya
+  da genel ikon rengi); Grubu Düzenle'de seçili simge seçilen renkte önizlenir.
+- **Koyu temalarda aktif grup belirgin**: aktif sekmeye ince açık halka ve
+  gölge; Gece, Grafit, Okyanus, Orman ve Gün Batımı'nın aktif rengi daha
+  parlak. Şablon rengini değiştirmemiş kullanıcılarda kendiliğinden güncellenir,
+  elle seçilmiş renk korunur.
+
 ## [1.5.8] — 2026-10-22
 
 ### Yeni

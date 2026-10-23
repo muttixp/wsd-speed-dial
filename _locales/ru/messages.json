@@ -881,6 +881,18 @@
   "sekmeBoyutu": {
     "message": "Размер панели групп"
   },
+  "menuKonumu": {
+    "message": "Положение меню"
+  },
+  "konumNormal": {
+    "message": "Обычно"
+  },
+  "konumKosede": {
+    "message": "В углу"
+  },
+  "menuKonumuIpucu": {
+    "message": "В углу: панель групп в левом верхнем углу страницы"
+  },
   "yakalamaKipi": {
     "message": "Режим снимка"
   },
@@ -1997,6 +2009,12 @@
   "yenilikler": {
     "message": "Что нового"
   },
+  "ozellikler": {
+    "message": "Возможности"
+  },
+  "goster": {
+    "message": "Показать"
+  },
   "degerlendir": {
     "message": "Оценить"
   },
@@ -2034,7 +2052,7 @@
     "message": "Импортированная"
   },
   "klasorYedekBaslik": {
-    "message": "Облачная папка (экспериментально)"
+    "message": "Папка для копий"
   },
   "klasorYedekAciklama": {
     "message": "Копии записываются в выбранную папку. Выберите облачную папку (OneDrive, Google Диск, Яндекс Диск, Dropbox), чтобы восстановить их на другом компьютере."

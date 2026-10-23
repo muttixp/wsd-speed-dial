@@ -81,7 +81,7 @@ export const VARSAYILAN = {
     grupIkonRengi: '#9db4cc',
     grupZeminRengi: '#ffffff',
     grupZeminOpaklik: 6,        // % - pasif sekme zemini
-    grupAktifRengi: '#576a80',
+    grupAktifRengi: '#6f8fb8',          // 1.5.9: Gece temasiyla ayni (eskisi #576a80 soluktu)
     grupAktifOpaklik: 100,      // % - aktif sekme zemini
     grupYaziRengi: '',          // bos = genel metin rengi (soluk); 1.5.2
     grupAktifYaziRengi: '',     // bos = genel metin rengi; acik renkli aktif sekmede okunmasi icin
@@ -89,6 +89,7 @@ export const VARSAYILAN = {
     grupKose: 9,                // grup sekmesi kose yaricapi
     grupBoyut: 100,             // sekme olcegi (%) - yazi, ikon ve dolgu birlikte
     grubuHatirla: true,         // (eski) acilista son bakilan grup mu, Ana Sayfa mi
+    seritUstte: false,          // 1.5.9: grup menusu sayfanin tam ustunde
     acilisGrubu: '',            // 1.5.8: '' = grubuHatirla'ya gore | 'son' | 'ilk' | grup kimligi
 
     // Uzanti simgesi - dort kare, capraz iki renk

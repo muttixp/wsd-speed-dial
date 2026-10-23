@@ -18,7 +18,7 @@
 import { gruplariAl, kartSayilariAl, kartGuncelleBaslik, grupSil,
          sirayiUygula, kokKlasoruAl } from './yerimi.js';
 import { c } from './dil.js';
-import { ikonlariAl } from './grupikon.js';
+import { ikonlariAl, gorunumleriAl } from './grupikon.js';
 import { ikonHTML } from './ikon.js';
 import { onaySor } from './onay.js';
 
@@ -115,18 +115,19 @@ export async function yonetPenceresiniAc(tamamlandi) {
     const gruplar = (await gruplariAl()).filter(g => g.id !== kok);  // kok tasinamaz
     const sayilar = await kartSayilariAl(gruplar.map(g => g.id));
     const ikonlar = await ikonlariAl();
+    const gorunumler = await gorunumleriAl().catch(() => ({}));
     const { ayarlariAl } = await import('./ayar.js');
     acilisId = acilisIlk = (await ayarlariAl()).acilisGrubu || '';
 
     for (const g of gruplar) {
-        liste.appendChild(satirOlustur(g, sayilar[g.id] || 0, ikonlar[g.id]));
+        liste.appendChild(satirOlustur(g, sayilar[g.id] || 0, ikonlar[g.id], gorunumler[g.id]?.renk));
     }
 
     el('yonetPencere').hidden = false;
     document.getElementById('perde').classList.add('acik');
 }
 
-function satirOlustur(g, adet, ikonDeger) {
+function satirOlustur(g, adet, ikonDeger, ikonRengi = null) {
     const li = document.createElement('li');
     li.className = 'yonetSatir';
     li.draggable = true;
@@ -140,6 +141,8 @@ function satirOlustur(g, adet, ikonDeger) {
     const ikon = document.createElement('span');
     ikon.className = 'yonetIkon';
     ikon.innerHTML = ikonHTML(ikonDeger || 'folder');
+    // Grup seridindeki rengin aynisi (1.5.9): gruba ozel renk, yoksa genel
+    if (ikonRengi) ikon.style.color = ikonRengi;
 
     const adAlan = document.createElement('input');
     adAlan.className = 'yonetAd';
