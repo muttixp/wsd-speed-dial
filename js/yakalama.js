@@ -947,9 +947,25 @@ export function elleYakala(url) {
                 target: { tabId: sekme.id },
                 func: elleCubukEnjekte,
                 args: cubukMetni
-            }).catch(() => { /* sayfa henuz hazir degil */ });
+            }).then(() => true).catch(() => false);   // sayfa henuz hazir degil
 
-            await cubuguBas();
+            // ERISILEMEYEN SAYFA (1.6.0): bazi siteler eklentilere kapali
+            // (magaza sayfalari, tarayicinin kendi sayfalari, Edge'de bazi
+            // Microsoft siteleri). Cubuk basilamayinca kullanici 5 dakika bos
+            // sayfada bekliyordu; birkac denemeden sonra sekme kapatilip
+            // haber veriliyor.
+            let basildi = await cubuguBas();
+            for (const ara of [800, 1500]) {
+                if (basildi || !sekme) break;
+                await bekle(ara);
+                basildi = await cubuguBas();
+            }
+            if (!basildi) {
+                if (sekme) { try { await chrome.tabs.remove(sekme.id); } catch (e) { /* kapanmis */ } }
+                if (wsdSekme) { try { await chrome.tabs.update(wsdSekme.id, { active: true }); } catch (e) { /* */ } }
+                coz({ kapali: true });
+                return;
+            }
 
             const mesajKarari = await new Promise(kararCoz => {
                 let bitti = false;
@@ -2136,9 +2152,22 @@ async function gizliYakala(url, ayar) {
             mobile: false
         }), 10000, 'setDeviceMetricsOverride');
 
+        // GORUNUR SAYDIRMA (1.6.0): arka plan sekmesi gizli sayiliyor ve
+        // tarayici onu hic cizmiyor; animasyonlar, kaydiricilar, sonradan
+        // yuklenen icerik ancak sekmeye tiklayinca calisiyordu. Odak
+        // benzetimi sekmeyi one getirmeden GORUNUR yapiyor (gercek tarayicida
+        // olculdu: gizli/0 kare -> gorunur/60 kare). Olmazsa eskisi gibi devam.
+        let gorunur = false;
+        try {
+            await zamanAsimli(chrome.debugger.sendCommand(hedef, 'Emulation.setFocusEmulationEnabled', { enabled: true }),
+                5000, 'setFocusEmulationEnabled');
+            gorunur = true;
+        } catch (e) { console.log('[WSD] gorunur saydirma olmadi:', e.message); }
+
         // YENIDEN YERLESIM BEKLEMESI (1.5.3): olcu degisince site kendini
         // yeni genislige gore yeniden diziyor; duzenin oturmasi icin kisa bekleme.
-        await bekle(300);
+        // Gorunur olunca acilis animasyonlari yeni basliyor: biraz daha uzun.
+        await bekle(gorunur ? 1500 : 300);
 
         const bicim = ayar.gorselBicimi === 'png' ? 'png' : 'jpeg';
         const secenek = {

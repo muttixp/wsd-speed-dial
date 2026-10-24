@@ -121,6 +121,11 @@ closed when you save. When it's worth keeping, turn it into a regular
 group with thumbnails; when you're done, delete it. Workspaces are
 stored as bookmarks and are included in backups.
 
+Search across your workspaces, pin the ones you use most, sync a
+workspace with the current window in one click, or add the page you
+are on from the right-click menu. When a workspace opens, only the
+first tab loads; the others load when you click them.
+
 WHAT IT DOES
 
 Tiles
@@ -258,6 +263,11 @@ etiket, not ve renk ekleyin, sürükleyip sıralayın. Kaydederken
 sekmeler kapanmaz. Kalıcı olacaksa görselli bir gruba dönüştürün,
 iş bittiyse silin. Çalışma alanları yer imi olarak saklanır ve
 yedeğe dahildir.
+
+Çalışma alanlarında arayın, sık kullandıklarınızı üste sabitleyin,
+bir çalışma alanını tek tıkla bu pencereyle eşitleyin ya da
+bulunduğunuz sayfayı sağ tık menüsünden ekleyin. Çalışma alanı
+açılınca yalnızca ilk sekme yüklenir; diğerleri tıklayınca yüklenir.
 
 NELER YAPAR
 
@@ -398,6 +408,11 @@ FVD Speed Dial? Короткая инструкция перенесёт и из
 сохранить надолго — превратите в обычную группу со скриншотами; если
 работа закончена — удалите. Рабочие области хранятся как закладки и
 входят в резервные копии.
+
+Ищите по рабочим областям, закрепляйте нужные сверху,
+синхронизируйте область с текущим окном одним щелчком или добавляйте
+открытую страницу через контекстное меню. При открытии области
+загружается только первая вкладка, остальные — по щелчку.
 
 ВОЗМОЖНОСТИ
 
@@ -545,6 +560,11 @@ reordene arrastando. As abas não são fechadas ao salvar. Quando valer
 a pena guardar, transforme-o em um grupo comum com miniaturas; quando
 terminar, exclua-o. Os espaços de trabalho são guardados como
 favoritos e entram nos backups.
+
+Pesquise nos espaços de trabalho, fixe no topo os que você mais usa,
+sincronize um espaço com a janela atual em um clique ou adicione a
+página atual pelo menu do botão direito. Ao abrir um espaço, só a
+primeira aba carrega; as outras carregam quando você clica nelas.
 
 O QUE ELE FAZ
 
@@ -696,6 +716,11 @@ no se cierran al guardar. Cuando valga la pena conservarlo,
 conviértelo en un grupo normal con miniaturas; cuando termines,
 elimínalo. Los espacios de trabajo se guardan como marcadores y se
 incluyen en las copias.
+
+Busca en tus espacios de trabajo, fija arriba los que más usas,
+sincroniza un espacio con la ventana actual en un clic o añade la
+página en la que estás desde el menú contextual. Al abrir un espacio
+solo se carga la primera pestaña; las demás, cuando haces clic.
 
 QUÉ HACE
 
@@ -851,6 +876,11 @@ OneDrive чи Google Drive, — і WSD сам записуватиме туди 
 мініатюрами; коли закінчите — видаліть. Робочі простори зберігаються
 як закладки й потрапляють у резервні копії.
 
+Шукайте в робочих просторах, закріплюйте потрібні вгорі,
+синхронізуйте простір із поточним вікном одним клацанням або
+додавайте відкриту сторінку через контекстне меню. Під час відкриття
+простору завантажується лише перша вкладка, решта — після клацання.
+
 ЩО ВІН ВМІЄ
 
 Плитки
@@ -959,7 +989,7 @@ bookmarks, each shown as a tile with a screenshot.
 | `storage` | Stores tile thumbnails, notes, color labels, visit counts and user settings locally. |
 | `unlimitedStorage` | Thumbnails for a large collection can exceed the default 5 MB quota. A user with a thousand tiles uses roughly 40 MB. |
 | `tabs` | Opens tiles in a new tab when the user chooses that, reads the current tab's address when adding it from the context menu, and lists the open tabs of the current window when the user saves them as a workspace or a group. |
-| `contextMenus` | Adds the "Add to WSD Speed Dial" item so pages can be added while browsing, and a "Save tabs to a workspace" item on the toolbar icon. |
+| `contextMenus` | Adds the "Add to WSD Speed Dial" item (with an "Add to workspace" submenu) so pages can be added while browsing, and a "Save tabs to a workspace" item on the toolbar icon. |
 | `alarms` | Keeps the screenshot queue running. In Manifest V3 the service worker is terminated while idle; an alarm wakes it so a long capture batch finishes. |
 | `scripting` | Scrolls the page being captured past fixed headers and cookie banners, and reads candidate images from the page. |
 | `search` | Lets the home-page search box send a query to the browser's own default search engine when the user picks "Browser default". The extension does not read, store or log queries; the permission shows no warning at install. |
@@ -1010,6 +1040,15 @@ Ekran görüntüsü için öneri sırası:
 3. Kart düzenleme penceresi
 4. Arama sonuçları
 5. Yinelenen kartlar ya da çöp kutusu
+
+### 1.6.0 ile yapılacaklar (mağaza paneli)
+
+- Paket yüklenecek. Yeni izin yok.
+- Uzun açıklama: çalışma alanları bölümüne bir paragraf eklendi (arama,
+  sabitleme, pencereyle eşitleme, sağ tık ile ekleme, hafif açma) — EN,
+  TR, RU, PT-BR, ES, UK metinlerini yeniden yapıştır.
+- Gizlilik sekmesi, `contextMenus` gerekçesi: "Add to workspace" eklendi
+  (aşağıdaki tablo) — istenirse güncelle.
 
 ### 1.5.9 ile yapılacaklar (mağaza paneli)
 

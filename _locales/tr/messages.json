@@ -2164,5 +2164,44 @@
   },
   "acilisIlk": {
     "message": "İlk grup"
+  },
+  "alanAra": {
+    "message": "Ara"
+  },
+  "alanAraBos": {
+    "message": "Eşleşen kayıt yok"
+  },
+  "pencereyleEsitle": {
+    "message": "Bu pencereyle eşitle"
+  },
+  "esitle": {
+    "message": "Eşitle"
+  },
+  "esitleMetin": {
+    "message": "\"$1\" bu penceredeki sekmelerle aynı olacak: $2 sekme eklenecek, $3 sekme çıkarılacak."
+  },
+  "alanZatenGuncel": {
+    "message": "Kayıt bu pencereyle zaten aynı"
+  },
+  "sabitle": {
+    "message": "Üste sabitle"
+  },
+  "sabitlemeyiKaldir": {
+    "message": "Sabitlemeyi kaldır"
+  },
+  "alanSonAcilis": {
+    "message": "son açılış $1"
+  },
+  "mAlanaEkle": {
+    "message": "Çalışma alanına ekle"
+  },
+  "alanaEklendi": {
+    "message": "\"$1\" çalışma alanına eklendi"
+  },
+  "alandaZatenVar": {
+    "message": "Bu sayfa \"$1\" içinde zaten var"
+  },
+  "sahneKapali": {
+    "message": "Bu sayfa eklentilere kapalı (tarayıcı izin vermiyor). Görsel için \"Görüntü Dosyası\" ya da \"Görüntü URL'si\" kullanın."
   }
 }

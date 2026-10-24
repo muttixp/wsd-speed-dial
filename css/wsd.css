@@ -3596,7 +3596,8 @@ html.acikMod :is(.tehlikeBolum .bolumBaslik, .tehlikeBolum .bolumSimge) { color:
    cam acik duvar renklerinde (Gece mavisi) seridi zeminle bir yapiyordu */
 html:not(.acikMod) body.camGorunum #ustSerit {
     background: rgba(var(--yuzey-rgb), .32);
-    border-color: rgba(255, 255, 255, .10);
+    /* Kenar cizgisi 1.6.0'da kalkti: boydan boya ince beyaz cizgi siritiyordu */
+    border-color: transparent;
 }
 
 /* ============ Hakkinda + Yenilikler (1.5.6) ============ */
@@ -3905,9 +3906,10 @@ body.camGorunum.seritUstte #kartAlani { padding-top: 56px; }
 #gpIkonlar .ikonKutu.secili { color: var(--gp-ikon-renk, inherit); }
 
 /* KOYU TEMADA AKTIF GRUP (1.5.9): aktif sekme ayni tondaki duvar kagidiyla
-   karisiyordu (Gece, Okyanus, Orman...). Ince acik halka + golge ayirir. */
+   karisiyordu (Gece, Okyanus, Orman...). Ayirt eden: parlatilmis tema rengi
+   + golge. Ince beyaz halka 1.6.0'da kaldirildi - siritiyordu. */
 html:not(.acikMod) .grupSekme.aktif {
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .30), 0 2px 10px rgba(0, 0, 0, .35);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, .35);
 }
 
 /* ============ Ozellikler penceresi (1.5.9, deneysel) ============ */
@@ -3926,3 +3928,20 @@ html:not(.acikMod) .grupSekme.aktif {
 @keyframes ozellikVurgu { 0%, 60% { box-shadow: inset 0 0 0 2px var(--vurgu-metin, var(--vurgu)); } 100% { box-shadow: inset 0 0 0 2px transparent; } }
 .ozellikVurgu { animation: ozellikVurgu 2.4s ease; border-radius: var(--k1); }
 
+/* Calisma alanlari: arama, sabitleme, eslesme (1.6.0) */
+.alanAra {
+    width: 170px; height: 26px; padding: 0 10px; border-radius: var(--k1);
+    border: 1px solid var(--cerceve); background: rgba(var(--on), .05);
+    color: var(--metin); font: inherit; font-weight: 400; font-size: 12.5px; outline: none;
+}
+.alanAra:focus { border-color: var(--vurgu); background: rgba(var(--on), .08); }
+.alanAraBos { grid-column: 1 / -1; margin: 24px 0; text-align: center; color: var(--metin-sonuk); }
+.alanAraBos[hidden], .alanKart[hidden] { display: none; }
+.alanUst { position: relative; }
+.alanUst h3 { padding-right: 28px; }
+.alanSabitle { position: absolute; top: 10px; right: 10px; opacity: 0; transition: opacity var(--gecis); }
+.alanKart:hover .alanSabitle, .alanSabitle:focus-visible, .alanSabitle.secili { opacity: 1; }
+.alanSabitle.secili { color: var(--vurgu-metin, var(--vurgu)); }
+.alanSabitle.secili svg { fill: currentColor; }
+.alanKart.araGenis .alanSekmeler li.fazla { display: flex; }
+.alanSekmeler li.eslesme a span { color: var(--vurgu-metin, var(--vurgu)); font-weight: 600; }

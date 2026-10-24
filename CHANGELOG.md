@@ -3,6 +3,45 @@
 Sürüm numaraları [Semantic Versioning](https://semver.org/lang/tr/)
 kurallarına uyar.
 
+## [1.6.0] — 2026-10-24
+
+### Yeni (Çalışma Alanları)
+- **Arama**: şeritte arama kutusu; kayıt adı, etiket, not, sekme başlığı ve
+  adresinde arar. `/` ya da Ctrl+F kutuya gider, Esc temizler. Eşleşen sekme
+  kartın gizli kısmındaysa kart açılır.
+- **Pencereyle eşitle**: kartta tek tık; kayıt bu penceredeki sekmelerle aynı
+  olur (sıra dahil). Çıkacak sekme varsa önce sorar. Pencere bloklara
+  ayrılıyorsa (Vivaldi çalışma alanları) Düzenle açılır.
+- **Hafif açma**: kayıt açılınca ilk sekme dışındakiler adres gelir gelmez
+  uyutulur, tıklayınca yüklenir.
+- **Üste sabitle**: kartın sağ üstündeki raptiye; sabitlenenler listenin
+  başında. Yedeğe girer.
+- **Son açılış**: kartta kayıt tarihi yerine son açılış zamanı.
+- **Sağ tık › Çalışma alanına ekle**: sayfa ya da bağlantı bir kayda eklenir;
+  aynı adres o kayıtta varsa eklenmez.
+
+### Yeni (Görünüm)
+- **Tema eşleri**: açık/koyu mod değişince seçili hazır temanın diğer moddaki
+  karşılığı gelir (Orman ↔ Nane, Okyanus ↔ Buz, Mor ↔ Pastel, Yakut ↔ Gül,
+  Kehribar ↔ Güneş, Gün Batımı ↔ Kum, Kontrast ↔ Mürekkep, Gece/Grafit →
+  Kağıt). O temanın renkleri daha önce değiştirildiyse değişiklik korunur.
+  Kendi kaydettiğiniz temalarda eskisi gibi o modda en son seçilen gelir.
+
+### Düzeltme
+- **Koyu temada aktif grup**: ince beyaz halka kaldırıldı (sırıtıyordu);
+  ayırt etmeyi parlatılmış tema rengi ve gölge yapıyor.
+- **Koyu temada grup menüsü (buzlu cam)**: seridin boydan boya ince beyaz
+  kenar çizgisi kaldırıldı.
+- **Gizli yakalamada yarım kalan animasyon**: arka plan sekmesi çizilmediği
+  için açılış animasyonları (belirme, kayarak gelme) her çekimde bir adım
+  ilerliyor, görüntü yarıda kalıyordu; sekmeye tıklayınca düzeliyordu.
+  Yakalama sırasında sekme görünür sayılıyor (odak taklidi); sekme öne
+  gelmiyor, etkin sekme değişmiyor.
+- **Sahne Yakala, eklentilere kapalı sayfada**: çubuk çıkmıyor, kullanıcı boş
+  sayfada bekliyordu (mağaza sayfaları, tarayıcı sayfaları, Edge'de bazı
+  Microsoft siteleri). Şimdi sekme kapanıyor ve "Görüntü Dosyası / Görüntü
+  URL'si kullanın" uyarısı çıkıyor.
+
 ## [1.5.9] — 2026-10-23
 
 ### Yeni

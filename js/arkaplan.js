@@ -11,7 +11,7 @@
 
 // WSD Speed Dial - servis iscisi
 
-import { kokKlasoruAl, gruplariAl, gorunurGruplariAl, urlNormalle, klasorZinciri } from './yerimi.js';
+import { kokKlasoruAl, gruplariAl, gorunurGruplariAl, urlNormalle, klasorZinciri, ALAN_KOK_ADI } from './yerimi.js';
 import { c } from './dil.js';
 import { yakalamayaEkle, kuyrugaDevamEt, kuyrugaTemizle, sonBasliklar } from './yakalama.js';
 import { simgeyiUygula } from './simge.js';
@@ -196,13 +196,24 @@ async function menuyuKur() {
         } catch (e) { agac = new Map(); }
         const altKlasorler = d => (d?.children || []).filter(x => !x.url);
 
+        // CALISMA ALANLARI (1.6.0): kayit varsa menunun altinda
+        // "Calisma alanina ekle ›" (yalnizca sayfa ve baglanti)
+        const alanlar = await calismaAlanlariAl();
+
         // Tek grup ve alt klasoru yoksa alt menu gereksiz - tek tiklamada eklensin
-        if (gruplar.length <= 1 && !gruplar.some(g => !g.kokMu && altKlasorler(agac.get(g.id)).length)) {
+        const tekGrup = gruplar.length <= 1 && !gruplar.some(g => !g.kokMu && altKlasorler(agac.get(g.id)).length);
+        if (tekGrup && !alanlar.length) {
             await menuOgesi({ id: 'wsdEkle', title: baslik, contexts: BAGLAMLAR });
             return;
         }
 
         await menuOgesi({ id: 'wsdKok', title: baslik, contexts: BAGLAMLAR });
+        await (async () => {
+        if (tekGrup) {
+            await menuOgesi({ id: 'wsdEkle', parentId: 'wsdKok', contexts: BAGLAMLAR,
+                              title: gruplar[0]?.baslik || chrome.i18n.getMessage('anaSayfa') || 'Ana Sayfa' });
+            return;
+        }
 
         // UC KIP (1.5.2, Ayarlar > Kartlar > Davranis):
         //  'pencere': gruplar dogrudan tiklanir + en altta "Klasor sec..."
@@ -242,12 +253,62 @@ async function menuyuKur() {
         for (const g of gruplar) {
             await menuOgesi({ id: 'wsdGrup:' + g.id, parentId: 'wsdKok', title: g.baslik, contexts: BAGLAMLAR });
         }
+        })();
+
+        if (alanlar.length) {
+            const BAG = ['page', 'link'];
+            await menuOgesi({ id: 'wsdAlanAyrac', parentId: 'wsdKok', type: 'separator', contexts: BAG });
+            await menuOgesi({ id: 'wsdAlanDal', parentId: 'wsdKok', contexts: BAG,
+                              title: chrome.i18n.getMessage('mAlanaEkle') || 'Çalışma alanına ekle' });
+            for (const a of alanlar) {
+                await menuOgesi({ id: 'wsdAlan:' + a.id, parentId: 'wsdAlanDal', title: a.ad, contexts: BAG });
+            }
+        }
     } catch (e) {
         console.log('[WSD] menu kurulamadi:', e);
     }
 }
 
 chrome.runtime.onInstalled.addListener(menuyuTazele);
+
+/** Calisma alani kayitlari: WSD kokunun yanindaki klasorun alt klasorleri. */
+async function calismaAlanlariAl() {
+    try {
+        const kok = await kokKlasoruAl();
+        const [wsd] = await chrome.bookmarks.get(kok);
+        const kardes = (await chrome.bookmarks.getChildren(wsd.parentId))
+            .find(d => !d.url && d.title === ALAN_KOK_ADI);
+        if (!kardes) return [];
+        return (await chrome.bookmarks.getChildren(kardes.id))
+            .filter(d => !d.url).map(d => ({ id: d.id, ad: d.title || '\u2014' }));
+    } catch (e) { return []; }
+}
+
+/** Sag tikla calisma alanina ekler; ayni adres o kayitta varsa eklemez. */
+async function alanaEkle(alanId, bilgi, sekme) {
+    const url = bilgi.linkUrl || bilgi.pageUrl || sekme?.url;
+    if (!url || !/^(https?|file):/i.test(url)) return;
+    const baslik = bilgi.linkUrl ? (bilgi.selectionText || bilgi.linkUrl) : (sekme?.title || url);
+    try {
+        const [alan] = await chrome.bookmarks.get(alanId);
+        const icerik = await chrome.bookmarks.getChildren(alanId);
+        if (icerik.some(d => d.url === url)) {
+            sayfadaBildir(sekme, c('alandaZatenVar', alan.title), false);
+            return;
+        }
+        await chrome.bookmarks.create({ parentId: alanId, title: baslik, url });
+        // Site simgesi (calisma alani kartlarinda gorunur)
+        const f = !bilgi.linkUrl ? (sekme?.favIconUrl || '') : '';
+        if (/^https?:/i.test(f)) {
+            const { alanIkonlari = {} } = await chrome.storage.local.get('alanIkonlari');
+            alanIkonlari[url] = f;
+            await chrome.storage.local.set({ alanIkonlari });
+        }
+        sayfadaBildir(sekme, c('alanaEklendi', alan.title), true);
+    } catch (e) {
+        console.log('[WSD] calisma alanina eklenemedi:', e);
+    }
+}
 
 // ILK KURULUMDA YAKALAMA KIPI (1.5.5): gizli kip Edge/Vivaldi'de sessiz,
 // pencere acmiyor - varsayilan o. Chrome'da ustte "hata ayiklama" cubugu
@@ -452,6 +513,10 @@ chrome.contextMenus.onClicked.addListener(async (bilgi, sekme) => {
         const ozellik = { url: chrome.runtime.getURL(SAYFA) + '#sekmeleriKaydet', active: true };
         if (sekme && sekme.id >= 0) { ozellik.windowId = sekme.windowId; ozellik.index = sekme.index + 1; }
         await chrome.tabs.create(ozellik).catch(() => chrome.tabs.create({ url: ozellik.url }));
+        return;
+    }
+    if (id.startsWith('wsdAlan:')) {
+        await alanaEkle(id.slice('wsdAlan:'.length), bilgi, sekme);
         return;
     }
     let hedef = null;

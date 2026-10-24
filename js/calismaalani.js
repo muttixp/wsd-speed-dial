@@ -78,9 +78,15 @@ async function bilgileriAl() {
 
 async function bilgiYaz(id, bilgi) {
     const hepsi = await bilgileriAl();
-    if (bilgi && ((bilgi.etiketler && bilgi.etiketler.length) || bilgi.not || bilgi.renk)) hepsi[id] = bilgi;
+    if (bilgi && ((bilgi.etiketler && bilgi.etiketler.length) || bilgi.not || bilgi.renk || bilgi.sabit || bilgi.son)) hepsi[id] = bilgi;
     else delete hepsi[id];
     try { await chrome.storage.local.set({ [BILGI_ANAHTARI]: hepsi }); } catch (e) { /* onemli degil */ }
+}
+
+/** Bilginin yalnizca verilen alanlarini degistirir (sabit, son acilis...). */
+async function bilgiGuncelle(id, parca) {
+    const hepsi = await bilgileriAl();
+    await bilgiYaz(id, { ...(hepsi[id] || {}), ...parca });
 }
 
 /* ---------- Sekme secimi ---------- */
@@ -247,8 +253,10 @@ async function alaniAc(alan, yeniPencere = false) {
         evet: c('alanAc')
     })) return;
     const adresler = alan.sekmeler.map(s => s.url);
+    bilgiGuncelle(alan.id, { son: Date.now() }).then(ciz);
     if (yeniPencere) {
-        await chrome.windows.create({ url: adresler, focused: true });
+        const p = await chrome.windows.create({ url: adresler, focused: true });
+        (p.tabs || []).slice(1).forEach(t => hafifYap(t.id));
         return;
     }
     let ben = null;
@@ -256,8 +264,38 @@ async function alaniAc(alan, yeniPencere = false) {
     for (const [i, url] of adresler.entries()) {
         const ozellik = { url, active: i === 0 };
         if (ben) { ozellik.windowId = ben.windowId; ozellik.index = ben.index + 1 + i; }
-        await chrome.tabs.create(ozellik);
+        const t = await chrome.tabs.create(ozellik);
+        if (i > 0) hafifYap(t.id);
     }
+}
+
+/**
+ * HAFIF ACMA (1.6.0): ilk sekme disindakiler adres islenir islenmez
+ * uyutuluyor (discard); tiklaninca yuklenir. Cok sekmeli kayit acilinca
+ * hepsi birden yuklenip bilgisayari yormasin. Adres islenmeden uyutmak
+ * sekmeyi bos birakabildigi icin once adresin gelmesi bekleniyor; 15 sn
+ * icinde gelmezse ya da kullanici sekmeye gecerse sekme normal yuklenir.
+ */
+function hafifYap(sekmeId) {
+    let bitti = false;
+    const bitir = (uyut, neden) => {
+        if (bitti) return;
+        bitti = true;
+        chrome.tabs.onUpdated.removeListener(dinle);
+        clearTimeout(zaman);
+        if (!uyut) return;
+        chrome.tabs.discard(sekmeId).catch(e => console.log('[WSD] hafif acma:', sekmeId, neden, e.message));
+    };
+    const islendi = t => !!t && /^(https?|file):/i.test(t.url || '');
+    const dinle = (id, d, t) => {
+        if (id !== sekmeId) return;
+        if (t.active) return bitir(false);               // kullanici tikladi
+        if (islendi(t)) bitir(true, d.status || 'adres');
+    };
+    const zaman = setTimeout(() => bitir(false), 15000);
+    chrome.tabs.onUpdated.addListener(dinle);
+    chrome.tabs.get(sekmeId).then(t => { if (islendi(t)) bitir(true, 'hemen'); })
+        .catch(() => bitir(false));
 }
 
 /**
@@ -296,7 +334,7 @@ async function alaniDuzenle(alan) {
         ek: { etiketler: alan.etiketler, not: alan.not, renk: alan.renk }
     });
     if (!sonuc) return;
-    if (sonuc.ek) await bilgiYaz(alan.id, sonuc.ek);
+    if (sonuc.ek) await bilgiGuncelle(alan.id, sonuc.ek);
 
     const secili = new Set(sonuc.secili);
     tazelemeyiBastir(5000);
@@ -315,6 +353,48 @@ async function alaniDuzenle(alan) {
     if (eklenecek.length) await sekmeleriYaz(alan.id, eklenecek);
     if (sonuc.ad && sonuc.ad !== alan.ad) await chrome.bookmarks.update(alan.id, { title: sonuc.ad });
     if (cikan || eklenecek.length) bildir(c('alanDuzenlendi', eklenecek.length, cikan));
+    await ciz();
+}
+
+/**
+ * PENCEREYLE ESITLE (1.6.0): kaydi bu penceredeki sekmelerle ayni yapar,
+ * sirasi da pencereninki olur. Cikacak sekme varsa once sorar.
+ * Pencere bloklara ayriliyorsa Duzenle acilir (bkz. penceredekiSekmeler).
+ */
+async function alaniEsitle(alan) {
+    const tumu = await penceredekiSekmeler();
+    if (!tumu.length) { bildir(c('kaydedilecekSekmeYok')); return; }
+    // Pencere birden fazla bloga ayriliyorsa (Vivaldi calisma alanlari ya
+    // da araya acilmis yeni sekme) hangi sekmelerin kastedildigini tahmin
+    // etmiyoruz: secimi Duzenle penceresi yaptiriyor
+    if (tumu.some(s => !s.bolumde)) return alaniDuzenle(alan);
+    const pencere = tumu;
+    const yeni = new Set(pencere.map(s => s.url));
+    const eski = new Set(alan.sekmeler.map(s => s.url));
+    const cikacak = alan.sekmeler.filter(s => !yeni.has(s.url));
+    const eklenecek = pencere.filter(s => !eski.has(s.url));
+    const ayniSira = !cikacak.length && !eklenecek.length
+        && pencere.every((s, i) => alan.sekmeler[i]?.url === s.url);
+    if (ayniSira) { bildir(c('alanZatenGuncel')); return; }
+    if (cikacak.length && !await onaySor({
+        baslik: c('pencereyleEsitle'),
+        metin: c('esitleMetin', alan.ad, eklenecek.length, cikacak.length),
+        evet: c('esitle')
+    })) return;
+    tazelemeyiBastir(5000);
+    for (const s of cikacak) {
+        try { await chrome.bookmarks.remove(s.id); } catch (e) { /* zaten yok */ }
+    }
+    if (eklenecek.length) await sekmeleriYaz(alan.id, eklenecek);
+    // Sira: pencerenin sirasi (ayni adreste ilk yer imi)
+    const [klasor] = await chrome.bookmarks.getSubTree(alan.id);
+    const yerimleri = new Map();
+    for (const d of klasor.children || []) if (d.url && !yerimleri.has(d.url)) yerimleri.set(d.url, d.id);
+    for (const [i, s] of pencere.entries()) {
+        const id = yerimleri.get(s.url);
+        if (id) await chrome.bookmarks.move(id, { parentId: alan.id, index: i }).catch(() => {});
+    }
+    bildir(c('alanDuzenlendi', eklenecek.length, cikacak.length));
     await ciz();
 }
 
@@ -369,6 +449,7 @@ export function calismaAlanlariniKur() {
     });
     el('alanKaydet')?.addEventListener('click', yeniAlan);
     el('alanKapat')?.addEventListener('click', kapat);
+    el('alanAra')?.addEventListener('input', araUygula);
     // Arac cubugu simgesinin menusunden gelindiyse kaydetmeyi hemen ac
     if (location.hash === '#sekmeleriKaydet') {
         history.replaceState(null, '', location.pathname);
@@ -376,7 +457,12 @@ export function calismaAlanlariniKur() {
     }
     document.addEventListener('keydown', e => {
         if (e.key === 'Escape' && document.body.classList.contains('alanAcik')
-            && el('onayPencere')?.hidden !== false) kapat();
+            && el('onayPencere')?.hidden !== false) {
+            // Aramada yazi varsa once onu temizle
+            const ara = el('alanAra');
+            if (ara && ara.value) { ara.value = ''; araUygula(); ara.blur(); return; }
+            kapat();
+        }
     });
 }
 
@@ -389,6 +475,7 @@ async function ac() {
 }
 
 function kapat() {
+    if (el('alanAra')) el('alanAra').value = '';
     document.body.classList.remove('alanAcik');
     grubuAc(aktifGrup());
 }
@@ -413,7 +500,11 @@ async function ciz() {
         a.etiketler = bilgiler[a.id]?.etiketler || [];
         a.not = bilgiler[a.id]?.not || '';
         a.renk = bilgiler[a.id]?.renk || null;
+        a.sabit = !!bilgiler[a.id]?.sabit;
+        a.son = bilgiler[a.id]?.son || 0;
     }
+    // Sabitlenenler ustte; kendi aralarinda yer imi sirasi
+    alanlar.sort((x, y) => (y.sabit ? 1 : 0) - (x.sabit ? 1 : 0));
     el('alanSayi').textContent = alanlar.length ? String(alanlar.length) : '';
 
     const liste = document.createElement('div');
@@ -457,6 +548,37 @@ async function ciz() {
         if (seciliEtiket && !alan.etiketler.includes(seciliEtiket)) continue;
         liste.appendChild(alanKarti(alan, ikonlar));
     }
+    const bos = document.createElement('p');
+    bos.className = 'alanAraBos';
+    bos.textContent = c('alanAraBos');
+    bos.hidden = true;
+    liste.appendChild(bos);
+    araUygula();
+}
+
+/**
+ * ARAMA (1.6.0): kayit adi, etiket, not, sekme basligi ve adresinde.
+ * Yeniden cizmeden kartlari gizler; eslesen sekme kartin gizli
+ * kismindaysa kart genisler.
+ */
+function araUygula() {
+    const terim = (el('alanAra')?.value || '').trim().toLocaleLowerCase();
+    const kartlar = [...document.querySelectorAll('.alanListe .alanKart')];
+    let gorunen = 0;
+    for (const k of kartlar) {
+        let tutan = !terim || (k.dataset.ara || '').includes(terim);
+        let gizlideVar = false;
+        for (const li of k.querySelectorAll('.alanSekmeler li[data-ara]')) {
+            const es = !!terim && li.dataset.ara.includes(terim);
+            li.classList.toggle('eslesme', es);
+            if (es) { tutan = true; if (li.classList.contains('fazla')) gizlideVar = true; }
+        }
+        k.classList.toggle('araGenis', gizlideVar);
+        k.hidden = !tutan;
+        if (tutan) gorunen++;
+    }
+    const bos = document.querySelector('.alanListe .alanAraBos');
+    if (bos) bos.hidden = !terim || gorunen > 0;
 }
 
 /* Simgeler - 24'luk kutu, cizgi */
@@ -464,6 +586,8 @@ const SVG = {
     alan:   '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><path d="M7 6.5h.01M10 6.5h.01"/>',
     ac:     '<path d="M5 12h14"/><path d="m13 6 6 6-6 6"/>',
     pencere:'<rect x="3" y="5" width="14" height="14" rx="2"/><path d="M10 3h9a2 2 0 0 1 2 2v9"/>',
+    esitle: '<path d="M21 12a9 9 0 0 1-15.5 6.2L3 16"/><path d="M3 21v-5h5"/><path d="M3 12a9 9 0 0 1 15.5-6.2L21 8"/><path d="M21 3v5h-5"/>',
+    sabit:  '<path d="M12 17v5"/><path d="M9 10.8V4h6v6.8l3 3.2v1H6v-1z"/>',
     grup:   '<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="m10 13 2 2 4-4"/>',
     kalem:  '<path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/>',
     sil:    '<path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M19 6l-1 14H6L5 6"/>',
@@ -501,6 +625,8 @@ function alanKarti(alan, ikonlar) {
     const kart = document.createElement('section');
     kart.className = 'alanKart';
     kart.dataset.id = alan.id;
+    kart.dataset.ara = [alan.ad, alan.not, ...alan.etiketler].join(' ').toLocaleLowerCase();
+    kart.classList.toggle('sabit', alan.sabit);
     // Renk secilmemisse GRI: baslik bandi her kartta ayirt edilsin
     kart.classList.add('renkli');
     if (!alan.renk) kart.classList.add('varsayilanRenk');
@@ -515,11 +641,16 @@ function alanKarti(alan, ikonlar) {
     ad.title = c('duzenle');
     ad.addEventListener('dblclick', () => alaniDuzenle(alan));
     const bilgi = document.createElement('small');
-    const tarih = alan.tarih
-        ? new Date(alan.tarih).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' })
-        : '';
+    const zaman = t => new Date(t).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' });
+    // Son acilis varsa o (1.6.0), yoksa kayit tarihi
+    const tarih = alan.son ? c('alanSonAcilis', zaman(alan.son)) : alan.tarih ? zaman(alan.tarih) : '';
     bilgi.textContent = c('nSekme', alan.sekmeler.length) + (tarih ? ' · ' + tarih : '');
-    ust.append(ad, bilgi);
+    // SABITLE (1.6.0): sabitlenen kayit listenin basinda durur
+    const sabitle = ikonDugme(SVG.sabit, alan.sabit ? c('sabitlemeyiKaldir') : c('sabitle'), async () => {
+        await bilgiGuncelle(alan.id, { sabit: !alan.sabit });
+        await ciz();
+    }, 'alanSabitle' + (alan.sabit ? ' secili' : ''));
+    ust.append(ad, bilgi, sabitle);
 
     if (alan.etiketler.length) {
         const cipler = document.createElement('div');
@@ -549,6 +680,7 @@ function alanKarti(alan, ikonlar) {
     alan.sekmeler.forEach((s, i) => {
         const li = document.createElement('li');
         if (i >= ILK_GOSTERILEN) li.className = 'fazla';
+        li.dataset.ara = (s.baslik + ' ' + s.url).toLocaleLowerCase();
         const a = document.createElement('a');
         a.href = s.url;
         a.title = s.url;
@@ -596,6 +728,7 @@ function alanKarti(alan, ikonlar) {
         ac,
         ikonDugme(SVG.pencere, c('yeniPencerede'), () => alaniAc(alan, true)),
         bosluk,
+        ikonDugme(SVG.esitle, c('pencereyleEsitle'), () => alaniEsitle(alan)),
         ikonDugme(SVG.kalem, c('duzenle'), () => alaniDuzenle(alan)),
         ikonDugme(SVG.grup, c('grubaDonustur'), () => grubaDonustur(alan)),
         ikonDugme(SVG.sil, c('sil'), () => alaniSil(alan), 'yikici')
@@ -678,6 +811,7 @@ export async function alanlariDisaVer() {
         if (b?.etiketler?.length) o.etiketler = b.etiketler;
         if (b?.not) o.not = b.not;
         if (b?.renk) o.renk = b.renk;
+        if (b?.sabit) o.sabit = true;
         return o;
     });
 }
@@ -724,6 +858,7 @@ export async function alanlariIceAl(liste, temizle) {
         if (Array.isArray(a.etiketler) && a.etiketler.length) b.etiketler = a.etiketler.map(String);
         if (a.not) b.not = String(a.not);
         if (a.renk) b.renk = String(a.renk);
+        if (a.sabit) b.sabit = true;
         if (Object.keys(b).length) bilgiler[k.id] = b;
         sayi++;
     }

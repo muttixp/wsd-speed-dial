@@ -2164,5 +2164,44 @@
   },
   "acilisIlk": {
     "message": "Первая группа"
+  },
+  "alanAra": {
+    "message": "Поиск"
+  },
+  "alanAraBos": {
+    "message": "Ничего не найдено"
+  },
+  "pencereyleEsitle": {
+    "message": "Синхронизировать с этим окном"
+  },
+  "esitle": {
+    "message": "Синхронизировать"
+  },
+  "esitleMetin": {
+    "message": "«$1» станет как вкладки этого окна: добавится $2, удалится $3."
+  },
+  "alanZatenGuncel": {
+    "message": "Уже совпадает с этим окном"
+  },
+  "sabitle": {
+    "message": "Закрепить сверху"
+  },
+  "sabitlemeyiKaldir": {
+    "message": "Открепить"
+  },
+  "alanSonAcilis": {
+    "message": "открыто $1"
+  },
+  "mAlanaEkle": {
+    "message": "Добавить в рабочую область"
+  },
+  "alanaEklendi": {
+    "message": "Добавлено в «$1»"
+  },
+  "alandaZatenVar": {
+    "message": "Эта страница уже есть в «$1»"
+  },
+  "sahneKapali": {
+    "message": "Эта страница закрыта для расширений (браузер не разрешает). Используйте «Файл изображения» или «URL изображения»."
   }
 }

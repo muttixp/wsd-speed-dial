@@ -8,6 +8,23 @@
 
 export const YENILIKLER = [
     {
+        surum: '1.6.0',
+        yeni: {
+            tr: ["Çalışma alanlarında arama: ad, etiket, not ve sekmelerde (/ tuşu)", "Pencereyle eşitle: kaydı bu penceredeki sekmelerle tek tıkla güncelleyin", "Hafif açma: kayıt açılınca sekmeler tıklayınca yüklenir, bilgisayar yorulmaz", "Kayıtları üste sabitleyin; kartta son açılış zamanı", "Sağ tık › Çalışma alanına ekle: sayfayı doğrudan bir kayda ekleyin", "Açık/koyu mod değişince temanın eşi gelir: Orman ↔ Nane, Okyanus ↔ Buz…"],
+            en: ["Search in workspaces: names, tags, notes and tabs (/ key)", "Sync with this window: update saved tabs from the current window in one click", "Light opening: tabs load when you click them, so opening many is easy on your computer", "Pin saved tabs to the top; cards show when they were last opened", "Right-click › Add to workspace: add the page straight to saved tabs", "Switching light/dark mode now picks the matching theme: Forest ↔ Mint, Ocean ↔ Ice…"],
+            ru: ["Поиск в рабочих областях: названия, метки, заметки и вкладки (клавиша /)", "Синхронизация с окном: обновите сохранённые вкладки из текущего окна в один клик", "Лёгкое открытие: вкладки загружаются по щелчку и не нагружают компьютер", "Закрепляйте области сверху; на карточке время последнего открытия", "Правый щелчок › Добавить в рабочую область: страница сразу попадает в сохранённые вкладки", "При смене светлого/тёмного режима выбирается парная тема"],
+            pt_BR: ["Busca nos espaços de trabalho: nomes, tags, notas e abas (tecla /)", "Sincronizar com esta janela: atualize as abas salvas com um clique", "Abertura leve: as abas carregam quando você clica nelas", "Fixe espaços no topo; o cartão mostra quando foi aberto pela última vez", "Clique direito › Adicionar ao espaço de trabalho: adicione a página direto às abas salvas", "Ao trocar entre modo claro e escuro, o tema correspondente é escolhido"],
+            es: ["Búsqueda en los espacios de trabajo: nombres, etiquetas, notas y pestañas (tecla /)", "Sincronizar con esta ventana: actualiza las pestañas guardadas con un clic", "Apertura ligera: las pestañas se cargan al hacer clic en ellas", "Fija espacios arriba; la tarjeta muestra cuándo se abrió por última vez", "Clic derecho › Añadir al espacio de trabajo: añade la página directamente", "Al cambiar entre modo claro y oscuro se elige el tema equivalente"],
+        },
+        duzeltme: {
+            tr: ["Gizli yakalama: açılış animasyonlu sitelerde görüntü artık yarıda kalmıyor", "Sahne Yakala: eklentilere kapalı sayfada artık boşuna beklemiyorsunuz, uyarı çıkıyor", "Koyu temalarda grup menüsü daha sade: aktif gruptaki beyaz halka ve seridin kenar çizgisi kaldırıldı", "Küçük hata düzeltmeleri ve iyileştirmeler"],
+            en: ["Silent capture: sites with intro animations no longer come out half-drawn", "Capture Scene: on pages closed to extensions you now get a notice instead of waiting", "Cleaner group menu in dark themes: the white ring on the active group and the bar's border are gone", "Small fixes and improvements"],
+            ru: ["Тихий режим: сайты с анимацией появления больше не снимаются наполовину", "Снять сцену: на страницах, закрытых для расширений, теперь появляется предупреждение", "Панель групп в тёмных темах аккуратнее: убраны белая рамка активной группы и обводка панели", "Мелкие исправления и улучшения"],
+            pt_BR: ["Captura silenciosa: sites com animações de entrada não saem mais pela metade", "Capturar cena: em páginas fechadas a extensões agora aparece um aviso", "Barra de grupos mais limpa nos temas escuros: sem o anel branco no grupo ativo e sem a borda da barra", "Pequenas correções e melhorias"],
+            es: ["Captura silenciosa: los sitios con animaciones de entrada ya no salen a medias", "Capturar escena: en páginas cerradas a las extensiones ahora aparece un aviso", "Barra de grupos más limpia en los temas oscuros: sin el anillo blanco del grupo activo ni el borde de la barra", "Pequeñas correcciones y mejoras"],
+        },
+    },
+    {
         surum: '1.5.9',
         yeni: {
             tr: ["Özellikler penceresi: neler yapabildiğini tek listede görün, \"Göster\" ile ayara gidin (Ayarlar › Hakkında)", "Menü Konumu: grup menüsü sol üst köşede, boşluksuz (Ayarlar › Görünüm › Grup Menüsü)", "Menü simgeleri ve açma/kapama anahtarları artık temanın renginde", "Koyu temalarda aktif grup daha belirgin", "Bulut Klasörü artık Yedek Klasörü: yerel klasör ya da bulut klasörü, ikisi de olur"],

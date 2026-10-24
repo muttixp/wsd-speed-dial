@@ -2164,5 +2164,44 @@
   },
   "acilisIlk": {
     "message": "Primer grupo"
+  },
+  "alanAra": {
+    "message": "Buscar"
+  },
+  "alanAraBos": {
+    "message": "No hay coincidencias"
+  },
+  "pencereyleEsitle": {
+    "message": "Sincronizar con esta ventana"
+  },
+  "esitle": {
+    "message": "Sincronizar"
+  },
+  "esitleMetin": {
+    "message": "«$1» quedará igual que las pestañas de esta ventana: se añaden $2 y se quitan $3."
+  },
+  "alanZatenGuncel": {
+    "message": "Ya coincide con esta ventana"
+  },
+  "sabitle": {
+    "message": "Fijar arriba"
+  },
+  "sabitlemeyiKaldir": {
+    "message": "Dejar de fijar"
+  },
+  "alanSonAcilis": {
+    "message": "abierto $1"
+  },
+  "mAlanaEkle": {
+    "message": "Añadir al espacio de trabajo"
+  },
+  "alanaEklendi": {
+    "message": "Añadido a «$1»"
+  },
+  "alandaZatenVar": {
+    "message": "Esta página ya está en «$1»"
+  },
+  "sahneKapali": {
+    "message": "Esta página está cerrada a las extensiones (el navegador no lo permite). Usa «Archivo de imagen» o «URL de imagen»."
   }
 }

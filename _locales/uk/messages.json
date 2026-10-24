@@ -2164,5 +2164,44 @@
   },
   "acilisIlk": {
     "message": "Перша група"
+  },
+  "alanAra": {
+    "message": "Пошук"
+  },
+  "alanAraBos": {
+    "message": "Нічого не знайдено"
+  },
+  "pencereyleEsitle": {
+    "message": "Синхронізувати з цим вікном"
+  },
+  "esitle": {
+    "message": "Синхронізувати"
+  },
+  "esitleMetin": {
+    "message": "«$1» стане як вкладки цього вікна: додасться $2, вилучиться $3."
+  },
+  "alanZatenGuncel": {
+    "message": "Вже збігається з цим вікном"
+  },
+  "sabitle": {
+    "message": "Закріпити вгорі"
+  },
+  "sabitlemeyiKaldir": {
+    "message": "Відкріпити"
+  },
+  "alanSonAcilis": {
+    "message": "відкрито $1"
+  },
+  "mAlanaEkle": {
+    "message": "Додати до робочої області"
+  },
+  "alanaEklendi": {
+    "message": "Додано до «$1»"
+  },
+  "alandaZatenVar": {
+    "message": "Ця сторінка вже є в «$1»"
+  },
+  "sahneKapali": {
+    "message": "Ця сторінка закрита для розширень (браузер не дозволяє). Використайте «Файл зображення» або «URL зображення»."
   }
 }

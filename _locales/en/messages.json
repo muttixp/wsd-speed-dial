@@ -2164,5 +2164,44 @@
   },
   "acilisIlk": {
     "message": "First group"
+  },
+  "alanAra": {
+    "message": "Search"
+  },
+  "alanAraBos": {
+    "message": "No matching saved tabs"
+  },
+  "pencereyleEsitle": {
+    "message": "Sync with this window"
+  },
+  "esitle": {
+    "message": "Sync"
+  },
+  "esitleMetin": {
+    "message": "\"$1\" will match the tabs in this window: $2 added, $3 removed."
+  },
+  "alanZatenGuncel": {
+    "message": "Already matches this window"
+  },
+  "sabitle": {
+    "message": "Pin to top"
+  },
+  "sabitlemeyiKaldir": {
+    "message": "Unpin"
+  },
+  "alanSonAcilis": {
+    "message": "last opened $1"
+  },
+  "mAlanaEkle": {
+    "message": "Add to workspace"
+  },
+  "alanaEklendi": {
+    "message": "Added to workspace \"$1\""
+  },
+  "alandaZatenVar": {
+    "message": "This page is already in \"$1\""
+  },
+  "sahneKapali": {
+    "message": "This page is closed to extensions (the browser does not allow it). Use \"Image File\" or \"Image URL\" instead."
   }
 }

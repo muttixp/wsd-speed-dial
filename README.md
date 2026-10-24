@@ -159,6 +159,14 @@ Yan paneldeki düğme ya da araç çubuğundaki simgeye sağ tık →
 - **Düzenle:** ad, etiket, not, renk; kayıtlı sekmeleri çıkarma ve bu
   penceredeki açık sekmelerden ekleme tek pencerede
 - **Gruba dönüştür:** kalıcı olacaksa görselli normal grup olur
+- **Pencereyle eşitle:** kaydı tek tıkla bu penceredeki sekmelerle aynı
+  yapar (çıkacak sekme varsa sorar)
+- **Hafif açma:** kayıt açılınca yalnızca ilk sekme yüklenir, diğerleri
+  tıklayınca yüklenir
+- **Arama** (`/`): ad, etiket, not, sekme başlığı ve adreste
+- **Üste sabitle** ve kartta son açılış zamanı
+- **Sağ tık › WSD Speed Dial'e ekle › Çalışma alanına ekle:** bulunulan
+  sayfayı bir kayda ekler
 - Kartlar sürükleyip sıralanır, etiketle süzülür
 - Kayıtlar WSD klasörünün yanında **WSD Çalışma Alanları** yer imi
   klasöründe durur; grup şeridi, arama ve görsel yakalama bunlara

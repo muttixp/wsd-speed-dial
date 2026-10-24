@@ -2164,5 +2164,44 @@
   },
   "acilisIlk": {
     "message": "第一个分组"
+  },
+  "alanAra": {
+    "message": "搜索"
+  },
+  "alanAraBos": {
+    "message": "没有匹配的项目"
+  },
+  "pencereyleEsitle": {
+    "message": "与此窗口同步"
+  },
+  "esitle": {
+    "message": "同步"
+  },
+  "esitleMetin": {
+    "message": "“$1”将与此窗口的标签页一致：添加 $2 个，移除 $3 个。"
+  },
+  "alanZatenGuncel": {
+    "message": "已与此窗口一致"
+  },
+  "sabitle": {
+    "message": "置顶"
+  },
+  "sabitlemeyiKaldir": {
+    "message": "取消置顶"
+  },
+  "alanSonAcilis": {
+    "message": "上次打开 $1"
+  },
+  "mAlanaEkle": {
+    "message": "添加到工作区"
+  },
+  "alanaEklendi": {
+    "message": "已添加到“$1”"
+  },
+  "alandaZatenVar": {
+    "message": "此页面已在“$1”中"
+  },
+  "sahneKapali": {
+    "message": "此页面不允许扩展程序访问（浏览器限制）。请使用“图片文件”或“图片网址”。"
   }
 }

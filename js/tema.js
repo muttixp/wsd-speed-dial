@@ -118,6 +118,16 @@ export const SABLONLAR = {
 
 const VARSAYILAN_SABLON = { koyu: 'gece', acik: 'kagit' };
 
+/* ESLER (1.6.0): modu degistirince secili hazir temanin diger moddaki
+   karsiligi gelsin (Orman -> Nane, Okyanus -> Buz...). Eskiden diger
+   modda en son secilen (yoksa ilk) tema geliyordu. */
+const ESLER = {
+    gece: 'kagit', grafit: 'kagit', okyanus: 'buz', orman: 'nane', mor: 'pastel',
+    gunbatimi: 'kum', kontrast: 'murekkep', yakut: 'gul', kehribar: 'gunes',
+    kagit: 'gece', kum: 'gunbatimi', buz: 'okyanus', nane: 'orman', pastel: 'mor',
+    gul: 'yakut', gunes: 'kehribar', murekkep: 'kontrast',
+};
+
 /* DESENLI DUVARLAR (1.5.6): sablon duvarlari duz iki renkli gecisti;
    artik isik lekeleri + ince capraz cizgi dokusu. Eski degeri tasiyan
    kullanicilar "degistirildi" rozeti gormesin diye eski -> yeni goc. */
@@ -271,11 +281,16 @@ export async function moduEsitle() {
     const saklanan = ayar.temaRenkleri || {};
     saklanan[onceki] = { tema: ayar.tema || VARSAYILAN_SABLON[onceki], renkler: renkleriAl(ayar) };
     const hedef = saklanan[mod];
-    const sablon = sablonBul(mod, hedef?.tema) || sablonBul(mod, VARSAYILAN_SABLON[mod]);
+    // Hazir temanin esi varsa o; o modda ayni tema daha once secilip
+    // renkleri degistirildiyse saklanan renkler korunur. Kendi kaydedilen
+    // temalarin esi yok: diger modda en son secilen gelir.
+    const es = sablonBul(mod, ESLER[ayar.tema]);
+    const sablon = es || sablonBul(mod, hedef?.tema) || sablonBul(mod, VARSAYILAN_SABLON[mod]);
+    const saklananRenk = hedef?.tema === sablon.id ? hedef.renkler : null;
     await ayarYaz({
-        ...(hedef?.renkler || sablon.r),
-        ...filtreGecisi(ayar, ayar.tema || VARSAYILAN_SABLON[onceki], hedef?.tema || sablon.id),
-        tema: hedef?.tema || sablon.id,
+        ...(saklananRenk || sablon.r),
+        ...filtreGecisi(ayar, ayar.tema || VARSAYILAN_SABLON[onceki], sablon.id),
+        tema: sablon.id,
         temaSonMod: mod,
         temaRenkleri: saklanan,
     });

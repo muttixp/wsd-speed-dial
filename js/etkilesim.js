@@ -1258,7 +1258,8 @@ function gorselAraclariniKur() {
         try {
             const { elleYakala } = await import('./yakalama.js');
             const veri = await elleYakala(url);
-            if (veri) {
+            if (veri && veri.kapali) bildir(c('sahneKapali'));
+            else if (veri) {
                 adayEkle(veri);       // karusele ekle + secili yap
                 bildir(c('sahneEklendi'));
             }

@@ -68,6 +68,8 @@ export function aramayiKur({ aktifGrup, grubuAc }) {
 
         if (e.key === '/' || (e.key === 'f' && (e.ctrlKey || e.metaKey))) {
             e.preventDefault();
+            // Calisma alanlarinda kendi aramasi var (1.6.0)
+            if (document.body.classList.contains('alanAcik')) { el('alanAra')?.focus(); return; }
             ac();
         }
     });
