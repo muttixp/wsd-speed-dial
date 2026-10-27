@@ -838,7 +838,7 @@ function fvdAyarCevir(p) {
     const renk = v => (typeof v === 'string' && /^[\da-f]{6}$/i.test(v)) ? '#' + v : null;
 
     const en = parseInt(p['sd.custom_dial_size_fancy'] || p['sd.custom_dial_size'], 10);
-    if (en > 0) c.kartEn = Math.min(420, Math.max(140, en));
+    if (en > 0) c.kartEn = Math.min(420, Math.max(64, en));
 
     const yazi = parseInt(p['sd.text.cell_title.size'], 10);
     if (yazi > 0) c.baslikBoyut = Math.min(20, Math.max(10, yazi));

@@ -20,6 +20,7 @@ import { klasorleriKur, klasorIsaretiniTemizle, yeniKlasor, klasoruTasi, klasoru
 import { gruplariAl, gorunurGruplariAl, kokKlasoruAl, tumKlasorleriAl } from './yerimi.js';
 import { RENKLER, renkleriAl, renkYaz } from './renk.js';
 import { karuseliKur, karuseliYukle, adayEkle, zeminAyarla, secimDurumu } from './karusel.js';
+import { gorselFiltreKur, filtrePaneliniKapat, bekleyenFiltreyiUygula } from './gorselfiltre.js';
 import { adaylariYaz } from './gorsel.js';
 import { onayPenceresiniKur, onaySor, metinSor, listeSor } from './onay.js';
 import { bildir, pencereAc, pencereKapat, sayfaKaydirmasiniTazele,
@@ -281,11 +282,31 @@ function karsilamaKur() {
         el('ayYedekSecici')?.click();
     });
 
+    // Hizli Basla (1.6.1): bilinen siteler + logolari
+    el('karsilamaHizli')?.addEventListener('click', async () => {
+        const { hizliBasla } = await import('./basitmod.js');
+        await hizliBasla();
+    });
+
     // Yer imlerinden ice aktarma - bos kadranda en hizli baslangic
     el('karsilamaYerimi')?.addEventListener('click', async () => {
         const { ictarPenceresiniAc } = await import('./yerimiictar.js');
         await ictarPenceresiniAc('tarayici');
     });
+
+    // ARAYUZ SECIMI (1.6.1, deneysel): Basit | Gelismis - secim hemen uygulanir
+    const modKartlari = [...document.querySelectorAll('#karsilamaMod .karsilamaModKart')];
+    const modGoster = basit => modKartlari.forEach(b => b.classList.toggle('secili', (b.dataset.deger === 'basit') === basit));
+    import('./ayar.js').then(async m => modGoster((await m.ayarlariAl()).basitMod === true)).catch(() => {});
+    for (const b of modKartlari) {
+        b.addEventListener('click', async () => {
+            const basit = b.dataset.deger === 'basit';
+            modGoster(basit);
+            const { moduDegistir } = await import('./basitmod.js');
+            await moduDegistir(basit);
+            document.dispatchEvent(new CustomEvent('wsd-ayar-tazele'));
+        });
+    }
 
     // CIKIS (1.5.3): karsilama yalnizca kart eklenince kayboluyordu;
     // bos kadranla baslamak isteyen kullanici "cikamadim" diyordu.
@@ -557,6 +578,7 @@ let kpIlkGrup = null;
 function kartPenceresiniKur() {
     renkSeciciyiKur();
     karuseliKur();
+    gorselFiltreKur();
     gorselAraclariniKur();
     notPenceresiniKur();
     tasiPenceresiniKur();
@@ -670,6 +692,7 @@ async function kartPenceresiniAc(kart) {
         await etiketCipleriniCiz();
     }
 
+    filtrePaneliniKapat();
     await karuseliYukle(kart ? kart.url : null);
     logoAdaylariniGizle();          // onceki kartin logo adaylari duruyordu
 
@@ -680,6 +703,7 @@ async function kartPenceresiniAc(kart) {
 function kartPenceresiniKapat() {
     pencereKapat('kartPencere');
     logoAdaylariniGizle();
+    filtrePaneliniKapat();
     duzenlenenKartId = null;
 }
 
@@ -700,6 +724,7 @@ async function kartiKaydet() {
         // yoksa yakalamayi baslatiyordu; kullanicinin sectigi yerel resim
         // biraz sonra yaziliyor, yakalama bitince de EZILIYORDU ("2-3
         // denemede tutuyor"). Once gorsel, sonra yer imi.
+        await bekleyenFiltreyiUygula();      // onizlemede kalan filtre de kaydedilsin
         const { adaylar: kAdaylar, secim: kSecim, zemin: kZemin, elle: kElle } = secimDurumu();
         if (kAdaylar.length) {
             await adaylariYaz(url, kAdaylar, kSecim, kElle);
@@ -1282,7 +1307,9 @@ function gorselAraclariniKur() {
         btn.disabled = true;
         try {
             const { logoYakala } = await import('./yakalama.js');
-            const kartlar = await logoYakala(url);
+            // Kare kartta kare logo (1.6.1): kutuyu doldursun, bant kalmasin
+            const { ayarlariAl } = await import('./ayar.js');
+            const kartlar = await logoYakala(url, 8, (await ayarlariAl()).kartOrani === 'okare');
             if (kartlar.length) {
                 logoAdaylariniGoster(kartlar);        // karusele DEGIL, secime sunuluyor
             } else {

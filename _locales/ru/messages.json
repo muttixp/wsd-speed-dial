@@ -21,7 +21,7 @@
     "message": "Поиск"
   },
   "GenisEkran": {
-    "message": "16:9 — широкий"
+    "message": "16:9"
   },
   "aciklik": {
     "message": "Яркость"
@@ -33,7 +33,7 @@
     "message": "Прозрачность активной группы"
   },
   "anaSayfaGrubunuGoster": {
-    "message": "Показывать группу «Главная»"
+    "message": "Группа «Главная»"
   },
   "ayarlariAcKapat": {
     "message": "открыть / закрыть настройки"
@@ -42,7 +42,7 @@
     "message": "Сбросить настройки"
   },
   "ayniSekme": {
-    "message": "В той же вкладке"
+    "message": "В этой вкладке"
   },
   "basaKaydir": {
     "message": "Прокрутить в начало"
@@ -51,7 +51,7 @@
     "message": "Заголовок"
   },
   "baslikYaziBoyutu": {
-    "message": "Размер шрифта заголовка"
+    "message": "Размер шрифта"
   },
   "bekleyenYakalamalariIptalEt": {
     "message": "Отменить ожидающие снимки"
@@ -78,10 +78,10 @@
     "message": "Плитка «+»"
   },
   "ekranGoruntusuBoyutu": {
-    "message": "Размер снимка"
+    "message": "Размер"
   },
   "ekranGoruntusuOnerilen": {
-    "message": "Снимок экрана (рекомендуется)"
+    "message": "Снимок экрана"
   },
   "enCokZiyaretEdilen": {
     "message": "Самые посещаемые"
@@ -96,10 +96,10 @@
     "message": "Как в общих настройках"
   },
   "gerekirsePencereyiOneAl": {
-    "message": "Выводить окно на передний план при необходимости"
+    "message": "Окно на передний план"
   },
   "gizliHataAyiklamaCubuguCikar": {
-    "message": "Скрытый (без окна)"
+    "message": "Скрытый"
   },
   "golgeRengi": {
     "message": "Цвет тени"
@@ -108,7 +108,7 @@
     "message": "Файл изображения"
   },
   "goruntuUrlSi": {
-    "message": "URL изображения"
+    "message": "Адрес изображения"
   },
   "gosterim": {
     "message": "Отображение"
@@ -138,7 +138,7 @@
     "message": "скрыть / показать всё"
   },
   "htmlSayfasiOlarakDisaAktar": {
-    "message": "Экспорт в HTML-страницу"
+    "message": "Экспорт в HTML"
   },
   "iceAktar": {
     "message": "Импорт"
@@ -165,34 +165,34 @@
     "message": "Удалить"
   },
   "kartAcilisSekli": {
-    "message": "Открывать плитку"
+    "message": "Открывать"
   },
   "kartBasliklari": {
-    "message": "Заголовки плиток"
+    "message": "Заголовки"
   },
   "kartBoyutu": {
-    "message": "Размер плитки"
+    "message": "Размер"
   },
   "kartCerceveRengi": {
     "message": "Цвет рамки"
   },
   "kartCerceveRengiUzerineGelince": {
-    "message": "Цвет рамки (при наведении)"
+    "message": "При наведении"
   },
   "kartCercevesi": {
-    "message": "Рамка плитки"
+    "message": "Рамка"
   },
   "kartOrani": {
-    "message": "Пропорции плитки"
+    "message": "Пропорции"
   },
   "kartSayisi": {
     "message": "Количество плиток"
   },
   "kartUstuButonlar": {
-    "message": "Кнопки на плитке"
+    "message": "Кнопки плитки"
   },
   "kartZeminRengi": {
-    "message": "Фон плитки"
+    "message": "Фон"
   },
   "kartiDuzenle": {
     "message": "Изменить плитку"
@@ -216,7 +216,7 @@
     "message": "Сочетания клавиш не работают при вводе текста."
   },
   "kullanilmayanVerileriTemizle": {
-    "message": "Очистить неиспользуемые данные"
+    "message": "Очистить неиспользуемое"
   },
   "notuSil": {
     "message": "Удалить заметку"
@@ -225,7 +225,7 @@
     "message": "перейти к этой группе"
   },
   "onceSayfaGorseliYoksaEkran": {
-    "message": "Сначала изображение страницы, иначе снимок"
+    "message": "Изображение страницы, иначе снимок"
   },
   "oncekiSonrakiGrup": {
     "message": "предыдущая / следующая группа"
@@ -237,7 +237,7 @@
     "message": "Свой эмодзи"
   },
   "pencereKisaSureGorunur": {
-    "message": "Окно (ненадолго появляется)"
+    "message": "Окно"
   },
   "pencereyiAramayiKapat": {
     "message": "закрыть окно / поиск"
@@ -249,16 +249,16 @@
     "message": "Оттенок"
   },
   "renklendirmeSiddeti": {
-    "message": "Сила тонирования"
+    "message": "Сила"
   },
   "renklendirmeYontemi": {
-    "message": "Способ тонирования"
+    "message": "Способ"
   },
   "resmiIndir": {
     "message": "Скачать изображение"
   },
   "sekmeZeminSaydamligi": {
-    "message": "Прозрачность фона панели групп"
+    "message": "Прозрачность фона"
   },
   "sil": {
     "message": "Удалить"
@@ -345,7 +345,7 @@
     "message": "Создать резервную копию"
   },
   "simdiYedekAl": {
-    "message": "Создать копию сейчас"
+    "message": "Создать копию"
   },
   "onaySorulariniGeriGetir": {
     "message": "Вернуть запросы подтверждения"
@@ -810,7 +810,7 @@
     "message": "Плиток: $1 · удалённая группа"
   },
   "goruntuUrlsi": {
-    "message": "URL изображения"
+    "message": "Адрес изображения"
   },
   "oncekiSimdiKayip": {
     "message": "Было: $1, сейчас: $3 ($2). "
@@ -837,16 +837,13 @@
     "message": "Обслуживание"
   },
   "anasayfaKurulumu": {
-    "message": "Настройка домашней страницы"
+    "message": "Домашняя страница"
   },
   "kisayollarBolum": {
     "message": "Сочетания клавиш"
   },
   "uzantiSimgesi": {
     "message": "Значок расширения"
-  },
-  "baslamakIcin": {
-    "message": "Начало работы"
   },
   "tonKaydir": {
     "message": "Сдвиг оттенка"
@@ -861,7 +858,7 @@
     "message": "Изображения плиток ($1) будут сняты заново. Это может занять несколько минут."
   },
   "colorizeTekTonaIndir": {
-    "message": "Colorize (один тон)"
+    "message": "Один тон"
   },
   "doygunluk": {
     "message": "Насыщенность"
@@ -876,13 +873,13 @@
     "message": "Квадрат"
   },
   "sekmeZeminRengi": {
-    "message": "Цвет фона панели групп"
+    "message": "Цвет фона"
   },
   "sekmeBoyutu": {
-    "message": "Размер панели групп"
+    "message": "Размер"
   },
   "menuKonumu": {
-    "message": "Положение меню"
+    "message": "Положение"
   },
   "konumNormal": {
     "message": "Обычно"
@@ -915,7 +912,7 @@
     "message": "Название"
   },
   "siteUrl": {
-    "message": "URL сайта"
+    "message": "Адрес сайта"
   },
   "enSonEklenen": {
     "message": "Сначала новые"
@@ -927,13 +924,13 @@
     "message": "Подтверждение"
   },
   "oranDengeli": {
-    "message": "16:10 — сбалансированный"
+    "message": "16:10"
   },
   "veya": {
     "message": "или"
   },
   "zeminRenklendirme": {
-    "message": "Тонирование фона"
+    "message": "Тонирование"
   },
   "kurulumAciklama": {
     "message": "Чтобы открывать WSD кнопкой «Домой», скопируйте адрес ниже в Настройки → При запуске → Главная страница."
@@ -987,10 +984,10 @@
     "message": "Размещение изображения"
   },
   "yerlesimKirp": {
-    "message": "Обрезать (заполнить)"
+    "message": "Заполнить"
   },
   "yerlesimSigdir": {
-    "message": "Вписать (показать целиком)"
+    "message": "Вписать"
   },
   "sahneYakala": {
     "message": "Снять сцену"
@@ -1461,7 +1458,7 @@
     "message": "Плитки, вкладки, окна, меню и кнопки"
   },
   "yanPaneliGizle": {
-    "message": "Автоскрытие боковой панели"
+    "message": "Скрывать боковую панель"
   },
   "buGruptaNKart": {
     "message": "В этой группе плиток: <b>$1</b>"
@@ -1497,7 +1494,7 @@
     "message": "Нажмите на название, чтобы добавить туда · ▸ раскрывает ветку"
   },
   "sagTikMenusu": {
-    "message": "Контекстное меню страницы"
+    "message": "Вид меню"
   },
   "sagTikPencere": {
     "message": "Группы + «Выбрать папку…»"
@@ -1542,10 +1539,10 @@
     "message": "Заголовок"
   },
   "baslikRengi": {
-    "message": "Цвет заголовка"
+    "message": "Цвет"
   },
   "baslikStili": {
-    "message": "Стиль заголовка"
+    "message": "Стиль"
   },
   "stilNormal": {
     "message": "Обычный"
@@ -1560,16 +1557,16 @@
     "message": "Жирный курсив"
   },
   "baslikGolgesi": {
-    "message": "Тень заголовка"
+    "message": "Тень"
   },
   "baslikGolgeRengi": {
     "message": "Цвет тени"
   },
   "menuYaziRengi": {
-    "message": "Цвет текста панели групп"
+    "message": "Цвет текста"
   },
   "aktifGrupYaziRengi": {
-    "message": "Цвет текста активной группы"
+    "message": "Текст активной группы"
   },
   "sistemBolum": {
     "message": "Система"
@@ -1593,7 +1590,7 @@
     "message": "Цвет фона"
   },
   "aktarimdaYakala": {
-    "message": "Снимать недостающие изображения после импорта"
+    "message": "Снимки при импорте"
   },
   "icindekiKartlardanSec": {
     "message": "Выбрать из плиток внутри"
@@ -1755,16 +1752,16 @@
     "message": "Строка поиска"
   },
   "webAramaGoster": {
-    "message": "Показывать строку поиска"
+    "message": "Показывать"
   },
   "webVarsayilanMotor": {
-    "message": "Поисковая система по умолчанию"
+    "message": "По умолчанию"
   },
   "webMotorListesi": {
-    "message": "Поисковые системы в списке"
+    "message": "Системы в списке"
   },
   "webMotorEkle": {
-    "message": "Добавить свою поисковую систему"
+    "message": "Добавить систему"
   },
   "webYeniAd": {
     "message": "Название"
@@ -1794,7 +1791,7 @@
     "message": "Взять цвет с экрана"
   },
   "arayuzAlt": {
-    "message": "Интерфейс"
+    "message": "Эффекты"
   },
   "renkliSimgeler": {
     "message": "Цветные значки"
@@ -1887,10 +1884,10 @@
     "message": "Главную нельзя переименовать"
   },
   "camGorunum": {
-    "message": "Эффект матового стекла"
+    "message": "Матовое стекло"
   },
   "aktifIkonRengi": {
-    "message": "Цвет значка активной группы"
+    "message": "Значок активной группы"
   },
   "aktarimGorselBaslik": {
     "message": "Изображения плиток"
@@ -1941,7 +1938,7 @@
     "message": "Чернила"
   },
   "webAramaYeri": {
-    "message": "Где показывать"
+    "message": "Где"
   },
   "webYerAnaSayfa": {
     "message": "Только на главной"
@@ -1953,7 +1950,7 @@
     "message": "Во всех группах"
   },
   "kucukPencere": {
-    "message": "Маленькое окно в углу (экспериментально)"
+    "message": "Маленькое окно в углу"
   },
   "gizliKipBilgi": {
     "message": "Во время снимка Chrome показывает вверху панель «отладки». Это обязательное уведомление; разрешение используется только для снимков, панель исчезает по завершении."
@@ -1992,7 +1989,7 @@
     "message": "Поиск в интернете или адрес"
   },
   "kartHizalama": {
-    "message": "Выравнивание плиток"
+    "message": "Выравнивание"
   },
   "hizaOrta": {
     "message": "По центру"
@@ -2064,7 +2061,7 @@
     "message": "Имя файлов копий и подпапки. Дайте каждому браузеру своё имя; одинаковое имя — общая копия."
   },
   "klasorYedekSiklik": {
-    "message": "Частота автокопирования"
+    "message": "Частота"
   },
   "gundeBir": {
     "message": "Раз в день"
@@ -2073,13 +2070,13 @@
     "message": "Раз в неделю"
   },
   "klasorYedekGorselli": {
-    "message": "Включать изображения"
+    "message": "С изображениями"
   },
   "klasorYedekSakla": {
     "message": "Хранить копий"
   },
   "klasorYedekSimdi": {
-    "message": "Сохранить в папку сейчас"
+    "message": "Сохранить сейчас"
   },
   "klasorYedekGeriYukle": {
     "message": "Восстановить из папки"
@@ -2151,7 +2148,7 @@
     "message": "Вот эта плитка"
   },
   "klasorYedekSiklikKapali": {
-    "message": "Выкл. (только вручную)"
+    "message": "Выкл."
   },
   "acilisGrubu": {
     "message": "Группа при открытии"
@@ -2202,6 +2199,141 @@
     "message": "Эта страница уже есть в «$1»"
   },
   "sahneKapali": {
-    "message": "Эта страница закрыта для расширений (браузер не разрешает). Используйте «Файл изображения» или «URL изображения»."
+    "message": "Эта страница закрыта для расширений (браузер не разрешает). Используйте «Файл изображения» или «Адрес изображения»."
+  },
+  "geriYukle": {
+    "message": "Восстановить"
+  },
+  "arayuzModu": {
+    "message": "Интерфейс"
+  },
+  "modBasit": {
+    "message": "Простой"
+  },
+  "modGelismis": {
+    "message": "Расширенный"
+  },
+  "logoKoy": {
+    "message": "Найти логотипы для плиток этой группы"
+  },
+  "baslikKonum": {
+    "message": "Положение"
+  },
+  "konumUstte": {
+    "message": "Сверху"
+  },
+  "konumAltta": {
+    "message": "Снизу"
+  },
+  "logoIlerleme": {
+    "message": "Поиск логотипов: $1 / $2"
+  },
+  "logoBitti": {
+    "message": "Логотипы добавлены: $1 из $2"
+  },
+  "logoKartYok": {
+    "message": "В этой группе нет плиток"
+  },
+  "logolar": {
+    "message": "Логотипы сайтов"
+  },
+  "boyutSimge": {
+    "message": "Значок"
+  },
+  "boyutMinik": {
+    "message": "Крошечный"
+  },
+  "boyutKucuk": {
+    "message": "Маленький"
+  },
+  "boyutOrta": {
+    "message": "Средний"
+  },
+  "boyutBuyuk": {
+    "message": "Большой"
+  },
+  "boyutKocaman": {
+    "message": "Огромный"
+  },
+  "boyutOzel": {
+    "message": "Свой"
+  },
+  "logoIpucu": {
+    "message": "Ставит логотип вместо изображения; старое остаётся в «Изменить»."
+  },
+  "modBasitAciklama": {
+    "message": "Чистая страница, маленькие значки"
+  },
+  "modGelismisAciklama": {
+    "message": "Группы, папки, все настройки"
+  },
+  "tema_gumus": {
+    "message": "Серебро"
+  },
+  "tema_toprak": {
+    "message": "Земля"
+  },
+  "tema_mercan": {
+    "message": "Коралл"
+  },
+  "filtre": {
+    "message": "Фильтр"
+  },
+  "filtreYok": {
+    "message": "Нет"
+  },
+  "filtreTekRenk": {
+    "message": "Один цвет"
+  },
+  "filtreRenklendir": {
+    "message": "Тонировать"
+  },
+  "filtreGri": {
+    "message": "Чёрно-белый"
+  },
+  "filtreSepya": {
+    "message": "Сепия"
+  },
+  "filtreTers": {
+    "message": "Инверсия"
+  },
+  "parlaklik": {
+    "message": "Яркость"
+  },
+  "kontrast": {
+    "message": "Контраст"
+  },
+  "uygula": {
+    "message": "Применить"
+  },
+  "filtreIpucu": {
+    "message": "Результат добавляется как новое изображение; исходное остаётся в карусели."
+  },
+  "filtreUygulandi": {
+    "message": "Фильтр применён."
+  },
+  "filtreUygulanamadi": {
+    "message": "Не удалось применить фильтр к этому изображению."
+  },
+  "filtreGorselYok": {
+    "message": "Сначала добавьте изображение."
+  },
+  "koyulastir": {
+    "message": "Затемнить"
+  },
+  "hizliBasla": {
+    "message": "Быстрый старт"
+  },
+  "hizliBaslaIpucu": {
+    "message": "Добавляет популярные сайты с логотипами"
+  },
+  "webOneriler": {
+    "message": "Подсказки"
+  },
+  "webOnerilerIpucu": {
+    "message": "Показывает подсказки при вводе; текст отправляется в сервис подсказок поисковика."
+  },
+  "duvarTema": {
+    "message": "Тема"
   }
 }

@@ -33,6 +33,10 @@ Küçük resimler, notlar ve ayarlar `chrome.storage.local`'da tutulur.
 
 ![Ana görünüm](docs/home.png)
 
+![Basit arayüz](docs/basit.png)
+
+*Basit arayüz: sade sayfa, küçük simgeler, ortada grup menüsü.*
+
 | | |
 |---|---|
 | ![Ayarlar](docs/ayarlar.png) | ![Kart düzenleme](docs/kart-duzenle.png) |
@@ -61,7 +65,7 @@ Vivaldi yeni sekmede kendi Speed Dial sayfasını açar. Yeni sekmede WSD çıkm
 
 ### Anasayfa (ev) butonu
 
-Ayarlar → Sistem → **Anasayfa Kurulumu** bölümündeki adresi kopyalayıp tarayıcınızın
+Ayarlar → Ana Sayfa → **Ana Sayfa Kurulumu** bölümündeki adresi kopyalayıp tarayıcınızın
 başlangıç sayfası ayarına yapıştırın.
 
 ---
@@ -77,6 +81,9 @@ başlangıç sayfası ayarına yapıştırın.
 - **Adlı etiketler**: Kart Düzenle'de ad + renk ile; bir karta birden çok
   etiket. Aramayı boş açınca renk ve adlı etiketler sayılarıyla listelenir,
   tıklayınca tüm gruplardaki o etiketli kartlar gelir
+- **Görsel filtresi** (Kart Düzenle › Filtre): Tek Renk, Renklendir,
+  Siyah-Beyaz, Sepya, Ters; parlaklık ve kontrast. Sonuç yeni görsel olarak
+  eklenir, asıl görsel kalır
 - Sürükleyerek sıralama, başka gruba taşıma
 - Kart üzerine gelince: düzenle, not, yenile, taşı, sil
 
@@ -127,18 +134,31 @@ YouTube, GitHub. Simgeden yalnızca o arama için motor seçilir; kısayolla
 da olur (`g kelime`, `yt kelime`…). Kendi motorunuzu (`%s` içeren adres)
 ekleyebilir, listeyi sürükleyip sıralayabilirsiniz. Nerede görüneceği
 ayarlanır: yalnızca Ana Sayfa, ilk grup ya da tüm gruplar. Rusça
-arayüzde varsayılan Yandex. Yazarken hiçbir yere istek gitmez.
+arayüzde varsayılan Yandex. Türkiye ve Rusya'da bölgeye özel motorlar
+listede kapalı gelir. **Öneriler** isteğe bağlıdır ve kapalı gelir;
+kapalıyken yazarken hiçbir yere istek gitmez.
 
 ![Web araması](docs/web-arama.png)
 
 ### Görünüm
 
-**Tema:** Koyu / Açık / Sistem modu ve hazır temalar (Gece, Grafit,
-Okyanus, Orman, Mor, Gün Batımı, Kontrast; Kâğıt, Kum, Buz, Nane, Pastel,
-Mürekkep). Sonra her renk tek tek değişir; kendi temanızı kaydedebilirsiniz.
+**Arayüz: Basit | Gelişmiş** (Ayarlar'ın en üstü, ilk açılışta da sorulur).
+Basit; küçük kare kartlar, altta başlık, ortada grup menüsü ve kısa bir
+ayar paneli verir. Kart boyutu hazır seçeneklerden seçilir (Simge, Minik,
+Küçük, Orta, Büyük, Kocaman); **Site Logoları** gruptaki kartlara sitenin
+logosunu koyar. Gelişmiş'e dönünce önceki ayarlar geri gelir, hiçbir veri
+silinmez. Karşılama ekranındaki **Hızlı Başla** bilinen siteleri logolarıyla
+tek tıkla ekler.
+
+**Tema:** Koyu / Açık / Sistem modu ve her modda 10 eş tema (Gece ↔ Kâğıt,
+Grafit ↔ Gümüş, Okyanus ↔ Buz, Orman ↔ Nane, Mor ↔ Pastel, Gün Batımı ↔
+Mercan, Kontrast ↔ Mürekkep, Yakut ↔ Gül, Kehribar ↔ Güneş, Toprak ↔ Kum);
+mod değişince eşi gelir. Sonra her renk tek tek değişir; kendi temanızı kaydedebilirsiniz.
 İsteğe bağlı **buzlu cam** görünüm ve **renkli simgeler**.
 
-Duvar kâğıdı, zemin renklendirme (ton kaydırma veya iki renk), kart oranı,
+Duvar kâğıdı (kendi resminiz ya da iki hazır zemin; açık/koyu hali moda
+göre), zemin renklendirme (ton kaydırma, iki renk ya da açık bir resmi koyu
+moda uyduran **Koyulaştır**), kart oranı,
 boyut, çerçeve, sütun sınırı, grup menüsü renkleri. Tek **Köşe
 Yuvarlaklığı** ayarı kartları, sekmeleri, menüleri, pencereleri ve
 düğmeleri birlikte değiştirir. Yan araç paneli kenara çekilip fare
@@ -261,12 +281,12 @@ bölümleri açar. Her bölüm açılır alt bölümlerden oluşur:
 
 | Bölüm | Alt bölümler |
 |---|---|
-| Görünüm | Tema · Arka Plan · Grup Menüsü · Yazı ve Panel · Arayüz |
-| Ana Sayfa | Davranış · Arama Çubuğu · Anasayfa Kurulumu |
+| Görünüm | Tema · Arka Plan · Grup Menüsü · Yazı ve Panel · Efektler |
+| Ana Sayfa | Davranış · Arama Çubuğu · Ana Sayfa Kurulumu |
 | Kartlar | Davranış · Boyut ve Yerleşim · Başlık · Renk ve Çerçeve |
-| Görüntü Yakalama | Yakalama · Gelişmiş · Görüntü |
+| Görsel Yakalama | Yakalama · Gelişmiş · Görsel |
 | Yedekleme ve Aktarma | Yedek · Yedek Klasörü · İçe Aktar |
-| Sistem | Uzantı Simgesi · Sağ Tık Menüsü · Kısayollar · Bakım · Sıfırlama |
+| Sistem | Eklenti Simgesi · Sağ Tık Menüsü · Kısayollar · Bakım · Sıfırlama |
 | Hakkında | sürüm, Yenilikler, değerlendir, öneri / hata bildir |
 
 Panel son açık bölümü hatırlar.

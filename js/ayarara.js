@@ -30,7 +30,18 @@ function ara(q) {
     if (sorgu.length < 2) return;
     panel.classList.add('ayarAramada');
     const kelimeler = sorgu.split(' ');
-    const uyar = metin => { const t = sade(metin); return kelimeler.every(k => t.includes(k)); };
+    // EKLER (1.6.1): kisa adlarda "Kart Boyutu" artik "Boyut"; "boyutu",
+    // "yontemi" gibi ekli aramalar da bulsun diye kelimenin son 1-2 harfi
+    // dusurulerek de denenir (yalnizca uzun kelimelerde)
+    const kok = k => [k, k.length > 4 ? k.slice(0, -1) : null, k.length > 5 ? k.slice(0, -2) : null].filter(Boolean);
+    const uyar = metin => { const t = sade(metin); return kelimeler.every(k => kok(k).some(x => t.includes(x))); };
+    const icerir = (t, k) => kok(k).some(x => t.includes(x));
+    // Satir: tum kelimeler satir + baslik metninde olmali, en az biri satirin KENDISINDE
+    // (yoksa "kart boyutu" Kartlar'daki her satiri getiriyordu)
+    const satirUyar = (kendi, cevre) => {
+        const k1 = sade(kendi), k2 = sade(cevre + ' ' + kendi);
+        return kelimeler.every(k => icerir(k2, k)) && kelimeler.some(k => icerir(k1, k));
+    };
     let toplam = 0;
     for (const bolum of panel.querySelectorAll('.bolum')) {
         const bolumAdi = bolum.querySelector('.bolumAd')?.textContent || '';
@@ -39,11 +50,16 @@ function ara(q) {
         const altlar = [...bolum.querySelectorAll('.altAcilir')];
         const birimler = [...bolum.querySelectorAll(SATIR)];
         for (const alt of altlar) {
-            const altUyar = bolumUyar || uyar(alt.querySelector('.altAd')?.textContent || '');
+            const altAdi = alt.querySelector('.altAd')?.textContent || '';
+            const altUyar = bolumUyar || uyar(altAdi);
             let altdaVar = altUyar;
             for (const s of alt.querySelectorAll(SATIR)) {
-                // Gizli kutudaki satir (ornek: secili olmayan yontemin ayarlari) sayilmaz
-                const e = !s.closest('[hidden]') && (altUyar || uyar(s.textContent));
+                // Gizli kutudaki satir (ornek: secili olmayan yontemin ayarlari) sayilmaz.
+                // KISA ADLAR (1.6.1): "Kartlar › Boyut" gibi adlar bolum adini
+                // tekrarlamiyor; "kart boyutu" aramasi bulsun diye bolum ve alt
+                // bolum adi da satirin metnine ekleniyor.
+                const icAdi = s.closest('.altBolum:not(.altAcilir)')?.querySelector(':scope > .altBaslik')?.textContent || '';
+                const e = !s.closest('[hidden]') && (altUyar || satirUyar(s.textContent, bolumAdi + ' ' + altAdi + ' ' + icAdi));
                 s.classList.add(e ? 'araEsles' : 'araGizli');
                 if (e) { altdaVar = true; toplam++; }
             }
@@ -53,7 +69,7 @@ function ara(q) {
         // Alt bolumu olmayan satirlar (Hakkinda gibi)
         for (const s of birimler) {
             if (s.closest('.altAcilir')) continue;
-            const e = !s.closest('[hidden]') && (bolumUyar || uyar(s.textContent));
+            const e = !s.closest('[hidden]') && (bolumUyar || satirUyar(s.textContent, bolumAdi));
             s.classList.add(e ? 'araEsles' : 'araGizli');
             if (e) { bolumdeVar = true; toplam++; }
         }

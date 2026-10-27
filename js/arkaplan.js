@@ -326,11 +326,27 @@ chrome.runtime.onInstalled.addListener(async ({ reason }) => {
         if (await chromeMu()) return;
         const { ayarlar } = await chrome.storage.local.get('ayarlar');
         if (ayarlar && ayarlar.yakalamaKipi) return;
-        await chrome.storage.local.set({ ayarlar: { ...(ayarlar || {}), yakalamaKipi: 'gizli' } });
+        // duvarHazir de yaziliyor: ayarlar burada olusunca ayar.js bunu
+        // "eski kullanici" sanip hazir duvar kagidini kapatiyordu (1.6.1)
+        await chrome.storage.local.set({ ayarlar: { duvarHazir: 'dalga', ...(ayarlar || {}), yakalamaKipi: 'gizli' } });
     } catch (e) { /* varsayilan pencere kipi kalir */ }
 });
 chrome.runtime.onStartup.addListener(menuyuTazele);
 menuyuTazele();
+
+/* --- Kaldirma geri bildirimi (1.6.1) ---
+   Eklenti kaldirilinca tarayici kisa bir "neden kaldirdiniz?" sayfasi acar.
+   Adreste yalnizca surum, arayuz dili ve magaza (chrome/edge) var; kimlik
+   ya da kullanim bilgisi YOK. Kullanici formu doldurmazsa hicbir sey gitmez. */
+function kaldirmaAdresiniKur() {
+    try {
+        const v = chrome.runtime.getManifest().version;
+        const d = chrome.i18n.getUILanguage() || 'en';
+        const t = /\bEdg\//.test(navigator.userAgent) ? 'edge' : 'chrome';
+        chrome.runtime.setUninstallURL(`https://webteyazilim.net/wsd/kaldirildi.php?v=${encodeURIComponent(v)}&d=${encodeURIComponent(d)}&t=${t}`);
+    } catch (e) { /* desteklenmiyor */ }
+}
+kaldirmaAdresiniKur();
 
 /* --- Uzanti simgesi ---
    MV3'te `setIcon` KALICI DEGIL: isci uyudugunda manifest PNG'si geri

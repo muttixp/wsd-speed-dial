@@ -21,7 +21,7 @@
     "message": "Ara"
   },
   "GenisEkran": {
-    "message": "16:9 — geniş ekran"
+    "message": "16:9"
   },
   "aciklik": {
     "message": "Açıklık"
@@ -33,7 +33,7 @@
     "message": "Aktif Grup Saydamlığı"
   },
   "anaSayfaGrubunuGoster": {
-    "message": "Ana Sayfa Grubunu Göster"
+    "message": "Ana Sayfa Grubu"
   },
   "ayarlariAcKapat": {
     "message": "ayarları aç / kapat"
@@ -42,7 +42,7 @@
     "message": "Ayarları sıfırla"
   },
   "ayniSekme": {
-    "message": "Aynı Sekme"
+    "message": "Aynı sekmede"
   },
   "basaKaydir": {
     "message": "Başa kaydır"
@@ -51,7 +51,7 @@
     "message": "Başlık"
   },
   "baslikYaziBoyutu": {
-    "message": "Başlık Yazı Boyutu"
+    "message": "Yazı Boyutu"
   },
   "bekleyenYakalamalariIptalEt": {
     "message": "Bekleyen yakalamaları iptal et"
@@ -75,13 +75,13 @@
     "message": "Düzenle"
   },
   "eklemeKarti": {
-    "message": "\"+\" Ekleme Kartı"
+    "message": "\"+\" Kartı"
   },
   "ekranGoruntusuBoyutu": {
-    "message": "Ekran Görüntüsü Boyutu"
+    "message": "Boyut"
   },
   "ekranGoruntusuOnerilen": {
-    "message": "Ekran görüntüsü (önerilen)"
+    "message": "Ekran görüntüsü"
   },
   "enCokZiyaretEdilen": {
     "message": "En çok ziyaret edilen"
@@ -96,19 +96,19 @@
     "message": "Genel ayar"
   },
   "gerekirsePencereyiOneAl": {
-    "message": "Gerekirse Pencereyi Öne Al"
+    "message": "Pencereyi Öne Al"
   },
   "gizliHataAyiklamaCubuguCikar": {
-    "message": "Gizli (pencere açılmaz)"
+    "message": "Gizli"
   },
   "golgeRengi": {
     "message": "Gölge Rengi"
   },
   "goruntuDosyasi": {
-    "message": "Görüntü Dosyası"
+    "message": "Görsel Dosyası"
   },
   "goruntuUrlSi": {
-    "message": "Görüntü URL'si"
+    "message": "Görsel Adresi"
   },
   "gosterim": {
     "message": "Gösterim"
@@ -138,19 +138,19 @@
     "message": "her şeyi gizle / göster"
   },
   "htmlSayfasiOlarakDisaAktar": {
-    "message": "HTML sayfası olarak dışa aktar"
+    "message": "HTML olarak dışa aktar"
   },
   "iceAktar": {
     "message": "İçe Aktar"
   },
   "ikon": {
-    "message": "İkon"
+    "message": "Simge"
   },
   "ikonRengi": {
-    "message": "İkon Rengi"
+    "message": "Simge Rengi"
   },
   "ikonYazi": {
-    "message": "İkon + yazı"
+    "message": "Simge + yazı"
   },
   "ilkSonGrup": {
     "message": "ilk / son grup"
@@ -165,34 +165,34 @@
     "message": "Kaldır"
   },
   "kartAcilisSekli": {
-    "message": "Kart Açılış Şekli"
+    "message": "Açılış"
   },
   "kartBasliklari": {
-    "message": "Kart Başlıkları"
+    "message": "Başlıklar"
   },
   "kartBoyutu": {
-    "message": "Kart Boyutu"
+    "message": "Boyut"
   },
   "kartCerceveRengi": {
     "message": "Çerçeve Rengi"
   },
   "kartCerceveRengiUzerineGelince": {
-    "message": "Çerçeve Rengi (Üzerine Gelince)"
+    "message": "Üzerine Gelince"
   },
   "kartCercevesi": {
-    "message": "Kart Çerçevesi"
+    "message": "Çerçeve"
   },
   "kartOrani": {
-    "message": "Kart Oranı"
+    "message": "Oran"
   },
   "kartSayisi": {
     "message": "Kart sayısı"
   },
   "kartUstuButonlar": {
-    "message": "Kart Üstü Butonlar"
+    "message": "Kart Düğmeleri"
   },
   "kartZeminRengi": {
-    "message": "Kart Zemin Rengi"
+    "message": "Zemin Rengi"
   },
   "kartiDuzenle": {
     "message": "Kartı Düzenle"
@@ -216,7 +216,7 @@
     "message": "Kısayollar bir metin alanındayken çalışmaz."
   },
   "kullanilmayanVerileriTemizle": {
-    "message": "Kullanılmayan verileri temizle"
+    "message": "Kullanılmayanları temizle"
   },
   "notuSil": {
     "message": "Notu Sil"
@@ -225,7 +225,7 @@
     "message": "o sıradaki gruba geç"
   },
   "onceSayfaGorseliYoksaEkran": {
-    "message": "Önce sayfa görseli, yoksa ekran"
+    "message": "Sayfa görseli, yoksa ekran"
   },
   "oncekiSonrakiGrup": {
     "message": "önceki / sonraki grup"
@@ -237,7 +237,7 @@
     "message": "Özel emoji"
   },
   "pencereKisaSureGorunur": {
-    "message": "Pencere (kısa süre görünür)"
+    "message": "Pencere"
   },
   "pencereyiAramayiKapat": {
     "message": "pencereyi / aramayı kapat"
@@ -249,16 +249,16 @@
     "message": "Renk Tonu"
   },
   "renklendirmeSiddeti": {
-    "message": "Renklendirme Şiddeti"
+    "message": "Şiddet"
   },
   "renklendirmeYontemi": {
-    "message": "Renklendirme Yöntemi"
+    "message": "Yöntem"
   },
   "resmiIndir": {
     "message": "Resmi İndir"
   },
   "sekmeZeminSaydamligi": {
-    "message": "Menü Zemin Saydamlığı"
+    "message": "Zemin Saydamlığı"
   },
   "sil": {
     "message": "Sil"
@@ -297,7 +297,7 @@
     "message": "Vazgeç"
   },
   "yalnizcaIkon": {
-    "message": "Yalnızca ikon"
+    "message": "Yalnızca simge"
   },
   "yalnizcaYazi": {
     "message": "Yalnızca yazı"
@@ -318,10 +318,10 @@
     "message": "yeni kart"
   },
   "yeniSekme": {
-    "message": "Yeni Sekme"
+    "message": "Yeni sekmede"
   },
   "yeniSekmeArkaPlan": {
-    "message": "Yeni Sekme (Arka Plan)"
+    "message": "Arka sekmede"
   },
   "yontem": {
     "message": "Yöntem"
@@ -345,13 +345,13 @@
     "message": "Yedekle"
   },
   "simdiYedekAl": {
-    "message": "Şimdi yedek al"
+    "message": "Yedekle"
   },
   "onaySorulariniGeriGetir": {
     "message": "Onay sorularını geri getir"
   },
   "adresiKopyala": {
-    "message": "Adresi Kopyala"
+    "message": "Adresi kopyala"
   },
   "arkaPlan": {
     "message": "Arka Plan"
@@ -489,7 +489,7 @@
     "message": "Dosya okunamadı"
   },
   "goruntuAlinamadi": {
-    "message": "görüntü alınamadı"
+    "message": "görsel alınamadı"
   },
   "indirilecekGorselYok": {
     "message": "İndirilecek görsel yok"
@@ -810,7 +810,7 @@
     "message": "$1 kart · silinmiş grup"
   },
   "goruntuUrlsi": {
-    "message": "Görüntü URL'si"
+    "message": "Görsel Adresi"
   },
   "oncekiSimdiKayip": {
     "message": "$1 $2 vardı, şimdi $3. "
@@ -831,22 +831,19 @@
     "message": "Grup Menüsü"
   },
   "goruntuYakalama": {
-    "message": "Görüntü Yakalama"
+    "message": "Görsel Yakalama"
   },
   "bakimBolum": {
     "message": "Bakım"
   },
   "anasayfaKurulumu": {
-    "message": "Anasayfa Kurulumu"
+    "message": "Ana Sayfa Kurulumu"
   },
   "kisayollarBolum": {
     "message": "Kısayollar"
   },
   "uzantiSimgesi": {
-    "message": "Uzantı Simgesi"
-  },
-  "baslamakIcin": {
-    "message": "Başlamak için"
+    "message": "Eklenti Simgesi"
   },
   "tonKaydir": {
     "message": "Ton Kaydır"
@@ -861,7 +858,7 @@
     "message": "$1 kartın görseli yeniden yakalanacak. Bu işlem birkaç dakika sürebilir."
   },
   "colorizeTekTonaIndir": {
-    "message": "Colorize (Tek Tona İndir)"
+    "message": "Tek Ton"
   },
   "doygunluk": {
     "message": "Doygunluk"
@@ -870,19 +867,19 @@
     "message": "Arka Plan Rengi"
   },
   "metinRengi": {
-    "message": "Metin Rengi"
+    "message": "Yazı Rengi"
   },
   "kare": {
     "message": "Kare"
   },
   "sekmeZeminRengi": {
-    "message": "Menü Zemin Rengi"
+    "message": "Zemin Rengi"
   },
   "sekmeBoyutu": {
-    "message": "Menü Boyutu"
+    "message": "Boyut"
   },
   "menuKonumu": {
-    "message": "Menü Konumu"
+    "message": "Konum"
   },
   "konumNormal": {
     "message": "Normal"
@@ -894,7 +891,7 @@
     "message": "Köşede: grup menüsü sayfanın sol üst köşesine oturur"
   },
   "yakalamaKipi": {
-    "message": "Yakalama Kipi"
+    "message": "Yakalama Modu"
   },
   "bekleme": {
     "message": "Bekleme"
@@ -915,7 +912,7 @@
     "message": "Ad"
   },
   "siteUrl": {
-    "message": "Site URL"
+    "message": "Site Adresi"
   },
   "enSonEklenen": {
     "message": "En son eklenen"
@@ -927,13 +924,13 @@
     "message": "Onay"
   },
   "oranDengeli": {
-    "message": "16:10 — dengeli"
+    "message": "16:10"
   },
   "veya": {
     "message": "veya"
   },
   "zeminRenklendirme": {
-    "message": "Zemin Renklendirme"
+    "message": "Renklendirme"
   },
   "kurulumAciklama": {
     "message": "Ev düğmesi WSD'yi açsın istiyorsanız bu adresi Ayarlar → Başlangıç → Ana Sayfa alanına yapıştırın."
@@ -987,10 +984,10 @@
     "message": "Görsel Yerleşimi"
   },
   "yerlesimKirp": {
-    "message": "Kırp (kartı doldur)"
+    "message": "Doldur"
   },
   "yerlesimSigdir": {
-    "message": "Sığdır (tamamını göster)"
+    "message": "Sığdır"
   },
   "sahneYakala": {
     "message": "Sahne Yakala"
@@ -1314,7 +1311,7 @@
     "message": "Yakalama"
   },
   "goruntuAlt": {
-    "message": "Görüntü"
+    "message": "Görsel"
   },
   "yedekAlt": {
     "message": "Yedek"
@@ -1413,7 +1410,7 @@
     "message": "Kapak resmi"
   },
   "resimSec": {
-    "message": "Resim seç…"
+    "message": "Görsel seç…"
   },
   "kapakIpucu": {
     "message": "Resmi buraya sürükleyin ya da Ctrl+V ile yapıştırın"
@@ -1461,13 +1458,13 @@
     "message": "Kartlar, sekmeler, pencereler, menüler ve düğmeler"
   },
   "yanPaneliGizle": {
-    "message": "Yan Araç Panelini Gizle"
+    "message": "Yan Paneli Gizle"
   },
   "buGruptaNKart": {
     "message": "Bu grupta <b>$1</b> kart var"
   },
   "dIkonRengi": {
-    "message": "İkon rengi"
+    "message": "Simge rengi"
   },
   "dArkaPlanRengi": {
     "message": "Arka plan rengi"
@@ -1497,7 +1494,7 @@
     "message": "Ada tıklayınca oraya eklenir · ▸ dalı açar"
   },
   "sagTikMenusu": {
-    "message": "Sayfada Sağ Tık Menüsü"
+    "message": "Menü Türü"
   },
   "sagTikPencere": {
     "message": "Gruplar + Klasör seç…"
@@ -1542,10 +1539,10 @@
     "message": "Başlık"
   },
   "baslikRengi": {
-    "message": "Başlık Rengi"
+    "message": "Renk"
   },
   "baslikStili": {
-    "message": "Başlık Stili"
+    "message": "Stil"
   },
   "stilNormal": {
     "message": "Normal"
@@ -1560,16 +1557,16 @@
     "message": "Kalın İtalik"
   },
   "baslikGolgesi": {
-    "message": "Başlık Gölgesi"
+    "message": "Gölge"
   },
   "baslikGolgeRengi": {
     "message": "Gölge Rengi"
   },
   "menuYaziRengi": {
-    "message": "Menü Yazı Rengi"
+    "message": "Yazı Rengi"
   },
   "aktifGrupYaziRengi": {
-    "message": "Aktif Grup Yazı Rengi"
+    "message": "Aktif Yazı Rengi"
   },
   "sistemBolum": {
     "message": "Sistem"
@@ -1593,7 +1590,7 @@
     "message": "Zemin Rengi"
   },
   "aktarimdaYakala": {
-    "message": "Aktarımda Görselleri Yakala"
+    "message": "Aktarımda Yakala"
   },
   "icindekiKartlardanSec": {
     "message": "İçindeki kartlardan seç"
@@ -1755,16 +1752,16 @@
     "message": "Arama Çubuğu"
   },
   "webAramaGoster": {
-    "message": "Arama Çubuğunu Göster"
+    "message": "Göster"
   },
   "webVarsayilanMotor": {
-    "message": "Varsayılan Arama Motoru"
+    "message": "Varsayılan Motor"
   },
   "webMotorListesi": {
-    "message": "Listede Görünen Motorlar"
+    "message": "Listedeki Motorlar"
   },
   "webMotorEkle": {
-    "message": "Kendi Arama Motorunu Ekle"
+    "message": "Motor Ekle"
   },
   "webYeniAd": {
     "message": "Ad"
@@ -1794,7 +1791,7 @@
     "message": "Ekrandan renk seç"
   },
   "arayuzAlt": {
-    "message": "Arayüz"
+    "message": "Efektler"
   },
   "renkliSimgeler": {
     "message": "Renkli Simgeler"
@@ -1815,7 +1812,7 @@
     "message": "Sistem"
   },
   "temaIpucu": {
-    "message": "Şablon tüm renkleri birlikte ayarlar; sonra tek tek değiştirebilirsiniz."
+    "message": "Tema tüm renkleri birlikte ayarlar; sonra tek tek değiştirebilirsiniz."
   },
   "temaUygulandi": {
     "message": "$1 teması uygulandı"
@@ -1824,7 +1821,7 @@
     "message": "değiştirildi"
   },
   "temaDegistirildiIpucu": {
-    "message": "Renkler elle değiştirildi. Şablona dönmek için tıklayın."
+    "message": "Renkler elle değiştirildi. Temaya dönmek için tıklayın."
   },
   "tema_gece": {
     "message": "Gece"
@@ -1887,10 +1884,10 @@
     "message": "Ana Sayfa'nın adı değiştirilemez"
   },
   "camGorunum": {
-    "message": "Buzlu Cam Görünüm"
+    "message": "Buzlu Cam"
   },
   "aktifIkonRengi": {
-    "message": "Aktif Grup İkon Rengi"
+    "message": "Aktif Simge Rengi"
   },
   "aktarimGorselBaslik": {
     "message": "Kart görselleri"
@@ -1941,7 +1938,7 @@
     "message": "Mürekkep"
   },
   "webAramaYeri": {
-    "message": "Nerede Görünsün"
+    "message": "Konum"
   },
   "webYerAnaSayfa": {
     "message": "Yalnızca Ana Sayfa"
@@ -1953,7 +1950,7 @@
     "message": "Tüm gruplarda"
   },
   "kucukPencere": {
-    "message": "Küçük Pencere, Köşede (deneysel)"
+    "message": "Köşede Küçük Pencere"
   },
   "gizliKipBilgi": {
     "message": "Yakalarken Chrome üstte \"hata ayıklama\" çubuğu gösterir. Bu zorunlu bir bildirimdir; izin yalnızca görüntü almak için kullanılır, çubuk iş bitince kaybolur."
@@ -1992,7 +1989,7 @@
     "message": "Web'de ara veya adres yaz"
   },
   "kartHizalama": {
-    "message": "Kart Hizalama"
+    "message": "Hizalama"
   },
   "hizaOrta": {
     "message": "Ortaya"
@@ -2058,13 +2055,13 @@
     "message": "Yedekler seçtiğiniz klasöre yazılır. Bulut klasörü (OneDrive, Google Drive, Dropbox) seçerseniz başka bilgisayardan geri yükleyebilirsiniz."
   },
   "klasorYedekAd": {
-    "message": "Yedek adı"
+    "message": "Yedek Adı"
   },
   "klasorYedekAdIpucu": {
     "message": "Yedek dosyalarının ve alt klasörün adı. Her tarayıcıya ayrı ad verin; aynı ad ortak yedektir."
   },
   "klasorYedekSiklik": {
-    "message": "Otomatik yedek sıklığı"
+    "message": "Sıklık"
   },
   "gundeBir": {
     "message": "Günde 1"
@@ -2073,13 +2070,13 @@
     "message": "Haftada 1"
   },
   "klasorYedekGorselli": {
-    "message": "Görseller dahil"
+    "message": "Görseller Dahil"
   },
   "klasorYedekSakla": {
-    "message": "Saklanacak yedek sayısı"
+    "message": "Saklanan Yedek"
   },
   "klasorYedekSimdi": {
-    "message": "Klasöre şimdi yedekle"
+    "message": "Şimdi yedekle"
   },
   "klasorYedekGeriYukle": {
     "message": "Klasörden geri yükle"
@@ -2151,7 +2148,7 @@
     "message": "Aradığınız kart"
   },
   "klasorYedekSiklikKapali": {
-    "message": "Kapalı (yalnızca elle)"
+    "message": "Kapalı"
   },
   "acilisGrubu": {
     "message": "Açılış Grubu"
@@ -2202,6 +2199,141 @@
     "message": "Bu sayfa \"$1\" içinde zaten var"
   },
   "sahneKapali": {
-    "message": "Bu sayfa eklentilere kapalı (tarayıcı izin vermiyor). Görsel için \"Görüntü Dosyası\" ya da \"Görüntü URL'si\" kullanın."
+    "message": "Bu sayfa eklentilere kapalı (tarayıcı izin vermiyor). Görsel için \"Görsel Dosyası\" ya da \"Görsel Adresi\" kullanın."
+  },
+  "geriYukle": {
+    "message": "Geri yükle"
+  },
+  "arayuzModu": {
+    "message": "Arayüz"
+  },
+  "modBasit": {
+    "message": "Basit"
+  },
+  "modGelismis": {
+    "message": "Gelişmiş"
+  },
+  "logoKoy": {
+    "message": "Bu gruptaki kartlara logo bul"
+  },
+  "baslikKonum": {
+    "message": "Konum"
+  },
+  "konumUstte": {
+    "message": "Üstte"
+  },
+  "konumAltta": {
+    "message": "Altta"
+  },
+  "logoIlerleme": {
+    "message": "Logolar aranıyor: $1 / $2"
+  },
+  "logoBitti": {
+    "message": "$2 karttan $1 tanesine logo kondu"
+  },
+  "logoKartYok": {
+    "message": "Bu grupta kart yok"
+  },
+  "logolar": {
+    "message": "Site Logoları"
+  },
+  "boyutSimge": {
+    "message": "Simge"
+  },
+  "boyutMinik": {
+    "message": "Minik"
+  },
+  "boyutKucuk": {
+    "message": "Küçük"
+  },
+  "boyutOrta": {
+    "message": "Orta"
+  },
+  "boyutBuyuk": {
+    "message": "Büyük"
+  },
+  "boyutKocaman": {
+    "message": "Kocaman"
+  },
+  "boyutOzel": {
+    "message": "Özel"
+  },
+  "logoIpucu": {
+    "message": "Kart görselini logo yapar; eskisi Düzenle'de kalır."
+  },
+  "modBasitAciklama": {
+    "message": "Sade sayfa, küçük simgeler"
+  },
+  "modGelismisAciklama": {
+    "message": "Gruplar, klasörler, tüm ayarlar"
+  },
+  "tema_gumus": {
+    "message": "Gümüş"
+  },
+  "tema_toprak": {
+    "message": "Toprak"
+  },
+  "tema_mercan": {
+    "message": "Mercan"
+  },
+  "filtre": {
+    "message": "Filtre"
+  },
+  "filtreYok": {
+    "message": "Yok"
+  },
+  "filtreTekRenk": {
+    "message": "Tek Renk"
+  },
+  "filtreRenklendir": {
+    "message": "Renklendir"
+  },
+  "filtreGri": {
+    "message": "Siyah-Beyaz"
+  },
+  "filtreSepya": {
+    "message": "Sepya"
+  },
+  "filtreTers": {
+    "message": "Ters"
+  },
+  "parlaklik": {
+    "message": "Parlaklık"
+  },
+  "kontrast": {
+    "message": "Kontrast"
+  },
+  "uygula": {
+    "message": "Uygula"
+  },
+  "filtreIpucu": {
+    "message": "Sonuç yeni görsel olarak eklenir; asıl görsel karuselde kalır."
+  },
+  "filtreUygulandi": {
+    "message": "Filtre uygulandı."
+  },
+  "filtreUygulanamadi": {
+    "message": "Bu görsele filtre uygulanamadı."
+  },
+  "filtreGorselYok": {
+    "message": "Önce bir görsel ekleyin."
+  },
+  "koyulastir": {
+    "message": "Koyulaştır"
+  },
+  "hizliBasla": {
+    "message": "Hızlı Başla"
+  },
+  "hizliBaslaIpucu": {
+    "message": "Bilinen siteleri logolarıyla ekler"
+  },
+  "webOneriler": {
+    "message": "Öneriler"
+  },
+  "webOnerilerIpucu": {
+    "message": "Yazdıkça öneri gösterir; yazılan metin motorun öneri servisine gider."
+  },
+  "duvarTema": {
+    "message": "Tema"
   }
 }

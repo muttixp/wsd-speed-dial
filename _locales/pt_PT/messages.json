@@ -21,7 +21,7 @@
     "message": "Pesquisar"
   },
   "GenisEkran": {
-    "message": "16:9 — widescreen"
+    "message": "16:9"
   },
   "aciklik": {
     "message": "Brilho"
@@ -33,7 +33,7 @@
     "message": "Opacidade do grupo ativo"
   },
   "anaSayfaGrubunuGoster": {
-    "message": "Mostrar grupo Início"
+    "message": "Grupo Início"
   },
   "ayarlariAcKapat": {
     "message": "abrir / fechar definições"
@@ -51,7 +51,7 @@
     "message": "Título"
   },
   "baslikYaziBoyutu": {
-    "message": "Tamanho da fonte do título"
+    "message": "Tamanho da fonte"
   },
   "bekleyenYakalamalariIptalEt": {
     "message": "Cancelar capturas pendentes"
@@ -78,10 +78,10 @@
     "message": "Bloco \"+\""
   },
   "ekranGoruntusuBoyutu": {
-    "message": "Tamanho da captura"
+    "message": "Tamanho"
   },
   "ekranGoruntusuOnerilen": {
-    "message": "Captura de ecrã (recomendado)"
+    "message": "Captura de ecrã"
   },
   "enCokZiyaretEdilen": {
     "message": "Mais visitados"
@@ -96,10 +96,10 @@
     "message": "Usar configuração geral"
   },
   "gerekirsePencereyiOneAl": {
-    "message": "Trazer a janela para a frente se necessário"
+    "message": "Trazer janela para a frente"
   },
   "gizliHataAyiklamaCubuguCikar": {
-    "message": "Oculto (mostra barra de depuração)"
+    "message": "Oculto"
   },
   "golgeRengi": {
     "message": "Cor da sombra"
@@ -108,7 +108,7 @@
     "message": "Ficheiro de imagem"
   },
   "goruntuUrlSi": {
-    "message": "URL da imagem"
+    "message": "Endereço da imagem"
   },
   "gosterim": {
     "message": "Exibição"
@@ -138,7 +138,7 @@
     "message": "ocultar / mostrar tudo"
   },
   "htmlSayfasiOlarakDisaAktar": {
-    "message": "Exportar como página HTML"
+    "message": "Exportar como HTML"
   },
   "iceAktar": {
     "message": "Importar"
@@ -165,34 +165,34 @@
     "message": "Remover"
   },
   "kartAcilisSekli": {
-    "message": "Abrir bloco em"
+    "message": "Abrir em"
   },
   "kartBasliklari": {
-    "message": "Títulos dos blocos"
+    "message": "Títulos"
   },
   "kartBoyutu": {
-    "message": "Tamanho do bloco"
+    "message": "Tamanho"
   },
   "kartCerceveRengi": {
     "message": "Cor da borda"
   },
   "kartCerceveRengiUzerineGelince": {
-    "message": "Cor da borda (ao passar)"
+    "message": "Ao passar"
   },
   "kartCercevesi": {
-    "message": "Borda do bloco"
+    "message": "Borda"
   },
   "kartOrani": {
-    "message": "Proporção do bloco"
+    "message": "Proporção"
   },
   "kartSayisi": {
     "message": "Quantidade de blocos"
   },
   "kartUstuButonlar": {
-    "message": "Botões sobre o bloco"
+    "message": "Botões do bloco"
   },
   "kartZeminRengi": {
-    "message": "Fundo do bloco"
+    "message": "Fundo"
   },
   "kartiDuzenle": {
     "message": "Editar bloco"
@@ -216,7 +216,7 @@
     "message": "Os atalhos não funcionam enquanto digita num campo."
   },
   "kullanilmayanVerileriTemizle": {
-    "message": "Limpar dados não usados"
+    "message": "Limpar não usados"
   },
   "notuSil": {
     "message": "Eliminar nota"
@@ -225,7 +225,7 @@
     "message": "ir para esse grupo"
   },
   "onceSayfaGorseliYoksaEkran": {
-    "message": "Primeiro a imagem da página, senão captura"
+    "message": "Imagem da página, senão captura"
   },
   "oncekiSonrakiGrup": {
     "message": "grupo anterior / próximo"
@@ -237,7 +237,7 @@
     "message": "Emoji personalizado"
   },
   "pencereKisaSureGorunur": {
-    "message": "Janela (visível por um instante)"
+    "message": "Janela"
   },
   "pencereyiAramayiKapat": {
     "message": "fechar diálogo / pesquisa"
@@ -249,16 +249,16 @@
     "message": "Matiz"
   },
   "renklendirmeSiddeti": {
-    "message": "Intensidade da tonalização"
+    "message": "Intensidade"
   },
   "renklendirmeYontemi": {
-    "message": "Método de tonalização"
+    "message": "Método"
   },
   "resmiIndir": {
     "message": "Transferir imagem"
   },
   "sekmeZeminSaydamligi": {
-    "message": "Opacidade do fundo dos separadores"
+    "message": "Opacidade do fundo"
   },
   "sil": {
     "message": "Eliminar"
@@ -321,7 +321,7 @@
     "message": "Novo separador"
   },
   "yeniSekmeArkaPlan": {
-    "message": "Novo separador (em segundo plano)"
+    "message": "Separador em segundo plano"
   },
   "yontem": {
     "message": "Método"
@@ -345,7 +345,7 @@
     "message": "Exportar cópia"
   },
   "simdiYedekAl": {
-    "message": "Fazer cópia agora"
+    "message": "Fazer cópia"
   },
   "onaySorulariniGeriGetir": {
     "message": "Restaurar confirmações"
@@ -810,7 +810,7 @@
     "message": "$1 blocos · grupo eliminado"
   },
   "goruntuUrlsi": {
-    "message": "URL da imagem"
+    "message": "Endereço da imagem"
   },
   "oncekiSimdiKayip": {
     "message": "Havia $1 $2, agora $3."
@@ -831,7 +831,7 @@
     "message": "Barra de grupos"
   },
   "goruntuYakalama": {
-    "message": "Capturas"
+    "message": "Captura"
   },
   "bakimBolum": {
     "message": "Manutenção"
@@ -844,9 +844,6 @@
   },
   "uzantiSimgesi": {
     "message": "Ícone da extensão"
-  },
-  "baslamakIcin": {
-    "message": "Comece com"
   },
   "tonKaydir": {
     "message": "Deslocar matiz"
@@ -861,7 +858,7 @@
     "message": "As imagens de $1 blocos serão capturadas novamente. Isso pode levar alguns minutos."
   },
   "colorizeTekTonaIndir": {
-    "message": "Colorir (um tom)"
+    "message": "Um tom"
   },
   "doygunluk": {
     "message": "Saturação"
@@ -876,13 +873,13 @@
     "message": "Quadrado"
   },
   "sekmeZeminRengi": {
-    "message": "Fundo dos separadores"
+    "message": "Cor de fundo"
   },
   "sekmeBoyutu": {
-    "message": "Tamanho dos separadores"
+    "message": "Tamanho"
   },
   "menuKonumu": {
-    "message": "Posição do menu"
+    "message": "Posição"
   },
   "konumNormal": {
     "message": "Normal"
@@ -915,7 +912,7 @@
     "message": "Nome"
   },
   "siteUrl": {
-    "message": "URL do site"
+    "message": "Endereço do site"
   },
   "enSonEklenen": {
     "message": "Mais recentes"
@@ -927,13 +924,13 @@
     "message": "Confirmar"
   },
   "oranDengeli": {
-    "message": "16:10 — equilibrado"
+    "message": "16:10"
   },
   "veya": {
     "message": "ou"
   },
   "zeminRenklendirme": {
-    "message": "Tonalização do fundo"
+    "message": "Tonalização"
   },
   "kurulumAciklama": {
     "message": "Para abrir o WSD pelo botão Início, copie o endereço abaixo em Definições → Ao iniciar → Página inicial."
@@ -987,10 +984,10 @@
     "message": "Ajuste da imagem"
   },
   "yerlesimKirp": {
-    "message": "Recortar (preencher)"
+    "message": "Preencher"
   },
   "yerlesimSigdir": {
-    "message": "Ajustar (mostrar tudo)"
+    "message": "Ajustar"
   },
   "sahneYakala": {
     "message": "Capturar cena"
@@ -1461,7 +1458,7 @@
     "message": "Blocos, separadores, janelas, menus e botões"
   },
   "yanPaneliGizle": {
-    "message": "Ocultar automaticamente a barra lateral"
+    "message": "Ocultar painel lateral"
   },
   "buGruptaNKart": {
     "message": "Este grupo tem <b>$1</b> blocos"
@@ -1497,7 +1494,7 @@
     "message": "Clique num nome para adicionar aí · ▸ abre o ramo"
   },
   "sagTikMenusu": {
-    "message": "Menu de contexto da página"
+    "message": "Tipo de menu"
   },
   "sagTikPencere": {
     "message": "Grupos + Escolher pasta…"
@@ -1542,10 +1539,10 @@
     "message": "Título"
   },
   "baslikRengi": {
-    "message": "Cor do título"
+    "message": "Cor"
   },
   "baslikStili": {
-    "message": "Estilo do título"
+    "message": "Estilo"
   },
   "stilNormal": {
     "message": "Normal"
@@ -1560,16 +1557,16 @@
     "message": "Negrito itálico"
   },
   "baslikGolgesi": {
-    "message": "Sombra do título"
+    "message": "Sombra"
   },
   "baslikGolgeRengi": {
     "message": "Cor da sombra"
   },
   "menuYaziRengi": {
-    "message": "Cor do texto do menu"
+    "message": "Cor do texto"
   },
   "aktifGrupYaziRengi": {
-    "message": "Cor do texto do grupo ativo"
+    "message": "Texto ativo"
   },
   "sistemBolum": {
     "message": "Sistema"
@@ -1593,7 +1590,7 @@
     "message": "Cor de fundo"
   },
   "aktarimdaYakala": {
-    "message": "Capturar miniaturas em falta após importar"
+    "message": "Capturar ao importar"
   },
   "icindekiKartlardanSec": {
     "message": "Escolher entre os blocos do grupo"
@@ -1755,16 +1752,16 @@
     "message": "Barra de pesquisa"
   },
   "webAramaGoster": {
-    "message": "Mostrar barra de pesquisa"
+    "message": "Mostrar"
   },
   "webVarsayilanMotor": {
-    "message": "Motor de pesquisa predefinido"
+    "message": "Predefinido"
   },
   "webMotorListesi": {
-    "message": "Motores mostrados na lista"
+    "message": "Na lista"
   },
   "webMotorEkle": {
-    "message": "Adicionar o seu motor de pesquisa"
+    "message": "Adicionar motor"
   },
   "webYeniAd": {
     "message": "Nome"
@@ -1794,7 +1791,7 @@
     "message": "Escolher uma cor do ecrã"
   },
   "arayuzAlt": {
-    "message": "Interface"
+    "message": "Efeitos"
   },
   "renkliSimgeler": {
     "message": "Ícones coloridos"
@@ -1887,10 +1884,10 @@
     "message": "Não é possível mudar o nome do grupo Início"
   },
   "camGorunum": {
-    "message": "Aspeto de vidro fosco"
+    "message": "Vidro fosco"
   },
   "aktifIkonRengi": {
-    "message": "Cor do ícone do grupo ativo"
+    "message": "Ícone ativo"
   },
   "aktarimGorselBaslik": {
     "message": "Imagens dos blocos"
@@ -1941,7 +1938,7 @@
     "message": "Tinta"
   },
   "webAramaYeri": {
-    "message": "Onde mostrar"
+    "message": "Onde"
   },
   "webYerAnaSayfa": {
     "message": "Só no Início"
@@ -1953,7 +1950,7 @@
     "message": "Em todos os grupos"
   },
   "kucukPencere": {
-    "message": "Janela pequena no canto (experimental)"
+    "message": "Janela pequena no canto"
   },
   "gizliKipBilgi": {
     "message": "Durante a captura, o Chrome mostra no topo uma barra de \"depuração\". É um aviso obrigatório; a permissão é usada só para capturas e a barra desaparece no fim."
@@ -1992,7 +1989,7 @@
     "message": "Pesquisar na Web ou escrever um endereço"
   },
   "kartHizalama": {
-    "message": "Alinhamento dos blocos"
+    "message": "Alinhamento"
   },
   "hizaOrta": {
     "message": "Centro"
@@ -2064,7 +2061,7 @@
     "message": "Nome dos ficheiros de cópia e da subpasta. Dê um nome próprio a cada navegador; o mesmo nome é uma cópia partilhada."
   },
   "klasorYedekSiklik": {
-    "message": "Frequência da cópia automática"
+    "message": "Frequência"
   },
   "gundeBir": {
     "message": "Uma vez por dia"
@@ -2079,7 +2076,7 @@
     "message": "Cópias a manter"
   },
   "klasorYedekSimdi": {
-    "message": "Fazer cópia na pasta agora"
+    "message": "Fazer cópia agora"
   },
   "klasorYedekGeriYukle": {
     "message": "Restaurar da pasta"
@@ -2151,7 +2148,7 @@
     "message": "Está aqui"
   },
   "klasorYedekSiklikKapali": {
-    "message": "Desligado (só manual)"
+    "message": "Desligado"
   },
   "acilisGrubu": {
     "message": "Grupo inicial"
@@ -2202,6 +2199,141 @@
     "message": "Esta página já está em \"$1\""
   },
   "sahneKapali": {
-    "message": "Esta página não permite extensões (o navegador bloqueia). Utilize \"Ficheiro de imagem\" ou \"URL da imagem\"."
+    "message": "Esta página não permite extensões (o navegador bloqueia). Utilize \"Ficheiro de imagem\" ou \"Endereço da imagem\"."
+  },
+  "geriYukle": {
+    "message": "Restaurar"
+  },
+  "arayuzModu": {
+    "message": "Interface"
+  },
+  "modBasit": {
+    "message": "Simples"
+  },
+  "modGelismis": {
+    "message": "Avançado"
+  },
+  "logoKoy": {
+    "message": "Procurar logótipos para os blocos deste grupo"
+  },
+  "baslikKonum": {
+    "message": "Posição"
+  },
+  "konumUstte": {
+    "message": "Acima"
+  },
+  "konumAltta": {
+    "message": "Abaixo"
+  },
+  "logoIlerleme": {
+    "message": "A procurar logótipos: $1 / $2"
+  },
+  "logoBitti": {
+    "message": "Logótipos adicionados a $1 de $2 blocos"
+  },
+  "logoKartYok": {
+    "message": "Nenhum bloco neste grupo"
+  },
+  "logolar": {
+    "message": "Logótipos dos sites"
+  },
+  "boyutSimge": {
+    "message": "Ícone"
+  },
+  "boyutMinik": {
+    "message": "Minúsculo"
+  },
+  "boyutKucuk": {
+    "message": "Pequeno"
+  },
+  "boyutOrta": {
+    "message": "Médio"
+  },
+  "boyutBuyuk": {
+    "message": "Grande"
+  },
+  "boyutKocaman": {
+    "message": "Enorme"
+  },
+  "boyutOzel": {
+    "message": "Personalizado"
+  },
+  "logoIpucu": {
+    "message": "Usa o logótipo como imagem; a anterior fica em Editar."
+  },
+  "modBasitAciklama": {
+    "message": "Página limpa, ícones pequenos"
+  },
+  "modGelismisAciklama": {
+    "message": "Grupos, pastas, todas as definições"
+  },
+  "tema_gumus": {
+    "message": "Prata"
+  },
+  "tema_toprak": {
+    "message": "Terra"
+  },
+  "tema_mercan": {
+    "message": "Coral"
+  },
+  "filtre": {
+    "message": "Filtro"
+  },
+  "filtreYok": {
+    "message": "Nenhum"
+  },
+  "filtreTekRenk": {
+    "message": "Uma cor"
+  },
+  "filtreRenklendir": {
+    "message": "Tingir"
+  },
+  "filtreGri": {
+    "message": "Preto e branco"
+  },
+  "filtreSepya": {
+    "message": "Sépia"
+  },
+  "filtreTers": {
+    "message": "Inverter"
+  },
+  "parlaklik": {
+    "message": "Brilho"
+  },
+  "kontrast": {
+    "message": "Contraste"
+  },
+  "uygula": {
+    "message": "Aplicar"
+  },
+  "filtreIpucu": {
+    "message": "O resultado é adicionado como nova imagem; a original continua no carrossel."
+  },
+  "filtreUygulandi": {
+    "message": "Filtro aplicado."
+  },
+  "filtreUygulanamadi": {
+    "message": "Não foi possível aplicar o filtro a esta imagem."
+  },
+  "filtreGorselYok": {
+    "message": "Adicione primeiro uma imagem."
+  },
+  "koyulastir": {
+    "message": "Escurecer"
+  },
+  "hizliBasla": {
+    "message": "Início rápido"
+  },
+  "hizliBaslaIpucu": {
+    "message": "Adiciona sites populares com os respetivos logótipos"
+  },
+  "webOneriler": {
+    "message": "Sugestões"
+  },
+  "webOnerilerIpucu": {
+    "message": "Mostra sugestões ao escrever; o texto é enviado ao serviço de sugestões do motor de pesquisa."
+  },
+  "duvarTema": {
+    "message": "Tema"
   }
 }

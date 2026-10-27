@@ -37,11 +37,12 @@ export const VARSAYILAN = {
     // Gorunum
     duvarAcik: true,
     duvarGorsel: null,          // data URI - yoksa varsayilan gradyan
+    duvarHazir: 'dalga',        // hazir duvar kagidi (1.6.1): 'dalga' | 'ipek' | null (temanin kendi zemini). Yeni kurulumda dalga
     zeminRengi: '#14161a',      // duvar kagidi kapaliyken kullanilan renk
 
     // Zemin renklendirme (ayri acma/kapama anahtari YOK; notr degerler
     // - ton 0, doygunluk 0, aciklik 0 - zaten "kapali" demek)
-    filtreYontemi: 'ton',       // 'ton' | 'iki'
+    filtreYontemi: 'ton',       // 'ton' | 'iki' | 'koyu'
     colorize: false,            // tek tona indir (grayscale -> sepia -> ton)
     ton: 0,                     // -180..180 derece
     doygunluk: 0,               // -100..100 fark
@@ -69,6 +70,9 @@ export const VARSAYILAN = {
     kartCerceveRengi: '#6a6a6a',
     kartCerceveHoverRengi: '#576a80',
     baslikGoster: true,
+    baslikKonum: 'ust',         // 'ust' | 'alt' - kart basligi gorselin ustunde/altinda (1.6.1)
+    basitMod: false,            // 1.6.1 deneysel: Basit arayuz (basitmod.js)
+    basitOnceki: null,          // Basit'e gecmeden onceki degerler
     kartAcilis: 'ayni',         // 'ayni' | 'yeni' | 'arkaplan'
     sagTikMenu: 'pencere',      // sayfada sag tik: 'pencere' | 'agac' | 'gruplar' (1.5.2)
     otomatikYedek: false,       // gunde 1 kez yedek dosyasi indir
@@ -114,6 +118,7 @@ export const VARSAYILAN = {
 
     // Web arama cubugu (1.5.5) - yalnizca Ana Sayfa'da
     webAramaGoster: true,
+    webOneriler: false,         // arama onerileri (1.6.1) - yazilan metin motorun oneri servisine gider
     webAramaYeri: 'anaSayfa',   // 'anaSayfa' (Ana Sayfa gizliyse kutu da yok) | 'ilkGrup' | 'hepsi'
     // 'tarayici' = tarayicinin kendi arama motoru. Rusca arayuzde Yandex:
     // oradaki kullanicilarin aliskin oldugu varsayilan (1.5.5)
@@ -125,6 +130,7 @@ export const VARSAYILAN = {
 };
 
 let onbellek = null;
+
 
 export async function ayarlariAl() {
     if (onbellek) return onbellek;
@@ -150,6 +156,9 @@ export async function ayarlariAl() {
         } else if ('filtreAcik' in onbellek) {
             delete onbellek.filtreAcik;
         }
+        // Hazir duvar kagidi (1.6.1) yalnizca YENI kurulumda varsayilan;
+        // mevcut kullanicinin zemini guncellemeyle degismesin
+        if (d.ayarlar && !('duvarHazir' in d.ayarlar)) onbellek.duvarHazir = null;
     } catch (e) {
         onbellek = { ...VARSAYILAN };
     }

@@ -9,7 +9,11 @@
  *
  * Diger motorlar yalnizca o motorun arama sayfasina GIDIS: tarayicinin
  * arama ayarina dokunulmuyor, adrese ortaklik/izleme kodu eklenmiyor,
- * yazarken hicbir yere istek gitmiyor (oneri listesi yok).
+ * yazarken hicbir yere istek gitmiyor.
+ *
+ * ARAMA ONERILERI (1.6.1): istege bagli, varsayilan KAPALI. Acilinca
+ * yazilan metin secili motorun oneri servisine gider (motorun kendi
+ * servisi yoksa Google; Rusca arayuzde Yandex). Cerez gonderilmez.
  */
 import { c } from './dil.js';
 import { ayarlariAl, ayarYaz } from './ayar.js';
@@ -21,13 +25,22 @@ function wikiDili() {
     catch (e) { return 'en'; }
 }
 
+// Yandex dile gore (1.6.1): herkes yandex.com.tr'ye gidiyordu - Rusca
+// kullanici Turkce sonuc goruyordu
+function yandexAlani() {
+    const d = wikiDili();
+    if (['ru', 'be', 'kk'].includes(d)) return 'yandex.ru';
+    if (d === 'tr') return 'yandex.com.tr';
+    return 'yandex.com';
+}
+
 // kisa: kisayol oneki ("g kelime"). renk: harf rozeti.
 const MOTORLAR = [
     { id: 'tarayici',   ad: null,          kisa: '',   renk: '' },
     { id: 'google',     ad: 'Google',      kisa: 'g',  renk: '#4285f4', adres: 'https://www.google.com/search?q=%s' },
     { id: 'bing',       ad: 'Bing',        kisa: 'b',  renk: '#00809d', adres: 'https://www.bing.com/search?q=%s' },
     { id: 'duckduckgo', ad: 'DuckDuckGo',  kisa: 'd',  renk: '#de5833', adres: 'https://duckduckgo.com/?q=%s' },
-    { id: 'yandex',     ad: 'Yandex',      kisa: 'y',  renk: '#fc3f1d', adres: 'https://yandex.com.tr/search/?text=%s' },
+    { id: 'yandex',     ad: 'Yandex',      kisa: 'y',  renk: '#fc3f1d', adres: () => `https://${yandexAlani()}/search/?text=%s` },
     { id: 'brave',      ad: 'Brave Search', kisa: 'br', renk: '#fb542b', adres: 'https://search.brave.com/search?q=%s' },
     { id: 'ecosia',     ad: 'Ecosia',      kisa: 'e',  renk: '#36acb8', adres: 'https://www.ecosia.org/search?q=%s' },
     { id: 'startpage',  ad: 'Startpage',   kisa: 's',  renk: '#6573ff', adres: 'https://www.startpage.com/do/search?query=%s' },
@@ -41,6 +54,10 @@ const MOTORLAR = [
     { id: 'trendyol',    ad: 'Trendyol',    kisa: 'ty', renk: '#f27a1a', bolge: 'tr', kapali: true, adres: 'https://www.trendyol.com/sr?q=%s' },
     { id: 'hepsiburada', ad: 'Hepsiburada', kisa: 'hb', renk: '#ff6000', bolge: 'tr', kapali: true, adres: 'https://www.hepsiburada.com/ara?q=%s' },
     { id: 'webtecity',   ad: 'WEBTE City',  kisa: 'wc', renk: '#1e6fd0', bolge: 'tr', kapali: true, adres: 'https://webtecity.com/index.php?option=com_webtebusiness&view=businesses&q=%s' },
+    { id: 'avito',       ad: 'Avito',       kisa: 'av', renk: '#00aaff', bolge: 'ru', kapali: true, adres: 'https://www.avito.ru/all?q=%s' },
+    { id: 'ozon',        ad: 'Ozon',        kisa: 'oz', renk: '#005bff', bolge: 'ru', kapali: true, adres: 'https://www.ozon.ru/search/?text=%s' },
+    { id: 'wildberries', ad: 'Wildberries', kisa: 'wb', renk: '#cb11ab', bolge: 'ru', kapali: true, adres: 'https://www.wildberries.ru/catalog/0/search.aspx?search=%s' },
+    { id: 'yamarket',    ad: 'Яндекс Маркет', kisa: 'ym', renk: '#f5b400', bolge: 'ru', kapali: true, adres: 'https://market.yandex.ru/search?text=%s' },
 ];
 
 /**
@@ -53,7 +70,13 @@ const BOLGELER = new Set();
 try {
     const dil = (chrome.i18n.getUILanguage() || '').toLowerCase();
     const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
-    if (dil.startsWith('tr') || tz === 'Europe/Istanbul') BOLGELER.add('tr');
+    // 1.6.1: TEK bolge - Turkiye ya da Rusya, ikisi birden asla; digerlerinde
+    // ek motor yok. Once dil, dil belirleyici degilse saat dilimi.
+    const RUSYA_TZ = /^(Europe\/(Moscow|Samara|Volgograd|Kaliningrad|Kirov|Astrakhan|Saratov|Ulyanovsk)|Asia\/(Yekaterinburg|Omsk|Novosibirsk|Barnaul|Tomsk|Novokuznetsk|Krasnoyarsk|Irkutsk|Chita|Yakutsk|Khandyga|Vladivostok|Ust-Nera|Magadan|Sakhalin|Srednekolymsk|Kamchatka|Anadyr))$/;
+    if (dil.startsWith('tr')) BOLGELER.add('tr');
+    else if (dil.startsWith('ru')) BOLGELER.add('ru');
+    else if (tz === 'Europe/Istanbul') BOLGELER.add('tr');
+    else if (RUSYA_TZ.test(tz)) BOLGELER.add('ru');
 } catch (e) { /* bolge yok - yalnizca genel motorlar */ }
 
 // Kullanicinin ekledigi motorlar ve listeden gizlenen yerlesikler
@@ -97,6 +120,8 @@ async function ayarlariOku() {
     // Varsayilan gizlenmisse/silinmisse tarayici motoruna dus
     if (varsayilanId !== 'tarayici' && gizliMi(motorBul(varsayilanId))) varsayilanId = 'tarayici';
     if (anlikId && !gorunenMotorlar().some(m => m.id === anlikId)) anlikId = null;
+    oneriAcik = a.webOneriler === true;
+    if (!oneriAcik) oneriKapat();
     document.body.classList.toggle('webAramaKapali', a.webAramaGoster === false);
     const yer = ['anaSayfa', 'ilkGrup', 'hepsi'].includes(a.webAramaYeri) ? a.webAramaYeri : 'anaSayfa';
     document.body.classList.toggle('webYerAna', yer === 'anaSayfa');
@@ -260,21 +285,104 @@ function adresMi(t) {
     return null;
 }
 
+/** Kisayol: "yt kedi" -> YouTube'da "kedi". onek: kisayol kismi ("yt ") */
+function cozumle(metin) {
+    let motor = motorBul(anlikId || varsayilanId);
+    let onek = '';
+    const bosluk = metin.indexOf(' ');
+    if (bosluk > 0) {
+        const on = metin.slice(0, bosluk).toLowerCase();
+        const kisa = gorunenMotorlar().find(m => m.kisa && m.kisa.toLowerCase() === on);
+        const kalan = metin.slice(bosluk + 1).trimStart();
+        if (kisa && kalan.trim()) { motor = kisa; onek = metin.slice(0, bosluk + 1); metin = kalan.trim(); }
+    }
+    return { motor, metin, onek };
+}
+
+/* ---------- Arama onerileri (1.6.1) ---------- */
+let oneriAcik = false;
+const ONERI = {
+    google:     q => `https://suggestqueries.google.com/complete/search?client=firefox&ie=utf-8&oe=utf-8&hl=${wikiDili()}&q=${q}`,
+    youtube:    q => `https://suggestqueries.google.com/complete/search?client=firefox&ds=yt&ie=utf-8&oe=utf-8&hl=${wikiDili()}&q=${q}`,
+    bing:       q => `https://api.bing.com/osjson.aspx?query=${q}`,
+    duckduckgo: q => `https://duckduckgo.com/ac/?type=list&q=${q}`,
+    yandex:     q => `https://suggest.yandex.ru/suggest-ff.cgi?part=${q}`,
+    wikipedia:  q => `https://${wikiDili()}.wikipedia.org/w/api.php?action=opensearch&format=json&limit=8&search=${q}`,
+};
+const oneriAdresi = (motor, q) => (ONERI[motor.id] || (wikiDili() === 'ru' ? ONERI.yandex : ONERI.google))(encodeURIComponent(q));
+
+let oneriSayac = 0, oneriBekle = null, oneriIstek = null, oneriSecili = -1, yazilan = '';
+
+function oneriKapat() {
+    clearTimeout(oneriBekle);
+    oneriIstek?.abort();
+    oneriSecili = -1;
+    const l = document.getElementById('webOneriListe');
+    if (l) { l.hidden = true; l.textContent = ''; }
+}
+
+function oneriIste() {
+    clearTimeout(oneriBekle);
+    if (!oneriAcik) return;
+    const ham = el('webAramaAlan').value;
+    yazilan = ham;
+    const { motor, metin, onek } = cozumle(ham.trim() ? ham : '');
+    if (!metin || metin.length > 120 || adresMi(metin)) { oneriKapat(); return; }
+    oneriBekle = setTimeout(async () => {
+        const benim = ++oneriSayac;
+        oneriIstek?.abort();
+        oneriIstek = new AbortController();
+        const t = setTimeout(() => oneriIstek?.abort(), 4000);
+        try {
+            const y = await fetch(oneriAdresi(motor, metin), { credentials: 'omit', signal: oneriIstek.signal });
+            const d = JSON.parse(await y.text());
+            const liste = (Array.isArray(d) && Array.isArray(d[1]) ? d[1] : [])
+                .map(x => typeof x === 'string' ? x : x?.phrase).filter(Boolean)
+                .filter(x => x.toLowerCase() !== metin.toLowerCase()).slice(0, 8);
+            if (benim === oneriSayac && el('webAramaAlan').value === ham) oneriCiz(liste, onek);
+        } catch (e) { /* ag yok / iptal - liste acilmaz */ }
+        finally { clearTimeout(t); }
+    }, 120);
+}
+
+function oneriCiz(liste, onek) {
+    const l = el('webOneriListe');
+    l.textContent = '';
+    oneriSecili = -1;
+    if (!liste.length || document.activeElement !== el('webAramaAlan')) { l.hidden = true; return; }
+    for (const o of liste) {
+        const li = document.createElement('li');
+        li.className = 'webOneri';
+        li.setAttribute('role', 'option');
+        li.dataset.deger = onek + o;
+        li.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span></span>';
+        li.querySelector('span').textContent = o;
+        l.appendChild(li);
+    }
+    el('webMotorListe').hidden = true;
+    l.hidden = false;
+}
+
+function oneriGez(yon) {
+    const l = el('webOneriListe');
+    const ogeler = [...l.querySelectorAll('.webOneri')];
+    if (l.hidden || !ogeler.length) return false;
+    oneriSecili += yon;
+    if (oneriSecili < -1) oneriSecili = ogeler.length - 1;
+    if (oneriSecili >= ogeler.length) oneriSecili = -1;
+    ogeler.forEach((li, i) => li.classList.toggle('secili', i === oneriSecili));
+    el('webAramaAlan').value = oneriSecili < 0 ? yazilan : ogeler[oneriSecili].dataset.deger;
+    return true;
+}
+
 async function ara(yeniSekme) {
     const alan = el('webAramaAlan');
     let metin = alan.value.trim();
     if (!metin) return;
 
-    let motor = motorBul(anlikId || varsayilanId);
-
-    // Kisayol: "yt kedi" -> YouTube'da "kedi"
-    const bosluk = metin.indexOf(' ');
-    if (bosluk > 0) {
-        const on = metin.slice(0, bosluk).toLowerCase();
-        const kisa = gorunenMotorlar().find(m => m.kisa && m.kisa.toLowerCase() === on);
-        const kalan = metin.slice(bosluk + 1).trim();
-        if (kisa && kalan) { motor = kisa; metin = kalan; }
-    }
+    oneriKapat();
+    let motor;
+    ({ motor, metin } = cozumle(metin));
 
     const git = adres => {
         if (yeniSekme) chrome.tabs.create({ url: adres, active: false }).catch(() => window.open(adres, '_blank'));
@@ -319,12 +427,28 @@ export async function webAramayiKur() {
     ayarPaneliKur();
 
     kutu.addEventListener('submit', e => { e.preventDefault(); ara(false); });
+    el('webAramaAlan').addEventListener('input', oneriIste);
+    el('webAramaAlan').addEventListener('blur', () => setTimeout(oneriKapat, 150));
+    el('webOneriListe').addEventListener('mousedown', e => {
+        const li = e.target.closest('.webOneri');
+        if (!li) return;
+        e.preventDefault();                       // alan odagini kaybetmesin
+        el('webAramaAlan').value = li.dataset.deger;
+        ara(e.ctrlKey || e.metaKey || e.button === 1);
+    });
     el('webAramaAlan').addEventListener('keydown', e => {
-        if (e.key === 'Enter' && (e.ctrlKey || e.metaKey || e.altKey || e.shiftKey)) {
+        if ((e.key === 'ArrowDown' || e.key === 'ArrowUp') && oneriGez(e.key === 'ArrowDown' ? 1 : -1)) {
+            e.preventDefault();
+        } else if (e.key === 'Enter' && (e.ctrlKey || e.metaKey || e.altKey || e.shiftKey)) {
             e.preventDefault();
             ara(true);
         } else if (e.key === 'Escape') {
-            if (!el('webMotorListe').hidden) listeAc(false);
+            if (!el('webOneriListe').hidden) {
+                e.preventDefault();               // arama alani Esc'de kendini temizliyor
+                el('webAramaAlan').value = yazilan || el('webAramaAlan').value;
+                oneriKapat();
+            }
+            else if (!el('webMotorListe').hidden) listeAc(false);
             else { e.target.value = ''; anlikId = null; simgeyiTazele(); e.target.blur(); }
         }
     });
@@ -364,6 +488,7 @@ function ayarPaneliniCiz() {
 
     ayarlariAl().then(a => {
         el('ayWebArama').checked = a.webAramaGoster !== false;
+        if (el('ayWebOneri')) el('ayWebOneri').checked = a.webOneriler === true;
         if (el('ayWebAramaYeri')) {
             el('ayWebAramaYeri').value = a.webAramaYeri || 'anaSayfa';
             el('ayWebAramaYeri').disabled = a.webAramaGoster === false;
@@ -409,6 +534,7 @@ function ayarPaneliKur() {
         ayarYaz({ webAramaGoster: e.target.checked }).catch(() => {});
     });
     el('ayWebAramaYeri')?.addEventListener('change', e => ayarYaz({ webAramaYeri: e.target.value }).catch(() => {}));
+    el('ayWebOneri')?.addEventListener('change', e => ayarYaz({ webOneriler: e.target.checked }).catch(() => {}));
     el('ayWebMotor').addEventListener('change', e => ayarYaz({ webMotoru: e.target.value }).catch(() => {}));
 
     el('ayWebMotorlar').addEventListener('change', e => {

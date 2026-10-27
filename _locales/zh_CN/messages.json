@@ -21,7 +21,7 @@
     "message": "搜索"
   },
   "GenisEkran": {
-    "message": "16:9 — 宽屏"
+    "message": "16:9"
   },
   "aciklik": {
     "message": "亮度"
@@ -33,7 +33,7 @@
     "message": "当前分组不透明度"
   },
   "anaSayfaGrubunuGoster": {
-    "message": "显示“主页”分组"
+    "message": "“主页”分组"
   },
   "ayarlariAcKapat": {
     "message": "打开 / 关闭设置"
@@ -51,7 +51,7 @@
     "message": "标题"
   },
   "baslikYaziBoyutu": {
-    "message": "标题字号"
+    "message": "字号"
   },
   "bekleyenYakalamalariIptalEt": {
     "message": "取消待处理的截图"
@@ -78,10 +78,10 @@
     "message": "“+”磁贴"
   },
   "ekranGoruntusuBoyutu": {
-    "message": "截图尺寸"
+    "message": "尺寸"
   },
   "ekranGoruntusuOnerilen": {
-    "message": "截图（推荐）"
+    "message": "截图"
   },
   "enCokZiyaretEdilen": {
     "message": "最常访问"
@@ -96,10 +96,10 @@
     "message": "使用全局设置"
   },
   "gerekirsePencereyiOneAl": {
-    "message": "必要时将窗口置于前台"
+    "message": "窗口置前"
   },
   "gizliHataAyiklamaCubuguCikar": {
-    "message": "隐藏（会显示调试栏）"
+    "message": "隐藏"
   },
   "golgeRengi": {
     "message": "阴影颜色"
@@ -108,7 +108,7 @@
     "message": "图片文件"
   },
   "goruntuUrlSi": {
-    "message": "图片网址"
+    "message": "图片地址"
   },
   "gosterim": {
     "message": "显示方式"
@@ -138,7 +138,7 @@
     "message": "隐藏 / 显示全部"
   },
   "htmlSayfasiOlarakDisaAktar": {
-    "message": "导出为 HTML 页面"
+    "message": "导出为 HTML"
   },
   "iceAktar": {
     "message": "导入"
@@ -165,34 +165,34 @@
     "message": "移除"
   },
   "kartAcilisSekli": {
-    "message": "磁贴打开方式"
+    "message": "打开方式"
   },
   "kartBasliklari": {
-    "message": "磁贴标题"
+    "message": "标题"
   },
   "kartBoyutu": {
-    "message": "磁贴大小"
+    "message": "大小"
   },
   "kartCerceveRengi": {
     "message": "边框颜色"
   },
   "kartCerceveRengiUzerineGelince": {
-    "message": "边框颜色（悬停）"
+    "message": "悬停时"
   },
   "kartCercevesi": {
-    "message": "磁贴边框"
+    "message": "边框"
   },
   "kartOrani": {
-    "message": "磁贴比例"
+    "message": "比例"
   },
   "kartSayisi": {
     "message": "磁贴数量"
   },
   "kartUstuButonlar": {
-    "message": "磁贴悬停按钮"
+    "message": "磁贴按钮"
   },
   "kartZeminRengi": {
-    "message": "磁贴背景"
+    "message": "背景"
   },
   "kartiDuzenle": {
     "message": "编辑磁贴"
@@ -216,7 +216,7 @@
     "message": "在输入框中输入时快捷键不可用。"
   },
   "kullanilmayanVerileriTemizle": {
-    "message": "清理未使用的数据"
+    "message": "清理未使用"
   },
   "notuSil": {
     "message": "删除备注"
@@ -225,7 +225,7 @@
     "message": "切换到该分组"
   },
   "onceSayfaGorseliYoksaEkran": {
-    "message": "优先使用页面图片，否则截图"
+    "message": "页面图片，否则截图"
   },
   "oncekiSonrakiGrup": {
     "message": "上一个 / 下一个分组"
@@ -237,7 +237,7 @@
     "message": "自定义表情"
   },
   "pencereKisaSureGorunur": {
-    "message": "窗口（短暂可见）"
+    "message": "窗口"
   },
   "pencereyiAramayiKapat": {
     "message": "关闭对话框 / 搜索"
@@ -249,16 +249,16 @@
     "message": "色相"
   },
   "renklendirmeSiddeti": {
-    "message": "着色强度"
+    "message": "强度"
   },
   "renklendirmeYontemi": {
-    "message": "着色方式"
+    "message": "方式"
   },
   "resmiIndir": {
     "message": "下载图片"
   },
   "sekmeZeminSaydamligi": {
-    "message": "标签背景不透明度"
+    "message": "背景不透明度"
   },
   "sil": {
     "message": "删除"
@@ -321,7 +321,7 @@
     "message": "新标签页"
   },
   "yeniSekmeArkaPlan": {
-    "message": "新标签页（后台）"
+    "message": "后台标签页"
   },
   "yontem": {
     "message": "方式"
@@ -345,7 +345,7 @@
     "message": "导出备份"
   },
   "simdiYedekAl": {
-    "message": "立即备份"
+    "message": "备份"
   },
   "onaySorulariniGeriGetir": {
     "message": "恢复确认提示"
@@ -810,7 +810,7 @@
     "message": "$1 个磁贴 · 已删除的分组"
   },
   "goruntuUrlsi": {
-    "message": "图片网址"
+    "message": "图片地址"
   },
   "oncekiSimdiKayip": {
     "message": "原有 $1 $2，现在 $3。"
@@ -845,9 +845,6 @@
   "uzantiSimgesi": {
     "message": "扩展图标"
   },
-  "baslamakIcin": {
-    "message": "开始使用"
-  },
   "tonKaydir": {
     "message": "色相偏移"
   },
@@ -861,7 +858,7 @@
     "message": "将重新截取 $1 个磁贴的图片，可能需要几分钟。"
   },
   "colorizeTekTonaIndir": {
-    "message": "着色（单色调）"
+    "message": "单色调"
   },
   "doygunluk": {
     "message": "饱和度"
@@ -876,13 +873,13 @@
     "message": "正方形"
   },
   "sekmeZeminRengi": {
-    "message": "标签背景"
+    "message": "背景颜色"
   },
   "sekmeBoyutu": {
-    "message": "标签大小"
+    "message": "大小"
   },
   "menuKonumu": {
-    "message": "菜单位置"
+    "message": "位置"
   },
   "konumNormal": {
     "message": "常规"
@@ -915,7 +912,7 @@
     "message": "名称"
   },
   "siteUrl": {
-    "message": "网站网址"
+    "message": "网站地址"
   },
   "enSonEklenen": {
     "message": "最近添加"
@@ -927,13 +924,13 @@
     "message": "确认"
   },
   "oranDengeli": {
-    "message": "16:10 — 均衡"
+    "message": "16:10"
   },
   "veya": {
     "message": "或"
   },
   "zeminRenklendirme": {
-    "message": "背景着色"
+    "message": "着色"
   },
   "kurulumAciklama": {
     "message": "如需通过主页按钮打开 WSD，请将下方地址复制到 设置 → 启动时 → 主页。"
@@ -987,10 +984,10 @@
     "message": "图片适配"
   },
   "yerlesimKirp": {
-    "message": "裁剪（填满）"
+    "message": "填满"
   },
   "yerlesimSigdir": {
-    "message": "适应（完整显示）"
+    "message": "适应"
   },
   "sahneYakala": {
     "message": "截取场景"
@@ -1461,7 +1458,7 @@
     "message": "磁贴、标签、窗口、菜单和按钮"
   },
   "yanPaneliGizle": {
-    "message": "自动隐藏侧边工具栏"
+    "message": "隐藏侧边栏"
   },
   "buGruptaNKart": {
     "message": "此分组中有 <b>$1</b> 个磁贴"
@@ -1497,7 +1494,7 @@
     "message": "点击名称即添加到该处 · ▸ 展开分支"
   },
   "sagTikMenusu": {
-    "message": "页面右键菜单"
+    "message": "菜单类型"
   },
   "sagTikPencere": {
     "message": "分组 + 选择文件夹…"
@@ -1542,10 +1539,10 @@
     "message": "标题"
   },
   "baslikRengi": {
-    "message": "标题颜色"
+    "message": "颜色"
   },
   "baslikStili": {
-    "message": "标题样式"
+    "message": "样式"
   },
   "stilNormal": {
     "message": "常规"
@@ -1560,16 +1557,16 @@
     "message": "粗斜体"
   },
   "baslikGolgesi": {
-    "message": "标题阴影"
+    "message": "阴影"
   },
   "baslikGolgeRengi": {
     "message": "阴影颜色"
   },
   "menuYaziRengi": {
-    "message": "菜单文字颜色"
+    "message": "文字颜色"
   },
   "aktifGrupYaziRengi": {
-    "message": "当前分组文字颜色"
+    "message": "当前文字颜色"
   },
   "sistemBolum": {
     "message": "系统"
@@ -1593,7 +1590,7 @@
     "message": "背景颜色"
   },
   "aktarimdaYakala": {
-    "message": "导入后自动截取缺失的缩略图"
+    "message": "导入时截图"
   },
   "icindekiKartlardanSec": {
     "message": "从其中的磁贴中选择"
@@ -1755,16 +1752,16 @@
     "message": "搜索栏"
   },
   "webAramaGoster": {
-    "message": "显示搜索栏"
+    "message": "显示"
   },
   "webVarsayilanMotor": {
-    "message": "默认搜索引擎"
+    "message": "默认引擎"
   },
   "webMotorListesi": {
-    "message": "列表中显示的搜索引擎"
+    "message": "列表中的引擎"
   },
   "webMotorEkle": {
-    "message": "添加自定义搜索引擎"
+    "message": "添加引擎"
   },
   "webYeniAd": {
     "message": "名称"
@@ -1794,7 +1791,7 @@
     "message": "从屏幕上取色"
   },
   "arayuzAlt": {
-    "message": "界面"
+    "message": "效果"
   },
   "renkliSimgeler": {
     "message": "彩色图标"
@@ -1887,10 +1884,10 @@
     "message": "无法重命名“主页”"
   },
   "camGorunum": {
-    "message": "毛玻璃效果"
+    "message": "毛玻璃"
   },
   "aktifIkonRengi": {
-    "message": "当前分组图标颜色"
+    "message": "当前图标颜色"
   },
   "aktarimGorselBaslik": {
     "message": "磁贴图片"
@@ -1941,7 +1938,7 @@
     "message": "墨水"
   },
   "webAramaYeri": {
-    "message": "显示位置"
+    "message": "位置"
   },
   "webYerAnaSayfa": {
     "message": "仅在主页"
@@ -1953,7 +1950,7 @@
     "message": "在所有分组中"
   },
   "kucukPencere": {
-    "message": "角落小窗口（实验性）"
+    "message": "角落小窗口"
   },
   "gizliKipBilgi": {
     "message": "截图时 Chrome 会在顶部显示“调试”提示栏。这是强制提示；该权限仅用于截图，完成后提示栏会消失。"
@@ -1992,7 +1989,7 @@
     "message": "搜索网页或输入网址"
   },
   "kartHizalama": {
-    "message": "磁贴对齐"
+    "message": "对齐"
   },
   "hizaOrta": {
     "message": "居中"
@@ -2064,7 +2061,7 @@
     "message": "备份文件和子文件夹的名称。每个浏览器请使用不同名称；名称相同即共享备份。"
   },
   "klasorYedekSiklik": {
-    "message": "自动备份频率"
+    "message": "频率"
   },
   "gundeBir": {
     "message": "每天一次"
@@ -2076,10 +2073,10 @@
     "message": "包含图片"
   },
   "klasorYedekSakla": {
-    "message": "保留的备份数"
+    "message": "保留数量"
   },
   "klasorYedekSimdi": {
-    "message": "立即备份到文件夹"
+    "message": "立即备份"
   },
   "klasorYedekGeriYukle": {
     "message": "从文件夹恢复"
@@ -2151,7 +2148,7 @@
     "message": "在这里"
   },
   "klasorYedekSiklikKapali": {
-    "message": "关闭（仅手动）"
+    "message": "关闭"
   },
   "acilisGrubu": {
     "message": "启动分组"
@@ -2202,6 +2199,141 @@
     "message": "此页面已在“$1”中"
   },
   "sahneKapali": {
-    "message": "此页面不允许扩展程序访问（浏览器限制）。请使用“图片文件”或“图片网址”。"
+    "message": "此页面不允许扩展程序访问（浏览器限制）。请使用“图片文件”或“图片地址”。"
+  },
+  "geriYukle": {
+    "message": "恢复"
+  },
+  "arayuzModu": {
+    "message": "界面"
+  },
+  "modBasit": {
+    "message": "简洁"
+  },
+  "modGelismis": {
+    "message": "高级"
+  },
+  "logoKoy": {
+    "message": "为此分组的磁贴查找标志"
+  },
+  "baslikKonum": {
+    "message": "位置"
+  },
+  "konumUstte": {
+    "message": "上方"
+  },
+  "konumAltta": {
+    "message": "下方"
+  },
+  "logoIlerleme": {
+    "message": "正在查找标志：$1 / $2"
+  },
+  "logoBitti": {
+    "message": "已为 $2 个中的 $1 个磁贴添加标志"
+  },
+  "logoKartYok": {
+    "message": "此分组中没有磁贴"
+  },
+  "logolar": {
+    "message": "网站标志"
+  },
+  "boyutSimge": {
+    "message": "图标"
+  },
+  "boyutMinik": {
+    "message": "极小"
+  },
+  "boyutKucuk": {
+    "message": "小"
+  },
+  "boyutOrta": {
+    "message": "中"
+  },
+  "boyutBuyuk": {
+    "message": "大"
+  },
+  "boyutKocaman": {
+    "message": "特大"
+  },
+  "boyutOzel": {
+    "message": "自定义"
+  },
+  "logoIpucu": {
+    "message": "以网站标志作为磁贴图片；旧图片保留在“编辑”中。"
+  },
+  "modBasitAciklama": {
+    "message": "简洁页面，小图标"
+  },
+  "modGelismisAciklama": {
+    "message": "分组、文件夹和全部设置"
+  },
+  "tema_gumus": {
+    "message": "银灰"
+  },
+  "tema_toprak": {
+    "message": "大地"
+  },
+  "tema_mercan": {
+    "message": "珊瑚"
+  },
+  "filtre": {
+    "message": "滤镜"
+  },
+  "filtreYok": {
+    "message": "无"
+  },
+  "filtreTekRenk": {
+    "message": "单色"
+  },
+  "filtreRenklendir": {
+    "message": "着色"
+  },
+  "filtreGri": {
+    "message": "黑白"
+  },
+  "filtreSepya": {
+    "message": "怀旧"
+  },
+  "filtreTers": {
+    "message": "反色"
+  },
+  "parlaklik": {
+    "message": "亮度"
+  },
+  "kontrast": {
+    "message": "对比度"
+  },
+  "uygula": {
+    "message": "应用"
+  },
+  "filtreIpucu": {
+    "message": "结果作为新图片添加；原图仍保留在轮播中。"
+  },
+  "filtreUygulandi": {
+    "message": "已应用滤镜。"
+  },
+  "filtreUygulanamadi": {
+    "message": "无法对此图片应用滤镜。"
+  },
+  "filtreGorselYok": {
+    "message": "请先添加图片。"
+  },
+  "koyulastir": {
+    "message": "变暗"
+  },
+  "hizliBasla": {
+    "message": "快速开始"
+  },
+  "hizliBaslaIpucu": {
+    "message": "添加常用网站及其标志"
+  },
+  "webOneriler": {
+    "message": "搜索建议"
+  },
+  "webOnerilerIpucu": {
+    "message": "输入时显示建议；输入的文字会发送到搜索引擎的建议服务。"
+  },
+  "duvarTema": {
+    "message": "主题"
   }
 }

@@ -3,6 +3,99 @@
 Sürüm numaraları [Semantic Versioning](https://semver.org/lang/tr/)
 kurallarına uyar.
 
+## [1.6.1] — 2026-10-27
+
+### Yeni (deneysel)
+- **Hızlı Başla** (karşılama ekranı): dile göre 6 bilinen site Ana Sayfa'ya
+  eklenir ve hemen logoları konur; ilk açılışta sayfa boş kalmaz. Ekran
+  görüntüsü yakalanmaz, pencere açılmaz.
+- **Basit modda Başlık ayarları**: Kartlar › Başlık artık Basit'te de
+  görünür (Yazı Boyutu, Renk, Gölge, Gölge Rengi); Konum ve Stil yalnız
+  Gelişmiş'te.
+- **Saydam logolar zeminli**: Logo Yakala ve Site Logoları'nda saydam logo
+  artık kendi zeminine oturur (koyu logo beyaz, açık logo koyu kutuda);
+  koyu temada YouTube, Wikipedia gibi koyu yazılı logolar kaybolmuyor.
+- **Kaldırma geri bildirimi**: eklenti kaldırılınca kısa bir "neden
+  kaldırdınız?" sayfası açılır (8 dil, tek tık; ad/e-posta yok). Adreste
+  yalnızca sürüm, dil ve mağaza var. Sayfa: `araclar/kaldirma/`.
+- **Rusya'ya özel arama motorları** (Arama Çubuğu listesinde, kapalı gelir):
+  Avito, Ozon, Wildberries, Яндекс Маркет. Bölge tek: Türkiye ya da Rusya
+  (önce tarayıcı dili, sonra saat dilimi); diğer kullanıcılarda ek motor yok.
+- **Arama önerileri** (Ana Sayfa › Arama Çubuğu › Öneriler, varsayılan
+  KAPALI): yazdıkça öneri listesi; ok tuşları ve fare ile seçilir, Esc
+  kapatır. Kaynak seçili motorun kendi servisi (Google, YouTube, Bing,
+  DuckDuckGo, Yandex, Wikipedia); servisi olmayan motorda Google (Rusça
+  arayüzde Yandex). Kısayollar da çalışır ("yt kedi" → YouTube önerileri).
+  Adres yazılınca öneri istenmez. Çerez gönderilmez.
+- **Görsel filtresi** (Kartı Düzenle › Filtre): Tek Renk (zeminden farklı
+  her şey seçilen renge — siyah logo mor olur), Renklendir, Siyah-Beyaz,
+  Sepya, Ters; Parlaklık ve Kontrast. Önizlemeli. Sonuç yeni görsel olarak
+  karusele eklenir, asıl görsel yerinde kalır. Panel açıkken Kaydet'e
+  basılırsa filtre de uygulanır.
+- **Renklendirme › Koyulaştır**: açık bir duvar kâğıdını koyu moda uydurur —
+  ışık ters çevrilir, renk tonu korunur (beyaz → siyah, açık mavi → koyu
+  mavi). Renk Tonu, Doygunluk ve Açıklık kaydırıcıları bunun üstüne çalışır.
+  Renklendirme temaya ayrı saklandığı için koyu temada Koyulaştır, açık
+  temada filtresiz kalır; mod değişince kendiliğinden geçer. Aynı modda
+  tema değiştirince ya da açık moddan koyuya geçince Koyulaştır yeni temaya
+  da taşınır (koyudan açığa geçerken taşınmaz, resim asıl haliyle görünür).
+- **Arayüz: Basit | Gelişmiş** (Ayarlar'ın en üstü): Basit, sade bir
+  başlangıç sayfası verir — küçük kare kartlar, başlık altta, ortada grup
+  menüsü, kart düğmeleri gizli; ayar paneli kısalır (Görsel Yakalama, Sistem,
+  Grup Menüsü, Renk ve Çerçeve gibi ayrıntılar gizli). Gelişmiş'e
+  dönünce önceki değerler geri gelir; Basit'teyken elle değiştirilen
+  korunur. Hiçbir veri silinmez.
+- **Site Logoları › Bu grupta bul** (Basit modda, Kartlar › Boyut'un
+  altında): gruptaki kartların görseli sitenin logosu olur. Eski görsel
+  silinmez, Düzenle'deki karuselde kalır.
+- **Karşılama ekranında seçim**: ilk açılışta "Basit — sade sayfa, küçük
+  simgeler" ya da "Gelişmiş — gruplar, klasörler, tüm ayarlar"; seçim hemen
+  uygulanır, sonra Ayarlar › Arayüz'den değişir. Mevcut kullanıcılar
+  Gelişmiş'te kalır.
+- **Karşılama ekranı derli toplu**: logo başlığın yanında, "Başlamak için"
+  kalktı, boşluklar daraldı, üç ikincil düğme tek satırda — 1080p ekrana
+  rahat sığar.
+- **Hazır boyutlar** (Basit modda Kartlar › Boyut): Simge, Minik, Küçük, Orta,
+  Büyük, Kocaman. Simge kare kutuda logo; diğerleri ekran görüntüsü. İnce
+  ayarlar (oran, yerleşim, boşluklar) Gelişmiş'te.
+- **Simge boyutunda**: logo kare hazırlanır; logonun etrafındaki kendi zemini
+  (geniş gri bant gibi) kırpılır, zemin rengi tüm kutuya yayılır, logo kutunun
+  %80'ini doldurur (Düzenle › Logo Yakala da kare kartta kare logo verir);
+  alttaki başlık kartlar arası boşluğu da kullanır, uzun adlar kesilmez.
+- **Logo Yakala**: adaylar kartın oranında ve tam görünür (önce kırpılıyordu); Google giriş sayfasına giden kartta (service=mail vb.)
+  logo asıl hizmetten (Gmail, YouTube, Drive…) aranır.
+- **Kartlar › Başlık › Konum: Üstte | Altta.**
+- Kart boyutu en az 64 piksel (önce 140).
+
+### Değişti
+- **Ayar adları kısa ve tutarlı**: her kavramın tek adı var (Simge, Görsel,
+  Mod, Eklenti, Düğme, Adres); bölüm adı ayarda tekrarlanmıyor ("Kartlar ›
+  Boyut"), parantezli uzun adlar kısaldı. Görünüm › "Arayüz" alt bölümünün
+  adı "Efektler" oldu (Renkli Simgeler, Buzlu Cam). Terim sözlüğü: `docs/TERIMLER.md`.
+  8 dilde. Ayarların kendisi değişmedi.
+- **Ayar araması**: bölüm ve alt bölüm adını da hesaba katıyor ("kart
+  boyutu" → Kartlar › Boyut); "boyutu", "yöntemi" gibi ekli kelimeler de
+  bulunuyor.
+- **Zemine göre yazı rengi** artık renklendirmeyi de hesaba katıyor (resim
+  renklendirmeyle koyulaşınca kart başlıkları yanlış renge dönmüyor).
+- **Hazır duvar kâğıtları** (Arka Plan › Duvar Kâğıdı): Tema | 1 | 2 —
+  1 katmanlı dalga, 2 ipek (yumuşak renk geçişi ve ışık kıvrımları). Kendi
+  çizimimiz (`duvar/`, üreticiler `araclar/zemin-dalga.py`, `zemin-ipek.py`).
+  Açık/koyu hali moda göre kendiliğinden gelir. Yeni kurulumda varsayılan 1;
+  mevcut kullanıcıların zemini değişmez.
+- **Basit modda Renklendirme** (Ton Kaydır, İki Renk, Koyulaştır) görünür.
+- Arka Plan önizlemesi, görselli varsayılan zeminde boş kalıyordu.
+- **Temalar eşit**: koyu ve açık modda 10'ar tema, aynı sırada ve birebir
+  eş (mod değişince aynı konumdaki eş gelir). Yeni: Toprak (koyu, Kum'un
+  eşi), Gümüş (açık, Grafit'in eşi), Mercan (açık, Gün Batımı'nın eşi).
+
+### Düzeltme
+- Logo Yakala / Site Logoları: alt alan adlı hizmetlerde (mail.google.com
+  gibi) marka servisi ana markanın logosunu veriyordu (Gmail'e Google
+  logosu). Alt alanda önce sayfanın kendi logosu aranır.
+- Arama Çubuğu › Yandex herkesi yandex.com.tr'ye götürüyordu; artık tarayıcı
+  diline göre: Rusça → yandex.ru, Türkçe → yandex.com.tr, diğerleri → yandex.com.
+
 ## [1.6.0] — 2026-10-24
 
 ### Yeni (Çalışma Alanları)

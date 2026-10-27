@@ -21,7 +21,7 @@
     "message": "Buscar"
   },
   "GenisEkran": {
-    "message": "16:9 — panorámico"
+    "message": "16:9"
   },
   "aciklik": {
     "message": "Brillo"
@@ -33,7 +33,7 @@
     "message": "Opacidad del grupo activo"
   },
   "anaSayfaGrubunuGoster": {
-    "message": "Mostrar grupo Inicio"
+    "message": "Grupo Inicio"
   },
   "ayarlariAcKapat": {
     "message": "abrir / cerrar ajustes"
@@ -51,7 +51,7 @@
     "message": "Título"
   },
   "baslikYaziBoyutu": {
-    "message": "Tamaño de fuente del título"
+    "message": "Tamaño de fuente"
   },
   "bekleyenYakalamalariIptalEt": {
     "message": "Cancelar capturas pendientes"
@@ -78,10 +78,10 @@
     "message": "Mosaico «+»"
   },
   "ekranGoruntusuBoyutu": {
-    "message": "Tamaño de captura"
+    "message": "Tamaño"
   },
   "ekranGoruntusuOnerilen": {
-    "message": "Captura de pantalla (recomendado)"
+    "message": "Captura de pantalla"
   },
   "enCokZiyaretEdilen": {
     "message": "Más visitados"
@@ -96,10 +96,10 @@
     "message": "Usar ajuste general"
   },
   "gerekirsePencereyiOneAl": {
-    "message": "Traer la ventana al frente si hace falta"
+    "message": "Traer ventana al frente"
   },
   "gizliHataAyiklamaCubuguCikar": {
-    "message": "Oculto (muestra barra de depuración)"
+    "message": "Oculto"
   },
   "golgeRengi": {
     "message": "Color de sombra"
@@ -108,7 +108,7 @@
     "message": "Archivo de imagen"
   },
   "goruntuUrlSi": {
-    "message": "URL de imagen"
+    "message": "Dirección de imagen"
   },
   "gosterim": {
     "message": "Visualización"
@@ -138,7 +138,7 @@
     "message": "ocultar / mostrar todo"
   },
   "htmlSayfasiOlarakDisaAktar": {
-    "message": "Exportar como página HTML"
+    "message": "Exportar como HTML"
   },
   "iceAktar": {
     "message": "Importar"
@@ -165,34 +165,34 @@
     "message": "Quitar"
   },
   "kartAcilisSekli": {
-    "message": "Abrir mosaico en"
+    "message": "Abrir en"
   },
   "kartBasliklari": {
-    "message": "Títulos de mosaicos"
+    "message": "Títulos"
   },
   "kartBoyutu": {
-    "message": "Tamaño del mosaico"
+    "message": "Tamaño"
   },
   "kartCerceveRengi": {
     "message": "Color del borde"
   },
   "kartCerceveRengiUzerineGelince": {
-    "message": "Color del borde (al pasar)"
+    "message": "Al pasar"
   },
   "kartCercevesi": {
-    "message": "Borde del mosaico"
+    "message": "Borde"
   },
   "kartOrani": {
-    "message": "Proporción del mosaico"
+    "message": "Proporción"
   },
   "kartSayisi": {
     "message": "Número de mosaicos"
   },
   "kartUstuButonlar": {
-    "message": "Botones sobre el mosaico"
+    "message": "Botones del mosaico"
   },
   "kartZeminRengi": {
-    "message": "Fondo del mosaico"
+    "message": "Fondo"
   },
   "kartiDuzenle": {
     "message": "Editar mosaico"
@@ -216,7 +216,7 @@
     "message": "Los atajos no funcionan mientras escribes en un campo."
   },
   "kullanilmayanVerileriTemizle": {
-    "message": "Limpiar datos no usados"
+    "message": "Limpiar lo no usado"
   },
   "notuSil": {
     "message": "Eliminar nota"
@@ -225,7 +225,7 @@
     "message": "ir a ese grupo"
   },
   "onceSayfaGorseliYoksaEkran": {
-    "message": "Primero imagen de la página, si no, captura"
+    "message": "Imagen de la página, si no, captura"
   },
   "oncekiSonrakiGrup": {
     "message": "grupo anterior / siguiente"
@@ -237,7 +237,7 @@
     "message": "Emoji personalizado"
   },
   "pencereKisaSureGorunur": {
-    "message": "Ventana (visible un momento)"
+    "message": "Ventana"
   },
   "pencereyiAramayiKapat": {
     "message": "cerrar diálogo / búsqueda"
@@ -249,16 +249,16 @@
     "message": "Tono"
   },
   "renklendirmeSiddeti": {
-    "message": "Intensidad del tinte"
+    "message": "Intensidad"
   },
   "renklendirmeYontemi": {
-    "message": "Método de tinte"
+    "message": "Método"
   },
   "resmiIndir": {
     "message": "Descargar imagen"
   },
   "sekmeZeminSaydamligi": {
-    "message": "Opacidad del fondo de pestañas"
+    "message": "Opacidad del fondo"
   },
   "sil": {
     "message": "Eliminar"
@@ -321,7 +321,7 @@
     "message": "Nueva pestaña"
   },
   "yeniSekmeArkaPlan": {
-    "message": "Nueva pestaña (en segundo plano)"
+    "message": "Pestaña en segundo plano"
   },
   "yontem": {
     "message": "Método"
@@ -345,7 +345,7 @@
     "message": "Exportar copia"
   },
   "simdiYedekAl": {
-    "message": "Hacer copia ahora"
+    "message": "Hacer copia"
   },
   "onaySorulariniGeriGetir": {
     "message": "Restaurar avisos de confirmación"
@@ -810,7 +810,7 @@
     "message": "$1 mosaicos · grupo eliminado"
   },
   "goruntuUrlsi": {
-    "message": "URL de imagen"
+    "message": "Dirección de imagen"
   },
   "oncekiSimdiKayip": {
     "message": "Había $1 $2, ahora $3. "
@@ -831,7 +831,7 @@
     "message": "Barra de grupos"
   },
   "goruntuYakalama": {
-    "message": "Capturas"
+    "message": "Captura"
   },
   "bakimBolum": {
     "message": "Mantenimiento"
@@ -844,9 +844,6 @@
   },
   "uzantiSimgesi": {
     "message": "Icono de la extensión"
-  },
-  "baslamakIcin": {
-    "message": "Empieza con"
   },
   "tonKaydir": {
     "message": "Desplazar tono"
@@ -861,7 +858,7 @@
     "message": "Se volverán a capturar las imágenes de $1 mosaicos. Puede tardar unos minutos."
   },
   "colorizeTekTonaIndir": {
-    "message": "Colorizar (un tono)"
+    "message": "Un tono"
   },
   "doygunluk": {
     "message": "Saturación"
@@ -876,13 +873,13 @@
     "message": "Cuadrado"
   },
   "sekmeZeminRengi": {
-    "message": "Fondo de pestañas"
+    "message": "Color de fondo"
   },
   "sekmeBoyutu": {
-    "message": "Tamaño de pestañas"
+    "message": "Tamaño"
   },
   "menuKonumu": {
-    "message": "Posición del menú"
+    "message": "Posición"
   },
   "konumNormal": {
     "message": "Normal"
@@ -915,7 +912,7 @@
     "message": "Nombre"
   },
   "siteUrl": {
-    "message": "URL del sitio"
+    "message": "Dirección del sitio"
   },
   "enSonEklenen": {
     "message": "Más recientes"
@@ -927,13 +924,13 @@
     "message": "Confirmar"
   },
   "oranDengeli": {
-    "message": "16:10 — equilibrado"
+    "message": "16:10"
   },
   "veya": {
     "message": "o"
   },
   "zeminRenklendirme": {
-    "message": "Tinte del fondo"
+    "message": "Tinte"
   },
   "kurulumAciklama": {
     "message": "Para abrir WSD con el botón de inicio, copia la dirección de abajo en Ajustes → Al iniciar → Página de inicio."
@@ -987,10 +984,10 @@
     "message": "Ajuste de imagen"
   },
   "yerlesimKirp": {
-    "message": "Recortar (llenar)"
+    "message": "Rellenar"
   },
   "yerlesimSigdir": {
-    "message": "Ajustar (mostrar todo)"
+    "message": "Ajustar"
   },
   "sahneYakala": {
     "message": "Capturar escena"
@@ -1461,7 +1458,7 @@
     "message": "Mosaicos, pestañas, ventanas, menús y botones"
   },
   "yanPaneliGizle": {
-    "message": "Ocultar automáticamente la barra lateral"
+    "message": "Ocultar panel lateral"
   },
   "buGruptaNKart": {
     "message": "Este grupo tiene <b>$1</b> mosaicos"
@@ -1497,7 +1494,7 @@
     "message": "Haz clic en un nombre para añadirlo ahí · ▸ abre la rama"
   },
   "sagTikMenusu": {
-    "message": "Menú contextual de la página"
+    "message": "Tipo de menú"
   },
   "sagTikPencere": {
     "message": "Grupos + Elegir carpeta…"
@@ -1542,10 +1539,10 @@
     "message": "Título"
   },
   "baslikRengi": {
-    "message": "Color del título"
+    "message": "Color"
   },
   "baslikStili": {
-    "message": "Estilo del título"
+    "message": "Estilo"
   },
   "stilNormal": {
     "message": "Normal"
@@ -1560,16 +1557,16 @@
     "message": "Negrita cursiva"
   },
   "baslikGolgesi": {
-    "message": "Sombra del título"
+    "message": "Sombra"
   },
   "baslikGolgeRengi": {
     "message": "Color de sombra"
   },
   "menuYaziRengi": {
-    "message": "Color del texto del menú"
+    "message": "Color del texto"
   },
   "aktifGrupYaziRengi": {
-    "message": "Color del texto del grupo activo"
+    "message": "Texto activo"
   },
   "sistemBolum": {
     "message": "Sistema"
@@ -1593,7 +1590,7 @@
     "message": "Color de fondo"
   },
   "aktarimdaYakala": {
-    "message": "Capturar miniaturas faltantes tras importar"
+    "message": "Capturar al importar"
   },
   "icindekiKartlardanSec": {
     "message": "Elegir entre los mosaicos que contiene"
@@ -1755,16 +1752,16 @@
     "message": "Barra de búsqueda"
   },
   "webAramaGoster": {
-    "message": "Mostrar barra de búsqueda"
+    "message": "Mostrar"
   },
   "webVarsayilanMotor": {
-    "message": "Buscador predeterminado"
+    "message": "Predeterminado"
   },
   "webMotorListesi": {
-    "message": "Buscadores mostrados en la lista"
+    "message": "En la lista"
   },
   "webMotorEkle": {
-    "message": "Añadir tu propio buscador"
+    "message": "Añadir buscador"
   },
   "webYeniAd": {
     "message": "Nombre"
@@ -1794,7 +1791,7 @@
     "message": "Elegir un color de la pantalla"
   },
   "arayuzAlt": {
-    "message": "Interfaz"
+    "message": "Efectos"
   },
   "renkliSimgeler": {
     "message": "Iconos en color"
@@ -1887,10 +1884,10 @@
     "message": "Inicio no se puede renombrar"
   },
   "camGorunum": {
-    "message": "Efecto de vidrio esmerilado"
+    "message": "Vidrio esmerilado"
   },
   "aktifIkonRengi": {
-    "message": "Color del icono del grupo activo"
+    "message": "Icono activo"
   },
   "aktarimGorselBaslik": {
     "message": "Imágenes de mosaicos"
@@ -1941,7 +1938,7 @@
     "message": "Tinta"
   },
   "webAramaYeri": {
-    "message": "Dónde mostrar"
+    "message": "Ubicación"
   },
   "webYerAnaSayfa": {
     "message": "Solo en Inicio"
@@ -1953,7 +1950,7 @@
     "message": "En todos los grupos"
   },
   "kucukPencere": {
-    "message": "Ventana pequeña en la esquina (experimental)"
+    "message": "Ventana pequeña en la esquina"
   },
   "gizliKipBilgi": {
     "message": "Al capturar, Chrome muestra arriba una barra de «depuración». Es un aviso obligatorio; el permiso solo se usa para capturas y la barra desaparece al terminar."
@@ -1992,7 +1989,7 @@
     "message": "Busca en la web o escribe una dirección"
   },
   "kartHizalama": {
-    "message": "Alineación de mosaicos"
+    "message": "Alineación"
   },
   "hizaOrta": {
     "message": "Centro"
@@ -2064,7 +2061,7 @@
     "message": "Nombre de los archivos de copia y de la subcarpeta. Da a cada navegador su propio nombre; el mismo nombre es una copia compartida."
   },
   "klasorYedekSiklik": {
-    "message": "Frecuencia de copia automática"
+    "message": "Frecuencia"
   },
   "gundeBir": {
     "message": "Una vez al día"
@@ -2076,10 +2073,10 @@
     "message": "Incluir imágenes"
   },
   "klasorYedekSakla": {
-    "message": "Copias que conservar"
+    "message": "Copias a conservar"
   },
   "klasorYedekSimdi": {
-    "message": "Hacer copia en la carpeta ahora"
+    "message": "Hacer copia ahora"
   },
   "klasorYedekGeriYukle": {
     "message": "Restaurar desde la carpeta"
@@ -2151,7 +2148,7 @@
     "message": "Aquí está"
   },
   "klasorYedekSiklikKapali": {
-    "message": "Desactivado (solo manual)"
+    "message": "Desactivado"
   },
   "acilisGrubu": {
     "message": "Grupo inicial"
@@ -2202,6 +2199,141 @@
     "message": "Esta página ya está en «$1»"
   },
   "sahneKapali": {
-    "message": "Esta página está cerrada a las extensiones (el navegador no lo permite). Usa «Archivo de imagen» o «URL de imagen»."
+    "message": "Esta página está cerrada a las extensiones (el navegador no lo permite). Usa «Archivo de imagen» o «Dirección de imagen»."
+  },
+  "geriYukle": {
+    "message": "Restaurar"
+  },
+  "arayuzModu": {
+    "message": "Interfaz"
+  },
+  "modBasit": {
+    "message": "Simple"
+  },
+  "modGelismis": {
+    "message": "Avanzado"
+  },
+  "logoKoy": {
+    "message": "Buscar logos para los mosaicos de este grupo"
+  },
+  "baslikKonum": {
+    "message": "Posición"
+  },
+  "konumUstte": {
+    "message": "Arriba"
+  },
+  "konumAltta": {
+    "message": "Abajo"
+  },
+  "logoIlerleme": {
+    "message": "Buscando logos: $1 / $2"
+  },
+  "logoBitti": {
+    "message": "Logos añadidos a $1 de $2 mosaicos"
+  },
+  "logoKartYok": {
+    "message": "No hay mosaicos en este grupo"
+  },
+  "logolar": {
+    "message": "Logos de sitios"
+  },
+  "boyutSimge": {
+    "message": "Icono"
+  },
+  "boyutMinik": {
+    "message": "Diminuto"
+  },
+  "boyutKucuk": {
+    "message": "Pequeño"
+  },
+  "boyutOrta": {
+    "message": "Mediano"
+  },
+  "boyutBuyuk": {
+    "message": "Grande"
+  },
+  "boyutKocaman": {
+    "message": "Enorme"
+  },
+  "boyutOzel": {
+    "message": "Personalizado"
+  },
+  "logoIpucu": {
+    "message": "Usa el logo como imagen; la anterior queda en Editar."
+  },
+  "modBasitAciklama": {
+    "message": "Página limpia, iconos pequeños"
+  },
+  "modGelismisAciklama": {
+    "message": "Grupos, carpetas, todos los ajustes"
+  },
+  "tema_gumus": {
+    "message": "Plata"
+  },
+  "tema_toprak": {
+    "message": "Tierra"
+  },
+  "tema_mercan": {
+    "message": "Coral"
+  },
+  "filtre": {
+    "message": "Filtro"
+  },
+  "filtreYok": {
+    "message": "Ninguno"
+  },
+  "filtreTekRenk": {
+    "message": "Un color"
+  },
+  "filtreRenklendir": {
+    "message": "Teñir"
+  },
+  "filtreGri": {
+    "message": "Blanco y negro"
+  },
+  "filtreSepya": {
+    "message": "Sepia"
+  },
+  "filtreTers": {
+    "message": "Invertir"
+  },
+  "parlaklik": {
+    "message": "Brillo"
+  },
+  "kontrast": {
+    "message": "Contraste"
+  },
+  "uygula": {
+    "message": "Aplicar"
+  },
+  "filtreIpucu": {
+    "message": "El resultado se añade como imagen nueva; la original sigue en el carrusel."
+  },
+  "filtreUygulandi": {
+    "message": "Filtro aplicado."
+  },
+  "filtreUygulanamadi": {
+    "message": "No se pudo aplicar el filtro a esta imagen."
+  },
+  "filtreGorselYok": {
+    "message": "Primero añade una imagen."
+  },
+  "koyulastir": {
+    "message": "Oscurecer"
+  },
+  "hizliBasla": {
+    "message": "Inicio rápido"
+  },
+  "hizliBaslaIpucu": {
+    "message": "Añade sitios populares con sus logotipos"
+  },
+  "webOneriler": {
+    "message": "Sugerencias"
+  },
+  "webOnerilerIpucu": {
+    "message": "Muestra sugerencias al escribir; el texto se envía al servicio de sugerencias del buscador."
+  },
+  "duvarTema": {
+    "message": "Tema"
   }
 }

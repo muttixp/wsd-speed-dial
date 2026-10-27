@@ -1,6 +1,6 @@
 # Gizlilik Politikası — WSD Speed Dial
 
-Son güncelleme: 11 Eylül 2026
+Son güncelleme: 27 Ekim 2026
 
 ## Kısaca
 
@@ -84,6 +84,24 @@ seçerseniz yedekler yalnızca o klasöre yazılır. Eklenti hiçbir sunucuya
 bağlanmaz; klasör bir bulut programının (OneDrive, Google Drive, Dropbox
 vb.) klasörüyse yüklemeyi o program yapar. Klasör seçmezseniz böyle bir
 yazma olmaz.
+
+**8. Arama önerilerini açarsanız** — Ana Sayfa › Arama Çubuğu ›
+Öneriler varsayılan olarak **kapalıdır**. Açarsanız arama kutusuna
+yazdığınız metin, öneri listesi için seçili motorun öneri servisine
+(Google, Bing, DuckDuckGo, Yandex, Wikipedia; kendi servisi olmayan
+motorda Google, Rusça arayüzde Yandex) gönderilir. Çerez gönderilmez,
+eklenti yazdıklarınızı saklamaz. Adres yazdığınızda istek gitmez.
+
+**9. Hızlı Başla ve Site Logoları** — karşılama ekranında Hızlı Başla'ya
+ya da Site Logoları düğmesine basarsanız eklenen sitelerin logoları
+3. maddedeki gibi alınır. Basmazsanız bu istek olmaz.
+
+**10. Eklentiyi kaldırdığınızda** — tarayıcı kısa bir "neden
+kaldırdınız?" sayfası açar (`webteyazilim.net/wsd/kaldirildi.php`).
+Adreste yalnızca eklentinin sürümü, arayüz dili ve mağaza (Chrome/Edge)
+bulunur; kimlik, kullanım bilgisi, IP kaydı ya da çerez yoktur. Formu
+doldurmak isteğe bağlıdır; doldurursanız yalnızca seçtiğiniz neden ve
+yazdığınız not saklanır. Ad ya da e-posta istenmez.
 
 ---
 

@@ -1300,7 +1300,29 @@ function brandfetchAdaylari(url) {
     }
 }
 
-export async function logoYakala(url, enCok = 8) {
+/** kare: kare kart icin kare tuval (1.6.1) - logo kutuyu doldurur, bant kalmaz */
+/**
+ * GIRIS SAYFASI ADRESI (1.6.1): kart "accounts.google.com/...service=mail"
+ * gibi bir oturum acma sayfasina gidiyorsa logo o sayfadan degil, asil
+ * hizmetten aranir (Gmail, YouTube, Drive...). Yoksa adres aynen kalir.
+ */
+const GOOGLE_HIZMET = {
+    mail: 'https://mail.google.com/', youtube: 'https://www.youtube.com/',
+    wise: 'https://drive.google.com/', writely: 'https://docs.google.com/',
+    cl: 'https://calendar.google.com/', lh2: 'https://photos.google.com/',
+};
+function logoIcinAdres(url) {
+    try {
+        const u = new URL(url);
+        if (u.hostname !== 'accounts.google.com') return url;
+        const devam = u.searchParams.get('continue');
+        if (devam && /^https:\/\//i.test(devam)) return new URL(devam).origin + '/';
+        return GOOGLE_HIZMET[u.searchParams.get('service')] || url;
+    } catch (e) { return url; }
+}
+
+export async function logoYakala(url, enCok = 8, kare = false) {
+    url = logoIcinAdres(url);
     // ONCE CANLI SAYFA: sunucudan gelen ham HTML cogu sitede bos
     // (Nuxt/React gibi cerceveler logoyu tarayicida ciziyor) - bu yuzden
     // sayfayi arka planda acip GERCEK DOM'a bakiyoruz. Basarisiz olursa
@@ -1309,7 +1331,20 @@ export async function logoYakala(url, enCok = 8) {
     if (!bilgi || !bilgi.adresler.length) bilgi = await logoAdresleriniTopla(url);
     if (!bilgi) bilgi = { adresler: [], zemin: null };
 
-    bilgi.adresler = [...brandfetchAdaylari(url), ...bilgi.adresler];   // marka servisi once
+    // Marka servisi once - ALT ALAN ADI haric (1.6.1): mail.google.com icin
+    // servis ana markayi (Google) veriyor, Gmail'in kendi logosu degil.
+    // Alt alanda once sayfanin kendi logosu, marka servisi en sonda.
+    const altAlan = (() => {
+        try {
+            const p = new URL(url).hostname.replace(/^www\./, '').split('.');
+            // com.tr, gov.tr, co.uk gibi ikinci duzey uzantilar alt alan sayilmaz
+            const ikiDuzey = p.length > 2 && p.at(-1).length === 2
+                && /^(com|gov|org|net|edu|co|gen|bel|av|k12|ac|biz|info|web|tv|pol|tsk)$/.test(p.at(-2));
+            return p.length > (ikiDuzey ? 3 : 2);
+        } catch (e) { return false; }
+    })();
+    bilgi.adresler = altAlan ? [...bilgi.adresler, ...brandfetchAdaylari(url)]
+                             : [...brandfetchAdaylari(url), ...bilgi.adresler];
     if (!bilgi.adresler.length) return [];
 
     const kartlar = [];
@@ -1335,7 +1370,7 @@ export async function logoYakala(url, enCok = 8) {
         gorulen.add(veri);
         gorulen.add(boyIz);
 
-        const kart = await logoyuBestele(veri);
+        const kart = await logoyuBestele(veri, null, kare);
         if (!kart) continue;
         kartlar.push(kart.veri);
 
@@ -1343,7 +1378,7 @@ export async function logoYakala(url, enCok = 8) {
         // Sozcu'nun kirmizi zeminli hali boyle cikiyor.
         const markaRengi = bilgi.zemin || bilgi.markaZemin;
         if (kart.saydam && markaRengi && kartlar.length < enCok) {
-            const renkli = await logoyuBestele(veri, markaRengi);
+            const renkli = await logoyuBestele(veri, markaRengi, kare);
             if (renkli) kartlar.push(renkli.veri);
         }
     }
@@ -1767,7 +1802,7 @@ async function logoAdresleriniTopla(url) {
  * Cikti PNG: JPEG saydamligi tasimiyor.
  * Doner: { veri, saydam } ya da null.
  */
-async function logoyuBestele(dataUri, zorlaZemin) {
+async function logoyuBestele(dataUri, zorlaZemin, kare = false) {
     try {
         let blob = await (await fetch(dataUri)).blob();
         if (/svg/i.test(blob.type)) {
@@ -1785,21 +1820,69 @@ async function logoyuBestele(dataUri, zorlaZemin) {
         }
 
         const ornek = zeminOrnekle(bmp);
-        const zemin = zorlaZemin || (ornek.saydam ? null : ornek.renk);
+        // SAYDAM LOGO DA ZEMINLI (1.6.1): saydam birakilinca kartin kendi zemini
+        // gorunuyordu - koyu temada koyu yazili logolar (YouTube, Wikipedia)
+        // kayboluyordu. Koyu logo beyaz, acik logo koyu zemine oturur.
+        const zemin = zorlaZemin || ornek.renk;
 
-        const tuval = new OffscreenCanvas(LOGO_EN, LOGO_BOY);
+        const W = kare ? LOGO_BOY : LOGO_EN, H = LOGO_BOY;
+        const tuval = new OffscreenCanvas(W, H);
         const ctx = tuval.getContext('2d');
-        if (zemin) { ctx.fillStyle = zemin; ctx.fillRect(0, 0, LOGO_EN, LOGO_BOY); }
+        if (zemin) { ctx.fillStyle = zemin; ctx.fillRect(0, 0, W, H); }
 
         const genis = !!zemin;                      // zeminli kartta logo buyuk dursun
-        const olcek = Math.min((LOGO_EN * (genis ? 0.82 : 0.68)) / bmp.width,
-                               (LOGO_BOY * (genis ? 0.72 : 0.58)) / bmp.height);
-        const en = bmp.width * olcek, boy = bmp.height * olcek;
-        ctx.drawImage(bmp, (LOGO_EN - en) / 2, (LOGO_BOY - boy) / 2, en, boy);
+        if (kare) {
+            // KARE (Simge boyutu, 1.6.1): logonun cevresindeki kendi zemini
+            // (genis gri bant gibi) kirpiliyor; zemin rengi kutunun tamamina
+            // yayiliyor, logo kutuyu doldurur. Kucuk kutuda kucuk logo
+            // secilmiyordu - oranlar buyuk.
+            const k = icerikKutusu(bmp) || { x: 0, y: 0, w: bmp.width, h: bmp.height };
+            const olcek = Math.min((W * 0.80) / k.w, (H * 0.80) / k.h);
+            const en = k.w * olcek, boy = k.h * olcek;
+            ctx.drawImage(bmp, k.x, k.y, k.w, k.h, (W - en) / 2, (H - boy) / 2, en, boy);
+        } else {
+            const olcek = Math.min((W * (genis ? 0.82 : 0.68)) / bmp.width, (H * (genis ? 0.72 : 0.58)) / bmp.height);
+            const en = bmp.width * olcek, boy = bmp.height * olcek;
+            ctx.drawImage(bmp, (W - en) / 2, (H - boy) / 2, en, boy);
+        }
         bmp.close();
 
         const cikti = await tuval.convertToBlob({ type: 'image/png' });
         return { veri: await blobDanDataUri(cikti), saydam: ornek.saydam && !zorlaZemin };
+    } catch (e) {
+        return null;
+    }
+}
+
+/**
+ * Logonun DOLU kismi (1.6.1): sol ust kose rengiyle (ya da saydamla) ayni
+ * olmayan piksellerin kutusu. Logonun cevresindeki genis zemin bandini
+ * atmak icin. Bulunamazsa null (logonun tamami kullanilir).
+ */
+function icerikKutusu(bmp) {
+    try {
+        const o = Math.min(1, 300 / Math.max(bmp.width, bmp.height));
+        const w = Math.max(1, Math.round(bmp.width * o)), h = Math.max(1, Math.round(bmp.height * o));
+        const t = new OffscreenCanvas(w, h);
+        const x = t.getContext('2d', { willReadFrequently: true });
+        x.drawImage(bmp, 0, 0, w, h);
+        const p = x.getImageData(0, 0, w, h).data;
+        const zr = p[0], zg = p[1], zb = p[2], za = p[3];
+        let x0 = w, y0 = h, x1 = -1, y1 = -1;
+        for (let yy = 0; yy < h; yy++) {
+            for (let xx = 0; xx < w; xx++) {
+                const i = (yy * w + xx) * 4, a = p[i + 3];
+                const dolu = za < 32 ? a > 32
+                    : a > 32 && Math.abs(p[i] - zr) + Math.abs(p[i + 1] - zg) + Math.abs(p[i + 2] - zb) > 48;
+                if (!dolu) continue;
+                if (xx < x0) x0 = xx; if (xx > x1) x1 = xx;
+                if (yy < y0) y0 = yy; if (yy > y1) y1 = yy;
+            }
+        }
+        if (x1 < 0) return null;
+        x0 = Math.max(0, x0 - 2); y0 = Math.max(0, y0 - 2);
+        x1 = Math.min(w - 1, x1 + 2); y1 = Math.min(h - 1, y1 + 2);
+        return { x: x0 / o, y: y0 / o, w: (x1 - x0 + 1) / o, h: (y1 - y0 + 1) / o };
     } catch (e) {
         return null;
     }

@@ -61,6 +61,14 @@ WSD Speed Dial turns your new tab page into a board of the sites you
 actually use, each with its own screenshot. Free, open source, no
 tracking.
 
+SIMPLE OR ADVANCED — YOUR CHOICE
+
+Want just a clean page? Simple mode gives you small logo tiles on a
+calm wallpaper, with a short settings list. Quick Start fills it with
+popular sites and their logos in one click. Need more? Advanced mode
+opens groups, folders and every setting. Switch any time; nothing is
+lost.
+
 COMING FROM ANOTHER SPEED DIAL?
 
 Bring everything over in one click from FVD Speed Dial and other speed
@@ -202,6 +210,14 @@ Written from scratch with no third-party code. Translations welcome.
 WSD Speed Dial, yeni sekme sayfanızı gerçekten kullandığınız
 sitelerin panosuna çevirir — her biri kendi ekran görüntüsüyle.
 Ücretsiz, açık kaynak, izleme yok.
+
+BASİT YA DA GELİŞMİŞ — SİZ SEÇİN
+
+Yalnızca sade bir sayfa mı istiyorsunuz? Basit mod, sakin bir duvar
+kâğıdı üstünde küçük logolu kartlar ve kısa bir ayar listesi verir.
+Hızlı Başla tek tıkla bilinen siteleri logolarıyla ekler. Daha fazlası
+mı gerekiyor? Gelişmiş mod gruplar, klasörler ve tüm ayarları açar.
+İstediğiniz an geçin; hiçbir şey kaybolmaz.
 
 BAŞKA BİR SPEED DIAL'DAN MI GELİYORSUNUZ?
 
@@ -349,6 +365,14 @@ WSD Speed Dial превращает новую вкладку в панель с
 действительно пользуетесь, — у каждого свой скриншот. Бесплатно,
 открытый код, без слежки.
 
+ПРОСТОЙ ИЛИ РАСШИРЕННЫЙ — ВЫБОР ЗА ВАМИ
+
+Нужна просто аккуратная страница? Простой режим — это небольшие
+плитки с логотипами на спокойных обоях и короткий список настроек.
+«Быстрый старт» в один клик добавляет популярные сайты с логотипами.
+Нужно больше? Расширенный режим открывает группы, папки и все
+настройки. Переключайтесь в любой момент — ничего не теряется.
+
 ПЕРЕХОДИТЕ С ДРУГОГО SPEED DIAL?
 
 Перенесите всё в один клик из FVD Speed Dial и других расширений speed
@@ -495,6 +519,14 @@ Mağaza panelinde dil ekleyip uzun açıklamaya yapıştırın; kısa açıklama
 WSD Speed Dial transforma a página de nova aba em um painel com os
 sites que você realmente usa, cada um com sua própria captura de tela.
 Gratuito, de código aberto e sem rastreamento.
+
+SIMPLES OU AVANÇADO — VOCÊ ESCOLHE
+
+Quer só uma página limpa? O modo Simples mostra blocos pequenos com
+logotipos sobre um papel de parede tranquilo e uma lista curta de
+configurações. O Início rápido adiciona sites populares com seus
+logotipos em um clique. Precisa de mais? O modo Avançado abre grupos,
+pastas e todas as configurações. Troque quando quiser; nada se perde.
 
 VEIO DE OUTRO SPEED DIAL?
 
@@ -650,6 +682,14 @@ Escrito do zero, sem código de terceiros. Traduções são bem-vindas.
 WSD Speed Dial convierte la página de nueva pestaña en un panel con
 los sitios que de verdad usas, cada uno con su propia captura.
 Gratuito, de código abierto y sin rastreo.
+
+SIMPLE O AVANZADO — TÚ ELIGES
+
+¿Solo quieres una página limpia? El modo Simple muestra mosaicos
+pequeños con logotipos sobre un fondo tranquilo y una lista corta de
+ajustes. Inicio rápido añade sitios populares con sus logotipos en un
+clic. ¿Necesitas más? El modo Avanzado abre grupos, carpetas y todos
+los ajustes. Cambia cuando quieras; no se pierde nada.
 
 ¿VIENES DE OTRO SPEED DIAL?
 
@@ -810,6 +850,14 @@ bienvenidas.
 WSD Speed Dial перетворює сторінку нової вкладки на дошку із сайтами,
 якими ви справді користуєтеся, — кожен зі своїм знімком. Безкоштовно,
 з відкритим кодом, без стеження.
+
+ПРОСТИЙ АБО РОЗШИРЕНИЙ — ОБИРАЄТЕ ВИ
+
+Потрібна просто охайна сторінка? Простий режим — це невеликі плитки з
+логотипами на спокійних шпалерах і короткий список налаштувань.
+«Швидкий старт» в один клік додає популярні сайти з логотипами.
+Потрібно більше? Розширений режим відкриває групи, папки й усі
+налаштування. Перемикайтеся будь-коли — нічого не втрачається.
 
 ПЕРЕХОДИТЕ З ІНШОГО SPEED DIAL?
 
@@ -1040,6 +1088,15 @@ Ekran görüntüsü için öneri sırası:
 3. Kart düzenleme penceresi
 4. Arama sonuçları
 5. Yinelenen kartlar ya da çöp kutusu
+
+### 1.6.1 ile yapılacaklar (mağaza paneli)
+
+- Paket yüklenecek. Yeni izin yok.
+- Uzun açıklama: girişin hemen altına "Basit ya da Gelişmiş" paragrafı
+  eklendi — EN, TR, RU, PT-BR, ES, UK metinlerini yeniden yapıştır.
+- Ekran görüntüsü: Basit mod görseli (`docs/basit.png`) eklenebilir.
+- Gizlilik politikası güncellendi (kaldırma sayfası, isteğe bağlı arama
+  önerileri) — adres aynı, bir şey yapmaya gerek yok.
 
 ### 1.6.0 ile yapılacaklar (mağaza paneli)
 

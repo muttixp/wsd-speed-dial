@@ -11,10 +11,11 @@
 
 // WSD Speed Dial - zemin renklendirme
 //
-// Iki kip:
+// Uc kip:
 //   'ton' -> hue-rotate + saturate + brightness. `colorize` acikken goruntu
 //            once grileştirilip sepia ile TEK TONA sabitleniyor, sonra o ton
 //            istenen yere donduruluyor.
+//   'koyu'-> once isik ters cevrilir (ton korunur), sonra 'ton' ile ayni.
 //   'iki' -> duotone. Gorsel yalnizca grileşiyor; renk isini golge/isik
 //            boya katmanlari yapiyor (multiply + screen).
 
@@ -32,6 +33,11 @@ export function filtreZinciri(ayar) {
     const aciklik   = ayar.aciklik || 0;
     const parlaklik = 1 + aciklik / 100;          // -100 -> 0, 0 -> 1, +100 -> 2
 
+    // KOYULASTIR (1.6.1): isik ters cevrilir, ton geri dondurulur - acik
+    // duvar kagidi koyu moda uyar (beyaz -> siyah, acik mavi -> koyu mavi).
+    // Ardindan Ton Kaydir'in kaydiricilari aynen calisir.
+    const on = ayar.filtreYontemi === 'koyu' ? 'invert(1) hue-rotate(180deg) ' : '';
+
     if (ayar.filtreYontemi === 'iki') {
         // Boya katmanlari renk veriyor; gorsel sadece grileşiyor.
         const siddet = (ayar.siddet ?? 100) / 100;
@@ -42,13 +48,13 @@ export function filtreZinciri(ayar) {
         // Sepia zayif doygunlukta oldugu icin TABAN 2 aliniyor;
         // 1 ile birakilinca sonuc solgun kaliyordu.
         const doy = Math.max(0, 2 + doygunluk / 50);   // -100 -> 0, 0 -> 2, +100 -> 4
-        return `grayscale(1) sepia(1) hue-rotate(${ton}deg) ` +
+        return on + `grayscale(1) sepia(1) hue-rotate(${ton}deg) ` +
                `saturate(${doy}) brightness(${parlaklik})`;
     }
 
     // Duz ton kaydirma: grileştirme YOK, notr griler notr kaliyor
     const doy = Math.max(0, 1 + doygunluk / 100);      // -100 -> 0, 0 -> 1, +100 -> 2
-    return `hue-rotate(${ton}deg) saturate(${doy}) brightness(${parlaklik})`;
+    return on + `hue-rotate(${ton}deg) saturate(${doy}) brightness(${parlaklik})`;
 }
 
 /** Iki renk kipinde boya katmanlarinin durumu. */

@@ -11,7 +11,7 @@
 
 // WSD Speed Dial - ayar paneli baglantilari
 
-import { moduSinifla } from './tema.js';
+import { moduSinifla, etkinMod } from './tema.js';
 import { tazelemeBastirildiMi, bildir, mesgulDugme } from './arayuz.js';
 import { ayarlariAl, ayarYaz, ayarlariSifirla } from './ayar.js';
 import { c } from './dil.js';
@@ -25,6 +25,16 @@ import { onaySor, onaylariGeriGetir } from './onay.js';
 // asagida tanimlandiginda gorunumuUygula() calisirken erisim hatasi
 // veriyor ve panel hic uygulanmiyordu (TDZ).
 const VARSAYILAN_DUVAR = 'radial-gradient(ellipse 60% 55% at 16% 18%, rgba(70,140,230,.38), transparent 70%), radial-gradient(ellipse 55% 60% at 88% 84%, rgba(120,80,220,.30), transparent 70%), radial-gradient(ellipse 38% 34% at 82% 10%, rgba(40,170,190,.20), transparent 70%), repeating-linear-gradient(135deg, rgba(255,255,255,.025) 0 1px, transparent 1px 14px), linear-gradient(135deg, #1a3a6e, #0d1730)';
+
+/* HAZIR DUVAR KAGITLARI (1.6.1): paketteki gorseller, moda gore acik/koyu
+   hali. Sira: kendi resmi > hazir > temanin zemini. */
+export const HAZIR_DUVARLAR = ['dalga', 'ipek'];
+const hazirAdres = (id, mod) => `/duvar/${id}-${mod === 'acik' ? 'acik' : 'koyu'}.webp`;
+function hazirDuvar(ayar) {
+    if (!HAZIR_DUVARLAR.includes(ayar.duvarHazir)) return null;
+    const mod = etkinMod(ayar);
+    return `url(${hazirAdres(ayar.duvarHazir, mod)}) center bottom / cover no-repeat, ${mod === 'acik' ? '#f7f9fd' : '#090c16'}`;
+}
 
 // [ayar anahtari, eleman id, deger okuyucu]
 const ALANLAR = [
@@ -44,6 +54,7 @@ const ALANLAR = [
     ['ekleKartiGoster',  'ayEkleKarti',     el => el.checked],
     ['yanPanelGizle',    'ayYanPanel',      el => el.checked],
     ['baslikGoster',     'ayBaslikGoster',  el => el.checked],
+    ['baslikKonum',      'ayBaslikKonum',   el => el.value],
     ['kartAcilis',       'ayKartAcilis',    el => el.value],
     ['otomatikYedek',    'ayOtoYedek',      el => el.checked],
     ['duvarAcik',        'ayDuvar',        el => el.checked],
@@ -298,8 +309,10 @@ function renkParlakligi(hex) {
     const n = parseInt(m[1], 16);
     return (0.2126 * (n >> 16) + 0.7152 * ((n >> 8) & 255) + 0.0722 * (n & 255)) / 255;
 }
-async function gorselParlakligi(src) {
-    const anahtar = src.length + ':' + src.slice(-64);
+async function gorselParlakligi(src, filtre = 'none') {
+    // Renklendirme de hesaba katiliyor (1.6.1): Koyulastir'da acik resim
+    // koyu gorunuyor; ham resim olculunce yazilar yanlis renge donuyordu
+    const anahtar = src.length + ':' + src.slice(-64) + ':' + filtre;
     if (zeminOlcum.anahtar === anahtar) return zeminOlcum.deger;
     try {
         const img = new Image();
@@ -308,6 +321,7 @@ async function gorselParlakligi(src) {
         const N = 24, t = document.createElement('canvas');
         t.width = t.height = N;
         const x = t.getContext('2d', { willReadFrequently: true });
+        x.filter = filtre;
         x.drawImage(img, 0, 0, N, N);
         const p = x.getImageData(0, 0, N, N).data;
         let top = 0;
@@ -323,7 +337,8 @@ async function zeminZitliginiUygula(ayar, duvarKapali) {
     const sira = ++zitlikSirasi;
     let p = null;
     if (duvarKapali) p = renkParlakligi(ayar.zeminRengi);
-    else if (ayar.duvarGorsel) p = await gorselParlakligi(ayar.duvarGorsel);
+    else if (ayar.duvarGorsel) p = await gorselParlakligi(ayar.duvarGorsel, filtreZinciri(ayar));
+    else if (hazirDuvar(ayar)) p = await gorselParlakligi(hazirAdres(ayar.duvarHazir, etkinMod(ayar)), filtreZinciri(ayar));
     // Gorsel yoksa temanin kendi gradyani: mod ile zaten uyumlu
     if (sira !== zitlikSirasi) return;
     const acik = document.documentElement.classList.contains('acikMod');
@@ -346,6 +361,16 @@ function gorunumuUygula(ayar) {
 
     const basliklarKapali = ayar.baslikGoster === false;
     document.body.classList.toggle('basliklarKapali', basliklarKapali);
+    document.body.classList.toggle('baslikAltta', ayar.baslikKonum === 'alt');
+    // Kucuk kartta (Simge) alttaki baslik kart arasi boslugu da kullanir (1.6.1)
+    document.body.classList.toggle('kucukKart', (ayar.kartEn || 250) <= 100);
+    // BASIT MOD (1.6.1, deneysel)
+    document.body.classList.toggle('basitMod', ayar.basitMod === true);
+    for (const b of document.querySelectorAll('#ayArayuzModu .segBtn')) {
+        b.classList.toggle('secili', b.dataset.deger === (ayar.basitMod === true ? 'basit' : 'gelismis'));
+    }
+    const hazir = document.getElementById('ayHazirBoyut');
+    if (hazir) import('./basitmod.js').then(m => { hazir.value = m.hazirBoyutAdi(ayar); }).catch(() => {});
     document.body.classList.toggle('kartlarOrtada', ayar.kartHizalama !== 'sol');
     document.body.classList.toggle('ekleKartiKapali', ayar.ekleKartiGoster === false);
     // 1.5.1: "kapat" kalkti; anahtar artik OTOMATIK GIZLEME. Kapaliyken serit hep acik
@@ -520,7 +545,7 @@ function gorunumuUygula(ayar) {
                 // gorsele oldugu gibi desene de uygulansin (1.5.6).
                 gorsel.removeAttribute('src');
                 gorsel.style.display = 'none';
-                const arka = ayar.duvarVarsayilan || VARSAYILAN_DUVAR;
+                const arka = hazirDuvar(ayar) || ayar.duvarVarsayilan || VARSAYILAN_DUVAR;
                 if (desen) {
                     desen.style.background = arka;
                     desen.style.display = 'block';
@@ -576,7 +601,7 @@ function gorunumuUygula(ayar) {
     // Yontem kutulari
     const tonKutu = document.getElementById('ayTonKutu');
     const ikiKutu = document.getElementById('ayIkiKutu');
-    if (tonKutu) tonKutu.hidden = ayar.filtreYontemi !== 'ton';
+    if (tonKutu) tonKutu.hidden = ayar.filtreYontemi === 'iki';
     if (ikiKutu) ikiKutu.hidden = ayar.filtreYontemi !== 'iki';
 
     for (const b of document.querySelectorAll('#ayYontemSegment .segBtn')) {
@@ -586,10 +611,21 @@ function gorunumuUygula(ayar) {
     // Panel onizlemesi - filtre ve iki renk boyasi burada da uygulaniyor
     const onizleme = document.getElementById('ayDuvarOnizleme');
     if (onizleme) {
-        const arka = ayar.duvarGorsel ? `url('${ayar.duvarGorsel}')` : (ayar.duvarVarsayilan || VARSAYILAN_DUVAR);
-        onizleme.style.backgroundImage = arka;
+        // Kisaltma (background) - varsayilan zemin "url() konum / boyut, renk"
+        // biciminde; backgroundImage'a yazilinca gecersiz sayiliyordu (1.6.1)
+        const arka = ayar.duvarGorsel ? `url('${ayar.duvarGorsel}') center / cover no-repeat`
+            : (hazirDuvar(ayar) || ayar.duvarVarsayilan || VARSAYILAN_DUVAR);
+        onizleme.style.background = arka;
         const oGorsel = document.getElementById('ayOnizlemeGorsel');
-        if (oGorsel) oGorsel.style.backgroundImage = arka;
+        if (oGorsel) oGorsel.style.background = arka;
+        // Hazir secici: kucuk resimler moda gore, secili olan isaretli
+        const mod = etkinMod(ayar);
+        for (const b of document.querySelectorAll('#ayDuvarHazir .duvarHazir')) {
+            const id = b.dataset.hazir;
+            b.classList.toggle('secili', !ayar.duvarGorsel && (id ? ayar.duvarHazir === id : !HAZIR_DUVARLAR.includes(ayar.duvarHazir)));
+            b.querySelector('i').style.background = id ? `url(${hazirAdres(id, mod)}) center bottom / cover no-repeat`
+                : (ayar.duvarVarsayilan || VARSAYILAN_DUVAR);
+        }
 
         const oGolge = document.getElementById('ayOnizlemeGolge');
         const oIsik  = document.getElementById('ayOnizlemeIsik');
@@ -1240,6 +1276,25 @@ function grupGosterimSegmenti() {
             gorunumuUygula(await ayarYaz({ grupGosterim: b.dataset.deger }));
         });
     }
+    // ARAYUZ MODU (1.6.1, deneysel): Basit | Gelismis
+    for (const b of document.querySelectorAll('#ayArayuzModu .segBtn')) {
+        b.addEventListener('click', async () => {
+            const { moduDegistir } = await import('./basitmod.js');
+            gorunumuUygula(await moduDegistir(b.dataset.deger === 'basit'));
+            document.dispatchEvent(new CustomEvent('wsd-ayar-tazele'));
+        });
+    }
+    document.getElementById('ayHazirBoyut')?.addEventListener('change', async e => {
+        const { HAZIR_BOYUTLAR } = await import('./basitmod.js');
+        const d = HAZIR_BOYUTLAR[e.target.value];
+        if (!d) return;
+        gorunumuUygula(await ayarYaz(d));
+        document.dispatchEvent(new CustomEvent('wsd-ayar-tazele'));
+    });
+    document.getElementById('ayLogoKoy')?.addEventListener('click', async () => {
+        const { grubaLogoKoy } = await import('./basitmod.js');
+        grubaLogoKoy();
+    });
     // MENU KONUMU (1.5.9): Normal | Kosede - ayar adi seritUstte (true = kose)
     for (const b of document.querySelectorAll('#ayMenuKonumu .segBtn')) {
         b.addEventListener('click', async () => {
@@ -1264,7 +1319,16 @@ function duvarAraclariniKur() {
         ?.addEventListener('click', () => secici?.click());
 
     document.getElementById('ayDuvarSil')?.addEventListener('click', async () => {
-        gorunumuUygula(await ayarYaz({ duvarGorsel: null }));
+        gorunumuUygula(await ayarYaz({ duvarGorsel: null, duvarHazir: null }));
+    });
+
+    // Hazir duvar kagidi secimi (1.6.1): kendi resmi varsa onun yerine gecer
+    document.getElementById('ayDuvarHazir')?.addEventListener('click', async e => {
+        const b = e.target.closest('.duvarHazir');
+        if (!b) return;
+        const yeni = await ayarYaz({ duvarHazir: b.dataset.hazir || null, duvarGorsel: null, duvarAcik: true });
+        document.getElementById('ayDuvar').checked = true;
+        gorunumuUygula(yeni);
     });
 
     secici?.addEventListener('change', async e => {

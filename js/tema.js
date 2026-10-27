@@ -76,16 +76,22 @@ export const SABLONLAR = {
             kartCerceveRengi: '#4a4020', kartCerceveHoverRengi: '#f2c230', grupIkonRengi: '#f0cf6a',
             grupZeminOpaklik: 7, grupAktifRengi: '#f2c230', grupAktifYaziRengi: '#1d1704', baslikGolgeRengi: '#0b0904',
             duvarVarsayilan: 'radial-gradient(ellipse 60% 55% at 16% 18%, rgba(255,190,50,.30), transparent 70%), radial-gradient(ellipse 55% 60% at 88% 84%, rgba(225,120,30,.24), transparent 70%), radial-gradient(ellipse 38% 34% at 82% 10%, rgba(255,230,140,.13), transparent 70%), repeating-linear-gradient(135deg, rgba(255,255,255,.025) 0 1px, transparent 1px 14px), linear-gradient(135deg, #5a4410, #15110a)' }) },
+        // Kahve (1.6.1): Kum'un koyu esi - toprak tonlari, aktif grup bakir
+        { id: 'toprak', r: koyu({ zeminRengi: '#17120d', metinRengi: '#f3eadf', kartZeminRengi: '#261d15',
+            kartCerceveRengi: '#4a3a29', kartCerceveHoverRengi: '#d39a5b', grupIkonRengi: '#e0bb8e',
+            grupZeminOpaklik: 7, grupAktifRengi: '#b8793f', baslikGolgeRengi: '#0b0805',
+            duvarVarsayilan: 'radial-gradient(ellipse 60% 55% at 16% 18%, rgba(210,150,90,.34), transparent 70%), radial-gradient(ellipse 55% 60% at 88% 84%, rgba(150,95,55,.32), transparent 70%), radial-gradient(ellipse 38% 34% at 82% 10%, rgba(240,200,150,.16), transparent 70%), repeating-linear-gradient(135deg, rgba(255,255,255,.025) 0 1px, transparent 1px 14px), linear-gradient(135deg, #5a3e24, #17110b)' }) },
     ],
     acik: [
         { id: 'kagit', r: acik({ zeminRengi: '#f4f5f7', metinRengi: '#1f2329', kartZeminRengi: '#ffffff',
             kartCerceveRengi: '#d5d9e0', kartCerceveHoverRengi: '#4d7ea8', grupIkonRengi: '#4d6a86',
             grupAktifRengi: '#4a79a1',
             duvarVarsayilan: 'radial-gradient(ellipse 60% 55% at 16% 18%, rgba(130,170,230,.28), transparent 70%), radial-gradient(ellipse 55% 60% at 88% 84%, rgba(190,170,240,.22), transparent 70%), radial-gradient(ellipse 38% 34% at 82% 10%, rgba(120,210,220,.18), transparent 70%), repeating-linear-gradient(135deg, rgba(0,0,0,.022) 0 1px, transparent 1px 14px), linear-gradient(135deg, #f7f9fc, #dfe6ef)' }) },
-        { id: 'kum', r: acik({ zeminRengi: '#f6f1e7', metinRengi: '#2d261c', kartZeminRengi: '#fffaf0',
-            kartCerceveRengi: '#e2d6bf', kartCerceveHoverRengi: '#b8864b', grupIkonRengi: '#8a6a3e',
-            grupAktifRengi: '#956c3b',
-            duvarVarsayilan: 'radial-gradient(ellipse 60% 55% at 16% 18%, rgba(240,190,120,.30), transparent 70%), radial-gradient(ellipse 55% 60% at 88% 84%, rgba(200,150,100,.22), transparent 70%), radial-gradient(ellipse 38% 34% at 82% 10%, rgba(255,220,170,.28), transparent 70%), repeating-linear-gradient(135deg, rgba(0,0,0,.022) 0 1px, transparent 1px 14px), linear-gradient(135deg, #fbf5ea, #eadcc2)' }) },
+        // Gri (1.6.1): Grafit'in acik esi - notr gri, aktif grup koyu gri
+        { id: 'gumus', r: acik({ zeminRengi: '#f3f4f5', metinRengi: '#202226', kartZeminRengi: '#ffffff',
+            kartCerceveRengi: '#d8dadd', kartCerceveHoverRengi: '#5d636e', grupIkonRengi: '#555a63',
+            grupAktifRengi: '#5d636e',
+            duvarVarsayilan: 'radial-gradient(ellipse 60% 55% at 16% 18%, rgba(160,165,175,.26), transparent 70%), radial-gradient(ellipse 55% 60% at 88% 84%, rgba(120,128,140,.20), transparent 70%), radial-gradient(ellipse 38% 34% at 82% 10%, rgba(200,205,212,.30), transparent 70%), repeating-linear-gradient(135deg, rgba(0,0,0,.022) 0 1px, transparent 1px 14px), linear-gradient(135deg, #f8f9fa, #dde0e4)' }) },
         { id: 'buz', r: acik({ zeminRengi: '#eef6fb', metinRengi: '#14324a', kartZeminRengi: '#ffffff',
             kartCerceveRengi: '#cfe3f0', kartCerceveHoverRengi: '#2f8fcf', grupIkonRengi: '#2f6f9f',
             grupAktifRengi: '#2879b0',
@@ -98,6 +104,16 @@ export const SABLONLAR = {
             kartCerceveRengi: '#e1d7f0', kartCerceveHoverRengi: '#8b6cd6', grupIkonRengi: '#6f58b0',
             grupAktifRengi: '#8260d3',
             duvarVarsayilan: 'radial-gradient(ellipse 60% 55% at 16% 18%, rgba(240,160,200,.28), transparent 70%), radial-gradient(ellipse 55% 60% at 88% 84%, rgba(160,140,240,.26), transparent 70%), radial-gradient(ellipse 38% 34% at 82% 10%, rgba(255,210,170,.24), transparent 70%), repeating-linear-gradient(135deg, rgba(0,0,0,.02) 0 1px, transparent 1px 14px), linear-gradient(135deg, #fbf3f7, #e4dcf7)' }) },
+        // Mercan (1.6.1): Gun Batimi'nin acik esi - acik seftali zemin, aktif grup mercan
+        { id: 'mercan', r: acik({ zeminRengi: '#fdf3ee', metinRengi: '#3a1f16', kartZeminRengi: '#ffffff',
+            kartCerceveRengi: '#f2d6c9', kartCerceveHoverRengi: '#e06a45', grupIkonRengi: '#b4532f',
+            grupAktifRengi: '#e06a45',
+            duvarVarsayilan: 'radial-gradient(ellipse 60% 55% at 16% 18%, rgba(255,170,110,.32), transparent 70%), radial-gradient(ellipse 55% 60% at 88% 84%, rgba(235,110,140,.22), transparent 70%), radial-gradient(ellipse 38% 34% at 82% 10%, rgba(255,215,160,.30), transparent 70%), repeating-linear-gradient(135deg, rgba(0,0,0,.02) 0 1px, transparent 1px 14px), linear-gradient(135deg, #fff7f1, #f6d5c6)' }) },
+        // Acik modda tersi: beyaz zemin, aktif grup SIYAH, yazisi beyaz
+        { id: 'murekkep', r: acik({ zeminRengi: '#ffffff', metinRengi: '#111111', kartZeminRengi: '#ffffff',
+            kartCerceveRengi: '#d9d9d9', kartCerceveHoverRengi: '#111111', grupIkonRengi: '#3a3a3a',
+            grupAktifRengi: '#111111', grupAktifYaziRengi: '#ffffff',
+            duvarVarsayilan: 'radial-gradient(ellipse 60% 55% at 16% 18%, rgba(0,0,0,.05), transparent 70%), radial-gradient(ellipse 55% 60% at 88% 84%, rgba(0,0,0,.06), transparent 70%), radial-gradient(ellipse 38% 34% at 82% 10%, rgba(0,0,0,.03), transparent 70%), repeating-linear-gradient(135deg, rgba(0,0,0,.025) 0 1px, transparent 1px 14px), linear-gradient(135deg, #ffffff, #e6e6e6)' }) },
         // Kirmizi (1.5.6): acik pembe-beyaz zemin, aktif grup kirmizi
         { id: 'gul', r: acik({ zeminRengi: '#fcf1f2', metinRengi: '#3a1418', kartZeminRengi: '#ffffff',
             kartCerceveRengi: '#f0d2d5', kartCerceveHoverRengi: '#d0353c', grupIkonRengi: '#b0262d',
@@ -108,11 +124,10 @@ export const SABLONLAR = {
             kartCerceveRengi: '#ece0a6', kartCerceveHoverRengi: '#d9a300', grupIkonRengi: '#8a6a00',
             grupAktifRengi: '#f2c230', grupAktifYaziRengi: '#2a2104',
             duvarVarsayilan: 'radial-gradient(ellipse 60% 55% at 16% 18%, rgba(255,215,70,.38), transparent 70%), radial-gradient(ellipse 55% 60% at 88% 84%, rgba(250,170,60,.24), transparent 70%), radial-gradient(ellipse 38% 34% at 82% 10%, rgba(255,240,160,.34), transparent 70%), repeating-linear-gradient(135deg, rgba(0,0,0,.022) 0 1px, transparent 1px 14px), linear-gradient(135deg, #fffbe8, #f6e3a0)' }) },
-        // Acik modda tersi: beyaz zemin, aktif grup SIYAH, yazisi beyaz
-        { id: 'murekkep', r: acik({ zeminRengi: '#ffffff', metinRengi: '#111111', kartZeminRengi: '#ffffff',
-            kartCerceveRengi: '#d9d9d9', kartCerceveHoverRengi: '#111111', grupIkonRengi: '#3a3a3a',
-            grupAktifRengi: '#111111', grupAktifYaziRengi: '#ffffff',
-            duvarVarsayilan: 'radial-gradient(ellipse 60% 55% at 16% 18%, rgba(0,0,0,.05), transparent 70%), radial-gradient(ellipse 55% 60% at 88% 84%, rgba(0,0,0,.06), transparent 70%), radial-gradient(ellipse 38% 34% at 82% 10%, rgba(0,0,0,.03), transparent 70%), repeating-linear-gradient(135deg, rgba(0,0,0,.025) 0 1px, transparent 1px 14px), linear-gradient(135deg, #ffffff, #e6e6e6)' }) },
+        { id: 'kum', r: acik({ zeminRengi: '#f6f1e7', metinRengi: '#2d261c', kartZeminRengi: '#fffaf0',
+            kartCerceveRengi: '#e2d6bf', kartCerceveHoverRengi: '#b8864b', grupIkonRengi: '#8a6a3e',
+            grupAktifRengi: '#956c3b',
+            duvarVarsayilan: 'radial-gradient(ellipse 60% 55% at 16% 18%, rgba(240,190,120,.30), transparent 70%), radial-gradient(ellipse 55% 60% at 88% 84%, rgba(200,150,100,.22), transparent 70%), radial-gradient(ellipse 38% 34% at 82% 10%, rgba(255,220,170,.28), transparent 70%), repeating-linear-gradient(135deg, rgba(0,0,0,.022) 0 1px, transparent 1px 14px), linear-gradient(135deg, #fbf5ea, #eadcc2)' }) },
     ],
 };
 
@@ -122,10 +137,17 @@ const VARSAYILAN_SABLON = { koyu: 'gece', acik: 'kagit' };
    karsiligi gelsin (Orman -> Nane, Okyanus -> Buz...). Eskiden diger
    modda en son secilen (yoksa ilk) tema geliyordu. */
 const ESLER = {
-    gece: 'kagit', grafit: 'kagit', okyanus: 'buz', orman: 'nane', mor: 'pastel',
-    gunbatimi: 'kum', kontrast: 'murekkep', yakut: 'gul', kehribar: 'gunes',
-    kagit: 'gece', kum: 'gunbatimi', buz: 'okyanus', nane: 'orman', pastel: 'mor',
-    gul: 'yakut', gunes: 'kehribar', murekkep: 'kontrast',
+    // 1.6.1: her koyu temanin tek bir acik esi var (sirasi da ayni)
+    gece: 'kagit', kagit: 'gece',
+    grafit: 'gumus', gumus: 'grafit',
+    okyanus: 'buz', buz: 'okyanus',
+    orman: 'nane', nane: 'orman',
+    mor: 'pastel', pastel: 'mor',
+    gunbatimi: 'mercan', mercan: 'gunbatimi',
+    kontrast: 'murekkep', murekkep: 'kontrast',
+    yakut: 'gul', gul: 'yakut',
+    kehribar: 'gunes', gunes: 'kehribar',
+    toprak: 'kum', kum: 'toprak',
 };
 
 /* DESENLI DUVARLAR (1.5.6): sablon duvarlari duz iki renkli gecisti;
@@ -243,12 +265,20 @@ const FILTRE_NOTR = {
 };
 const filtreleriAl = ayar => Object.fromEntries(Object.keys(FILTRE_NOTR).map(k => [k, ayar[k] ?? FILTRE_NOTR[k]]));
 const notrMu = f => Object.keys(FILTRE_NOTR).every(k => esitMi(f[k], FILTRE_NOTR[k]));
-/** cikilanId'nin filtresini saklar, girilenId'ninkini dondurur (yazilacak ayarlar) */
-function filtreGecisi(ayar, cikilanId, girilenId) {
+/** cikilanId'nin filtresini saklar, girilenId'ninkini dondurur (yazilacak ayarlar).
+ *  ayniMod (1.6.1): ayni modda tema degisiyor ve girilen temanin kendi filtresi
+ *  yoksa KOYULASTIR tasinir - duvar kagidini moda uyduruyor, temaya degil;
+ *  koyu modda tema degistirince acik resim birden parlamasin. Acik modda
+ *  acilmis Koyulastir koyu moda gecerken de tasinir (tersi tasinmaz: acik
+ *  moda donunce resim asil haliyle gorunur). */
+function filtreGecisi(ayar, cikilanId, girilenId, ayniMod = false, koyuyaGiris = false) {
     const tf = { ...(ayar.temaFiltreleri || {}) };
+    const f = filtreleriAl(ayar);
     if (cikilanId) {
-        const f = filtreleriAl(ayar);
         if (notrMu(f)) delete tf[cikilanId]; else tf[cikilanId] = f;
+    }
+    if (!tf[girilenId] && (ayniMod || koyuyaGiris) && f.filtreYontemi === 'koyu') {
+        return { ...f, temaFiltreleri: tf };
     }
     return { ...FILTRE_NOTR, ...(tf[girilenId] || {}), temaFiltreleri: tf };
 }
@@ -289,7 +319,7 @@ export async function moduEsitle() {
     const saklananRenk = hedef?.tema === sablon.id ? hedef.renkler : null;
     await ayarYaz({
         ...(saklananRenk || sablon.r),
-        ...filtreGecisi(ayar, ayar.tema || VARSAYILAN_SABLON[onceki], sablon.id),
+        ...filtreGecisi(ayar, ayar.tema || VARSAYILAN_SABLON[onceki], sablon.id, false, mod === 'koyu'),
         tema: sablon.id,
         temaSonMod: mod,
         temaRenkleri: saklanan,
@@ -305,7 +335,7 @@ async function sablonUygula(id) {
     const sablon = sablonBul(mod, id);
     if (!sablon) return;
     const geri = { ...renkleriAl(ayar), ...filtreleriAl(ayar), temaFiltreleri: ayar.temaFiltreleri || {}, tema: ayar.tema };
-    await ayarYaz({ ...sablon.r, ...filtreGecisi(ayar, ayar.tema || VARSAYILAN_SABLON[mod], id), tema: id, temaSonMod: mod });
+    await ayarYaz({ ...sablon.r, ...filtreGecisi(ayar, ayar.tema || VARSAYILAN_SABLON[mod], id, true), tema: id, temaSonMod: mod });
     tazeleIste();
     const { bildir } = await import('./arayuz.js');
     bildir(c('temaUygulandi', sablonAdi(sablon)), {

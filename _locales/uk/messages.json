@@ -21,7 +21,7 @@
     "message": "Пошук"
   },
   "GenisEkran": {
-    "message": "16:9 — широкий"
+    "message": "16:9"
   },
   "aciklik": {
     "message": "Яскравість"
@@ -33,7 +33,7 @@
     "message": "Прозорість активної групи"
   },
   "anaSayfaGrubunuGoster": {
-    "message": "Показувати групу «Головна»"
+    "message": "Група «Головна»"
   },
   "ayarlariAcKapat": {
     "message": "відкрити / закрити налаштування"
@@ -42,7 +42,7 @@
     "message": "Скинути налаштування"
   },
   "ayniSekme": {
-    "message": "У тій самій вкладці"
+    "message": "У цій вкладці"
   },
   "basaKaydir": {
     "message": "Прокрутити на початок"
@@ -51,7 +51,7 @@
     "message": "Заголовок"
   },
   "baslikYaziBoyutu": {
-    "message": "Розмір шрифту заголовка"
+    "message": "Розмір шрифту"
   },
   "bekleyenYakalamalariIptalEt": {
     "message": "Скасувати очікувані знімки"
@@ -78,10 +78,10 @@
     "message": "Плитка «+»"
   },
   "ekranGoruntusuBoyutu": {
-    "message": "Розмір знімка"
+    "message": "Розмір"
   },
   "ekranGoruntusuOnerilen": {
-    "message": "Знімок екрана (рекомендовано)"
+    "message": "Знімок екрана"
   },
   "enCokZiyaretEdilen": {
     "message": "Найвідвідуваніші"
@@ -96,10 +96,10 @@
     "message": "Загальне налаштування"
   },
   "gerekirsePencereyiOneAl": {
-    "message": "Виводити вікно на передній план за потреби"
+    "message": "Вікно на передній план"
   },
   "gizliHataAyiklamaCubuguCikar": {
-    "message": "Прихований (показує панель налагодження)"
+    "message": "Прихований"
   },
   "golgeRengi": {
     "message": "Колір тіні"
@@ -108,7 +108,7 @@
     "message": "Файл зображення"
   },
   "goruntuUrlSi": {
-    "message": "URL зображення"
+    "message": "Адреса зображення"
   },
   "gosterim": {
     "message": "Відображення"
@@ -138,7 +138,7 @@
     "message": "приховати / показати все"
   },
   "htmlSayfasiOlarakDisaAktar": {
-    "message": "Експорт у HTML-сторінку"
+    "message": "Експорт у HTML"
   },
   "iceAktar": {
     "message": "Імпорт"
@@ -165,34 +165,34 @@
     "message": "Видалити"
   },
   "kartAcilisSekli": {
-    "message": "Відкривати плитку"
+    "message": "Відкривати"
   },
   "kartBasliklari": {
-    "message": "Заголовки плиток"
+    "message": "Заголовки"
   },
   "kartBoyutu": {
-    "message": "Розмір плитки"
+    "message": "Розмір"
   },
   "kartCerceveRengi": {
     "message": "Колір рамки"
   },
   "kartCerceveRengiUzerineGelince": {
-    "message": "Колір рамки (при наведенні)"
+    "message": "При наведенні"
   },
   "kartCercevesi": {
-    "message": "Рамка плитки"
+    "message": "Рамка"
   },
   "kartOrani": {
-    "message": "Пропорції плитки"
+    "message": "Пропорції"
   },
   "kartSayisi": {
     "message": "Кількість плиток"
   },
   "kartUstuButonlar": {
-    "message": "Кнопки на плитці"
+    "message": "Кнопки плитки"
   },
   "kartZeminRengi": {
-    "message": "Фон плитки"
+    "message": "Фон"
   },
   "kartiDuzenle": {
     "message": "Змінити плитку"
@@ -216,7 +216,7 @@
     "message": "Сполучення клавіш не працюють під час введення тексту."
   },
   "kullanilmayanVerileriTemizle": {
-    "message": "Очистити невикористані дані"
+    "message": "Очистити невикористане"
   },
   "notuSil": {
     "message": "Видалити нотатку"
@@ -225,7 +225,7 @@
     "message": "перейти до цієї групи"
   },
   "onceSayfaGorseliYoksaEkran": {
-    "message": "Спочатку зображення сторінки, інакше знімок"
+    "message": "Зображення сторінки, інакше знімок"
   },
   "oncekiSonrakiGrup": {
     "message": "попередня / наступна група"
@@ -237,7 +237,7 @@
     "message": "Свій емодзі"
   },
   "pencereKisaSureGorunur": {
-    "message": "Вікно (ненадовго видно)"
+    "message": "Вікно"
   },
   "pencereyiAramayiKapat": {
     "message": "закрити вікно / пошук"
@@ -249,16 +249,16 @@
     "message": "Відтінок"
   },
   "renklendirmeSiddeti": {
-    "message": "Сила тонування"
+    "message": "Сила"
   },
   "renklendirmeYontemi": {
-    "message": "Спосіб тонування"
+    "message": "Спосіб"
   },
   "resmiIndir": {
     "message": "Завантажити зображення"
   },
   "sekmeZeminSaydamligi": {
-    "message": "Прозорість фону вкладок"
+    "message": "Прозорість фону"
   },
   "sil": {
     "message": "Видалити"
@@ -318,10 +318,10 @@
     "message": "нова плитка"
   },
   "yeniSekme": {
-    "message": "Нова вкладка"
+    "message": "У новій вкладці"
   },
   "yeniSekmeArkaPlan": {
-    "message": "Нова вкладка (у фоні)"
+    "message": "У фоновій вкладці"
   },
   "yontem": {
     "message": "Спосіб"
@@ -345,7 +345,7 @@
     "message": "Експорт копії"
   },
   "simdiYedekAl": {
-    "message": "Створити копію зараз"
+    "message": "Створити копію"
   },
   "onaySorulariniGeriGetir": {
     "message": "Повернути запити підтвердження"
@@ -810,7 +810,7 @@
     "message": "$1 плиток · видалена група"
   },
   "goruntuUrlsi": {
-    "message": "URL зображення"
+    "message": "Адреса зображення"
   },
   "oncekiSimdiKayip": {
     "message": "Було $1 $2, зараз $3. "
@@ -837,16 +837,13 @@
     "message": "Обслуговування"
   },
   "anasayfaKurulumu": {
-    "message": "Налаштування домашньої сторінки"
+    "message": "Домашня сторінка"
   },
   "kisayollarBolum": {
     "message": "Сполучення клавіш"
   },
   "uzantiSimgesi": {
     "message": "Значок розширення"
-  },
-  "baslamakIcin": {
-    "message": "Почніть з"
   },
   "tonKaydir": {
     "message": "Зсув відтінку"
@@ -861,7 +858,7 @@
     "message": "Зображення $1 плиток буде знято заново. Це може зайняти кілька хвилин."
   },
   "colorizeTekTonaIndir": {
-    "message": "Colorize (один тон)"
+    "message": "Один тон"
   },
   "doygunluk": {
     "message": "Насиченість"
@@ -876,13 +873,13 @@
     "message": "Квадрат"
   },
   "sekmeZeminRengi": {
-    "message": "Фон вкладок"
+    "message": "Колір фону"
   },
   "sekmeBoyutu": {
-    "message": "Розмір вкладок"
+    "message": "Розмір"
   },
   "menuKonumu": {
-    "message": "Положення меню"
+    "message": "Положення"
   },
   "konumNormal": {
     "message": "Звичайно"
@@ -915,7 +912,7 @@
     "message": "Назва"
   },
   "siteUrl": {
-    "message": "URL сайту"
+    "message": "Адреса сайту"
   },
   "enSonEklenen": {
     "message": "Спочатку нові"
@@ -927,13 +924,13 @@
     "message": "Підтвердження"
   },
   "oranDengeli": {
-    "message": "16:10 — збалансований"
+    "message": "16:10"
   },
   "veya": {
     "message": "або"
   },
   "zeminRenklendirme": {
-    "message": "Тонування фону"
+    "message": "Тонування"
   },
   "kurulumAciklama": {
     "message": "Щоб відкривати WSD кнопкою «Додому», скопіюйте адресу нижче в Налаштування → Під час запуску → Домашня сторінка."
@@ -987,10 +984,10 @@
     "message": "Розміщення зображення"
   },
   "yerlesimKirp": {
-    "message": "Обрізати (заповнити)"
+    "message": "Заповнити"
   },
   "yerlesimSigdir": {
-    "message": "Вписати (показати повністю)"
+    "message": "Вписати"
   },
   "sahneYakala": {
     "message": "Зняти сцену"
@@ -1461,7 +1458,7 @@
     "message": "Плитки, вкладки, вікна, меню й кнопки"
   },
   "yanPaneliGizle": {
-    "message": "Автоприховування бічної панелі"
+    "message": "Приховувати бічну панель"
   },
   "buGruptaNKart": {
     "message": "У цій групі плиток: <b>$1</b>"
@@ -1497,7 +1494,7 @@
     "message": "Натисніть назву, щоб додати туди · ▸ розгортає гілку"
   },
   "sagTikMenusu": {
-    "message": "Контекстне меню сторінки"
+    "message": "Вид меню"
   },
   "sagTikPencere": {
     "message": "Групи + «Вибрати папку…»"
@@ -1542,10 +1539,10 @@
     "message": "Заголовок"
   },
   "baslikRengi": {
-    "message": "Колір заголовка"
+    "message": "Колір"
   },
   "baslikStili": {
-    "message": "Стиль заголовка"
+    "message": "Стиль"
   },
   "stilNormal": {
     "message": "Звичайний"
@@ -1560,16 +1557,16 @@
     "message": "Жирний курсив"
   },
   "baslikGolgesi": {
-    "message": "Тінь заголовка"
+    "message": "Тінь"
   },
   "baslikGolgeRengi": {
     "message": "Колір тіні"
   },
   "menuYaziRengi": {
-    "message": "Колір тексту панелі груп"
+    "message": "Колір тексту"
   },
   "aktifGrupYaziRengi": {
-    "message": "Колір тексту активної групи"
+    "message": "Текст активної групи"
   },
   "sistemBolum": {
     "message": "Система"
@@ -1593,7 +1590,7 @@
     "message": "Колір фону"
   },
   "aktarimdaYakala": {
-    "message": "Створювати відсутні мініатюри після імпорту"
+    "message": "Знімки під час імпорту"
   },
   "icindekiKartlardanSec": {
     "message": "Вибрати з плиток усередині"
@@ -1755,16 +1752,16 @@
     "message": "Рядок пошуку"
   },
   "webAramaGoster": {
-    "message": "Показувати рядок пошуку"
+    "message": "Показувати"
   },
   "webVarsayilanMotor": {
-    "message": "Пошукова система за замовчуванням"
+    "message": "За замовчуванням"
   },
   "webMotorListesi": {
-    "message": "Пошукові системи у списку"
+    "message": "Системи у списку"
   },
   "webMotorEkle": {
-    "message": "Додати свою пошукову систему"
+    "message": "Додати систему"
   },
   "webYeniAd": {
     "message": "Назва"
@@ -1794,7 +1791,7 @@
     "message": "Взяти колір з екрана"
   },
   "arayuzAlt": {
-    "message": "Інтерфейс"
+    "message": "Ефекти"
   },
   "renkliSimgeler": {
     "message": "Кольорові значки"
@@ -1887,10 +1884,10 @@
     "message": "«Головну» не можна перейменувати"
   },
   "camGorunum": {
-    "message": "Ефект матового скла"
+    "message": "Матове скло"
   },
   "aktifIkonRengi": {
-    "message": "Колір значка активної групи"
+    "message": "Значок активної групи"
   },
   "aktarimGorselBaslik": {
     "message": "Зображення плиток"
@@ -1941,7 +1938,7 @@
     "message": "Чорнило"
   },
   "webAramaYeri": {
-    "message": "Де показувати"
+    "message": "Де"
   },
   "webYerAnaSayfa": {
     "message": "Лише на «Головній»"
@@ -1953,7 +1950,7 @@
     "message": "В усіх групах"
   },
   "kucukPencere": {
-    "message": "Маленьке вікно в кутку (експериментально)"
+    "message": "Маленьке вікно в кутку"
   },
   "gizliKipBilgi": {
     "message": "Під час знімка Chrome показує вгорі панель «налагодження». Це обов'язкове повідомлення; дозвіл використовується лише для знімків, панель зникає після завершення."
@@ -1992,7 +1989,7 @@
     "message": "Пошук в інтернеті або адреса"
   },
   "kartHizalama": {
-    "message": "Вирівнювання плиток"
+    "message": "Вирівнювання"
   },
   "hizaOrta": {
     "message": "По центру"
@@ -2064,7 +2061,7 @@
     "message": "Назва файлів копій і підпапки. Дайте кожному браузеру власну назву; однакова назва — спільна копія."
   },
   "klasorYedekSiklik": {
-    "message": "Частота автоматичного копіювання"
+    "message": "Частота"
   },
   "gundeBir": {
     "message": "Раз на день"
@@ -2073,13 +2070,13 @@
     "message": "Раз на тиждень"
   },
   "klasorYedekGorselli": {
-    "message": "Включати зображення"
+    "message": "Із зображеннями"
   },
   "klasorYedekSakla": {
     "message": "Зберігати копій"
   },
   "klasorYedekSimdi": {
-    "message": "Зберегти в папку зараз"
+    "message": "Зберегти зараз"
   },
   "klasorYedekGeriYukle": {
     "message": "Відновити з папки"
@@ -2151,7 +2148,7 @@
     "message": "Ось ця плитка"
   },
   "klasorYedekSiklikKapali": {
-    "message": "Вимк. (лише вручну)"
+    "message": "Вимк."
   },
   "acilisGrubu": {
     "message": "Група під час відкриття"
@@ -2202,6 +2199,141 @@
     "message": "Ця сторінка вже є в «$1»"
   },
   "sahneKapali": {
-    "message": "Ця сторінка закрита для розширень (браузер не дозволяє). Використайте «Файл зображення» або «URL зображення»."
+    "message": "Ця сторінка закрита для розширень (браузер не дозволяє). Використайте «Файл зображення» або «Адреса зображення»."
+  },
+  "geriYukle": {
+    "message": "Відновити"
+  },
+  "arayuzModu": {
+    "message": "Інтерфейс"
+  },
+  "modBasit": {
+    "message": "Простий"
+  },
+  "modGelismis": {
+    "message": "Розширений"
+  },
+  "logoKoy": {
+    "message": "Знайти логотипи для плиток цієї групи"
+  },
+  "baslikKonum": {
+    "message": "Положення"
+  },
+  "konumUstte": {
+    "message": "Зверху"
+  },
+  "konumAltta": {
+    "message": "Знизу"
+  },
+  "logoIlerleme": {
+    "message": "Пошук логотипів: $1 / $2"
+  },
+  "logoBitti": {
+    "message": "Логотипи додано: $1 з $2"
+  },
+  "logoKartYok": {
+    "message": "У цій групі немає плиток"
+  },
+  "logolar": {
+    "message": "Логотипи сайтів"
+  },
+  "boyutSimge": {
+    "message": "Значок"
+  },
+  "boyutMinik": {
+    "message": "Крихітний"
+  },
+  "boyutKucuk": {
+    "message": "Малий"
+  },
+  "boyutOrta": {
+    "message": "Середній"
+  },
+  "boyutBuyuk": {
+    "message": "Великий"
+  },
+  "boyutKocaman": {
+    "message": "Величезний"
+  },
+  "boyutOzel": {
+    "message": "Власний"
+  },
+  "logoIpucu": {
+    "message": "Ставить логотип замість зображення; старе лишається в «Змінити»."
+  },
+  "modBasitAciklama": {
+    "message": "Чиста сторінка, маленькі значки"
+  },
+  "modGelismisAciklama": {
+    "message": "Групи, теки, усі налаштування"
+  },
+  "tema_gumus": {
+    "message": "Срібло"
+  },
+  "tema_toprak": {
+    "message": "Земля"
+  },
+  "tema_mercan": {
+    "message": "Корал"
+  },
+  "filtre": {
+    "message": "Фільтр"
+  },
+  "filtreYok": {
+    "message": "Немає"
+  },
+  "filtreTekRenk": {
+    "message": "Один колір"
+  },
+  "filtreRenklendir": {
+    "message": "Тонувати"
+  },
+  "filtreGri": {
+    "message": "Чорно-білий"
+  },
+  "filtreSepya": {
+    "message": "Сепія"
+  },
+  "filtreTers": {
+    "message": "Інверсія"
+  },
+  "parlaklik": {
+    "message": "Яскравість"
+  },
+  "kontrast": {
+    "message": "Контраст"
+  },
+  "uygula": {
+    "message": "Застосувати"
+  },
+  "filtreIpucu": {
+    "message": "Результат додається як нове зображення; оригінал лишається в каруселі."
+  },
+  "filtreUygulandi": {
+    "message": "Фільтр застосовано."
+  },
+  "filtreUygulanamadi": {
+    "message": "Не вдалося застосувати фільтр до цього зображення."
+  },
+  "filtreGorselYok": {
+    "message": "Спочатку додайте зображення."
+  },
+  "koyulastir": {
+    "message": "Затемнити"
+  },
+  "hizliBasla": {
+    "message": "Швидкий старт"
+  },
+  "hizliBaslaIpucu": {
+    "message": "Додає популярні сайти з логотипами"
+  },
+  "webOneriler": {
+    "message": "Підказки"
+  },
+  "webOnerilerIpucu": {
+    "message": "Показує підказки під час введення; текст надсилається до сервісу підказок пошуковика."
+  },
+  "duvarTema": {
+    "message": "Тема"
   }
 }

@@ -21,7 +21,7 @@
     "message": "Search"
   },
   "GenisEkran": {
-    "message": "16:9 — widescreen"
+    "message": "16:9"
   },
   "aciklik": {
     "message": "Brightness"
@@ -33,7 +33,7 @@
     "message": "Active Group Opacity"
   },
   "anaSayfaGrubunuGoster": {
-    "message": "Show Home Group"
+    "message": "Home Group"
   },
   "ayarlariAcKapat": {
     "message": "open / close settings"
@@ -42,7 +42,7 @@
     "message": "Reset settings"
   },
   "ayniSekme": {
-    "message": "Same Tab"
+    "message": "Same tab"
   },
   "basaKaydir": {
     "message": "Scroll to start"
@@ -51,7 +51,7 @@
     "message": "Title"
   },
   "baslikYaziBoyutu": {
-    "message": "Title Font Size"
+    "message": "Font Size"
   },
   "bekleyenYakalamalariIptalEt": {
     "message": "Cancel pending captures"
@@ -75,13 +75,13 @@
     "message": "Edit"
   },
   "eklemeKarti": {
-    "message": "\"+\" Add Tile"
+    "message": "\"+\" Tile"
   },
   "ekranGoruntusuBoyutu": {
-    "message": "Screenshot Size"
+    "message": "Size"
   },
   "ekranGoruntusuOnerilen": {
-    "message": "Screenshot (recommended)"
+    "message": "Screenshot"
   },
   "enCokZiyaretEdilen": {
     "message": "Most visited"
@@ -96,10 +96,10 @@
     "message": "Use global setting"
   },
   "gerekirsePencereyiOneAl": {
-    "message": "Bring Window to Front if Needed"
+    "message": "Bring Window to Front"
   },
   "gizliHataAyiklamaCubuguCikar": {
-    "message": "Hidden (no window)"
+    "message": "Hidden"
   },
   "golgeRengi": {
     "message": "Shadow Color"
@@ -108,7 +108,7 @@
     "message": "Image File"
   },
   "goruntuUrlSi": {
-    "message": "Image URL"
+    "message": "Image Address"
   },
   "gosterim": {
     "message": "Display"
@@ -138,7 +138,7 @@
     "message": "hide / show everything"
   },
   "htmlSayfasiOlarakDisaAktar": {
-    "message": "Export as HTML page"
+    "message": "Export as HTML"
   },
   "iceAktar": {
     "message": "Import"
@@ -165,34 +165,34 @@
     "message": "Remove"
   },
   "kartAcilisSekli": {
-    "message": "Tile Opens In"
+    "message": "Opens In"
   },
   "kartBasliklari": {
-    "message": "Tile Titles"
+    "message": "Titles"
   },
   "kartBoyutu": {
-    "message": "Tile Size"
+    "message": "Size"
   },
   "kartCerceveRengi": {
     "message": "Border Color"
   },
   "kartCerceveRengiUzerineGelince": {
-    "message": "Border Color (Hover)"
+    "message": "On Hover"
   },
   "kartCercevesi": {
-    "message": "Tile Border"
+    "message": "Border"
   },
   "kartOrani": {
-    "message": "Tile Ratio"
+    "message": "Ratio"
   },
   "kartSayisi": {
     "message": "Tile count"
   },
   "kartUstuButonlar": {
-    "message": "Tile Hover Buttons"
+    "message": "Tile Buttons"
   },
   "kartZeminRengi": {
-    "message": "Tile Background"
+    "message": "Background"
   },
   "kartiDuzenle": {
     "message": "Edit Tile"
@@ -216,7 +216,7 @@
     "message": "Shortcuts do not work while typing in a field."
   },
   "kullanilmayanVerileriTemizle": {
-    "message": "Clean unused data"
+    "message": "Clean unused"
   },
   "notuSil": {
     "message": "Delete Note"
@@ -225,7 +225,7 @@
     "message": "switch to that group"
   },
   "onceSayfaGorseliYoksaEkran": {
-    "message": "Page image first, then screenshot"
+    "message": "Page image, else screenshot"
   },
   "oncekiSonrakiGrup": {
     "message": "previous / next group"
@@ -237,7 +237,7 @@
     "message": "Custom emoji"
   },
   "pencereKisaSureGorunur": {
-    "message": "Window (briefly visible)"
+    "message": "Window"
   },
   "pencereyiAramayiKapat": {
     "message": "close dialog / search"
@@ -249,16 +249,16 @@
     "message": "Hue"
   },
   "renklendirmeSiddeti": {
-    "message": "Tint Strength"
+    "message": "Strength"
   },
   "renklendirmeYontemi": {
-    "message": "Tinting Method"
+    "message": "Method"
   },
   "resmiIndir": {
     "message": "Download Image"
   },
   "sekmeZeminSaydamligi": {
-    "message": "Menu Background Opacity"
+    "message": "Background Opacity"
   },
   "sil": {
     "message": "Delete"
@@ -318,10 +318,10 @@
     "message": "new tile"
   },
   "yeniSekme": {
-    "message": "New Tab"
+    "message": "New tab"
   },
   "yeniSekmeArkaPlan": {
-    "message": "New Tab (Background)"
+    "message": "Background tab"
   },
   "yontem": {
     "message": "Method"
@@ -345,7 +345,7 @@
     "message": "Back up"
   },
   "simdiYedekAl": {
-    "message": "Back up now"
+    "message": "Back up"
   },
   "onaySorulariniGeriGetir": {
     "message": "Restore confirmation prompts"
@@ -810,7 +810,7 @@
     "message": "$1 tiles · deleted group"
   },
   "goruntuUrlsi": {
-    "message": "Image URL"
+    "message": "Image Address"
   },
   "oncekiSimdiKayip": {
     "message": "There were $1 $2, now $3. "
@@ -831,22 +831,19 @@
     "message": "Group Menu"
   },
   "goruntuYakalama": {
-    "message": "Screenshot"
+    "message": "Image Capture"
   },
   "bakimBolum": {
     "message": "Maintenance"
   },
   "anasayfaKurulumu": {
-    "message": "Homepage Setup"
+    "message": "Home Page Setup"
   },
   "kisayollarBolum": {
     "message": "Shortcuts"
   },
   "uzantiSimgesi": {
     "message": "Extension Icon"
-  },
-  "baslamakIcin": {
-    "message": "Get started with"
   },
   "tonKaydir": {
     "message": "Hue Shift"
@@ -861,7 +858,7 @@
     "message": "Images for $1 tiles will be captured again. This may take a few minutes."
   },
   "colorizeTekTonaIndir": {
-    "message": "Colorize (single tone)"
+    "message": "Single Tone"
   },
   "doygunluk": {
     "message": "Saturation"
@@ -876,13 +873,13 @@
     "message": "Square"
   },
   "sekmeZeminRengi": {
-    "message": "Menu Background Color"
+    "message": "Background Color"
   },
   "sekmeBoyutu": {
-    "message": "Menu Size"
+    "message": "Size"
   },
   "menuKonumu": {
-    "message": "Menu Position"
+    "message": "Position"
   },
   "konumNormal": {
     "message": "Normal"
@@ -915,7 +912,7 @@
     "message": "Name"
   },
   "siteUrl": {
-    "message": "Site URL"
+    "message": "Site Address"
   },
   "enSonEklenen": {
     "message": "Most recent"
@@ -927,13 +924,13 @@
     "message": "Confirm"
   },
   "oranDengeli": {
-    "message": "16:10 — balanced"
+    "message": "16:10"
   },
   "veya": {
     "message": "or"
   },
   "zeminRenklendirme": {
-    "message": "Background Tinting"
+    "message": "Tinting"
   },
   "kurulumAciklama": {
     "message": "To open WSD with the browser home button, copy the address below into Settings → On startup → Home page."
@@ -987,10 +984,10 @@
     "message": "Image Fit"
   },
   "yerlesimKirp": {
-    "message": "Crop (fill tile)"
+    "message": "Fill"
   },
   "yerlesimSigdir": {
-    "message": "Fit (show all)"
+    "message": "Fit"
   },
   "sahneYakala": {
     "message": "Capture Scene"
@@ -1461,7 +1458,7 @@
     "message": "Cards, tabs, windows, menus and buttons"
   },
   "yanPaneliGizle": {
-    "message": "Auto-hide Side Toolbar"
+    "message": "Hide Side Panel"
   },
   "buGruptaNKart": {
     "message": "This group has <b>$1</b> cards"
@@ -1497,7 +1494,7 @@
     "message": "Click a name to add it there · ▸ opens the branch"
   },
   "sagTikMenusu": {
-    "message": "Page Right-Click Menu"
+    "message": "Menu Type"
   },
   "sagTikPencere": {
     "message": "Groups + Choose folder…"
@@ -1542,10 +1539,10 @@
     "message": "Title"
   },
   "baslikRengi": {
-    "message": "Title Color"
+    "message": "Color"
   },
   "baslikStili": {
-    "message": "Title Style"
+    "message": "Style"
   },
   "stilNormal": {
     "message": "Normal"
@@ -1560,16 +1557,16 @@
     "message": "Bold Italic"
   },
   "baslikGolgesi": {
-    "message": "Title Shadow"
+    "message": "Shadow"
   },
   "baslikGolgeRengi": {
     "message": "Shadow Color"
   },
   "menuYaziRengi": {
-    "message": "Menu Text Color"
+    "message": "Text Color"
   },
   "aktifGrupYaziRengi": {
-    "message": "Active Group Text Color"
+    "message": "Active Text Color"
   },
   "sistemBolum": {
     "message": "System"
@@ -1593,7 +1590,7 @@
     "message": "Background Color"
   },
   "aktarimdaYakala": {
-    "message": "Capture Missing Thumbnails After Import"
+    "message": "Capture on Import"
   },
   "icindekiKartlardanSec": {
     "message": "Pick from the tiles inside"
@@ -1755,16 +1752,16 @@
     "message": "Search Bar"
   },
   "webAramaGoster": {
-    "message": "Show Search Bar"
+    "message": "Show"
   },
   "webVarsayilanMotor": {
-    "message": "Default Search Engine"
+    "message": "Default Engine"
   },
   "webMotorListesi": {
-    "message": "Engines Shown in the List"
+    "message": "Engines in List"
   },
   "webMotorEkle": {
-    "message": "Add Your Own Search Engine"
+    "message": "Add Engine"
   },
   "webYeniAd": {
     "message": "Name"
@@ -1794,7 +1791,7 @@
     "message": "Pick a color from the screen"
   },
   "arayuzAlt": {
-    "message": "Interface"
+    "message": "Effects"
   },
   "renkliSimgeler": {
     "message": "Colored Icons"
@@ -1887,10 +1884,10 @@
     "message": "Home cannot be renamed"
   },
   "camGorunum": {
-    "message": "Frosted Glass Look"
+    "message": "Frosted Glass"
   },
   "aktifIkonRengi": {
-    "message": "Active Group Icon Color"
+    "message": "Active Icon Color"
   },
   "aktarimGorselBaslik": {
     "message": "Card images"
@@ -1941,7 +1938,7 @@
     "message": "Ink"
   },
   "webAramaYeri": {
-    "message": "Where to Show"
+    "message": "Position"
   },
   "webYerAnaSayfa": {
     "message": "Home only"
@@ -1953,7 +1950,7 @@
     "message": "In all groups"
   },
   "kucukPencere": {
-    "message": "Small Window in the Corner (experimental)"
+    "message": "Small Corner Window"
   },
   "gizliKipBilgi": {
     "message": "While capturing, Chrome shows a \"debugging\" bar at the top. It is a mandatory notice; the permission is used only for screenshots and the bar disappears when done."
@@ -1992,7 +1989,7 @@
     "message": "Search the web or type an address"
   },
   "kartHizalama": {
-    "message": "Tile Alignment"
+    "message": "Alignment"
   },
   "hizaOrta": {
     "message": "Center"
@@ -2058,13 +2055,13 @@
     "message": "Backups are written to the folder you choose. Pick a cloud folder (OneDrive, Google Drive, Dropbox) to restore on another computer."
   },
   "klasorYedekAd": {
-    "message": "Backup name"
+    "message": "Backup Name"
   },
   "klasorYedekAdIpucu": {
     "message": "Name of the backup files and subfolder. Give each browser its own name; the same name means a shared backup."
   },
   "klasorYedekSiklik": {
-    "message": "Automatic backup frequency"
+    "message": "Frequency"
   },
   "gundeBir": {
     "message": "Once a day"
@@ -2073,13 +2070,13 @@
     "message": "Once a week"
   },
   "klasorYedekGorselli": {
-    "message": "Include images"
+    "message": "Include Images"
   },
   "klasorYedekSakla": {
-    "message": "Backups to keep"
+    "message": "Backups to Keep"
   },
   "klasorYedekSimdi": {
-    "message": "Back up to folder now"
+    "message": "Back up now"
   },
   "klasorYedekGeriYukle": {
     "message": "Restore from folder"
@@ -2151,7 +2148,7 @@
     "message": "Here it is"
   },
   "klasorYedekSiklikKapali": {
-    "message": "Off (manual only)"
+    "message": "Off"
   },
   "acilisGrubu": {
     "message": "Start Group"
@@ -2202,6 +2199,141 @@
     "message": "This page is already in \"$1\""
   },
   "sahneKapali": {
-    "message": "This page is closed to extensions (the browser does not allow it). Use \"Image File\" or \"Image URL\" instead."
+    "message": "This page is closed to extensions (the browser does not allow it). Use \"Image File\" or \"Image Address\" instead."
+  },
+  "geriYukle": {
+    "message": "Restore"
+  },
+  "arayuzModu": {
+    "message": "Interface"
+  },
+  "modBasit": {
+    "message": "Simple"
+  },
+  "modGelismis": {
+    "message": "Advanced"
+  },
+  "logoKoy": {
+    "message": "Find logos for tiles in this group"
+  },
+  "baslikKonum": {
+    "message": "Position"
+  },
+  "konumUstte": {
+    "message": "Above"
+  },
+  "konumAltta": {
+    "message": "Below"
+  },
+  "logoIlerleme": {
+    "message": "Finding logos: $1 / $2"
+  },
+  "logoBitti": {
+    "message": "Logos added to $1 of $2 tiles"
+  },
+  "logoKartYok": {
+    "message": "No tiles in this group"
+  },
+  "logolar": {
+    "message": "Site Logos"
+  },
+  "boyutSimge": {
+    "message": "Icon"
+  },
+  "boyutMinik": {
+    "message": "Tiny"
+  },
+  "boyutKucuk": {
+    "message": "Small"
+  },
+  "boyutOrta": {
+    "message": "Medium"
+  },
+  "boyutBuyuk": {
+    "message": "Large"
+  },
+  "boyutKocaman": {
+    "message": "Huge"
+  },
+  "boyutOzel": {
+    "message": "Custom"
+  },
+  "logoIpucu": {
+    "message": "Uses the site logo as the tile image; the old one stays in Edit."
+  },
+  "modBasitAciklama": {
+    "message": "A clean page with small icons"
+  },
+  "modGelismisAciklama": {
+    "message": "Groups, folders, all settings"
+  },
+  "tema_gumus": {
+    "message": "Silver"
+  },
+  "tema_toprak": {
+    "message": "Earth"
+  },
+  "tema_mercan": {
+    "message": "Coral"
+  },
+  "filtre": {
+    "message": "Filter"
+  },
+  "filtreYok": {
+    "message": "None"
+  },
+  "filtreTekRenk": {
+    "message": "One Color"
+  },
+  "filtreRenklendir": {
+    "message": "Tint"
+  },
+  "filtreGri": {
+    "message": "Black & White"
+  },
+  "filtreSepya": {
+    "message": "Sepia"
+  },
+  "filtreTers": {
+    "message": "Invert"
+  },
+  "parlaklik": {
+    "message": "Brightness"
+  },
+  "kontrast": {
+    "message": "Contrast"
+  },
+  "uygula": {
+    "message": "Apply"
+  },
+  "filtreIpucu": {
+    "message": "The result is added as a new image; the original stays in the carousel."
+  },
+  "filtreUygulandi": {
+    "message": "Filter applied."
+  },
+  "filtreUygulanamadi": {
+    "message": "Couldn’t apply the filter to this image."
+  },
+  "filtreGorselYok": {
+    "message": "Add an image first."
+  },
+  "koyulastir": {
+    "message": "Darken"
+  },
+  "hizliBasla": {
+    "message": "Quick Start"
+  },
+  "hizliBaslaIpucu": {
+    "message": "Adds popular sites with their logos"
+  },
+  "webOneriler": {
+    "message": "Suggestions"
+  },
+  "webOnerilerIpucu": {
+    "message": "Shows suggestions as you type; your text is sent to the engine’s suggestion service."
+  },
+  "duvarTema": {
+    "message": "Theme"
   }
 }

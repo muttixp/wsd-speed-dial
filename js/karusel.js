@@ -78,6 +78,18 @@ export function zeminAyarla(renk) {
     ciz();
 }
 
+/** Filtre onizlemesi (1.6.1): adaylari degistirmeden gosterilen resim */
+export function onizlemeGoster(dataUri) {
+    const o = el('kpOnizleme');
+    if (o && dataUri) o.style.backgroundImage = `url('${dataUri}')`;
+}
+
+export function karuseliCiz() { ciz(); }
+
+let sonra = null;
+/** Her cizimden sonra cagrilir (filtre onizlemesi secim degisince tazelensin) */
+export function cizinceCagir(fn) { sonra = fn; }
+
 export function secimDurumu() {
     return { adaylar, secim, zemin, elle, gorsel: adaylar[secim] || null };
 }
@@ -109,6 +121,7 @@ function ciz() {
     el('kpSonraki').disabled = tek;
 
     noktalar.textContent = '';
+    sonra?.();
     if (tek) return;
     adaylar.forEach((_, i) => {
         const n = document.createElement('button');

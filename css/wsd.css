@@ -1000,6 +1000,17 @@ body.ayarAcik #yanArac { opacity: 0; pointer-events: none; }
 }
 .duvarOnizleme:hover { border-color: var(--vurgu); }
 
+/* Hazir duvar kagitlari (1.6.1) */
+.duvarHazirlar { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 8px; }
+.duvarHazir {
+    display: grid; gap: 4px; padding: 3px; border: 1px solid var(--cerceve); border-radius: var(--k1);
+    background: transparent; color: var(--metin-sonuk); font: inherit; font-size: 11px; cursor: pointer;
+    transition: border-color var(--gecis), color var(--gecis);
+}
+.duvarHazir i { display: block; aspect-ratio: 16 / 9; border-radius: calc(var(--k1) - 2px); }
+.duvarHazir:hover { border-color: var(--cerceve-guclu); color: var(--metin); }
+.duvarHazir.secili { border-color: var(--vurgu-parlak); color: var(--metin); }
+
 /* Onizleme katmanlari: ayni filtre ve boya sayfa zemininde ne yapiyorsa
    burada da aynisini yapiyor - ayari degistirirken sonucu goruyorsun. */
 .onizlemeGorsel {
@@ -2452,6 +2463,33 @@ body.disBirakma #kartAlani::after {
 .kirikKod { margin-left: 8px; color: #e2706c; font-weight: 600; }
 .kirikUrl { color: var(--metin-sonuk); word-break: break-all; font-size: 11.5px; }
 
+/* Gorsel filtresi (Kart Duzenle, 1.6.1) */
+.gorselDugme.secili { border-color: var(--vurgu-parlak); color: var(--metin); }
+.filtrePanel {
+    display: grid;
+    gap: var(--b2);
+    margin-bottom: var(--b3);
+    padding: var(--b3);
+    border: 1px solid var(--cerceve);
+    border-radius: var(--k2);
+    background: rgba(var(--on), .03);
+}
+.filtrePanel[hidden], .filtreSatir[hidden] { display: none; }
+.filtreTurler { display: grid; grid-template-columns: repeat(3, 1fr); }
+.filtreTurler .segBtn { padding: 6px 4px; }
+.filtreSatir {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    align-items: center;
+    gap: var(--b2);
+    font-size: 12px;
+    color: var(--metin-sonuk);
+}
+.filtreSatir input[type=range] { width: 100%; }
+.filtreSatir .renkKutu { justify-self: start; }
+.filtrePanel .kucukBilgi { margin: 0; }
+.filtreDugmeler { display: flex; justify-content: flex-end; gap: var(--b2); }
+
 /* Logo aday izgarasi (Kart Duzenle) */
 .logoIzgara { margin-bottom: var(--b3); }
 .logoIzgara .kucukBilgi { margin: 0 0 var(--b2); }
@@ -2470,7 +2508,7 @@ body.disBirakma #kartAlani::after {
     line-height: 0;
     transition: border-color var(--gecis), transform var(--gecis);
 }
-.logoAday img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; display: block; }
+.logoAday img { width: 100%; aspect-ratio: var(--kart-oran, 16 / 10); object-fit: contain; display: block; }
 .logoAday:hover { border-color: var(--vurgu-parlak); transform: translateY(-1px); }
 
 /* Arama sonucundaki grup etiketi tiklanabilir */
@@ -3091,6 +3129,24 @@ select option:checked, select option:hover { color: var(--vurgu-yazi, #fff); }
     box-shadow: var(--golge-3);
 }
 #webMotorListe[hidden] { display: none; }
+/* Arama onerileri (1.6.1) */
+#webOneriListe {
+    position: absolute; top: calc(100% + 6px); left: 0; right: 0; z-index: 40;
+    margin: 0; padding: 6px; list-style: none;
+    background: var(--yuzey-2);
+    border: 1px solid var(--cerceve-guclu);
+    border-radius: var(--k2);
+    box-shadow: var(--golge-3);
+}
+#webOneriListe[hidden] { display: none; }
+.webOneri {
+    display: flex; align-items: center; gap: 10px;
+    padding: 7px 10px; border-radius: var(--k1);
+    color: var(--metin); font-size: 14px; cursor: pointer;
+}
+.webOneri svg { width: 15px; height: 15px; flex: none; color: var(--metin-sonuk); }
+.webOneri span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.webOneri:hover, .webOneri.secili { background: rgba(var(--on), .08); }
 .webMotor {
     display: flex; align-items: center; gap: 10px;
     padding: 6px 8px; border-radius: var(--k1);
@@ -3428,7 +3484,14 @@ body.camGorunum #webMotorListe {
     backdrop-filter: blur(22px) saturate(1.5);
     border-color: rgba(255, 255, 255, .08);
 }
+body.camGorunum #webOneriListe {
+    background: rgba(var(--yuzey-rgb), .62);
+    -webkit-backdrop-filter: blur(22px) saturate(1.5);
+    backdrop-filter: blur(22px) saturate(1.5);
+    border-color: rgba(255, 255, 255, .08);
+}
 html.acikMod body.camGorunum #webMotorListe { background: rgba(255, 255, 255, .7); border-color: rgba(255, 255, 255, .5); }
+html.acikMod body.camGorunum #webOneriListe { background: rgba(255, 255, 255, .7); border-color: rgba(255, 255, 255, .5); }
 
 /* ---------- Buzlu cam: tum pencere sistemleri (1.5.5) ----------
    Sag tik menuleri, pencereler, kart uzerindeki arac seridi, yan serit,
@@ -3945,3 +4008,68 @@ html:not(.acikMod) .grupSekme.aktif {
 .alanSabitle.secili svg { fill: currentColor; }
 .alanKart.araGenis .alanSekmeler li.fazla { display: flex; }
 .alanSekmeler li.eslesme a span { color: var(--vurgu-metin, var(--vurgu)); font-weight: 600; }
+
+/* ============ Baslik altta + Basit mod (1.6.1, deneysel) ============ */
+body.baslikAltta .kartBaslik { order: 2; padding: 6px var(--b1) 0; }
+body.baslikAltta .kartRenk { bottom: auto; top: calc(var(--kart-gorsel-boy) - 3px); border-radius: 0 0 3px 3px; }
+
+/* Basit: grup menusu ortada, icerigi kadar genis */
+body.basitMod #grupSeridi { flex: 0 1 auto; }
+body.basitMod:not(.camGorunum) #ustSerit { justify-content: center; }
+body.basitMod.camGorunum #ustSerit { left: 50%; transform: translateX(-50%); }
+/* Basit: kisa ayar paneli - ayrintili bolumler gizli */
+body.basitMod #ayarPanel :is(.altGrupMenu, .altYazi, .altArayuz, .altKurulum, .altKRenk,
+    .yakalamaBolum, .sistemBolum) { display: none !important; }
+body:not(.basitMod) .basitYalniz { display: none !important; }
+body.basitMod #ayarPanel .gelismisYalniz { display: none !important; }
+.arayuzModSatir { margin: 0 0 8px; padding: 10px 12px; border: 0; border-radius: var(--k2); background: rgba(var(--on), .04); }
+
+.logoSatir > span:first-child { display: flex; flex-direction: column; gap: 3px; }
+.logoSatir small { margin: 0; }
+.logoYenile { padding: 6px; line-height: 0; }
+.logoYenile svg { width: 16px; height: 16px; }
+.logoYenile.calisiyor svg { animation: logoDon 1s linear infinite; }
+@keyframes logoDon { to { transform: rotate(360deg); } }
+.arayuzAd { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; }
+.arayuzAd svg { width: 16px; height: 16px; flex: none; color: var(--metin-sonuk); }
+body.renkliSimgeler .arayuzAd svg { color: #a3d65c; }
+html.acikMod body.renkliSimgeler .arayuzAd svg { color: #5f8f1f; }
+/* Simge boyutu: baslik kutudan genis - iki yandaki boslugu da kullanir */
+body.kucukKart.baslikAltta .kartBaslik {
+    width: calc(100% + var(--kart-bosluk-yatay) - 4px);
+    margin-left: calc((var(--kart-bosluk-yatay) - 4px) / -2);
+    padding-left: 0; padding-right: 0;
+}
+
+/* Karsilamada arayuz secimi (1.6.1, deneysel) */
+.karsilamaMod { display: grid; grid-template-columns: 1fr 1fr; gap: var(--b3); margin: calc(-1 * var(--b2)) 0 var(--b5); }
+.karsilamaModKart {
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    padding: 12px 10px 10px; border: 1px solid var(--cerceve); border-radius: var(--k2);
+    background: rgba(var(--on), .03); color: var(--metin); font: inherit; cursor: pointer;
+    transition: border-color var(--gecis), background var(--gecis);
+}
+.karsilamaModKart:hover { background: rgba(var(--on), .07); }
+.karsilamaModKart svg { width: 64px; height: 42px; margin-bottom: 4px; fill: rgba(var(--on), .22); }
+.karsilamaModKart b { font-size: 14px; font-weight: 600; }
+.karsilamaModKart small { font-size: 11.5px; color: var(--metin-sonuk); line-height: 1.35; }
+.karsilamaModKart.secili { border-color: var(--vurgu); background: rgba(var(--on), .07); box-shadow: 0 0 0 1px var(--vurgu) inset; }
+.karsilamaModKart.secili svg { fill: var(--vurgu-metin, var(--vurgu)); }
+
+/* KARSILAMA DERLI TOPLU (1.6.1): 1080p ekrana sigsin - logo basligin yaninda,
+   bosluklar dar, ikincil dugmeler tek satirda */
+#karsilama { margin-top: 2vh; padding: 20px 26px 16px; }
+#karsilama h2.karsilamaBaslik { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 0 0 16px; font-size: 20px; }
+#karsilama .karsilamaSimge { width: 40px; height: 40px; margin: 0; border-radius: 10px; }
+.karsilamaMod { margin: 0 0 12px; }
+.karsilamaModKart { padding: 9px 8px 8px; }
+.karsilamaModKart svg { width: 48px; height: 32px; margin-bottom: 2px; }
+.karsilamaListe { margin: 0 0 12px; }
+.karsilamaListe li { padding: 5px 0; line-height: 1.45; }
+.karsilamaListe svg { width: 26px; height: 26px; padding: 6px; }
+.karsilamaDugmeler { grid-template-columns: repeat(6, 1fr); gap: 8px; }
+/* 1.6.1: ust sirada Hizli Basla + Ice Aktar (yarim yarim), altta uc dugme */
+.karsilamaDugmeler .dugme { grid-column: span 2; }
+.karsilamaDugmeler #karsilamaHizli, .karsilamaDugmeler #karsilamaAktar { grid-column: span 3; }
+.karsilamaDugmeler .dugme { padding-left: 8px; padding-right: 8px; white-space: nowrap; }
+#karsilama .karsilamaAciklama { margin: 10px 0 6px; font-size: 11.5px; line-height: 1.45; }
