@@ -1089,6 +1089,10 @@ Ekran görüntüsü için öneri sırası:
 4. Arama sonuçları
 5. Yinelenen kartlar ya da çöp kutusu
 
+### 1.6.2 ile yapılacaklar (mağaza paneli)
+
+- Yalnızca paket; açıklamalar değişmedi. Yeni izin yok.
+
 ### 1.6.1 ile yapılacaklar (mağaza paneli)
 
 - Paket yüklenecek. Yeni izin yok.

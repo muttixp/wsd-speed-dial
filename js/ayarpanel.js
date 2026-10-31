@@ -50,6 +50,7 @@ const ALANLAR = [
     ['aktarimdaYakala',  'ayAktarimdaYakala', el => el.checked],
     ['yakalamaKipi',     'ayYakalamaKipi', el => el.value],
     ['sagTikMenu',       'aySagTikMenu',     el => el.value],
+    ['sagTikAlan',       'aySagTikAlan',     el => el.checked],
     ['kartAraclariGoster','ayKartAraclari', el => el.checked],
     ['ekleKartiGoster',  'ayEkleKarti',     el => el.checked],
     ['yanPanelGizle',    'ayYanPanel',      el => el.checked],

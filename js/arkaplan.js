@@ -198,7 +198,10 @@ async function menuyuKur() {
 
         // CALISMA ALANLARI (1.6.0): kayit varsa menunun altinda
         // "Calisma alanina ekle ›" (yalnizca sayfa ve baglanti)
-        const alanlar = await calismaAlanlariAl();
+        // Ayarlar > Sistem > Sag Tik Menusu > Calisma Alani ile kapatilabilir (1.6.2)
+        let alanAcik = true;
+        try { alanAcik = (await chrome.storage.local.get('ayarlar')).ayarlar?.sagTikAlan !== false; } catch (e) { /* acik */ }
+        const alanlar = alanAcik ? await calismaAlanlariAl() : [];
 
         // Tek grup ve alt klasoru yoksa alt menu gereksiz - tek tiklamada eklensin
         const tekGrup = gruplar.length <= 1 && !gruplar.some(g => !g.kokMu && altKlasorler(agac.get(g.id)).length);
@@ -360,7 +363,8 @@ chrome.storage.onChanged.addListener((d, alan) => {
     if (alan === 'local' && d.ayarlar) {
         simgeyiUygula();
         // Sag tik menu kipi degistiyse menu yeniden kurulsun
-        if ((d.ayarlar.oldValue?.sagTikMenu || 'pencere') !== (d.ayarlar.newValue?.sagTikMenu || 'pencere')) menuyuTazele();
+        const o = d.ayarlar.oldValue || {}, y = d.ayarlar.newValue || {};
+        if ((o.sagTikMenu || 'pencere') !== (y.sagTikMenu || 'pencere') || (o.sagTikAlan !== false) !== (y.sagTikAlan !== false)) menuyuTazele();
     }
 });
 

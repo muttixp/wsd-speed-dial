@@ -8,7 +8,9 @@
 // Turler:
 //   tekrenk    -> zeminden farkli her sey secilen renge (siyah logo -> mor)
 //   renklendir -> koyu..acik tonlar secilen rengin tonlarina (duotone)
-//   gri, sepya, ters
+//   gri, sepya
+//   ters       -> ISIK ters cevrilir, renk tonu korunur (1.6.2): koyu zeminli
+//                 logo acik zemine, acik olan koyuya - kirmizi kirmizi kalir
 // Hepsinde Parlaklik / Kontrast.
 import { secimDurumu, adayEkle, onizlemeGoster, karuseliCiz, cizinceCagir } from './karusel.js';
 import { c } from './dil.js';
@@ -95,7 +97,11 @@ function isle(p, w, h) {
         } else if (tur === 'sepya') {
             [r, g, b] = [0.393 * r + 0.769 * g + 0.189 * b, 0.349 * r + 0.686 * g + 0.168 * b, 0.272 * r + 0.534 * g + 0.131 * b];
         } else if (tur === 'ters') {
-            r = 255 - r; g = 255 - g; b = 255 - b;
+            // HSL'de L -> 1-L; ton ve doygunluk ayni. Kisa yol: rengin en
+            // acik ve en koyu bileseninin toplamini 255'e tamamlayacak
+            // kadar kaydir (tum bilesenlere ayni miktar).
+            const kay = 255 - Math.max(r, g, b) - Math.min(r, g, b);
+            r += kay; g += kay; b += kay;
         }
         if (pa || C) {
             r = k * (r - 128) + 128 + pa;

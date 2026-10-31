@@ -2016,7 +2016,7 @@
     "message": "Değerlendir"
   },
   "degerlendirmeIstegi": {
-    "message": "WSD işinize yaradıysa mağazada değerlendirmeniz çok yardımcı olur."
+    "message": "WSD işinize yarıyorsa mağazada kısa bir değerlendirme çok yardımcı olur — bağımsız ve ücretsiz bir proje."
   },
   "oneriHataBildir": {
     "message": "Öneri / hata bildir"
@@ -2295,7 +2295,7 @@
     "message": "Sepya"
   },
   "filtreTers": {
-    "message": "Ters"
+    "message": "Tersine Çevir"
   },
   "parlaklik": {
     "message": "Parlaklık"
@@ -2319,7 +2319,7 @@
     "message": "Önce bir görsel ekleyin."
   },
   "koyulastir": {
-    "message": "Koyulaştır"
+    "message": "Tersine Çevir"
   },
   "hizliBasla": {
     "message": "Hızlı Başla"
@@ -2335,5 +2335,11 @@
   },
   "duvarTema": {
     "message": "Tema"
+  },
+  "webYapayZeka": {
+    "message": "Yapay Zekâ"
+  },
+  "sagTikAlan": {
+    "message": "Çalışma Alanına Ekle"
   }
 }

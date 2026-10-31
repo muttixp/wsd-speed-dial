@@ -75,6 +75,7 @@ export const VARSAYILAN = {
     basitOnceki: null,          // Basit'e gecmeden onceki degerler
     kartAcilis: 'ayni',         // 'ayni' | 'yeni' | 'arkaplan'
     sagTikMenu: 'pencere',      // sayfada sag tik: 'pencere' | 'agac' | 'gruplar' (1.5.2)
+    sagTikAlan: true,           // sag tikta "Calisma alanina ekle" alt menusu (1.6.2)
     otomatikYedek: false,       // gunde 1 kez yedek dosyasi indir
     kartAraclariGoster: true,   // kart uzerine gelince cikan buton seridi
     ekleKartiGoster: true,      // izgaradaki "+" karti

@@ -55,6 +55,45 @@ $magaza = $al('t', 10) === 'edge' ? 'edge' : 'chrome';
 [$baslik, $alt, $nedenler, $ekMetin, $gonder, $tesekkur, $yenidenKur, $secin] = $METIN[$dil];
 $e = fn(string $s) => htmlspecialchars($s, ENT_QUOTES, 'UTF-8');
 
+/* RAPOR (yalnizca gelistirici): kaldirildi.php?rapor=ANAHTAR
+   Anahtar depoda DEGIL, sunucuda veri/anahtar.txt dosyasinda. Dosya yoksa
+   rapor kapali. CSV'nin kendisi disaridan hic okunamaz (veri/ kapali). */
+if (isset($_GET['rapor'])) {
+    $anahtarDosya = __DIR__ . '/veri/anahtar.txt';
+    $anahtar = is_file($anahtarDosya) ? trim((string)file_get_contents($anahtarDosya)) : '';
+    if ($anahtar === '' || !hash_equals($anahtar, (string)$_GET['rapor'])) { http_response_code(404); exit; }
+    if (isset($_GET['indir'])) {                 // ham CSV indir
+        header('Content-Type: text/csv; charset=utf-8');
+        header('Content-Disposition: attachment; filename="wsd-kaldirma.csv"');
+        @readfile(__DIR__ . '/veri/kaldirma.csv');
+        exit;
+    }
+    $satirlar = [];
+    if (($f = @fopen(__DIR__ . '/veri/kaldirma.csv', 'rb'))) {
+        fgetcsv($f);
+        while (($r = fgetcsv($f)) !== false) if (count($r) >= 6) $satirlar[] = $r;
+        fclose($f);
+    }
+    $say = function (int $i) use ($satirlar) { $s = []; foreach ($satirlar as $r) $s[$r[$i]] = ($s[$r[$i]] ?? 0) + 1; arsort($s); return $s; };
+    $tablo = function (string $baslik, array $s) use ($e) {
+        $t = '<h2>' . $e($baslik) . '</h2><table>';
+        foreach ($s as $k => $n) $t .= '<tr><td>' . $e((string)$k) . '</td><td>' . $n . '</td></tr>';
+        return $t . '</table>';
+    };
+    $tr = $METIN['tr'][2];
+    $nedenler2 = []; foreach ($say(4) as $k => $n) $nedenler2[($tr[$k] ?? $k)] = $n;
+    echo '<!doctype html><meta charset="utf-8"><meta name="robots" content="noindex"><title>WSD kaldırma raporu</title>'
+       . '<style>body{font:14px system-ui,sans-serif;max-width:760px;margin:24px auto;padding:0 16px}table{border-collapse:collapse;margin-bottom:16px}td{border:1px solid #ccc;padding:4px 10px}h2{font-size:15px;margin:18px 0 6px}</style>'
+       . '<h1>Kaldırma yanıtları: ' . count($satirlar) . '</h1>'
+       . '<p><a href="?rapor=' . $e((string)$_GET['rapor']) . '&amp;indir=1">CSV indir</a></p>'
+       . $tablo('Neden', $nedenler2) . $tablo('Dil', $say(2)) . $tablo('Sürüm', $say(1)) . $tablo('Mağaza', $say(3))
+       . '<h2>Notlar (son 50)</h2><table>';
+    foreach (array_slice(array_reverse(array_filter($satirlar, fn($r) => $r[5] !== '')), 0, 50) as $r)
+        echo '<tr><td>' . $e($r[0]) . '</td><td>' . $e($r[2]) . '</td><td>' . $e($tr[$r[4]] ?? $r[4]) . '</td><td>' . $e($r[5]) . '</td></tr>';
+    echo '</table>';
+    exit;
+}
+
 $gonderildi = false;
 $uyari = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

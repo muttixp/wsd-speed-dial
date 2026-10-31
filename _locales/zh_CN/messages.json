@@ -2016,7 +2016,7 @@
     "message": "评分"
   },
   "degerlendirmeIstegi": {
-    "message": "如果 WSD 对你有帮助，在商店留下评价会很有帮助。"
+    "message": "喜欢 WSD 吗？在商店留下评价会很有帮助——这是一个独立的免费项目。"
   },
   "oneriHataBildir": {
     "message": "建议 / 报告问题"
@@ -2295,7 +2295,7 @@
     "message": "怀旧"
   },
   "filtreTers": {
-    "message": "反色"
+    "message": "反转"
   },
   "parlaklik": {
     "message": "亮度"
@@ -2319,7 +2319,7 @@
     "message": "请先添加图片。"
   },
   "koyulastir": {
-    "message": "变暗"
+    "message": "反转"
   },
   "hizliBasla": {
     "message": "快速开始"
@@ -2335,5 +2335,11 @@
   },
   "duvarTema": {
     "message": "主题"
+  },
+  "webYapayZeka": {
+    "message": "AI"
+  },
+  "sagTikAlan": {
+    "message": "添加到工作区"
   }
 }

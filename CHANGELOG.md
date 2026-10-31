@@ -3,6 +3,29 @@
 Sürüm numaraları [Semantic Versioning](https://semver.org/lang/tr/)
 kurallarına uyar.
 
+## [1.6.2] — 2026-10-31
+
+### Yeni
+- **Yapay zekâ ile arama** (Arama Çubuğu): Perplexity, ChatGPT, Claude,
+  Copilot. Motor listesinde ayrı bölümde, en altta; kısayollar `px`, `gpt`,
+  `cl`, `co` ("px soru" → Perplexity). Bu motorlarda yazarken öneri istenmez.
+- **Sistem › Sağ Tık Menüsü › Çalışma Alanına Ekle** (açık gelir): kapatılınca
+  sağ tık menüsünde "Çalışma alanına ekle" alt menüsü görünmez.
+
+### Değişti
+- Renklendirme › **Koyulaştır** adı **Tersine Çevir** oldu: yöntem resmin
+  ışığını ters çeviriyor (açık resim koyulaşır, koyu resim açılır); eski ad
+  koyu bir resimde yanıltıcıydı. 8 dilde. Ayarın kendisi değişmedi.
+- Kartı Düzenle › Filtre › **Ters** artık **Tersine Çevir**: yalnızca ışığı
+  ters çevirir, renk tonu korunur (koyu zeminli logo açık zemine, açık olan
+  koyuya geçer; kırmızı kırmızı kalır). Önce renkleri de ters çeviriyordu
+  (kırmızı → camgöbeği). Duvar kâğıdındaki Tersine Çevir ile aynı mantık.
+- **Değerlendirme isteği** yalnızca eklentiyi gerçekten kullanana çıkar:
+  kurulumdan en az 7 gün sonra, en az 5 ayrı gün açılmış ve en az 4 kart
+  varsa. En çok iki kez (ikincisi 30 gün sonra); "Değerlendir"e basan (ya da
+  Hakkında'dan değerlendiren) bir daha görmez. Bildirim 20 sn kalır, metin
+  yenilendi. Önce herkese 14. günde bir kez soruluyordu.
+
 ## [1.6.1] — 2026-10-27
 
 ### Yeni (deneysel)

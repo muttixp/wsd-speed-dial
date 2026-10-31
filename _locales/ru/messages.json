@@ -2016,7 +2016,7 @@
     "message": "Оценить"
   },
   "degerlendirmeIstegi": {
-    "message": "Если WSD вам полезен, отзыв в магазине очень поможет."
+    "message": "Нравится WSD? Короткий отзыв в магазине очень поможет — это независимый бесплатный проект."
   },
   "oneriHataBildir": {
     "message": "Предложение / ошибка"
@@ -2295,7 +2295,7 @@
     "message": "Сепия"
   },
   "filtreTers": {
-    "message": "Инверсия"
+    "message": "Инвертировать"
   },
   "parlaklik": {
     "message": "Яркость"
@@ -2319,7 +2319,7 @@
     "message": "Сначала добавьте изображение."
   },
   "koyulastir": {
-    "message": "Затемнить"
+    "message": "Инвертировать"
   },
   "hizliBasla": {
     "message": "Быстрый старт"
@@ -2335,5 +2335,11 @@
   },
   "duvarTema": {
     "message": "Тема"
+  },
+  "webYapayZeka": {
+    "message": "ИИ"
+  },
+  "sagTikAlan": {
+    "message": "Добавить в рабочую область"
   }
 }

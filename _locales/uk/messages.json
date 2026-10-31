@@ -2016,7 +2016,7 @@
     "message": "Оцінити"
   },
   "degerlendirmeIstegi": {
-    "message": "Якщо WSD вам корисний, відгук у магазині дуже допоможе."
+    "message": "Подобається WSD? Короткий відгук у магазині дуже допоможе — це незалежний безкоштовний проєкт."
   },
   "oneriHataBildir": {
     "message": "Пропозиція / помилка"
@@ -2295,7 +2295,7 @@
     "message": "Сепія"
   },
   "filtreTers": {
-    "message": "Інверсія"
+    "message": "Інвертувати"
   },
   "parlaklik": {
     "message": "Яскравість"
@@ -2319,7 +2319,7 @@
     "message": "Спочатку додайте зображення."
   },
   "koyulastir": {
-    "message": "Затемнити"
+    "message": "Інвертувати"
   },
   "hizliBasla": {
     "message": "Швидкий старт"
@@ -2335,5 +2335,11 @@
   },
   "duvarTema": {
     "message": "Тема"
+  },
+  "webYapayZeka": {
+    "message": "ШІ"
+  },
+  "sagTikAlan": {
+    "message": "Додати до робочої області"
   }
 }

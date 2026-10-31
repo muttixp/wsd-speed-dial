@@ -1,2 +1,10 @@
-Require all denied
-Deny from all
+# Veri klasoru disaridan okunamaz: her istek kaldirma formuna yonlenir.
+# mod_rewrite yoksa erisim tamamen kapali.
+Options -Indexes
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^ /wsd/kaldirildi.php [R=302,L]
+</IfModule>
+<IfModule !mod_rewrite.c>
+    Require all denied
+</IfModule>

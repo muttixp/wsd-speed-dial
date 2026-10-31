@@ -130,7 +130,8 @@ listesi görünür.
 
 Kartların üstünde motor seçmeli arama kutusu: tarayıcının kendi motoru,
 Google, Bing, DuckDuckGo, Yandex, Brave, Ecosia, Startpage, Wikipedia,
-YouTube, GitHub. Simgeden yalnızca o arama için motor seçilir; kısayolla
+YouTube, GitHub; yapay zekâ ile arama için Perplexity, ChatGPT, Claude,
+Copilot. Simgeden yalnızca o arama için motor seçilir; kısayolla
 da olur (`g kelime`, `yt kelime`…). Kendi motorunuzu (`%s` içeren adres)
 ekleyebilir, listeyi sürükleyip sıralayabilirsiniz. Nerede görüneceği
 ayarlanır: yalnızca Ana Sayfa, ilk grup ya da tüm gruplar. Rusça
@@ -158,7 +159,7 @@ mod değişince eşi gelir. Sonra her renk tek tek değişir; kendi temanızı k
 
 Duvar kâğıdı (kendi resminiz ya da iki hazır zemin; açık/koyu hali moda
 göre), zemin renklendirme (ton kaydırma, iki renk ya da açık bir resmi koyu
-moda uyduran **Koyulaştır**), kart oranı,
+moda uyduran **Tersine Çevir**), kart oranı,
 boyut, çerçeve, sütun sınırı, grup menüsü renkleri. Tek **Köşe
 Yuvarlaklığı** ayarı kartları, sekmeleri, menüleri, pencereleri ve
 düğmeleri birlikte değiştirir. Yan araç paneli kenara çekilip fare

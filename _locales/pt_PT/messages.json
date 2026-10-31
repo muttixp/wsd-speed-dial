@@ -2016,7 +2016,7 @@
     "message": "Avaliar"
   },
   "degerlendirmeIstegi": {
-    "message": "Se o WSD lhe é útil, uma avaliação na loja ajuda muito."
+    "message": "Está a gostar do WSD? Uma avaliação rápida na loja ajuda muito — é um projeto independente e gratuito."
   },
   "oneriHataBildir": {
     "message": "Sugerir / comunicar um erro"
@@ -2319,7 +2319,7 @@
     "message": "Adicione primeiro uma imagem."
   },
   "koyulastir": {
-    "message": "Escurecer"
+    "message": "Inverter"
   },
   "hizliBasla": {
     "message": "Início rápido"
@@ -2335,5 +2335,11 @@
   },
   "duvarTema": {
     "message": "Tema"
+  },
+  "webYapayZeka": {
+    "message": "IA"
+  },
+  "sagTikAlan": {
+    "message": "Adicionar ao espaço de trabalho"
   }
 }

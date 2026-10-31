@@ -116,28 +116,69 @@ async function guncellemeyiDuyur() {
 }
 
 /**
- * DEGERLENDIRME ISTEGI (1.5.8): kurulumdan 14 gun sonra BIR KEZ, kisa
- * bildirim. Kapatilsa da tiklansa da bir daha cikmaz; odul/zorlama yok.
- * Kurulum tarihi yoksa (eski kullanici) bugunden sayilir.
+ * DEGERLENDIRME ISTEGI (1.5.8, 1.6.2'de yenilendi): magaza artik SON
+ * yorumlara agirlik veriyor. Soru yalnizca eklentiyi gercekten kullanana:
+ *   - kurulumdan en az 7 gun gecmis,
+ *   - en az 5 AYRI GUN acilmis,
+ *   - en az 4 kart var.
+ * En cok IKI kez sorulur (ikincisi 30 gun sonra); "Degerlendir"e basan
+ * bir daha gormez. Odul/zorlama yok - magaza kurallarina uygun.
  */
-const DEGERLENDIRME_GUN = 14;
-async function degerlendirmeIste() {
+const ILK_GUN = 7, KULLANIM_GUN = 5, EN_AZ_KART = 4, TEKRAR_GUN = 30, EN_COK = 2;
+
+/** Ayri kullanim gunlerini sayar (gunde bir artar) */
+async function kullanimiSay() {
+    try {
+        const bugun = new Date().toISOString().slice(0, 10);
+        const { kullanim } = await chrome.storage.local.get('kullanim');
+        const k = kullanim && typeof kullanim.gun === 'number' ? kullanim : { gun: 0, son: '' };
+        if (k.son === bugun) return k.gun;
+        const yeni = { gun: k.gun + 1, son: bugun };
+        await chrome.storage.local.set({ kullanim: yeni });
+        return yeni.gun;
+    } catch (e) { return 0; }
+}
+
+async function kartSayisi() {
+    try {
+        const { kokKlasoruAl } = await import('./yerimi.js');
+        const [agac] = await chrome.bookmarks.getSubTree(await kokKlasoruAl());
+        let n = 0;
+        const gez = d => { if (d.url) n++; (d.children || []).forEach(gez); };
+        gez(agac);
+        return n;
+    } catch (e) { return 0; }
+}
+
+async function degerlendirmeIste(gun) {
     let d;
-    try { d = await chrome.storage.local.get(['kurulumTarihi', 'degerlendirmeSoruldu']); } catch (e) { return; }
-    if (d.degerlendirmeSoruldu) return;
+    try {
+        d = await chrome.storage.local.get(['kurulumTarihi', 'degerlendirmeSoruldu',
+                                            'degerlendirmeSayisi', 'degerlendirmeTiklandi']);
+    } catch (e) { return; }
+    if (d.degerlendirmeTiklandi) return;
+    // 1.5.8'de bir kez sorulmus olanlar 1 sayilir
+    const sayi = d.degerlendirmeSayisi ?? (d.degerlendirmeSoruldu ? 1 : 0);
+    if (sayi >= EN_COK) return;
     const simdi = Date.now();
     if (!d.kurulumTarihi) {
         try { await chrome.storage.local.set({ kurulumTarihi: simdi }); } catch (e) { /* */ }
         return;
     }
-    if (simdi - d.kurulumTarihi < DEGERLENDIRME_GUN * 864e5) return;
+    if (simdi - d.kurulumTarihi < ILK_GUN * 864e5) return;
+    if (gun < KULLANIM_GUN) return;
+    if (sayi >= 1 && simdi - (d.degerlendirmeSoruldu || 0) < TEKRAR_GUN * 864e5) return;
+    if (await kartSayisi() < EN_AZ_KART) return;
     // Once isaretle: ayni anda acik baska sekme de sormasin
-    try { await chrome.storage.local.set({ degerlendirmeSoruldu: simdi }); } catch (e) { return; }
+    try { await chrome.storage.local.set({ degerlendirmeSoruldu: simdi, degerlendirmeSayisi: sayi + 1 }); } catch (e) { return; }
     const { bildir } = await import('./arayuz.js');
     setTimeout(() => bildir(c('degerlendirmeIstegi'), {
         etiket: c('degerlendir'),
-        calistir: async () => ac(await degerlendirmeAdresi()),
-        sure: 15000,
+        calistir: async () => {
+            try { await chrome.storage.local.set({ degerlendirmeTiklandi: true }); } catch (e) { /* */ }
+            ac(await degerlendirmeAdresi());
+        },
+        sure: 20000,
     }), 4000);
 }
 
@@ -146,7 +187,10 @@ export function hakkindaKur() {
     if (!s) return;
     s.textContent = surum();
     el('ayYenilikler')?.addEventListener('click', yenilikPenceresiniAc);
-    el('ayDegerlendir')?.addEventListener('click', async () => ac(await degerlendirmeAdresi()));
+    el('ayDegerlendir')?.addEventListener('click', async () => {
+        chrome.storage.local.set({ degerlendirmeTiklandi: true }).catch(() => {});
+        ac(await degerlendirmeAdresi());
+    });
     el('ayOneri')?.addEventListener('click', () => ac(DEPO + '/issues'));
     el('ayKaynak')?.addEventListener('click', () => ac(DEPO));
     // FVD'den gorselleriyle gecis rehberi (1.5.8) - Ice Aktar dugmeleri arasinda
@@ -159,5 +203,6 @@ export function hakkindaKur() {
         if (e.key === 'Escape' && el('yenilikPencere') && !el('yenilikPencere').hidden) kapat();
     });
     // Ayni acilista iki bildirim olmasin: guncelleme duyurusu onceliklidir
-    guncellemeyiDuyur().then(duyurdu => { if (!duyurdu) degerlendirmeIste(); }).catch(() => {});
+    const gunSayisi = kullanimiSay();
+    guncellemeyiDuyur().then(async duyurdu => { if (!duyurdu) degerlendirmeIste(await gunSayisi); }).catch(() => {});
 }

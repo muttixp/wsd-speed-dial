@@ -48,6 +48,13 @@ const MOTORLAR = [
     { id: 'youtube',    ad: 'YouTube',     kisa: 'yt', renk: '#ff0000', adres: 'https://www.youtube.com/results?search_query=%s' },
     { id: 'github',     ad: 'GitHub',      kisa: 'gh', renk: '#6e5494', adres: 'https://github.com/search?q=%s' },
 
+    // YAPAY ZEKA (1.6.2): soruyu dogrudan o hizmete gotururlar; listede ayri
+    // bolumde, en altta. Oneri servisleri yok - yazarken oneri istenmez.
+    { id: 'perplexity', ad: 'Perplexity',  kisa: 'px', renk: '#20808d', grup: 'yz', adres: 'https://www.perplexity.ai/search?q=%s' },
+    { id: 'chatgpt',    ad: 'ChatGPT',     kisa: 'gpt', renk: '#10a37f', grup: 'yz', adres: 'https://chatgpt.com/?q=%s&hints=search' },
+    { id: 'claude',     ad: 'Claude',      kisa: 'cl', renk: '#d97757', grup: 'yz', adres: 'https://claude.ai/new?q=%s' },
+    { id: 'copilot',    ad: 'Copilot',     kisa: 'co', renk: '#2b6be6', grup: 'yz', adres: 'https://copilot.microsoft.com/?q=%s' },
+
     // BOLGESEL (bolge): yalnizca o bolgedeki kullanicida listelenir.
     // kapali: ilk kurulumda listede KAPALI gelir, kullanici acar.
     { id: 'sahibinden',  ad: 'Sahibinden',  kisa: 'sh', renk: '#d4a900', bolge: 'tr', kapali: true, adres: 'https://www.sahibinden.com/arama?query_text=%s' },
@@ -253,7 +260,18 @@ function listeyiCiz() {
     const liste = el('webMotorListe');
     liste.textContent = '';
     const secili = anlikId || varsayilanId;
-    for (const m of gorunenMotorlar()) {
+    const motorlar = gorunenMotorlar();
+    const sirali = [...motorlar.filter(m => m.grup !== 'yz'), ...motorlar.filter(m => m.grup === 'yz')];
+    let ayracKondu = false;
+    for (const m of sirali) {
+        if (m.grup === 'yz' && !ayracKondu) {
+            ayracKondu = true;
+            const a = document.createElement('li');
+            a.className = 'webAyrac';
+            a.setAttribute('role', 'separator');
+            a.textContent = c('webYapayZeka');
+            liste.appendChild(a);
+        }
         const li = document.createElement('li');
         li.setAttribute('role', 'option');
         li.dataset.motor = m.id;
@@ -327,7 +345,7 @@ function oneriIste() {
     const ham = el('webAramaAlan').value;
     yazilan = ham;
     const { motor, metin, onek } = cozumle(ham.trim() ? ham : '');
-    if (!metin || metin.length > 120 || adresMi(metin)) { oneriKapat(); return; }
+    if (!metin || metin.length > 120 || adresMi(metin) || motor.grup === 'yz') { oneriKapat(); return; }
     oneriBekle = setTimeout(async () => {
         const benim = ++oneriSayac;
         oneriIstek?.abort();
