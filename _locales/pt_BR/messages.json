@@ -1590,7 +1590,7 @@
     "message": "Cor de fundo"
   },
   "aktarimdaYakala": {
-    "message": "Capturar ao importar"
+    "message": "Captura automática"
   },
   "icindekiKartlardanSec": {
     "message": "Escolher entre os blocos de dentro"
@@ -2341,5 +2341,47 @@
   },
   "sagTikAlan": {
     "message": "Adicionar ao espaço de trabalho"
+  },
+  "otoYakalaIpucu": {
+    "message": "Faz uma captura ao adicionar ou importar blocos. Desativado, você escolhe as imagens."
+  },
+  "kendiGorselYenileSor": {
+    "message": "A imagem deste atalho está bloqueada. Capturar de novo? O bloqueio será removido; a imagem antiga fica no carrossel em Editar."
+  },
+  "nKendiGorselKorundu": {
+    "message": "$1 atalhos com imagem bloqueada foram ignorados."
+  },
+  "logoBoyutu": {
+    "message": "Tamanho do logotipo"
+  },
+  "kpYerlesimIpucu": {
+    "message": "Ajustar a imagem dentro deste bloco ou preenchê-lo"
+  },
+  "adayKaldir": {
+    "message": "Remover esta imagem"
+  },
+  "kpKilitIpucu": {
+    "message": "Bloquear: a imagem é mantida ao atualizar e ao mudar o endereço"
+  },
+  "kilidiAc": {
+    "message": "Bloqueada - clique para desbloquear"
+  },
+  "gizliCubukBilgi": {
+    "message": "As imagens são capturadas em segundo plano. A barra de \"depuração\" no topo é um aviso obrigatório do Chrome; só a imagem do atalho é capturada e a barra some ao terminar. Você pode escolher Janela em Configurações › Modo de captura."
+  },
+  "yeniKartGorseli": {
+    "message": "Imagem do novo bloco"
+  },
+  "yeniKartGorseliIpucu": {
+    "message": "Pelo tamanho: logotipo em Ícone, Minúsculo e Pequeno; visão do site nos maiores. Sem logotipo, usa a visão do site."
+  },
+  "gorselBoyutaGore": {
+    "message": "Pelo tamanho"
+  },
+  "gorselLogo": {
+    "message": "Logotipo"
+  },
+  "gorselSiteGorunumu": {
+    "message": "Visão do site"
   }
 }

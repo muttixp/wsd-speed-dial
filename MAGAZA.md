@@ -1041,7 +1041,7 @@ bookmarks, each shown as a tile with a screenshot.
 | `alarms` | Keeps the screenshot queue running. In Manifest V3 the service worker is terminated while idle; an alarm wakes it so a long capture batch finishes. |
 | `scripting` | Scrolls the page being captured past fixed headers and cookie banners, and reads candidate images from the page. |
 | `search` | Lets the home-page search box send a query to the browser's own default search engine when the user picks "Browser default". The extension does not read, store or log queries; the permission shows no warning at install. |
-| `debugger` | Only used by the optional "Hidden" capture mode, which takes a screenshot without showing a window. The default mode does not use it. Chrome does not allow this permission to be optional, so it is requested at install. |
+| `debugger` | Used by the "Hidden" capture mode (the default since 1.6.3) to take a screenshot of a tile's page in a background tab without opening a window. It attaches only to that background tab, only for the seconds the screenshot takes, and only sends commands to set the viewport size, let the background page render as if focused, and capture the image (Emulation.setDeviceMetricsOverride, Emulation.setFocusEmulationEnabled, Page.captureScreenshot). Page content is not read or stored. Users can switch to the "Window" mode in Settings, which does not use this permission. |
 | `host_permissions` (`<all_urls>`) | The user can add any site, so the target is not known in advance. Access is used solely to capture a screenshot of pages the user explicitly added. |
 
 **Veri kullanımı beyanları** — hepsine "hayır":
@@ -1088,6 +1088,17 @@ Ekran görüntüsü için öneri sırası:
 3. Kart düzenleme penceresi
 4. Arama sonuçları
 5. Yinelenen kartlar ya da çöp kutusu
+
+### 1.6.3 ile yapılacaklar (mağaza paneli)
+
+- Paket yüklenecek. Yeni izin yok; açıklamalar değişmedi.
+- **Gizlilik sekmesi › `debugger` gerekçesi yenilenecek**: Gizli kip artık
+  varsayılan. Yukarıdaki tablodaki yeni metni yapıştır (Chrome ve Edge).
+- Gizlilik politikası güncellendi (debugger satırı, Basit modda sitenin kendi
+  logosu, kaldırma sayfasında Firefox) — adres aynı, bir şey yapmaya gerek yok.
+- Edge: "Notes for certification" RELEASE_1.6.3.md'de.
+- Firefox (AMO): ayrı paket `wsd-firefox-1.6.3-amo.zip`; sürüm notu ve
+  incelemeci notu RELEASE_1.6.3.md'de.
 
 ### 1.6.2 ile yapılacaklar (mağaza paneli)
 

@@ -22,6 +22,7 @@
 // atliyor.
 
 import { ayarlariAl } from './ayar.js';
+import { chromeMu } from './tarayici.js';
 import { c } from './dil.js';
 
 const YAKALAMA_ARASI_MS = 700;
@@ -447,6 +448,20 @@ async function kuyruguIsle() {
                     // dikey afis hem yatay kapak sunuyor; kart yatay oldugu icin
                     // kapak dogru secim. Afis karuselde kalir, kullanici gecebilir.
                     sayfadan = await oranaGoreSirala(sayfadan, ayar);
+                }
+
+                // BASIT MOD LOGO (1.6.3): kucuk kartta ekran goruntusu okunmuyor;
+                // Simge/Minik/Kucuk boyutta (ya da kullanici "Logo" sectiyse)
+                // once logo denenir. Bulunamazsa ekran goruntusune dusulur.
+                // GIZLILIK: yalnizca sitenin kendi sayfasindaki logo - dis logo
+                // servislerine kullanici basmadan istek gitmez.
+                const basitGorsel = ayar.basitGorsel || 'oto';
+                if (ayar.basitMod && !YAKALANAMAZ_SEMA.test(is.url)
+                    && (basitGorsel === 'logo' || (basitGorsel === 'oto' && ayar.kartEn <= 160))) {
+                    try {
+                        const [logo] = await logoYakala(is.url, 1, ayar.kartOrani === 'okare', false);
+                        if (logo) return [logo];
+                    } catch (e) { console.log('[WSD] logo bulunamadi, ekran goruntusu:', is.url, e.message); }
                 }
 
                 // Yakalanamayan semalarda sekme acip goruntu alinamiyor -
@@ -1270,6 +1285,14 @@ function uzunBitir() {
  * (oranaGoreSirala) geciremiyoruz, bu yuzden ayri yol.
  */
 const LOGO_EN = 800, LOGO_BOY = 500;
+// LOGO BOYUTU (1.6.3, Kartlar > Boyut): logonun kutudaki payi. Logolar
+// kenarlara dayaniyordu; varsayilan 'orta' biraz bosluk birakir.
+const LOGO_PAY = { kucuk: 0.62, orta: 0.72, buyuk: 0.82 };
+let logoPay = LOGO_PAY.orta;
+async function logoPayiniOku() {
+    try { logoPay = LOGO_PAY[(await chrome.storage.local.get('ayarlar')).ayarlar?.logoBoyutu] || LOGO_PAY.orta; }
+    catch (e) { logoPay = LOGO_PAY.orta; }
+}
 
 /**
  * BRANDFETCH marka logosu servisi. Sitelerin HTML'inde temiz bir logo
@@ -1321,8 +1344,14 @@ function logoIcinAdres(url) {
     } catch (e) { return url; }
 }
 
-export async function logoYakala(url, enCok = 8, kare = false) {
+// Disari alan adi gonderen logo servisleri (1.6.3): kendiliginden yapilan
+// logo aramasinda (Basit mod, yeni kart) kullanilmaz - yalnizca sitenin kendisi
+const DIS_SERVIS = /^https:\/\/(www\.google\.com\/s2\/favicons|cdn\.brandfetch\.io)\//i;
+
+/** disServis: false ise marka/favicon servislerine istek gitmez */
+export async function logoYakala(url, enCok = 8, kare = false, disServis = true) {
     url = logoIcinAdres(url);
+    await logoPayiniOku();
     // ONCE CANLI SAYFA: sunucudan gelen ham HTML cogu sitede bos
     // (Nuxt/React gibi cerceveler logoyu tarayicida ciziyor) - bu yuzden
     // sayfayi arka planda acip GERCEK DOM'a bakiyoruz. Basarisiz olursa
@@ -1343,8 +1372,10 @@ export async function logoYakala(url, enCok = 8, kare = false) {
             return p.length > (ikiDuzey ? 3 : 2);
         } catch (e) { return false; }
     })();
-    bilgi.adresler = altAlan ? [...bilgi.adresler, ...brandfetchAdaylari(url)]
-                             : [...brandfetchAdaylari(url), ...bilgi.adresler];
+    const marka = disServis ? brandfetchAdaylari(url) : [];
+    bilgi.adresler = altAlan ? [...bilgi.adresler, ...marka]
+                             : [...marka, ...bilgi.adresler];
+    if (!disServis) bilgi.adresler = bilgi.adresler.filter(a => !DIS_SERVIS.test(a));
     if (!bilgi.adresler.length) return [];
 
     const kartlar = [];
@@ -1837,11 +1868,11 @@ async function logoyuBestele(dataUri, zorlaZemin, kare = false) {
             // yayiliyor, logo kutuyu doldurur. Kucuk kutuda kucuk logo
             // secilmiyordu - oranlar buyuk.
             const k = icerikKutusu(bmp) || { x: 0, y: 0, w: bmp.width, h: bmp.height };
-            const olcek = Math.min((W * 0.80) / k.w, (H * 0.80) / k.h);
+            const olcek = Math.min((W * logoPay) / k.w, (H * logoPay) / k.h);
             const en = k.w * olcek, boy = k.h * olcek;
             ctx.drawImage(bmp, k.x, k.y, k.w, k.h, (W - en) / 2, (H - boy) / 2, en, boy);
         } else {
-            const olcek = Math.min((W * (genis ? 0.82 : 0.68)) / bmp.width, (H * (genis ? 0.72 : 0.58)) / bmp.height);
+            const olcek = Math.min((W * (genis ? logoPay : logoPay - 0.14)) / bmp.width, (H * (genis ? logoPay - 0.10 : logoPay - 0.24)) / bmp.height);
             const en = bmp.width * olcek, boy = bmp.height * olcek;
             ctx.drawImage(bmp, (W - en) / 2, (H - boy) / 2, en, boy);
         }
@@ -2191,13 +2222,33 @@ function elleCubukEnjekte(mSahne, mCek, mAlan, mUzun, mVazgec) {
 }
 
 /**
+ * CUBUK BILGISI (1.6.3): Chrome gizli yakalamada ustte "hata ayiklama"
+ * cubugu gosteriyor. Ilk seferde acik WSD sayfasinda bir kez aciklanir;
+ * hicbir sayfa cevap vermezse (sayfa kapali) sonraki yakalamada denenir.
+ */
+let cubukBilgiDenendi = false;
+async function cubukBilgisiVer() {
+    if (cubukBilgiDenendi) return;
+    cubukBilgiDenendi = true;
+    try {
+        const d = await chrome.storage.local.get('gizliCubukBilgi');
+        if (d.gizliCubukBilgi) return;
+        // Servis iscisinde dinamik import yok - tarayici.js ustte
+        if (!(await chromeMu())) { await chrome.storage.local.set({ gizliCubukBilgi: true }); return; }
+        const cevap = await chrome.runtime.sendMessage({ hedef: 'sayfa', tur: 'gizliCubukBilgi' }).catch(() => null);
+        if (cevap) await chrome.storage.local.set({ gizliCubukBilgi: true });
+        else cubukBilgiDenendi = false;
+    } catch (e) { cubukBilgiDenendi = false; }
+}
+
+/**
  * GIZLI YAKALAMA - chrome.debugger ile.
  *
  * Sekme ARKA PLANDA aciliyor ve `Page.captureScreenshot` ile goruntu
  * aliniyor: pencere hic one gelmiyor, ekranda goz kirpma olmuyor.
  *
- * Bedeli: tarayici ustte "hata ayikliyor" cubugu gosteriyor.
- * Bu yuzden ayara bagli, varsayilan degil.
+ * Bedeli: Chrome ustte "hata ayikliyor" cubugu gosteriyor (Edge/Vivaldi
+ * sessiz). 1.6.3'ten beri varsayilan; cubuk ilk seferde aciklaniyor.
  */
 async function gizliYakala(url, ayar) {
     let sekme = null;
@@ -2223,6 +2274,7 @@ async function gizliYakala(url, ayar) {
         }
 
         const hedef = { tabId: sekme.id };
+        cubukBilgisiVer();
         await zamanAsimli(chrome.debugger.attach(hedef, '1.3'), 10000, 'debugger.attach');
         baglandi = true;
 

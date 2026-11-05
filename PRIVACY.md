@@ -1,6 +1,6 @@
 # Gizlilik Politikası — WSD Speed Dial
 
-Son güncelleme: 27 Ekim 2026
+Son güncelleme: 5 Kasım 2026
 
 ## Kısaca
 
@@ -47,7 +47,8 @@ Eklenti yalnızca şu durumlarda dışarıya bağlanır:
 
 **1. Kart görseli yakalarken** — eklediğiniz sayfayı arka planda açıp
 ekran görüntüsünü alır. Bu, o siteye normal bir ziyaret gibidir; site
-sizi görebilir. Başka bir sunucuya veri gitmez.
+sizi görebilir. Basit modda küçük kart boyutlarında bu ziyaret sırasında
+sitenin kendi logosu alınır. Başka bir sunucuya veri gitmez.
 
 **2. Favicon alırken** — grup ikonu olarak site simgesi seçerseniz
 `google.com/s2/favicons` adresinden çekilir. Yalnızca sitenin alan adı
@@ -98,7 +99,7 @@ ya da Site Logoları düğmesine basarsanız eklenen sitelerin logoları
 
 **10. Eklentiyi kaldırdığınızda** — tarayıcı kısa bir "neden
 kaldırdınız?" sayfası açar (`webteyazilim.net/wsd/kaldirildi.php`).
-Adreste yalnızca eklentinin sürümü, arayüz dili ve mağaza (Chrome/Edge)
+Adreste yalnızca eklentinin sürümü, arayüz dili ve mağaza (Chrome/Edge/Firefox)
 bulunur; kimlik, kullanım bilgisi, IP kaydı ya da çerez yoktur. Formu
 doldurmak isteğe bağlıdır; doldurursanız yalnızca seçtiğiniz neden ve
 yazdığınız not saklanır. Ad ya da e-posta istenmez.
@@ -116,7 +117,7 @@ yazdığınız not saklanır. Ad ya da e-posta istenmez.
 | `contextMenus` | "WSD Speed Dial'e ekle" sağ tık menüsü |
 | `alarms` | Görsel yakalama kuyruğunu sürdürmek. Manifest V3'te servis işçisi uyuduğunda kuyruk kesiliyor; alarm onu uyandırıyor |
 | `scripting` | Yakalanan sayfayı kaydırmak ve sayfa görsellerini okumak |
-| `debugger` | Yalnızca "Gizli" yakalama kipinde. Pencere açmadan ekran görüntüsü almak için. Varsayılan kip bunu kullanmaz |
+| `debugger` | "Gizli" yakalama kipinde (varsayılan) pencere açmadan ekran görüntüsü almak için. Yalnızca yakalanan sekmeye, görüntü süresince bağlanır; sayfa içeriği okunmaz, saklanmaz. Ayarlardan "Pencere" kipi seçilirse kullanılmaz |
 | `<all_urls>` | Hangi siteyi ekleyeceğiniz önceden bilinemez; yalnızca eklediğiniz sayfaların görselini almak için kullanılır |
 
 Hiçbir izin veri toplamak için kullanılmaz.

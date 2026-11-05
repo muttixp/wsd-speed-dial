@@ -54,15 +54,10 @@ export async function gorselYaz(anahtar, dataUri, zemin) {
 export async function adaylariYaz(anahtar, adaylar, secim = 0, elle = false) {
     if (!adaylar || !adaylar.length) return;
     const mevcut = (await gorselAl(anahtar))[anahtar] || {};
-    await chrome.storage.local.set({
-        [anahtar]: {
-            ...mevcut,
-            adaylar,
-            secim,
-            gorsel: adaylar[secim] || adaylar[0],
-            ...(elle ? { elle: true } : {})
-        }
-    });
+    const kayit = { ...mevcut, adaylar, secim, gorsel: adaylar[secim] || adaylar[0] };
+    // KILIT (1.6.3): Duzenle'de kilit acilinca isaret de kalksin
+    if (elle) kayit.elle = true; else delete kayit.elle;
+    await chrome.storage.local.set({ [anahtar]: kayit });
 }
 
 export async function secimiDegistir(anahtar, secim) {
@@ -71,6 +66,13 @@ export async function secimiDegistir(anahtar, secim) {
     await chrome.storage.local.set({
         [anahtar]: { ...kayit, secim, gorsel: kayit.adaylar[secim] }
     });
+}
+
+/** Kart basina yerlesim (1.6.3): 'contain' | 'cover' | null (genel ayar) */
+export async function yerlesimYaz(anahtar, yerlesim) {
+    const kayit = (await gorselAl(anahtar))[anahtar] || {};
+    if (yerlesim) kayit.yerlesim = yerlesim; else delete kayit.yerlesim;
+    await chrome.storage.local.set({ [anahtar]: kayit });
 }
 
 export async function zeminYaz(anahtar, zemin) {

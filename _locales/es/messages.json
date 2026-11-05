@@ -1590,7 +1590,7 @@
     "message": "Color de fondo"
   },
   "aktarimdaYakala": {
-    "message": "Capturar al importar"
+    "message": "Captura automática"
   },
   "icindekiKartlardanSec": {
     "message": "Elegir entre los mosaicos que contiene"
@@ -2341,5 +2341,47 @@
   },
   "sagTikAlan": {
     "message": "Añadir al espacio de trabajo"
+  },
+  "otoYakalaIpucu": {
+    "message": "Hace una captura al añadir o importar mosaicos. Si está desactivado, eliges tú las imágenes."
+  },
+  "kendiGorselYenileSor": {
+    "message": "La imagen de este acceso está bloqueada. ¿Capturarla de nuevo? Se quitará el bloqueo; la imagen anterior queda en el carrusel de Editar."
+  },
+  "nKendiGorselKorundu": {
+    "message": "Se omitieron $1 accesos con imagen bloqueada."
+  },
+  "logoBoyutu": {
+    "message": "Tamaño del logotipo"
+  },
+  "kpYerlesimIpucu": {
+    "message": "Ajustar la imagen dentro de este mosaico o llenarlo"
+  },
+  "adayKaldir": {
+    "message": "Quitar esta imagen"
+  },
+  "kpKilitIpucu": {
+    "message": "Bloquear: la imagen se conserva al actualizar y al cambiar la dirección"
+  },
+  "kilidiAc": {
+    "message": "Bloqueada: haz clic para desbloquear"
+  },
+  "gizliCubukBilgi": {
+    "message": "Las imágenes se capturan en segundo plano. La barra de \"depuración\" de arriba es un aviso obligatorio de Chrome; solo se toma la imagen del acceso y desaparece al terminar. Puedes elegir Ventana en Ajustes › Modo de captura."
+  },
+  "yeniKartGorseli": {
+    "message": "Imagen de mosaico nuevo"
+  },
+  "yeniKartGorseliIpucu": {
+    "message": "Según el tamaño: logotipo en Icono, Diminuto y Pequeño; vista del sitio en los más grandes. Si no hay logotipo, se usa la vista del sitio."
+  },
+  "gorselBoyutaGore": {
+    "message": "Según el tamaño"
+  },
+  "gorselLogo": {
+    "message": "Logotipo"
+  },
+  "gorselSiteGorunumu": {
+    "message": "Vista del sitio"
   }
 }

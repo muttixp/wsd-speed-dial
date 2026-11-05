@@ -19,7 +19,7 @@ import { aktifGrup, aktifSekme, arayuzuKur, grubuAc, kartGorseliniTazele } from 
 import { klasorleriKur, klasorIsaretiniTemizle, yeniKlasor, klasoruTasi, klasoruDuzenle } from './klasor.js';
 import { gruplariAl, gorunurGruplariAl, kokKlasoruAl, tumKlasorleriAl } from './yerimi.js';
 import { RENKLER, renkleriAl, renkYaz } from './renk.js';
-import { karuseliKur, karuseliYukle, adayEkle, zeminAyarla, secimDurumu } from './karusel.js';
+import { karuseliKur, karuseliYukle, adayEkle, zeminAyarla, secimDurumu, yerlesimDegistir, kendiResmeGoreYerlesim } from './karusel.js';
 import { gorselFiltreKur, filtrePaneliniKapat, bekleyenFiltreyiUygula } from './gorselfiltre.js';
 import { adaylariYaz } from './gorsel.js';
 import { onayPenceresiniKur, onaySor, metinSor, listeSor } from './onay.js';
@@ -371,14 +371,15 @@ export async function grubunGorselleriniYenile(grupId) {
 
     // Aktif grupta degilsek de calisir: kartlarin DOM karsiligi
     // olmayabilir, o yuzden dogrudan URL uzerinden istiyoruz.
+    // Kendi gorseli olan kartlar ATLANIR (1.6.3) - toplu yenileme
+    // kullanicinin sectigi resimleri silip yeniden yakaliyordu
+    let atlanan = 0;
     for (const k of kartlar) {
         const temiz = urlNormalle(k.url);
-        try { await chrome.storage.local.remove(temiz); } catch (e) { /* yoktu */ }
-        gorselIste(temiz);
-        const a = document.querySelector(`[data-kart-id="${k.id}"]`);
-        a?.classList.add('yenileniyor');
+        if (!await gorseliYenile(k.id, temiz, true)) atlanan++;
     }
-    bildir(c('nKartKuyrugaAlindi', kartlar.length));
+    bildir(c('nKartKuyrugaAlindi', kartlar.length - atlanan)
+        + (atlanan ? ' ' + c('nKendiGorselKorundu', atlanan) : ''), { sure: 6000 });
 }
 
 /** Kisayollardan cagrilan sarmalayicilar. */
@@ -725,9 +726,11 @@ async function kartiKaydet() {
         // biraz sonra yaziliyor, yakalama bitince de EZILIYORDU ("2-3
         // denemede tutuyor"). Once gorsel, sonra yer imi.
         await bekleyenFiltreyiUygula();      // onizlemede kalan filtre de kaydedilsin
-        const { adaylar: kAdaylar, secim: kSecim, zemin: kZemin, elle: kElle } = secimDurumu();
+        const { adaylar: kAdaylar, secim: kSecim, zemin: kZemin, elle: kElle, yerlesim: kYerlesim } = secimDurumu();
         if (kAdaylar.length) {
             await adaylariYaz(url, kAdaylar, kSecim, kElle);
+            const { yerlesimYaz } = await import('./gorsel.js');
+            await yerlesimYaz(url, kYerlesim);
             if (kZemin) {
                 const { zeminYaz } = await import('./gorsel.js');
                 await zeminYaz(url, kZemin);
@@ -1238,7 +1241,9 @@ function gorselAraclariniKur() {
         const dosya = e.target.files && e.target.files[0];
         if (!dosya) return;
         try {
-            adayEkle(await dosyayiOku(dosya));
+            const veri = await dosyayiOku(dosya);
+            adayEkle(veri);
+            kendiResmeGoreYerlesim(veri);
         } catch (err) {
             bildir(c('dosyaOkunamadi'));
         }
@@ -1258,7 +1263,9 @@ function gorselAraclariniKur() {
             if (!yanit.ok) throw new Error('indirilemedi');
             const blob = await yanit.blob();
             if (!blob.type.startsWith('image/')) throw new Error(c('gorselDegil'));
-            adayEkle(await blobOku(blob));
+            const veri = await blobOku(blob);
+            adayEkle(veri);
+            kendiResmeGoreYerlesim(veri);
         } catch (err) {
             bildir(c('goruntuAlinamadi'));
         }
@@ -1266,6 +1273,8 @@ function gorselAraclariniKur() {
 
     // 3) Arka plan rengi - gorsel seffafsa/kucukse arkasi bu renk olur
     el('kpZemin')?.addEventListener('click', () => el('kpZeminSecici').click());
+    // Kart basina Sigdir/Doldur (1.6.3)
+    el('kpYerlesim')?.addEventListener('click', () => yerlesimDegistir());
     el('kpZeminSecici')?.addEventListener('input', e => zeminAyarla(e.target.value));
 
     // Sahne Yakala: sayfayi acar, kullanici sahneyi secip ceker,
@@ -1998,10 +2007,12 @@ async function bosMenuEylemi(e) {
                 evet: c('baslat')
             })) return;
             await bekleyenleriSor();
+            let atlanan = 0;
             for (const k of kartlar) {
-                await gorseliYenile(k.dataset.kartId, k.dataset.anahtar);
+                if (!await gorseliYenile(k.dataset.kartId, k.dataset.anahtar, true)) atlanan++;
             }
-            bildir(c('nKartKuyrugaAlindi2', kartlar.length));
+            bildir(c('nKartKuyrugaAlindi2', kartlar.length - atlanan)
+                + (atlanan ? ' ' + c('nKendiGorselKorundu', atlanan) : ''), { sure: 6000 });
             break;
         }
 
@@ -2030,16 +2041,33 @@ async function bosMenuEylemi(e) {
 const DONENCE_EN_AZ_MS = 900;
 const donenceBaslangic = new Map();
 
-async function gorseliYenile(kartId, url) {
+/**
+ * Gorseli yeniden yakalar (1.6.3): kayit SILINMEZ, "yenile" isaretlenir -
+ * yeni goruntu secilir, eskiler (kendi resmi dahil) karuselde kalir.
+ * Kendi resmi olan kartta tek tek yenilemede sorulur; toplu yenilemede
+ * (toplu=true) o kartlar atlanir. Atlandiysa false doner.
+ */
+async function gorseliYenile(kartId, url, toplu = false) {
     const a = document.querySelector(`[data-kart-id="${kartId}"]`);
-    if (!a) return;
-    a.classList.add('yenileniyor');
+    if (!url) return false;
+    let kayit = {};
+    try { kayit = (await chrome.storage.local.get(url))[url] || {}; } catch (e) { /* yok */ }
+    if (kayit.elle) {
+        if (toplu) return false;
+        if (!await onaySor({
+            baslik: c('gorseliYenile'),
+            metin: c('kendiGorselYenileSor'),
+            evet: c('gorseliYenile'),
+        })) return false;
+    }
+    a?.classList.add('yenileniyor');
     donenceBaslangic.set(url, Date.now());
-
-    // Eski gorseli sil ki yakalama yenisini yazsin
-    try { await chrome.storage.local.remove(url); } catch (e) { /* yoktu */ }
+    if (Object.keys(kayit).length) {
+        try { await chrome.storage.local.set({ [url]: { ...kayit, yenile: Date.now() } }); } catch (e) { /* */ }
+    }
 
     gorselIste(url);
+    return true;
 
     // Guvenlik: yakalama patlarsa donence sonsuza kadar donmesin
     setTimeout(() => donenceyiKaldir(url), 30000);

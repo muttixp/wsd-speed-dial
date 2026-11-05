@@ -513,7 +513,35 @@ body.kartOdakta .kart:not(.aramaBulunan) { opacity: .22; filter: grayscale(.7); 
        kullanici adayin gercek oranini gorup dogru karar versin */
     background: var(--kart-zemin, #22262e) center/contain no-repeat;
     box-shadow: var(--golge-2);
+    position: relative;
 }
+/* Secili adayi kaldir (1.6.3) - onizlemenin ustune gelince gorunur */
+.karuselSil {
+    position: absolute; top: 6px; right: 6px;
+    width: 26px; height: 26px; border-radius: 50%;
+    border: 0; cursor: pointer;
+    font-size: 18px; line-height: 26px; padding: 0;
+    color: #fff; background: rgba(0, 0, 0, .55);
+    opacity: 0; transition: opacity .15s, background .15s;
+}
+.karuselOnizleme:hover .karuselSil, .karuselSil:focus-visible { opacity: 1; }
+.karuselSil:hover { background: #c0392b; }
+@media (hover: none) { .karuselSil { opacity: 1; } }
+/* Kilit (1.6.3): kilitliyken hep gorunur, acikken ustune gelince */
+.karuselKilit {
+    position: absolute; top: 6px; left: 6px;
+    height: 26px; min-width: 26px; border-radius: 13px;
+    border: 0; cursor: pointer; padding: 0 6px;
+    display: inline-flex; align-items: center; justify-content: center;
+    color: #fff; background: rgba(0, 0, 0, .55);
+    opacity: 0; transition: opacity .15s, background .15s;
+}
+.karuselKilit[hidden] { display: none; }
+.karuselKilit .kilitHalka { transition: transform .15s; transform-origin: 16px 11px; }
+.karuselKilit:not(.kilitli) .kilitHalka { transform: translateX(-4px) translateY(-2px) rotate(-18deg); }
+.karuselKilit.kilitli { opacity: 1; background: var(--vurgu, #3b82f6); }
+.karuselOnizleme:hover .karuselKilit, .karuselKilit:focus-visible { opacity: 1; }
+@media (hover: none) { .karuselKilit { opacity: 1; } }
 
 .karuselNoktalar {
     display: flex;

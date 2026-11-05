@@ -3,6 +3,52 @@
 Sürüm numaraları [Semantic Versioning](https://semver.org/lang/tr/)
 kurallarına uyar.
 
+## [1.6.3] — 2026-11-05
+
+### Değişti
+- **Düzenle önizlemesi kartla aynı görünür**: aynı oran, aynı Sığdır/Doldur,
+  aynı tema zemini. Önceden önizleme hep "sığdır" + beyaz zemindi; kartta
+  kırpılmış ve tema renginde görününce farklı sanılıyordu.
+- **Kart başına Sığdır/Doldur**: Düzenle'deki görsel araçlarında yeni düğme;
+  genel ayardan bağımsız bu kart için seçilir. Kendi yüklediğiniz saydam ya
+  da kart oranına uymayan resimde (geniş logo vb.) otomatik Sığdır.
+- **Yakalama Modu varsayılanı Gizli (her tarayıcıda)**: Chrome'da da
+  pencere açılmadan arka sekmede yakalanır. 1.6.3 öncesinden gelen ve
+  Pencere'de olan Chrome kullanıcısı bir kez Gizli'ye alınır. Chrome'un
+  üstteki "hata ayıklama" çubuğu ilk yakalamada bir kez açıklanır
+  (Pencere'ye dönüş yolu da yazılı).
+- **Görsel Kilidi**: Düzenle önizlemesinin sol üst köşesindeki kilit seçili
+  görseli sabitler. Kilitli kartta yenileme ve adres değişikliği yeni
+  görüntüyü yalnızca karusele aday ekler; grup/tümünü yenile atlar, tek
+  yenilemede sorulur. Kendi yüklediğiniz resim kendiliğinden kilitlenir;
+  kilit açılınca ya da kilitli görsel × ile silinince kart normale döner.
+  Kilitsiz kartta adres değişince eski görseller artık silinmez.
+- **Karuselde görsel kaldır**: önizlemenin köşesindeki × seçili görseli
+  çıkarır (kaydedince kalıcı). Aynı resim iki kez eklenmez; farklı yoldan
+  gelse de (dosya/adres/logo) tanınır. Kayıtta zaten kopya varsa Düzenle
+  açılınca teke iner.
+- **Otomatik Yakala** (Görsel Yakalama; eski adı "Aktarımda Yakala"):
+  kapatılınca kart eklenince, içe aktarınca ve eşitlenince ekran görüntüsü
+  alınmaz; görseli kullanıcı seçer.
+- **Senkronla gelen kartlar sormadan yakalanmaz**: birkaç saniyede 3+ kart
+  eklenince (tarayıcı senkronu, toplu ekleme) liste bekletilir ve sayfada
+  bir kez sorulur. İkinci bilgisayarda senkron her kartı tek tek yakalatıp
+  durmadan sekme açıyordu.
+- **Kendi görseli korunur**: Görseli yenile kaydı artık silmiyor; yeni
+  görüntü seçilir, eskiler (kendi resmi dahil) Düzenle'deki karuselde kalır.
+  Kendi görseli olan kartta önce sorulur; grubun/tümünün yenilenmesinde bu
+  kartlar atlanır ("Kendi görseli olan N kart korundu").
+- **Logo Boyutu** (Kartlar › Boyut): Küçük | Orta | Büyük — logonun kutudaki
+  payı. Varsayılan Orta (önce logolar kenarlara dayanıyordu). Yeni alınan
+  logolara uygulanır; mevcutlar için Site Logoları.
+- **Site Logoları** artık Gelişmiş modda da görünür.
+- **Basit modda Yeni Kart Görseli** (Kartlar): Boyuta göre (varsayılan) |
+  Logo | Site görünümü. Boyuta göre: Simge, Minik ve Küçük kartta yeni kart
+  ve Görseli yenile önce logo dener, bulunamazsa ekran görüntüsü; Orta ve
+  üstünde ekran görüntüsü. Küçük kutuda ekran görüntüsü okunmuyordu.
+  Kendiliğinden yapılan bu aramada yalnızca sitenin kendi sayfasındaki logo
+  alınır; dış logo servislerine istek gitmez (gizlilik sözü korunur).
+
 ## [1.6.2] — 2026-10-31
 
 ### Yeni

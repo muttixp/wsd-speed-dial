@@ -630,6 +630,7 @@ async function bekleyenleriYukle() {
             // Zemin rengi: saydam gorsellerde arkada gorunur, ayrica
             // "sigdir" modunda kenar bosluklarini doldurur
             if (veri.zemin) el.style.backgroundColor = veri.zemin;
+            yerlesimUygula(el, veri);
         }
 
         if (!veri || !veri.gorsel) continue;
@@ -688,6 +689,13 @@ async function gorselleriUygula(kartlar) {
     }
 }
 
+/** Kart basina gorsel yerlesimi (1.6.3): 'contain' | 'cover' | yok (genel ayar) */
+function yerlesimUygula(el, veri) {
+    const y = veri && (veri.yerlesim === 'contain' || veri.yerlesim === 'cover') ? veri.yerlesim : '';
+    el.style.backgroundSize = y;
+    el.style.backgroundPosition = y === 'contain' ? '50% 50%' : y === 'cover' ? '50% 0' : '';
+}
+
 /** Tek bir kartin gorselini yerinde tazeler (yakalama bitince cagriliyor). */
 export async function kartGorseliniTazele(anahtar) {
     const kayit = await gorselAl(anahtar);
@@ -697,7 +705,11 @@ export async function kartGorseliniTazele(anahtar) {
     for (const a of document.querySelectorAll('.kart[data-anahtar]')) {
         if (a.dataset.anahtar !== anahtar) continue;
         const el = a.querySelector('.kartGorsel');
-        if (el) el.style.backgroundImage = `url('${veri.gorsel}')`;
+        if (el) {
+            el.style.backgroundImage = `url('${veri.gorsel}')`;
+            el.style.backgroundColor = veri.zemin || '';
+            yerlesimUygula(el, veri);
+        }
         a.dataset.gorselYuklendi = '1';        // gozcu bir daha okumasin
     }
     const siskin = veri.gorsel.length >= SISKIN_ESIK ||

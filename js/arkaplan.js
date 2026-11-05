@@ -326,13 +326,30 @@ chrome.runtime.onInstalled.addListener(({ reason }) => {
 chrome.runtime.onInstalled.addListener(async ({ reason }) => {
     if (reason !== 'install') return;
     try {
-        if (await chromeMu()) return;
+        // 1.6.3: Chrome dahil her yerde gizli. Pencere kipi toplu yakalamada
+        // pencere acip kapatiyor ("tarayici cildirdi" yorumlari); Chrome'un
+        // ust cubugu icin ilk yakalamada bir kez bilgi veriliyor.
         const { ayarlar } = await chrome.storage.local.get('ayarlar');
         if (ayarlar && ayarlar.yakalamaKipi) return;
         // duvarHazir de yaziliyor: ayarlar burada olusunca ayar.js bunu
         // "eski kullanici" sanip hazir duvar kagidini kapatiyordu (1.6.1)
         await chrome.storage.local.set({ ayarlar: { duvarHazir: 'dalga', ...(ayarlar || {}), yakalamaKipi: 'gizli' } });
     } catch (e) { /* varsayilan pencere kipi kalir */ }
+});
+// GIZLI KIP GECISI (1.6.3): Chrome'da varsayilan pencereydi ve ayarlar
+// tum degerleriyle yazildigi icin bilerek secilenden ayirt edilemiyor.
+// 1.6.3 oncesinden gelen Chrome kullanicisi bir kez gizliye alinir;
+// ilk yakalamadaki bilgi notu geri donus yolunu da soyler.
+chrome.runtime.onInstalled.addListener(async ({ reason, previousVersion }) => {
+    if (reason !== 'update' || !previousVersion) return;
+    const p = previousVersion.split('.').map(Number);
+    if ((p[0] * 1e6 + (p[1] || 0) * 1e3 + (p[2] || 0)) >= 1006003) return;
+    try {
+        if (!(await chromeMu())) return;
+        const { ayarlar } = await chrome.storage.local.get('ayarlar');
+        if (!ayarlar || ayarlar.yakalamaKipi !== 'pencere') return;
+        await chrome.storage.local.set({ ayarlar: { ...ayarlar, yakalamaKipi: 'gizli' } });
+    } catch (e) { /* kalsin */ }
 });
 chrome.runtime.onStartup.addListener(menuyuTazele);
 menuyuTazele();
@@ -717,11 +734,24 @@ async function gorseliKaydet(url, adaylar) {
 
     if (liste.length) {
         const mevcut = (await chrome.storage.local.get(url).catch(() => ({})))[url] || {};
-        // KULLANICININ RESMI (1.5.5): kendi resmini secmisse yakalanan
-        // goruntu yalnizca aday olarak eklenir, secim degismez
-        const kayit = mevcut.elle && mevcut.gorsel
-            ? { ...mevcut, adaylar: [...(mevcut.adaylar || [mevcut.gorsel]), ...liste.filter(x => !(mevcut.adaylar || []).includes(x))] }
-            : { ...mevcut, adaylar: liste, secim: 0, gorsel: liste[0] };
+        // KILITLI (1.5.5/1.6.3): kullanici gorseli kilitlemisse (kendi resmi
+        // otomatik kilitli) yakalanan goruntu yalnizca aday olarak eklenir
+        // YENILE (1.6.3): kullanici "Gorseli yenile" dedi - yeni goruntu
+        // secilir ama ESKI gorseller (kendi resmi dahil) karuselde kalir;
+        // Duzenle'den geri secilebilir. Onceden kayit silinip kayboluyordu.
+        const eski = mevcut.adaylar || (mevcut.gorsel ? [mevcut.gorsel] : []);
+        let kayit;
+        if (mevcut.yenile) {
+            kayit = { ...mevcut, adaylar: [...liste, ...eski.filter(x => !liste.includes(x))].slice(0, 8), secim: 0, gorsel: liste[0] };
+            delete kayit.yenile;
+            delete kayit.elle;
+        } else if (mevcut.elle && mevcut.gorsel) {
+            kayit = { ...mevcut, adaylar: [...eski, ...liste.filter(x => !eski.includes(x))] };
+        } else {
+            // KILITSIZ (1.6.3): adres degisince eski gorseller silinmesin -
+            // yeni goruntu basa gelip secilir, eskiler karuselde kalir
+            kayit = { ...mevcut, adaylar: [...liste, ...eski.filter(x => !liste.includes(x))].slice(0, 8), secim: 0, gorsel: liste[0] };
+        }
         const sonuc = await guvenliYaz({ [url]: kayit });
         if (!sonuc.ok) {
             depoHatasi = sonuc.dolu ? 'dolu' : 'hata';
@@ -740,17 +770,51 @@ async function gorseliKaydet(url, adaylar) {
 }
 
 // Yer imi WSD agacina eklendiginde de gorsel cek (yer imi cubugundan eklenenler)
+/* KART EKLENINCE YAKALAMA (1.6.3):
+   - Ayarlar > Gorsel Yakalama > Otomatik Yakala kapaliysa hic yakalanmaz.
+   - Yer imleri SENKRONLA ya da baska bir araçla TOPLU gelince (birkac
+     saniyede 3+ kart) sormadan baslanmiyor: ikinci bilgisayarda senkron
+     her karti tek tek yakalatip durmadan sekme aciyordu. Liste bekletilip
+     sayfada bir kez soruluyor (ice aktarmadaki soru). */
+const TOPLU_ESIK = 3, TOPLU_BEKLE_MS = 3000;
+let topluListe = [], topluZaman = null;
+
+async function otoYakalaAcik() {
+    try { return (await chrome.storage.local.get('ayarlar')).ayarlar?.aktarimdaYakala !== false; }
+    catch (e) { return true; }
+}
+
+async function topluyuIsle() {
+    const liste = [...new Set(topluListe)];
+    topluListe = [];
+    topluZaman = null;
+    if (!liste.length) return;
+    let varolan = {};
+    try { varolan = await chrome.storage.local.get(liste); } catch (e) { /* */ }
+    const eksik = liste.filter(a => !varolan[a]);
+    if (!eksik.length) return;
+    if (eksik.length < TOPLU_ESIK) {
+        for (const a of eksik) yakalamayaEkle(a, gorseliKaydet);
+        return;
+    }
+    const { [AKTARIM_BEKLEYEN]: onceki } = await chrome.storage.local.get(AKTARIM_BEKLEYEN).catch(() => ({}));
+    const hepsi = [...new Set([...(Array.isArray(onceki) ? onceki : []), ...eksik])];
+    await chrome.storage.local.set({ [AKTARIM_BEKLEYEN]: hepsi }).catch(() => {});
+    chrome.runtime.sendMessage({ hedef: 'sayfa', tur: 'aktarimGorselSor', adet: hepsi.length }).catch(() => {});
+}
+
 chrome.bookmarks.onCreated.addListener(async (id, dugum) => {
     if (!dugum.url) return;
     if (await iceAktarimSuruyor()) return;      // bitince toplu alinacak
     try {
         // Alt klasorler dahil WSD agacinda mi?
         if (!await klasorZinciri(dugum.parentId)) return;
+        if (!await otoYakalaAcik()) return;
 
         // Normallestirilmis anahtarla bakiyoruz - depoda oyle duruyor
         const anahtar = urlNormalle(dugum.url);
-        const mevcut = await chrome.storage.local.get(anahtar);
-        if (mevcut[anahtar]) return;                // gorsel zaten var
-        yakalamayaEkle(anahtar, gorseliKaydet);
+        topluListe.push(anahtar);
+        clearTimeout(topluZaman);
+        topluZaman = setTimeout(topluyuIsle, TOPLU_BEKLE_MS);
     } catch (e) { /* onemli degil */ }
 });

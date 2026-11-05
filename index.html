@@ -591,10 +591,26 @@
                         <option value="ozel" data-c="boyutOzel" hidden>Özel</option>
                     </select>
                 </label>
-                <div class="ayarSatir basitYalniz logoSatir">
+                <label class="ayarSatir basitYalniz">
+                    <span><span data-c="yeniKartGorseli">Yeni Kart Görseli</span><small class="webMotorIpucu" data-c="yeniKartGorseliIpucu">Boyuta göre: Simge, Minik ve Küçük kartta logo, büyüklerde site görünümü.</small></span>
+                    <select id="ayBasitGorsel">
+                        <option value="oto" data-c="gorselBoyutaGore">Boyuta göre</option>
+                        <option value="logo" data-c="gorselLogo">Logo</option>
+                        <option value="ekran" data-c="gorselSiteGorunumu">Site görünümü</option>
+                    </select>
+                </label>
+                <div class="ayarSatir logoSatir">
                     <span><span data-c="logolar">Site Logoları</span><small class="webMotorIpucu" data-c="logoIpucu">Kart görselini logo yapar; eskisi Düzenle'de kalır.</small></span>
                     <button type="button" class="miniDugme logoYenile" id="ayLogoKoy" title="Bu gruptaki kartlara logo bul" data-c-title="logoKoy" aria-label="Bu gruptaki kartlara logo bul" data-c-aria-label="logoKoy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg></button>
                 </div>
+                <label class="ayarSatir">
+                    <span data-c="logoBoyutu">Logo Boyutu</span>
+                    <select id="ayLogoBoyutu">
+                        <option value="kucuk" data-c="boyutKucuk">Küçük</option>
+                        <option value="orta" data-c="boyutOrta">Orta</option>
+                        <option value="buyuk" data-c="boyutBuyuk">Büyük</option>
+                    </select>
+                </label>
                 <label class="ayarSatir gelismisYalniz">
                     <span data-c="kartOrani">Oran</span>
                     <select id="ayKartOrani">
@@ -731,7 +747,7 @@
         </label>
         <p class="kucukBilgi" id="ayGizliBilgi" data-c="gizliKipBilgi" hidden>Yakalarken Chrome üstte "hata ayıklama" çubuğu gösterir. Bu zorunlu bir bildirimdir; izin yalnızca görüntü almak için kullanılır, çubuk iş bitince kaybolur.</p>
         <label class="ayarSatir">
-            <span data-c="aktarimdaYakala">Aktarımda Yakala</span>
+            <span><span data-c="aktarimdaYakala">Otomatik Yakala</span><small class="webMotorIpucu" data-c="otoYakalaIpucu">Kart eklenince ve içe aktarınca ekran görüntüsü alır. Kapalıyken görseli siz seçersiniz.</small></span>
             <input type="checkbox" id="ayAktarimdaYakala" class="anahtar">
         </label>
                     </div></div>
@@ -1081,7 +1097,7 @@
 
             <div class="karusel">
                 <button id="kpOnceki" class="karuselOk" type="button" aria-label="Önceki" data-c-aria-label="onceki">&#10094;</button>
-                <div id="kpOnizleme" class="karuselOnizleme"></div>
+                <div id="kpOnizleme" class="karuselOnizleme"><button id="kpKilit" class="karuselKilit" type="button" aria-pressed="false" title="Kilitle" hidden><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2" fill="currentColor"/><path class="kilitHalka" d="M8 11V8a4 4 0 0 1 8 0" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></button><button id="kpAdaySil" class="karuselSil" type="button" title="Bu görseli kaldır" data-c-title="adayKaldir" hidden>&times;</button></div>
                 <button id="kpSonraki" class="karuselOk" type="button" aria-label="Sonraki" data-c-aria-label="sonraki">&#10095;</button>
             </div>
             <div id="kpNoktalar" class="karuselNoktalar"></div>
@@ -1103,6 +1119,9 @@
                 </button>
                 <button id="kpFiltre" class="gorselDugme" type="button">
                     <span class="gdSimge">&#127912;</span><span data-c="filtre">Filtre</span>
+                </button>
+                <button id="kpYerlesim" class="gorselDugme" type="button" title="Bu kartta görsel sığdırılsın ya da kartı doldursun" data-c-title="kpYerlesimIpucu">
+                    <span class="gdSimge">&#10530;</span><span data-yerlesim-ad>Sığdır</span>
                 </button>
                 <button id="kpIndir" class="gorselDugme" type="button">
                     <span class="gdSimge">&#8615;</span><span data-c="resmiIndir">Resmi İndir</span>

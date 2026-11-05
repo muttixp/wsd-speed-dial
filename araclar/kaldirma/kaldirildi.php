@@ -4,7 +4,7 @@
  *
  * Eklenti kaldirilinca tarayici bu sayfayi acar:
  *   kaldirildi.php?v=1.6.1&d=ru&t=chrome
- * Yalnizca surum, dil ve magaza (chrome/edge) gelir; kimlik, IP, cerez YOK.
+ * Yalnizca surum, dil ve magaza (chrome/edge/firefox) gelir; kimlik, IP, cerez YOK.
  * Yanitlar veri/kaldirma.csv dosyasina yazilir (veri/ disaridan okunamaz).
  *
  * Kurulum: bu dosyayi ve veri/ klasorunu sitenin /wsd/ dizinine koyun;
@@ -51,7 +51,7 @@ $surum = preg_replace('/[^0-9.]/', '', $al('v', 20));
 $dilHam = strtolower($al('d', 10));
 $dil = substr($dilHam, 0, 2);
 if (!isset($METIN[$dil])) $dil = 'en';
-$magaza = $al('t', 10) === 'edge' ? 'edge' : 'chrome';
+$magaza = in_array($al('t', 10), ['edge', 'firefox'], true) ? $al('t', 10) : 'chrome';
 [$baslik, $alt, $nedenler, $ekMetin, $gonder, $tesekkur, $yenidenKur, $secin] = $METIN[$dil];
 $e = fn(string $s) => htmlspecialchars($s, ENT_QUOTES, 'UTF-8');
 
@@ -122,9 +122,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $gonderildi = true;
     }
 }
-$magazaAdres = $magaza === 'edge'
-    ? 'https://microsoftedge.microsoft.com/addons/search/WSD%20Speed%20Dial'
-    : 'https://chromewebstore.google.com/detail/blhdiabjeaeidnnmiflopnocieiaiibd';
+$magazaAdres = [
+    'edge'    => 'https://microsoftedge.microsoft.com/addons/search/WSD%20Speed%20Dial',
+    'firefox' => 'https://addons.mozilla.org/firefox/addon/wsd-speeddial@muttixp/',
+][$magaza] ?? 'https://chromewebstore.google.com/detail/blhdiabjeaeidnnmiflopnocieiaiibd';
 ?><!doctype html>
 <html lang="<?= $e($dil) ?>">
 <head>

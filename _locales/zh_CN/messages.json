@@ -1590,7 +1590,7 @@
     "message": "背景颜色"
   },
   "aktarimdaYakala": {
-    "message": "导入时截图"
+    "message": "自动截图"
   },
   "icindekiKartlardanSec": {
     "message": "从其中的磁贴中选择"
@@ -2341,5 +2341,47 @@
   },
   "sagTikAlan": {
     "message": "添加到工作区"
+  },
+  "otoYakalaIpucu": {
+    "message": "添加或导入卡片时自动截图。关闭后由你自己选择图片。"
+  },
+  "kendiGorselYenileSor": {
+    "message": "此快捷方式的图片已锁定。要重新截取吗？锁定将解除；旧图片保留在“编辑”的轮播中。"
+  },
+  "nKendiGorselKorundu": {
+    "message": "已跳过 $1 个图片已锁定的快捷方式。"
+  },
+  "logoBoyutu": {
+    "message": "标志大小"
+  },
+  "kpYerlesimIpucu": {
+    "message": "在此卡片中完整显示图片或填满卡片"
+  },
+  "adayKaldir": {
+    "message": "移除此图片"
+  },
+  "kpKilitIpucu": {
+    "message": "锁定：刷新或更改地址时保留此图片"
+  },
+  "kilidiAc": {
+    "message": "已锁定 - 点击解锁"
+  },
+  "gizliCubukBilgi": {
+    "message": "图片在后台截取。顶部的“调试”栏是 Chrome 的强制提示；只截取快捷方式图片，完成后即消失。可在 设置 › 截图模式 中改为“窗口”。"
+  },
+  "yeniKartGorseli": {
+    "message": "新快捷方式图片"
+  },
+  "yeniKartGorseliIpucu": {
+    "message": "按尺寸：图标、极小、小尺寸用标志，较大尺寸用网站截图。找不到标志时使用网站截图。"
+  },
+  "gorselBoyutaGore": {
+    "message": "按尺寸"
+  },
+  "gorselLogo": {
+    "message": "标志"
+  },
+  "gorselSiteGorunumu": {
+    "message": "网站截图"
   }
 }

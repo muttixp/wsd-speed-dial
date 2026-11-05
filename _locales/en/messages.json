@@ -1590,7 +1590,7 @@
     "message": "Background Color"
   },
   "aktarimdaYakala": {
-    "message": "Capture on Import"
+    "message": "Auto Capture"
   },
   "icindekiKartlardanSec": {
     "message": "Pick from the tiles inside"
@@ -2341,5 +2341,47 @@
   },
   "sagTikAlan": {
     "message": "Add to Workspace"
+  },
+  "otoYakalaIpucu": {
+    "message": "Takes a screenshot when you add or import tiles. When off, you choose the images yourself."
+  },
+  "kendiGorselYenileSor": {
+    "message": "This tile's image is locked. Capture it again? The lock is removed; the old image stays in the carousel in Edit."
+  },
+  "nKendiGorselKorundu": {
+    "message": "$1 tiles with locked images were skipped."
+  },
+  "logoBoyutu": {
+    "message": "Logo Size"
+  },
+  "kpYerlesimIpucu": {
+    "message": "Fit the image inside this tile or fill the tile"
+  },
+  "adayKaldir": {
+    "message": "Remove this image"
+  },
+  "kpKilitIpucu": {
+    "message": "Lock: keep this image on refresh and when the address changes"
+  },
+  "kilidiAc": {
+    "message": "Locked - click to unlock"
+  },
+  "gizliCubukBilgi": {
+    "message": "Images are captured in the background. The \"debugging\" bar at the top is Chrome's mandatory notice; only the tile image is taken and the bar disappears when done. You can switch to Window in Settings › Capture Mode."
+  },
+  "yeniKartGorseli": {
+    "message": "New Tile Image"
+  },
+  "yeniKartGorseliIpucu": {
+    "message": "By size: logo on Icon, Tiny and Small tiles, site view on larger ones. If no logo is found, the site view is used."
+  },
+  "gorselBoyutaGore": {
+    "message": "By size"
+  },
+  "gorselLogo": {
+    "message": "Logo"
+  },
+  "gorselSiteGorunumu": {
+    "message": "Site view"
   }
 }

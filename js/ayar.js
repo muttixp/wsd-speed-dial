@@ -31,8 +31,10 @@ export const VARSAYILAN = {
     jpegKalitesi: 85,
     yakalamaKucuk: false,       // pencere kipi: yari boyutta, sag alt kosede, %50 yakinlastirma (1.5.5)
     yakalamaOneAl: false,       // odaksiz yakalama basarisizsa pencereyi one al
-    yakalamaKipi: 'pencere',    // 'pencere' | 'gizli' (debugger ile, pencere hic gorunmez)
-    aktarimdaYakala: true,      // ice aktarma / yedek yukleme bitince eksik gorselleri kendiliginden yakala
+    yakalamaKipi: 'gizli',      // 'pencere' | 'gizli' (arka sekme, pencere hic gorunmez). 1.6.3: her tarayicida varsayilan
+    basitGorsel: 'oto',         // Basit modda yeni kart gorseli (1.6.3): 'oto' (Simge/Minik/Kucuk logo, buyukler ekran) | 'logo' | 'ekran'
+    logoBoyutu: 'orta',         // logonun kutudaki payi (1.6.3): 'kucuk' | 'orta' | 'buyuk'
+    aktarimdaYakala: true,      // OTOMATIK YAKALA (1.6.3): kart eklenince, ice aktarinca ve senkronda ekran goruntusu
 
     // Gorunum
     duvarAcik: true,

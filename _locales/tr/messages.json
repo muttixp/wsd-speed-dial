@@ -1590,7 +1590,7 @@
     "message": "Zemin Rengi"
   },
   "aktarimdaYakala": {
-    "message": "Aktarımda Yakala"
+    "message": "Otomatik Yakala"
   },
   "icindekiKartlardanSec": {
     "message": "İçindeki kartlardan seç"
@@ -2341,5 +2341,47 @@
   },
   "sagTikAlan": {
     "message": "Çalışma Alanına Ekle"
+  },
+  "otoYakalaIpucu": {
+    "message": "Kart eklenince ve içe aktarınca ekran görüntüsü alır. Kapalıyken görseli siz seçersiniz."
+  },
+  "kendiGorselYenileSor": {
+    "message": "Bu kartın görseli kilitli. Yeniden yakalansın mı? Kilit kalkar; eski görsel Düzenle'deki karuselde kalır."
+  },
+  "nKendiGorselKorundu": {
+    "message": "Görseli kilitli $1 kart atlandı."
+  },
+  "logoBoyutu": {
+    "message": "Logo Boyutu"
+  },
+  "kpYerlesimIpucu": {
+    "message": "Bu kartta görsel sığdırılsın ya da kartı doldursun"
+  },
+  "adayKaldir": {
+    "message": "Bu görseli kaldır"
+  },
+  "kpKilitIpucu": {
+    "message": "Kilitle: bu görsel yenilemede ve adres değişince korunur"
+  },
+  "kilidiAc": {
+    "message": "Kilitli - kilidi açmak için tıklayın"
+  },
+  "gizliCubukBilgi": {
+    "message": "Görseller arka planda alınıyor. Üstteki \"hata ayıklama\" çubuğu Chrome'un zorunlu bildirimidir; yalnızca kart görüntüsü alınır, iş bitince kaybolur. İsterseniz Ayarlar › Yakalama Modu'ndan Pencere'yi seçebilirsiniz."
+  },
+  "yeniKartGorseli": {
+    "message": "Yeni Kart Görseli"
+  },
+  "yeniKartGorseliIpucu": {
+    "message": "Boyuta göre: Simge, Minik ve Küçük kartta logo, büyüklerde site görünümü. Logo bulunamazsa site görünümü alınır."
+  },
+  "gorselBoyutaGore": {
+    "message": "Boyuta göre"
+  },
+  "gorselLogo": {
+    "message": "Logo"
+  },
+  "gorselSiteGorunumu": {
+    "message": "Site görünümü"
   }
 }
