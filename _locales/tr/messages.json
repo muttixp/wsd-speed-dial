@@ -2367,7 +2367,7 @@
     "message": "Kilitli - kilidi açmak için tıklayın"
   },
   "gizliCubukBilgi": {
-    "message": "Görseller arka planda alınıyor. Üstteki \"hata ayıklama\" çubuğu Chrome'un zorunlu bildirimidir; yalnızca kart görüntüsü alınır, iş bitince kaybolur. İsterseniz Ayarlar › Yakalama Modu'ndan Pencere'yi seçebilirsiniz."
+    "message": "Görseller arka planda alınıyor. Chrome üstte kısa süre \"hata ayıklama\" çubuğu gösterebilir; bu Chrome'un zorunlu bildirimidir, yalnızca kart görüntüsü alınır. İsterseniz Ayarlar › Yakalama Modu'ndan Pencere'yi seçebilirsiniz."
   },
   "yeniKartGorseli": {
     "message": "Yeni Kart Görseli"
@@ -2383,5 +2383,41 @@
   },
   "gorselSiteGorunumu": {
     "message": "Site görünümü"
+  },
+  "mGorselleriKilitle": {
+    "message": "Görselleri kilitle"
+  },
+  "tumGorselleriKilitle": {
+    "message": "Tüm görselleri kilitle"
+  },
+  "tumKilitleriAc": {
+    "message": "Tüm kilitleri aç"
+  },
+  "kilitlenecekGorselYok": {
+    "message": "Kilitlenecek görsel yok (görseli olmayan ya da zaten kilitli)."
+  },
+  "acilacakKilitYok": {
+    "message": "Açılacak kilit yok."
+  },
+  "nGorselKilitlendi": {
+    "message": "$1 kartın görseli kilitlendi."
+  },
+  "nKilitAcildi": {
+    "message": "$1 kartın kilidi açıldı."
+  },
+  "geriAlindi": {
+    "message": "Geri alındı."
+  },
+  "gorselBosluk": {
+    "message": "Kenar Boşluğu"
+  },
+  "gorselBoslukIpucu": {
+    "message": "Sığdır ile gösterilen görsellerde (logolar, kendi resimleriniz) kart kenarından boşluk."
+  },
+  "camKart": {
+    "message": "Kartlarda da"
+  },
+  "camKartIpucu": {
+    "message": "Kapalıyken kart zemini seçtiğiniz renkte, saydam olmadan görünür (örn. beyaz)."
   }
 }

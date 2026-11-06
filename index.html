@@ -459,6 +459,10 @@
                 <span data-c="camGorunum">Buzlu Cam</span>
                 <input type="checkbox" id="ayCamGorunum" class="anahtar">
             </label>
+            <label class="ayarSatir camAlt">
+                <span><span data-c="camKart">Kartlarda da</span><small class="webMotorIpucu" data-c="camKartIpucu">Kapalıyken kart zemini seçtiğiniz renkte, saydam olmadan görünür (örn. beyaz).</small></span>
+                <input type="checkbox" id="ayCamKart" class="anahtar">
+            </label>
                     </div></div>
                 </div>
                 <input type="file" id="ayDuvarSecici" accept="image/*" hidden>
@@ -611,6 +615,16 @@
                         <option value="buyuk" data-c="boyutBuyuk">Büyük</option>
                     </select>
                 </label>
+                <label class="ayarSatir">
+                    <span><span data-c="gorselBosluk">Kenar Boşluğu</span><small class="webMotorIpucu" data-c="gorselBoslukIpucu">Sığdır ile gösterilen görsellerde (logolar, kendi resimleriniz) kart kenarından boşluk.</small></span>
+                    <input type="range" id="ayGorselBosluk" min="0" max="20" step="1">
+                    <output id="ayGorselBoslukDeger"></output>
+                </label>
+                <!-- Basit modda Gorsel Yakalama bolumu gizli: toplu kilit burada da (1.6.4) -->
+                <div class="ayarSatir tekSutun dugmeYigini basitYalniz">
+            <button type="button" class="miniDugme" id="ayHepsiniKilitleB"><svg class="dugmeSimge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><span data-c="tumGorselleriKilitle">Tüm görselleri kilitle</span></button>
+            <button type="button" class="miniDugme" id="ayKilitleriAcB"><svg class="dugmeSimge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 7.5-2"/></svg><span data-c="tumKilitleriAc">Tüm kilitleri aç</span></button>
+        </div>
                 <label class="ayarSatir gelismisYalniz">
                     <span data-c="kartOrani">Oran</span>
                     <select id="ayKartOrani">
@@ -750,6 +764,10 @@
             <span><span data-c="aktarimdaYakala">Otomatik Yakala</span><small class="webMotorIpucu" data-c="otoYakalaIpucu">Kart eklenince ve içe aktarınca ekran görüntüsü alır. Kapalıyken görseli siz seçersiniz.</small></span>
             <input type="checkbox" id="ayAktarimdaYakala" class="anahtar">
         </label>
+        <div class="ayarSatir tekSutun dugmeYigini">
+            <button type="button" class="miniDugme" id="ayHepsiniKilitle"><svg class="dugmeSimge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><span data-c="tumGorselleriKilitle">Tüm görselleri kilitle</span></button>
+            <button type="button" class="miniDugme" id="ayKilitleriAc"><svg class="dugmeSimge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 7.5-2"/></svg><span data-c="tumKilitleriAc">Tüm kilitleri aç</span></button>
+        </div>
                     </div></div>
                 </div>
                 <div class="altBolum altAcilir altYGelismis">
@@ -1214,6 +1232,7 @@
         <li class="menuAyrac" role="separator"></li>
         <li data-eylem="hepsiniAc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg><span data-c="mHepsiniAc">Hepsini aç</span></li>
         <li data-eylem="hepsiniYenile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg><span data-c="mGorselleriYenile">Görselleri yenile</span></li>
+        <li data-eylem="gorselleriKilitle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><span data-c="mGorselleriKilitle">Görselleri kilitle</span></li>
         <li class="menuAyrac" role="separator"></li>
         <li data-eylem="copKutusu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg><span data-c="mCopKutusu">Çöp kutusu</span></li>
         <li data-eylem="ayarlar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9c.14.31.4.55.71.66H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><span data-c="mAyarlar">Ayarlar</span></li>
@@ -1225,6 +1244,7 @@
         <li data-eylem="grupYeniSekmeGrubu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span data-c="mYeniPencerede">Tümünü yeni pencerede aç</span></li>
         <li class="menuAyrac" role="separator"></li>
         <li data-eylem="grupYenile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg><span data-c="mGorselleriYenile">Görselleri yenile</span></li>
+        <li data-eylem="grupKilitle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><span data-c="mGorselleriKilitle">Görselleri kilitle</span></li>
         <li data-eylem="grupSirala"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h13M3 12h9M3 18h5"/><path d="M18 9l3-3 3 3M21 6v12" transform="translate(-3,0)"/></svg><span data-c="mKartlariSirala">Kartları sırala…</span></li>
         <li class="menuAyrac" role="separator"></li>
         <li data-eylem="grupYenidenAdlandir"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></svg><span data-c="mGrubuDuzenle">Grubu düzenle…</span></li>

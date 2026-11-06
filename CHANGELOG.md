@@ -3,6 +3,34 @@
 Sürüm numaraları [Semantic Versioning](https://semver.org/lang/tr/)
 kurallarına uyar.
 
+## [1.6.4] — 2026-11-06
+
+### Eklendi
+- **Toplu görsel kilidi**: grup menüsü ve boş alan menüsünde "Görselleri
+  kilitle" (alt klasörler dahil); Ayarlar › Görsel Yakalama'da "Tüm
+  görselleri kilitle" / "Tüm kilitleri aç" (Basit modda Kartlar › Boyut ve
+  Yerleşim'de, çünkü orada Görsel Yakalama bölümü gizli). Yalnızca görseli olan kartlar;
+  bildirimde Geri Al. Yüzlerce kartı tek tek kilitlemek zorunda kalan
+  kullanıcı isteği.
+- **Kenar Boşluğu** (Kartlar › Boyut ve Yerleşim, %0–20): Sığdır ile gösterilen
+  görseller (logolar, adresten/dosyadan eklenen resimler) kart kenarına
+  dayanmasın. Logo Boyutu yalnızca WSD'nin ürettiği logoları etkiliyordu.
+  Düzenle önizlemesi de aynı boşlukla.
+- **Buzlu Cam › Kartlarda da**: kapatınca kart zemini saydam olmadan seçilen
+  renkte (beyaz kart zemini camla gri görünüyordu).
+- **Görsel kaynak adresi saklanır**: Düzenle › Adresten eklenen görselin
+  bağlantısı kayıtta (ve yedekte) tutulur; aynı görsel seçiliyken Adresten
+  sorusu bu bağlantıyla dolu açılır.
+
+### Düzeltildi
+- Yedekten geri yüklemede görsel kilidi, Sığdır/Doldur seçimi ve kaynak
+  adresi kayboluyordu; yedek artık bunları da taşıyor.
+- Gizli kip açıklaması (ilk yakalamada bir kez) hemen ardından gelen
+  "kuyruğa alındı" bildirimiyle eziliyor, okunamadan kayboluyordu. Artık
+  25 sn ya da Tamam'a basılana kadar kalıyor; arada gelen bildirim sonra
+  gösteriliyor. Metin "çubuk gösterebilir" diye yumuşatıldı (bazı Chrome
+  kurulumlarında çubuk çıkmıyor).
+
 ## [1.6.3] — 2026-11-05
 
 ### Değişti

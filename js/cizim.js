@@ -694,6 +694,7 @@ function yerlesimUygula(el, veri) {
     const y = veri && (veri.yerlesim === 'contain' || veri.yerlesim === 'cover') ? veri.yerlesim : '';
     el.style.backgroundSize = y;
     el.style.backgroundPosition = y === 'contain' ? '50% 50%' : y === 'cover' ? '50% 0' : '';
+    if (y) el.dataset.yerlesim = y; else delete el.dataset.yerlesim;     // kenar boslugu (CSS)
 }
 
 /** Tek bir kartin gorselini yerinde tazeler (yakalama bitince cagriliyor). */

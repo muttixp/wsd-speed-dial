@@ -303,7 +303,7 @@ chrome.runtime.onMessage.addListener((mesaj, _g, cevapla) => {
     if (mesaj && mesaj.hedef === 'sayfa' && mesaj.tur === 'gizliCubukBilgi') {
         if (document.hidden) return;              // gorunen sayfa cevaplasin
         import('./etkilesim.js')
-            .then(m => m.bildir(c('gizliCubukBilgi'), { sure: 20000, etiket: c('tamam'), calistir: () => {} }))
+            .then(m => m.bildir(c('gizliCubukBilgi'), { sure: 25000, etiket: c('tamam'), calistir: () => {}, oncelikli: true }))
             .catch(() => {});
         cevapla(true);
         return;

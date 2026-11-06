@@ -3567,14 +3567,15 @@ html.acikMod body.camGorunum #yanArac::after { background: rgba(255, 255, 255, .
 /* Kartin bos alani (sigdir kipinde gorselin cevresi, yuklenirken) da
    buzlu cam: kart zemin rengi yari saydam, arkasi bulanik. Gorsel yine
    tam opak ustte. */
-body.camGorunum .kartGorsel {
+/* KART CAMI AYRI (1.6.4): "Kartlarda da" kapaliysa kart zemini tam renk */
+body.camGorunum:not(.camKartYok) .kartGorsel {
     /* Bulaniklik YOK (her kartta ayri bulaniklik zayif makinede kaydirmayi
        agirlastiriyordu): yari saydam zemin + ustten hafif parlama + ince
        ic isik cizgisi cam hissini veriyor. */
     background-color: color-mix(in srgb, var(--kart-zemin) 38%, transparent);
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, .10), inset 0 0 0 1px rgba(255, 255, 255, .05);
 }
-body.camGorunum .kartGorsel:not([style*="background-image"]) {
+body.camGorunum:not(.camKartYok) .kartGorsel:not([style*="background-image"]) {
     background-image: linear-gradient(160deg, rgba(255, 255, 255, .10), rgba(255, 255, 255, 0) 55%);
 }
 /* Calisma alanlari kartlari, bos durum kutusu ve karsilama kutusu da cam */
@@ -4106,3 +4107,15 @@ body.kucukKart.baslikAltta .kartBaslik {
 .karsilamaDugmeler #karsilamaHizli, .karsilamaDugmeler #karsilamaAktar { grid-column: span 3; }
 .karsilamaDugmeler .dugme { padding-left: 8px; padding-right: 8px; white-space: nowrap; }
 #karsilama .karsilamaAciklama { margin: 10px 0 6px; font-size: 11.5px; line-height: 1.45; }
+
+/* KENAR BOSLUGU (1.6.4): sigdirilan gorsel kart kenarina dayanmasin.
+   Kart basina yerlesim data-yerlesim ile (cizim.js); genel ayar html sinifi. */
+html.gorselSigdir .kartGorsel:not([data-yerlesim="cover"]),
+.kartGorsel[data-yerlesim="contain"] {
+    box-sizing: border-box;
+    padding: var(--gorsel-bosluk, 0%);
+    background-origin: content-box;
+    background-clip: border-box;
+}
+/* Buzlu cam alt secenegi: ana anahtar kapaliyken soluk */
+body:not(.camGorunum) #ayarPanel .camAlt { opacity: .45; pointer-events: none; }

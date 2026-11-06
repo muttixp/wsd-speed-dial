@@ -19,7 +19,7 @@ import { aktifGrup, aktifSekme, arayuzuKur, grubuAc, kartGorseliniTazele } from 
 import { klasorleriKur, klasorIsaretiniTemizle, yeniKlasor, klasoruTasi, klasoruDuzenle } from './klasor.js';
 import { gruplariAl, gorunurGruplariAl, kokKlasoruAl, tumKlasorleriAl } from './yerimi.js';
 import { RENKLER, renkleriAl, renkYaz } from './renk.js';
-import { karuseliKur, karuseliYukle, adayEkle, zeminAyarla, secimDurumu, yerlesimDegistir, kendiResmeGoreYerlesim } from './karusel.js';
+import { karuseliKur, karuseliYukle, adayEkle, zeminAyarla, secimDurumu, yerlesimDegistir, kendiResmeGoreYerlesim, seciliKaynak } from './karusel.js';
 import { gorselFiltreKur, filtrePaneliniKapat, bekleyenFiltreyiUygula } from './gorselfiltre.js';
 import { adaylariYaz } from './gorsel.js';
 import { onayPenceresiniKur, onaySor, metinSor, listeSor } from './onay.js';
@@ -382,6 +382,36 @@ export async function grubunGorselleriniYenile(grupId) {
         + (atlanan ? ' ' + c('nKendiGorselKorundu', atlanan) : ''), { sure: 6000 });
 }
 
+/**
+ * TOPLU GORSEL KILIDI (1.6.4): yuzlerce karti tek tek kilitlemek zahmetli.
+ * grupId verilirse o grup (alt klasorler dahil), verilmezse tum koleksiyon.
+ * Yalnizca gorseli olan kartlar; tek okuma + tek yazma. "Geri al" onceki
+ * durumu aynen geri koyar.
+ */
+export async function gorselleriKilitle(grupId, kilitle = true) {
+    const { grubunTumKartlari, tumKartlariAl } = await import('./yerimi.js');
+    const kartlar = grupId ? await grubunTumKartlari(grupId) : await tumKartlariAl();
+    const anahtarlar = [...new Set(kartlar.map(k => urlNormalle(k.url)).filter(Boolean))];
+    const kayitlar = anahtarlar.length ? await chrome.storage.local.get(anahtarlar) : {};
+    const yeni = {}, eski = {};
+    for (const a of anahtarlar) {
+        const k = kayitlar[a];
+        if (!k || !(k.gorsel || (k.adaylar && k.adaylar.length))) continue;
+        if (!!k.elle === kilitle) continue;
+        eski[a] = k;
+        const d = { ...k };
+        if (kilitle) d.elle = true; else delete d.elle;
+        yeni[a] = d;
+    }
+    const n = Object.keys(yeni).length;
+    if (!n) { bildir(c(kilitle ? 'kilitlenecekGorselYok' : 'acilacakKilitYok')); return; }
+    await chrome.storage.local.set(yeni);
+    bildir(c(kilitle ? 'nGorselKilitlendi' : 'nKilitAcildi', n), {
+        etiket: c('geriAl'),
+        calistir: async () => { await chrome.storage.local.set(eski); bildir(c('geriAlindi')); }
+    });
+}
+
 /** Kisayollardan cagrilan sarmalayicilar. */
 export function kartEklePenceresi() { kartPenceresiniAc(null); }
 export function grupEklePenceresiDis() { grupEklePenceresi(); }
@@ -726,11 +756,12 @@ async function kartiKaydet() {
         // biraz sonra yaziliyor, yakalama bitince de EZILIYORDU ("2-3
         // denemede tutuyor"). Once gorsel, sonra yer imi.
         await bekleyenFiltreyiUygula();      // onizlemede kalan filtre de kaydedilsin
-        const { adaylar: kAdaylar, secim: kSecim, zemin: kZemin, elle: kElle, yerlesim: kYerlesim } = secimDurumu();
+        const { adaylar: kAdaylar, secim: kSecim, zemin: kZemin, elle: kElle, yerlesim: kYerlesim, kaynaklar: kKaynaklar } = secimDurumu();
         if (kAdaylar.length) {
             await adaylariYaz(url, kAdaylar, kSecim, kElle);
-            const { yerlesimYaz } = await import('./gorsel.js');
+            const { yerlesimYaz, kaynaklarYaz } = await import('./gorsel.js');
             await yerlesimYaz(url, kYerlesim);
+            await kaynaklarYaz(url, kKaynaklar);
             if (kZemin) {
                 const { zeminYaz } = await import('./gorsel.js');
                 await zeminYaz(url, kZemin);
@@ -1255,6 +1286,7 @@ function gorselAraclariniKur() {
         const adres = await metinSor({
             baslik: c('goruntuUrlsi'),
             metin: c('gorselAdresiniYapistirin'),
+            deger: seciliKaynak(),           // daha once bu adresten eklendiyse (1.6.4)
             evet: c('ekle')
         });
         if (!adres) return;
@@ -1264,7 +1296,7 @@ function gorselAraclariniKur() {
             const blob = await yanit.blob();
             if (!blob.type.startsWith('image/')) throw new Error(c('gorselDegil'));
             const veri = await blobOku(blob);
-            adayEkle(veri);
+            await adayEkle(veri, adres.trim());
             kendiResmeGoreYerlesim(veri);
         } catch (err) {
             bildir(c('goruntuAlinamadi'));
@@ -1846,6 +1878,11 @@ async function grupMenuEylemi(e) {
         return;
     }
 
+    if (eylem === 'grupKilitle') {
+        await gorselleriKilitle(id, true);
+        return;
+    }
+
     if (eylem === 'grupYenile') {
         await grubunGorselleriniYenile(id);
         return;
@@ -2013,6 +2050,27 @@ async function bosMenuEylemi(e) {
             }
             bildir(c('nKartKuyrugaAlindi2', kartlar.length - atlanan)
                 + (atlanan ? ' ' + c('nKendiGorselKorundu', atlanan) : ''), { sure: 6000 });
+            break;
+        }
+
+        case 'gorselleriKilitle': {
+            // Ozel ekranlarda (arama, kirik...) gorunen kartlar; yoksa aktif grup
+            const ozelEkran = ['aramaAcik', 'kirikAcik', 'kopyaAcik', 'copAcik', 'alanAcik']
+                .some(x => document.body.classList.contains(x));
+            if (!ozelEkran) { await gorselleriKilitle(aktifGrup(), true); break; }
+            const anahtarlar = [...new Set([...document.querySelectorAll('.kart:not(.ekleKart)')].map(k => k.dataset.anahtar).filter(Boolean))];
+            const kayitlar = anahtarlar.length ? await chrome.storage.local.get(anahtarlar) : {};
+            const yeni = {}, eski = {};
+            for (const a of anahtarlar) {
+                const k = kayitlar[a];
+                if (!k || k.elle || !(k.gorsel || (k.adaylar && k.adaylar.length))) continue;
+                eski[a] = k; yeni[a] = { ...k, elle: true };
+            }
+            const n = Object.keys(yeni).length;
+            if (!n) { bildir(c('kilitlenecekGorselYok')); break; }
+            await chrome.storage.local.set(yeni);
+            bildir(c('nGorselKilitlendi', n), { etiket: c('geriAl'),
+                calistir: async () => { await chrome.storage.local.set(eski); bildir(c('geriAlindi')); } });
             break;
         }
 

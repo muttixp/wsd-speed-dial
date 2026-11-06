@@ -2367,7 +2367,7 @@
     "message": "已锁定 - 点击解锁"
   },
   "gizliCubukBilgi": {
-    "message": "图片在后台截取。顶部的“调试”栏是 Chrome 的强制提示；只截取快捷方式图片，完成后即消失。可在 设置 › 截图模式 中改为“窗口”。"
+    "message": "图片在后台截取。Chrome 可能会在顶部短暂显示“调试”栏；这是 Chrome 的强制提示，只截取快捷方式图片。可在 设置 › 截图模式 中改为“窗口”。"
   },
   "yeniKartGorseli": {
     "message": "新快捷方式图片"
@@ -2383,5 +2383,41 @@
   },
   "gorselSiteGorunumu": {
     "message": "网站截图"
+  },
+  "mGorselleriKilitle": {
+    "message": "锁定图片"
+  },
+  "tumGorselleriKilitle": {
+    "message": "锁定所有图片"
+  },
+  "tumKilitleriAc": {
+    "message": "全部解锁"
+  },
+  "kilitlenecekGorselYok": {
+    "message": "没有可锁定的图片（无图片或已锁定）。"
+  },
+  "acilacakKilitYok": {
+    "message": "没有已锁定的图片。"
+  },
+  "nGorselKilitlendi": {
+    "message": "已锁定 $1 个快捷方式的图片。"
+  },
+  "nKilitAcildi": {
+    "message": "已解锁 $1 个快捷方式。"
+  },
+  "geriAlindi": {
+    "message": "已撤销。"
+  },
+  "gorselBosluk": {
+    "message": "边距"
+  },
+  "gorselBoslukIpucu": {
+    "message": "以“适应”显示的图片（标志、你自己的图片）与快捷方式边缘的间距。"
+  },
+  "camKart": {
+    "message": "快捷方式也使用"
+  },
+  "camKartIpucu": {
+    "message": "关闭时，快捷方式背景以所选颜色显示，不透明（例如白色）。"
   }
 }

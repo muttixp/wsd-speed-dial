@@ -69,6 +69,20 @@ export async function secimiDegistir(anahtar, secim) {
 }
 
 /** Kart basina yerlesim (1.6.3): 'contain' | 'cover' | null (genel ayar) */
+/** Gorselin kisa izi (FNV-1a): kaynak adresini aday sirasindan bagimsiz tutmak icin */
+export function gorselIzi(veri) {
+    let h = 0x811c9dc5;
+    for (let i = 0; i < veri.length; i++) { h ^= veri.charCodeAt(i); h = Math.imul(h, 0x01000193); }
+    return (h >>> 0).toString(36) + veri.length.toString(36);
+}
+
+/** Elle eklenen gorsellerin adresleri (1.6.4): { iz: url } */
+export async function kaynaklarYaz(anahtar, kaynaklar) {
+    const kayit = (await gorselAl(anahtar))[anahtar] || {};
+    if (kaynaklar && Object.keys(kaynaklar).length) kayit.kaynaklar = kaynaklar; else delete kayit.kaynaklar;
+    await chrome.storage.local.set({ [anahtar]: kayit });
+}
+
 export async function yerlesimYaz(anahtar, yerlesim) {
     const kayit = (await gorselAl(anahtar))[anahtar] || {};
     if (yerlesim) kayit.yerlesim = yerlesim; else delete kayit.yerlesim;

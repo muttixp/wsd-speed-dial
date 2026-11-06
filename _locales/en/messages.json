@@ -2367,7 +2367,7 @@
     "message": "Locked - click to unlock"
   },
   "gizliCubukBilgi": {
-    "message": "Images are captured in the background. The \"debugging\" bar at the top is Chrome's mandatory notice; only the tile image is taken and the bar disappears when done. You can switch to Window in Settings › Capture Mode."
+    "message": "Images are captured in the background. Chrome may briefly show a \"debugging\" bar at the top; it is Chrome's mandatory notice and only the tile image is taken. You can switch to Window in Settings › Capture Mode."
   },
   "yeniKartGorseli": {
     "message": "New Tile Image"
@@ -2383,5 +2383,41 @@
   },
   "gorselSiteGorunumu": {
     "message": "Site view"
+  },
+  "mGorselleriKilitle": {
+    "message": "Lock images"
+  },
+  "tumGorselleriKilitle": {
+    "message": "Lock all images"
+  },
+  "tumKilitleriAc": {
+    "message": "Unlock all images"
+  },
+  "kilitlenecekGorselYok": {
+    "message": "Nothing to lock (no image, or already locked)."
+  },
+  "acilacakKilitYok": {
+    "message": "No locked images."
+  },
+  "nGorselKilitlendi": {
+    "message": "Locked the images of $1 tiles."
+  },
+  "nKilitAcildi": {
+    "message": "Unlocked $1 tiles."
+  },
+  "geriAlindi": {
+    "message": "Undone."
+  },
+  "gorselBosluk": {
+    "message": "Edge Margin"
+  },
+  "gorselBoslukIpucu": {
+    "message": "Space between the tile edge and images shown with Fit (logos, your own images)."
+  },
+  "camKart": {
+    "message": "On tiles too"
+  },
+  "camKartIpucu": {
+    "message": "When off, the tile background shows in your chosen colour without transparency (e.g. white)."
   }
 }

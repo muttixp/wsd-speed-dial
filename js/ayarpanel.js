@@ -49,6 +49,8 @@ const ALANLAR = [
     ['yakalamaOneAl',    'ayOneAl',     el => el.checked],
     ['aktarimdaYakala',  'ayAktarimdaYakala', el => el.checked],
     ['logoBoyutu',       'ayLogoBoyutu',   el => el.value],
+    ['gorselBosluk',     'ayGorselBosluk', el => +el.value],
+    ['camKart',          'ayCamKart',      el => el.checked],
     ['basitGorsel',      'ayBasitGorsel',  el => el.value],
     ['yakalamaKipi',     'ayYakalamaKipi', el => el.value],
     ['sagTikMenu',       'aySagTikMenu',     el => el.value],
@@ -113,6 +115,7 @@ const CIKTILAR = {
     ayKaydirma: ['ayKaydirmaDeger', v => v + ' px'],
     ayBekleme:  ['ayBeklemeDeger',  v => (v / 1000).toFixed(1) + ' sn'],
     ayKalite:   ['ayKaliteDeger',   v => v + '%'],
+    ayGorselBosluk: ['ayGorselBoslukDeger', v => v + '%'],
     ayBaslikBoyut: ['ayBaslikBoyutDeger', v => v + 'px'],
     ayTon:       ['ayTonDeger',       v => v],
     ayDoygunluk: ['ayDoygunlukDeger', v => v],
@@ -355,6 +358,7 @@ function gorunumuUygula(ayar) {
     document.body.classList.toggle('araclarKapali', kapali);
     document.body.classList.toggle('renkliSimgeler', ayar.renkliSimgeler !== false);
     document.body.classList.toggle('camGorunum', ayar.camGorunum !== false);
+    document.body.classList.toggle('camKartYok', ayar.camKart === false);
     document.body.classList.toggle('seritUstte', ayar.seritUstte === true);
     moduSinifla(ayar);
     hazirSecimiGoster(ayar.yakalamaEn, ayar.yakalamaBoy);
@@ -397,6 +401,9 @@ function gorunumuUygula(ayar) {
     const oranCss = { o1610: '16 / 10', o169: '16 / 9', o43: '4 / 3', okare: '1 / 1' };
     kok.setProperty('--kart-oran', oranCss[ayar.kartOrani] || '16 / 10');
     kok.setProperty('--gorsel-yerlesim', ayar.gorselYerlesim === 'contain' ? 'contain' : 'cover');
+    // Kart basina yerlesim ayri; bosluk yalnizca SIGDIR'da (1.6.4)
+    document.documentElement.classList.toggle('gorselSigdir', ayar.gorselYerlesim === 'contain');
+    kok.setProperty('--gorsel-bosluk', (ayar.gorselBosluk || 0) + '%');
     // Kirpmada USTTEN hizala (menu/logo ustte), sigdirmada ortala
     kok.setProperty('--gorsel-konum', ayar.gorselYerlesim === 'contain' ? '50% 50%' : '50% 0');
     kok.setProperty('--kart-bosluk-yatay', (ayar.kartBoslukYatay ?? 3) + 'px');
@@ -906,6 +913,15 @@ function yedekAraclariniKur() {
         b.classList.add('gorunur');
         setTimeout(() => b.classList.remove('gorunur'), 3200);
     };
+
+    // Toplu gorsel kilidi (1.6.4) - tum koleksiyon
+    // Gelismis: Gorsel Yakalama bolumu; Basit: Kartlar bolumu (B)
+    for (const [id, kilitle] of [['ayHepsiniKilitle', true], ['ayKilitleriAc', false],
+                                 ['ayHepsiniKilitleB', true], ['ayKilitleriAcB', false]]) {
+        document.getElementById(id)?.addEventListener('click', async () => {
+            (await import('./etkilesim.js')).gorselleriKilitle(null, kilitle);
+        });
+    }
 
     document.getElementById('ayYedekAl')?.addEventListener('click', async e => {
         await mesgulDugme(e.currentTarget, c('yedekleniyor'), async ilerle => { try {

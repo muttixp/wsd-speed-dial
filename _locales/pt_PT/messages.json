@@ -2367,7 +2367,7 @@
     "message": "Bloqueada - clique para desbloquear"
   },
   "gizliCubukBilgi": {
-    "message": "As imagens são capturadas em segundo plano. A barra de \"depuração\" no topo é um aviso obrigatório do Chrome; só a imagem do atalho é capturada e a barra desaparece no fim. Pode escolher Janela em Definições › Modo de captura."
+    "message": "As imagens são capturadas em segundo plano. O Chrome pode mostrar por instantes uma barra de \"depuração\" no topo; é um aviso obrigatório do Chrome e só a imagem do atalho é capturada. Pode escolher Janela em Definições › Modo de captura."
   },
   "yeniKartGorseli": {
     "message": "Imagem do novo atalho"
@@ -2383,5 +2383,41 @@
   },
   "gorselSiteGorunumu": {
     "message": "Vista do site"
+  },
+  "mGorselleriKilitle": {
+    "message": "Bloquear imagens"
+  },
+  "tumGorselleriKilitle": {
+    "message": "Bloquear todas as imagens"
+  },
+  "tumKilitleriAc": {
+    "message": "Desbloquear todas"
+  },
+  "kilitlenecekGorselYok": {
+    "message": "Nada para bloquear (sem imagem ou já bloqueada)."
+  },
+  "acilacakKilitYok": {
+    "message": "Nenhuma imagem bloqueada."
+  },
+  "nGorselKilitlendi": {
+    "message": "Imagens de $1 atalhos bloqueadas."
+  },
+  "nKilitAcildi": {
+    "message": "$1 atalhos desbloqueados."
+  },
+  "geriAlindi": {
+    "message": "Anulado."
+  },
+  "gorselBosluk": {
+    "message": "Margem"
+  },
+  "gorselBoslukIpucu": {
+    "message": "Espaço entre o rebordo do atalho e as imagens em Ajustar (logótipos, as suas imagens)."
+  },
+  "camKart": {
+    "message": "Também nos atalhos"
+  },
+  "camKartIpucu": {
+    "message": "Desligado, o fundo do atalho usa a cor escolhida sem transparência (ex.: branco)."
   }
 }

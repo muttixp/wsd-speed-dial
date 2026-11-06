@@ -33,7 +33,8 @@ export const VARSAYILAN = {
     yakalamaOneAl: false,       // odaksiz yakalama basarisizsa pencereyi one al
     yakalamaKipi: 'gizli',      // 'pencere' | 'gizli' (arka sekme, pencere hic gorunmez). 1.6.3: her tarayicida varsayilan
     basitGorsel: 'oto',         // Basit modda yeni kart gorseli (1.6.3): 'oto' (Simge/Minik/Kucuk logo, buyukler ekran) | 'logo' | 'ekran'
-    logoBoyutu: 'orta',         // logonun kutudaki payi (1.6.3): 'kucuk' | 'orta' | 'buyuk'
+    logoBoyutu: 'orta',
+    gorselBosluk: 0,            // SIGDIRILAN gorsellerde kenar boslugu, kart eninin %'si (1.6.4)         // logonun kutudaki payi (1.6.3): 'kucuk' | 'orta' | 'buyuk'
     aktarimdaYakala: true,      // OTOMATIK YAKALA (1.6.3): kart eklenince, ice aktarinca ve senkronda ekran goruntusu
 
     // Gorunum
@@ -108,6 +109,7 @@ export const VARSAYILAN = {
     simgeZeminRengi: '#1b2029',
     anaSayfaGoster: true,       // kok grup seritte ve menulerde gorunsun mu
     renkliSimgeler: true,       // ayar bolumleri ve yan serit simgeleri renkli (1.5.5)
+    camKart: true,              // buzlu cam kart zemininde de (1.6.4) - kapaliyken kart zemini tam renk
     camGorunum: true,           // ust serit ve arama cubugu buzlu cam (1.5.5)
 
     // Tema (1.5.5) - tema.js

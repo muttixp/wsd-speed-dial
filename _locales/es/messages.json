@@ -2367,7 +2367,7 @@
     "message": "Bloqueada: haz clic para desbloquear"
   },
   "gizliCubukBilgi": {
-    "message": "Las imágenes se capturan en segundo plano. La barra de \"depuración\" de arriba es un aviso obligatorio de Chrome; solo se toma la imagen del acceso y desaparece al terminar. Puedes elegir Ventana en Ajustes › Modo de captura."
+    "message": "Las imágenes se capturan en segundo plano. Chrome puede mostrar brevemente una barra de \"depuración\" arriba; es un aviso obligatorio de Chrome y solo se toma la imagen del acceso. Puedes elegir Ventana en Ajustes › Modo de captura."
   },
   "yeniKartGorseli": {
     "message": "Imagen de mosaico nuevo"
@@ -2383,5 +2383,41 @@
   },
   "gorselSiteGorunumu": {
     "message": "Vista del sitio"
+  },
+  "mGorselleriKilitle": {
+    "message": "Bloquear imágenes"
+  },
+  "tumGorselleriKilitle": {
+    "message": "Bloquear todas las imágenes"
+  },
+  "tumKilitleriAc": {
+    "message": "Desbloquear todas"
+  },
+  "kilitlenecekGorselYok": {
+    "message": "Nada que bloquear (sin imagen o ya bloqueada)."
+  },
+  "acilacakKilitYok": {
+    "message": "No hay imágenes bloqueadas."
+  },
+  "nGorselKilitlendi": {
+    "message": "Se bloquearon las imágenes de $1 accesos."
+  },
+  "nKilitAcildi": {
+    "message": "Se desbloquearon $1 accesos."
+  },
+  "geriAlindi": {
+    "message": "Deshecho."
+  },
+  "gorselBosluk": {
+    "message": "Margen"
+  },
+  "gorselBoslukIpucu": {
+    "message": "Espacio entre el borde del acceso y las imágenes con Ajustar (logotipos, tus imágenes)."
+  },
+  "camKart": {
+    "message": "También en los accesos"
+  },
+  "camKartIpucu": {
+    "message": "Desactivado, el fondo del acceso usa tu color sin transparencia (p. ej. blanco)."
   }
 }

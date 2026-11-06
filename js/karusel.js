@@ -14,7 +14,7 @@
 // Adaylar: yakalamadan gelen ekran goruntusu + sayfa gorselleri.
 // Kullanici kendi dosyasini/URL'sini de ekleyebiliyor; o da listeye giriyor.
 
-import { gorselAl } from './gorsel.js';
+import { gorselAl, gorselIzi } from './gorsel.js';
 import { c } from './dil.js';
 
 let adaylar = [];
@@ -23,6 +23,7 @@ let zemin = null;
 let elle = false;           // KILIT (1.6.3): secili gorsel yenilemede/adres degisince degismez.
                             // Kendi gorseli (dosya/URL/logo) eklenince kendiliginden kilitlenir.
 let yerlesim = null;        // kart basina 'contain' | 'cover' (1.6.3); null = genel ayar
+let kaynaklar = {};         // elle eklenen gorsellerin adresleri { iz: url } (1.6.4)
 
 const el = id => document.getElementById(id);
 
@@ -46,12 +47,14 @@ export async function karuseliYukle(anahtar) {
     zemin = null;
     elle = false;
     yerlesim = null;
+    kaynaklar = {};
 
     if (anahtar) {
         const kayit = (await gorselAl(anahtar))[anahtar];
         if (kayit) {
             zemin = kayit.zemin || null;
             yerlesim = kayit.yerlesim || null;
+            kaynaklar = { ...(kayit.kaynaklar || {}) };
             // Kendi resmi isareti kayitta duruyor; pencere acilinca kaybolup
             // adres degisince yakalama secili resmi eziyordu (1.5.6)
             elle = !!kayit.elle;
@@ -68,9 +71,10 @@ export async function karuseliYukle(anahtar) {
 }
 
 /** Disaridan gorsel ekler (dosya secimi / URL) ve ona gecer. */
-export async function adayEkle(dataUri) {
+export async function adayEkle(dataUri, kaynak = null) {
     if (!dataUri) return;
     elle = true;
+    if (kaynak) kaynaklar[gorselIzi(dataUri)] = kaynak;
     let mevcut = adaylar.indexOf(dataUri);
     // AYNI RESIM IKI KEZ GIRMESIN (1.6.3): ayni dosya farkli yoldan
     // (dosya, adres, logo) gelince metin farkli ama resim ayni olabiliyor
@@ -82,6 +86,8 @@ export async function adayEkle(dataUri) {
     }
     if (mevcut >= 0) {
         secim = mevcut;
+        // Ayni resim baska kopyayla eslendi: adresi oraya da yaz
+        if (kaynak) kaynaklar[gorselIzi(adaylar[mevcut])] = kaynak;
     } else {
         adaylar.push(dataUri);
         secim = adaylar.length - 1;
@@ -158,7 +164,16 @@ let sonra = null;
 export function cizinceCagir(fn) { sonra = fn; }
 
 export function secimDurumu() {
-    return { adaylar, secim, zemin, elle, yerlesim, gorsel: adaylar[secim] || null };
+    // Yalnizca karuselde kalan adaylarin adresleri saklanir
+    const izler = new Set(adaylar.map(gorselIzi));
+    const k = Object.fromEntries(Object.entries(kaynaklar).filter(([iz]) => izler.has(iz)));
+    return { adaylar, secim, zemin, elle, yerlesim, kaynaklar: k, gorsel: adaylar[secim] || null };
+}
+
+/** Secili adayin elle girilen adresi (varsa) - "Adresten" sorusu bununla dolar */
+export function seciliKaynak() {
+    const su = adaylar[secim];
+    return su ? (kaynaklar[gorselIzi(su)] || '') : '';
 }
 
 /* GORSEL YERLESIMI (1.6.3): onizleme KARTLA AYNI gorunsun - ayni oran,
@@ -224,6 +239,11 @@ function ciz() {
     const y = etkinYerlesim();
     onizleme.style.backgroundSize = y;
     onizleme.style.backgroundPosition = y === 'contain' ? '50% 50%' : '50% 0';
+    // Kenar boslugu kartla ayni (1.6.4)
+    const bos = y === 'contain';
+    onizleme.style.boxSizing = bos ? 'border-box' : '';
+    onizleme.style.padding = bos ? 'var(--gorsel-bosluk, 0%)' : '';
+    onizleme.style.backgroundOrigin = bos ? 'content-box' : '';
     const yd = el('kpYerlesim');
     if (yd) {
         yd.classList.toggle('secili', !!yerlesim);

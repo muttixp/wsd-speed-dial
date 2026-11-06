@@ -25,6 +25,7 @@
 //   - Tek seferlik bayraklar (ornek: sikistirma surumu)
 
 import { kokKlasoruAl, gruplariAl, kartlariAl, klasorIcerigi, urlNormalle } from './yerimi.js';
+import { gorselIzi } from './gorsel.js';
 import { c } from './dil.js';
 import { ayarlariAl } from './ayar.js';
 
@@ -187,6 +188,13 @@ export async function yedekBlobu(ilerleme, { gorseller = true, kaynak = null } =
             // daha demek ve hepsi yeniden uretilebilir. Dosya boyutu
             // birkac kat kuculuyor.
             const sade = { gorsel: v.gorsel, zemin: v.zemin ?? null };
+            // KILIT, YERLESIM, KAYNAK (1.6.4): geri yuklemede kilit "sliyordu"
+            if (v.elle) sade.elle = true;
+            if (v.yerlesim) sade.yerlesim = v.yerlesim;
+            if (v.kaynaklar && v.gorsel) {
+                const k = v.kaynaklar[gorselIzi(v.gorsel)];
+                if (k) sade.kaynaklar = { [gorselIzi(v.gorsel)]: k };
+            }
             metin += (ilk ? '' : ',') + JSON.stringify(a) + ':' + JSON.stringify(sade);
             ilk = false;
             yazilan++;

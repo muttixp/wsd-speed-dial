@@ -50,9 +50,24 @@ export async function mesgulDugme(btn, metin, is) {
     }
 }
 
+// ONCELIKLI BILDIRIM (1.6.3): bir kez gosterilen aciklama (Chrome cubugu)
+// hemen ardindan gelen "kuyruga alindi" gibi bildirimlerle eziliyor,
+// okunamadan gidiyordu. Oncelikli bildirim suresi dolana ya da Tamam'a
+// basilana kadar sonrakiler bekler; en son gelen ardindan gosterilir.
+let oncelikliBitis = 0;
+let bekleyenBildirim = null;
+function oncelikliBitti() {
+    oncelikliBitis = 0;
+    if (bekleyenBildirim) { const [m, e] = bekleyenBildirim; bekleyenBildirim = null; bildir(m, e); }
+}
+
 export function bildir(metin, eylem = null) {
     const b = el('bildirim');
     if (!b) return;
+    if (!(eylem && eylem.oncelikli) && Date.now() < oncelikliBitis) {
+        bekleyenBildirim = [metin, eylem];
+        return;
+    }
 
     b.textContent = '';
     b.append(document.createTextNode(metin));
@@ -65,7 +80,9 @@ export function bildir(metin, eylem = null) {
         d.addEventListener('click', async () => {
             b.classList.remove('gorunur');
             clearTimeout(bildirimZaman);
+            const oncelikli = eylem.oncelikli;
             await eylem.calistir();
+            if (oncelikli) oncelikliBitti();
         });
         b.appendChild(d);
     }
@@ -75,7 +92,11 @@ export function bildir(metin, eylem = null) {
     // Geri alma suresi daha uzun: kullanicinin fark edip karar vermesi gerek.
     // Eylem kendi suresini de verebiliyor (siralama gibi buyuk degisiklikler).
     const sure = eylem ? (eylem.sure || 8000) : 2600;
-    bildirimZaman = setTimeout(() => b.classList.remove('gorunur'), sure);
+    if (eylem && eylem.oncelikli) oncelikliBitis = Date.now() + sure;
+    bildirimZaman = setTimeout(() => {
+        b.classList.remove('gorunur');
+        if (eylem && eylem.oncelikli) oncelikliBitti();
+    }, sure);
 }
 
 /**
