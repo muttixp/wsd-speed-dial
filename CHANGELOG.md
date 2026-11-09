@@ -3,6 +3,13 @@
 Sürüm numaraları [Semantic Versioning](https://semver.org/lang/tr/)
 kurallarına uyar.
 
+## [1.6.5] — 2026-11-09
+
+### Düzeltildi
+- **Kenar Boşluğu kaydırıcısı tutulamıyordu**: açıklamalı uzun etiket
+  ayar satırında "auto" sütunla tüm yeri alıyor, kaydırıcı 4 px'e iniyordu.
+  Kaydırıcılı satırlarda etiket sütunu en fazla %45, kaydırıcı en az 80 px.
+
 ## [1.6.4] — 2026-11-06
 
 ### Eklendi

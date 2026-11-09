@@ -8,6 +8,16 @@
 
 export const YENILIKLER = [
     {
+        surum: '1.6.5',
+        duzeltme: {
+            tr: ["Kenar Boşluğu kaydırıcısı hareket etmiyordu (çubuk çok daralıyordu); düzeltildi"],
+            en: ["The Edge Margin slider could not be moved (it was squeezed too narrow); fixed"],
+            ru: ["Ползунок «Отступ от краёв» не двигался (был сжат почти до нуля) — исправлено"],
+            pt_BR: ["O controle deslizante Margem não se movia (ficava estreito demais); corrigido"],
+            es: ["El control deslizante Margen no se podía mover (quedaba demasiado estrecho); corregido"],
+        },
+    },
+    {
         surum: '1.6.4',
         yeni: {
             tr: ["Görselleri toplu kilitleyin: grup menüsünde ve boş alan menüsünde \"Görselleri kilitle\"; tüm koleksiyon için Ayarlar › Görsel Yakalama (Basit modda: Kartlar) › Tüm görselleri kilitle / Tüm kilitleri aç", "Kenar Boşluğu: Sığdır ile gösterilen logolar ve kendi resimleriniz kart kenarına dayanmaz (Kartlar › Boyut ve Yerleşim)", "Buzlu Cam › Kartlarda da: kapatınca kart zemini seçtiğiniz renkte, örneğin tam beyaz", "Adresten eklediğiniz görselin bağlantısı saklanır; Düzenle › Adresten açınca hazır gelir"],

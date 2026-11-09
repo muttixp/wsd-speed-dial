@@ -713,11 +713,13 @@ body.pencereAcik { overflow: hidden; }
    Once cubuk tam genislik kapliyordu ve deger alt satira dusuyordu -
    panelde gereksiz yer harciyordu. */
 .ayarSatir:has(input[type=range]) {
-    grid-template-columns: minmax(90px, auto) 1fr 34px;
+    /* Etiket sutunu en fazla %45 (1.6.5): aciklamali uzun etiket "auto" ile
+       tum yeri aliyor, cubuk 4 px'e inip tutulamaz oluyordu (Kenar Boslugu) */
+    grid-template-columns: minmax(90px, 45%) minmax(80px, 1fr) 34px;
 }
 .ayarSatir input[type=range] {
     width: 100%;
-    min-width: 0;
+    min-width: 80px;
     accent-color: var(--vurgu);
     height: 4px;
 }
