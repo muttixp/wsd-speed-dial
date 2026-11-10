@@ -2412,12 +2412,30 @@
     "message": "Margem"
   },
   "gorselBoslukIpucu": {
-    "message": "Espaço entre o rebordo do atalho e as imagens em Ajustar (logótipos, as suas imagens)."
+    "message": "Espaço entre o rebordo do atalho e a imagem: logótipos, capturas e as suas imagens."
   },
   "camKart": {
     "message": "Também nos atalhos"
   },
   "camKartIpucu": {
     "message": "Desligado, o fundo do atalho usa a cor escolhida sem transparência (ex.: branco)."
+  },
+  "kpBoslukIpucu": {
+    "message": "Tamanho da imagem neste atalho: ao meio Ajustar, para a direita amplia (em \"Preencher\" os vazios desaparecem), para a esquerda adiciona margem. \"Geral\": o valor das Definições."
+  },
+  "boslukGenel": {
+    "message": "Geral"
+  },
+  "kartDikey": {
+    "message": "Posição vertical"
+  },
+  "dikeyUst": {
+    "message": "Em cima"
+  },
+  "dikeyOrta": {
+    "message": "Ao centro"
+  },
+  "gorselBoyutu": {
+    "message": "Tamanho da imagem"
   }
 }

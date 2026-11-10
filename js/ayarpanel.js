@@ -101,6 +101,7 @@ const ALANLAR = [
     ['gorselYerlesim',   'ayGorselYerlesim',   el => el.value],
     ['maxSutun',         'ayMaxSutun',         el => +el.value],
     ['kartHizalama',     'ayKartHizalama',     el => el.value],
+    ['kartDikey',        'ayKartDikey',        el => el.value],
     ['kartZeminRengi',   'ayKartZemin',        el => el.value],
     ['kartEn',           'ayKartEn',           el => +el.value],
     ['kartBoslukYatay',  'ayBoslukYatay',      el => +el.value],
@@ -379,6 +380,7 @@ function gorunumuUygula(ayar) {
     const hazir = document.getElementById('ayHazirBoyut');
     if (hazir) import('./basitmod.js').then(m => { hazir.value = m.hazirBoyutAdi(ayar); }).catch(() => {});
     document.body.classList.toggle('kartlarOrtada', ayar.kartHizalama !== 'sol');
+    document.body.classList.toggle('kartlarDikeyOrta', ayar.kartDikey === 'orta');
     document.body.classList.toggle('ekleKartiKapali', ayar.ekleKartiGoster === false);
     // 1.5.1: "kapat" kalkti; anahtar artik OTOMATIK GIZLEME. Kapaliyken serit hep acik
     document.body.classList.toggle('yanPanelSabit', ayar.yanPanelGizle === false);

@@ -2412,12 +2412,30 @@
     "message": "Edge Margin"
   },
   "gorselBoslukIpucu": {
-    "message": "Space between the tile edge and images shown with Fit (logos, your own images)."
+    "message": "Space between the tile edge and the image: logos, screenshots and your own images."
   },
   "camKart": {
     "message": "On tiles too"
   },
   "camKartIpucu": {
     "message": "When off, the tile background shows in your chosen colour without transparency (e.g. white)."
+  },
+  "kpBoslukIpucu": {
+    "message": "Image size on this tile: middle is Fit, drag right to enlarge (gaps close at \"Fill\"), left for an edge margin. \"Global\": the value in Settings."
+  },
+  "boslukGenel": {
+    "message": "Global"
+  },
+  "kartDikey": {
+    "message": "Vertical Position"
+  },
+  "dikeyUst": {
+    "message": "Top"
+  },
+  "dikeyOrta": {
+    "message": "Middle"
+  },
+  "gorselBoyutu": {
+    "message": "Image Size"
   }
 }

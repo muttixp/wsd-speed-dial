@@ -373,3 +373,18 @@ async function aktarimGorselSor(adet) {
         aktarimSoruAcik = false;
     }
 }
+
+// KAYDIRMA CUBUGU YERI (1.6.6): sayfa kayiyor mu? Panel acilinca cubugun
+// yeri yalnizca o zaman ayrilir (CSS: html.kaydirmali). Panel acikken
+// overflow:hidden oldugu icin olcum dondurulur - son deger kalir.
+function kaydirmaOlc() {
+    const b = document.body;
+    if (b.classList.contains('ayarAcik') || b.classList.contains('pencereAcik')) return;
+    const h = document.documentElement;
+    h.classList.toggle('kaydirmali', h.scrollHeight > h.clientHeight + 1);
+}
+try {
+    new ResizeObserver(kaydirmaOlc).observe(document.body);
+    addEventListener('resize', kaydirmaOlc);
+    kaydirmaOlc();
+} catch (e) { /* eski tarayici: serit yok, panelde kayma olabilir */ }

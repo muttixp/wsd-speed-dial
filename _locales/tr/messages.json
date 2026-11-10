@@ -2412,12 +2412,30 @@
     "message": "Kenar Boşluğu"
   },
   "gorselBoslukIpucu": {
-    "message": "Sığdır ile gösterilen görsellerde (logolar, kendi resimleriniz) kart kenarından boşluk."
+    "message": "Kart kenarı ile görsel arasındaki boşluk: logolar, ekran görüntüleri ve kendi resimleriniz."
   },
   "camKart": {
     "message": "Kartlarda da"
   },
   "camKartIpucu": {
     "message": "Kapalıyken kart zemini seçtiğiniz renkte, saydam olmadan görünür (örn. beyaz)."
+  },
+  "kpBoslukIpucu": {
+    "message": "Bu kartta görselin boyutu: ortada Sığdır, sağa çekince büyür (\"Doldur\" noktasında boşluk kapanır), sola çekince kenar boşluğu. \"Genel\": Ayarlar'daki değer."
+  },
+  "boslukGenel": {
+    "message": "Genel"
+  },
+  "kartDikey": {
+    "message": "Dikey Konum"
+  },
+  "dikeyUst": {
+    "message": "Üstte"
+  },
+  "dikeyOrta": {
+    "message": "Ortada"
+  },
+  "gorselBoyutu": {
+    "message": "Görsel Boyutu"
   }
 }

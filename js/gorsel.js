@@ -83,6 +83,39 @@ export async function kaynaklarYaz(anahtar, kaynaklar) {
     await chrome.storage.local.set({ [anahtar]: kayit });
 }
 
+/**
+ * GORSEL BOYUTU (1.6.6): kart basina tek kaydirici. boyut < 0 = kenar
+ * boslugu (%), 0 = Sigdir, > 0 = buyutme (+60 = x1.6). Taban hep SIGDIR;
+ * buyuttukce oran farkindan kalan bosluk kapanir, "tam dolu" noktasi
+ * Doldur'a esittir. Olcu gorsel/kart oranina gore "G% auto" ya da
+ * "auto Y%" - oran bilinmeden hesaplanamaz.
+ */
+export function buyutmeOlcusu(boyut, gorselOran, kartOran) {
+    if (!(boyut > 0) || !(gorselOran > 0) || !(kartOran > 0)) return null;
+    const s = 1 + Math.min(100, boyut) / 100;
+    // +0.6: alt piksel yuvarlamasinda kenarda/koselerde zemin cizgisi kalmasin
+    const yuzde = (100 * s + 0.6).toFixed(1) + '%';
+    return gorselOran > kartOran ? `${yuzde} auto` : `auto ${yuzde}`;
+}
+/** Bosluk birakmadan kaplamak icin gereken buyutme (Doldur'a esit) */
+export function tamDoluBoyut(gorselOran, kartOran) {
+    if (!(gorselOran > 0) || !(kartOran > 0)) return null;
+    return Math.round((Math.max(gorselOran / kartOran, kartOran / gorselOran) - 1) * 100);
+}
+export function kartOraniOku() {
+    const t = getComputedStyle(document.documentElement).getPropertyValue('--kart-oran').trim() || '16 / 10';
+    const [a, b] = t.split('/').map(Number);
+    return a && b ? a / b : 1.6;
+}
+
+/** Kayitta tek alani yazar/siler (1.6.6): null/undefined = sil */
+export async function alanYaz(anahtar, alan, deger) {
+    const kayit = (await gorselAl(anahtar))[anahtar];
+    if (!kayit) return;
+    if (deger === null || deger === undefined) delete kayit[alan]; else kayit[alan] = deger;
+    await chrome.storage.local.set({ [anahtar]: kayit });
+}
+
 export async function yerlesimYaz(anahtar, yerlesim) {
     const kayit = (await gorselAl(anahtar))[anahtar] || {};
     if (yerlesim) kayit.yerlesim = yerlesim; else delete kayit.yerlesim;

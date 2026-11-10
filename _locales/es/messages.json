@@ -2412,12 +2412,30 @@
     "message": "Margen"
   },
   "gorselBoslukIpucu": {
-    "message": "Espacio entre el borde del acceso y las imágenes con Ajustar (logotipos, tus imágenes)."
+    "message": "Espacio entre el borde del acceso y la imagen: logotipos, capturas y tus imágenes."
   },
   "camKart": {
     "message": "También en los accesos"
   },
   "camKartIpucu": {
     "message": "Desactivado, el fondo del acceso usa tu color sin transparencia (p. ej. blanco)."
+  },
+  "kpBoslukIpucu": {
+    "message": "Tamaño de la imagen en este acceso: en el centro Ajustar, a la derecha amplía (en «Rellenar» desaparecen los huecos), a la izquierda añade margen. «General»: el valor de Ajustes."
+  },
+  "boslukGenel": {
+    "message": "General"
+  },
+  "kartDikey": {
+    "message": "Posición vertical"
+  },
+  "dikeyUst": {
+    "message": "Arriba"
+  },
+  "dikeyOrta": {
+    "message": "Centro"
+  },
+  "gorselBoyutu": {
+    "message": "Tamaño de imagen"
   }
 }

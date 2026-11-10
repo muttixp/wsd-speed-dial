@@ -2412,12 +2412,30 @@
     "message": "边距"
   },
   "gorselBoslukIpucu": {
-    "message": "以“适应”显示的图片（标志、你自己的图片）与快捷方式边缘的间距。"
+    "message": "快捷方式边缘与图片之间的间距：标志、截图和你自己的图片。"
   },
   "camKart": {
     "message": "快捷方式也使用"
   },
   "camKartIpucu": {
     "message": "关闭时，快捷方式背景以所选颜色显示，不透明（例如白色）。"
+  },
+  "kpBoslukIpucu": {
+    "message": "此快捷方式的图片大小：中间为“适应”，向右放大（到“填充”处空白消失），向左增加边距。“通用”：使用设置中的值。"
+  },
+  "boslukGenel": {
+    "message": "通用"
+  },
+  "kartDikey": {
+    "message": "垂直位置"
+  },
+  "dikeyUst": {
+    "message": "顶部"
+  },
+  "dikeyOrta": {
+    "message": "居中"
+  },
+  "gorselBoyutu": {
+    "message": "图片大小"
   }
 }

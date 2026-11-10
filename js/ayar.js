@@ -64,6 +64,7 @@ export const VARSAYILAN = {
     kartOrani: 'o1610',         // 'o43' | 'o1610' | 'o169'
     gorselYerlesim: 'cover',    // 'cover' (kırp) | 'contain' (sığdır)
     maxSutun: 0,                // 0 = sinir yok, ekrana sigan kadar
+    kartDikey: 'ust',           // kartlar sayfada 'ust' | 'orta' (dikeyde ortali) (1.6.6)
     kartHizalama: 'orta',       // 'orta' | 'sol' - satirlar (son satir dahil) ortalanir (1.5.6)
     kartZeminRengi: '#22262e',
     kartEn: 250,

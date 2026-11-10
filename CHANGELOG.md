@@ -3,6 +3,32 @@
 Sürüm numaraları [Semantic Versioning](https://semver.org/lang/tr/)
 kurallarına uyar.
 
+## [1.6.6] — 2026-11-10
+
+### Eklendi
+- **Görsel Boyutu** (kart başına, Kartı Düzenle'de önizlemenin altında):
+  tek kaydırıcı. Ortada Sığdır; sağa çekince görsel büyür, "tam dolu"
+  noktasına yapışır ve "Doldur" yazar (oran farkından kalan zemin boşluğu
+  kapanır, kenarlar kırpılabilir); sola çekince kenar boşluğu (%20'ye
+  kadar). "Genel" Ayarlar'daki değere döner; Sığdır/Doldur düğmesi de
+  kaydırıcıyı sıfırlar. Görsel oranı kayda yazılır; yedekte de.
+- **Dikey Konum** (Kartlar › Boyut ve Yerleşim): Üstte | Ortada. Ortada'da
+  arama kutusu ve kartlar ekranın dikey ortasında; içerik uzunsa etkisiz.
+
+### Değişti
+- Yenilikler penceresi yalnızca 1.6.x sürümlerini gösteriyor; 1.5.9 ve
+  öncesi kaldırıldı (geçmiş bu dosyada).
+
+### Düzeltildi
+- **Kenar Boşluğu Doldur'da etkisizdi**: yalnızca Sığdır'daki görsellere
+  uygulanıyordu; WSD'nin ürettiği logolar Doldur ile çizildiği için
+  kaydırıcı hiçbir şey yapmıyor gibi görünüyordu. Artık her yerleşimde
+  (klasör kutuları hariç).
+- Sağ kenarda boydan boya ince şerit: kaydırma çubuğunun yeri hep
+  ayrılıyordu, sayfa kaymıyorken boş şerit olarak görünüyordu. Yer artık
+  yalnızca sayfa kayıyorsa ve panel/pencere açıkken ayrılıyor (panel
+  açılınca içerik yine kaymıyor).
+
 ## [1.6.5] — 2026-11-09
 
 ### Düzeltildi

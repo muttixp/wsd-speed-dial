@@ -616,7 +616,7 @@
                     </select>
                 </label>
                 <label class="ayarSatir">
-                    <span><span data-c="gorselBosluk">Kenar Boşluğu</span><small class="webMotorIpucu" data-c="gorselBoslukIpucu">Sığdır ile gösterilen görsellerde (logolar, kendi resimleriniz) kart kenarından boşluk.</small></span>
+                    <span><span data-c="gorselBosluk">Kenar Boşluğu</span><small class="webMotorIpucu" data-c="gorselBoslukIpucu">Kart kenarı ile görsel arasındaki boşluk: logolar, ekran görüntüleri ve kendi resimleriniz.</small></span>
                     <input type="range" id="ayGorselBosluk" min="0" max="20" step="1">
                     <output id="ayGorselBoslukDeger"></output>
                 </label>
@@ -651,6 +651,13 @@
                     <select id="ayKartHizalama">
                         <option value="orta" data-c="hizaOrta">Ortaya</option>
                         <option value="sol" data-c="hizaSol">Sola</option>
+                    </select>
+                </label>
+                <label class="ayarSatir">
+                    <span data-c="kartDikey">Dikey Konum</span>
+                    <select id="ayKartDikey">
+                        <option value="ust" data-c="dikeyUst">Üstte</option>
+                        <option value="orta" data-c="dikeyOrta">Ortada</option>
                     </select>
                 </label>
                 <label class="ayarSatir gelismisYalniz">
@@ -1119,6 +1126,14 @@
                 <button id="kpSonraki" class="karuselOk" type="button" aria-label="Sonraki" data-c-aria-label="sonraki">&#10095;</button>
             </div>
             <div id="kpNoktalar" class="karuselNoktalar"></div>
+
+            <!-- Kart basina kenar boslugu (1.6.6) - bos = genel ayar -->
+            <div class="kpBoslukSatir" title="Bu kartta görselin kenar boşluğu" data-c-title="kpBoslukIpucu">
+                <span data-c="gorselBoyutu">Görsel Boyutu</span>
+                <input type="range" id="kpBosluk" min="-20" max="100" step="1">
+                <output id="kpBoslukDeger"></output>
+                <button type="button" id="kpBoslukGenel" class="kpBoslukGenel" data-c="boslukGenel">Genel</button>
+            </div>
 
             <div class="gorselAraclari">
                 <button id="kpDosya" class="gorselDugme" type="button">

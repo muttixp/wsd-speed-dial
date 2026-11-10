@@ -1089,6 +1089,10 @@ Ekran görüntüsü için öneri sırası:
 4. Arama sonuçları
 5. Yinelenen kartlar ya da çöp kutusu
 
+### 1.6.6 ile yapılacaklar (mağaza paneli)
+
+- Paket yüklenecek (Chrome, Edge, Firefox). Yeni izin yok; açıklamalar ve gizlilik sekmesi değişmedi. Notlar RELEASE_1.6.6.md'de.
+
 ### 1.6.5 ile yapılacaklar (mağaza paneli)
 
 - Yalnızca hata düzeltmesi; paket yüklenecek (Chrome, Edge, Firefox). Notlar RELEASE_1.6.5.md'de.

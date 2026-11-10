@@ -191,6 +191,8 @@ export async function yedekBlobu(ilerleme, { gorseller = true, kaynak = null } =
             // KILIT, YERLESIM, KAYNAK (1.6.4): geri yuklemede kilit "sliyordu"
             if (v.elle) sade.elle = true;
             if (v.yerlesim) sade.yerlesim = v.yerlesim;
+            if (Number.isFinite(v.boyut)) sade.boyut = v.boyut;
+            if (v.oran) sade.oran = v.oran;
             if (v.kaynaklar && v.gorsel) {
                 const k = v.kaynaklar[gorselIzi(v.gorsel)];
                 if (k) sade.kaynaklar = { [gorselIzi(v.gorsel)]: k };

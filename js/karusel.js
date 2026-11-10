@@ -14,7 +14,7 @@
 // Adaylar: yakalamadan gelen ekran goruntusu + sayfa gorselleri.
 // Kullanici kendi dosyasini/URL'sini de ekleyebiliyor; o da listeye giriyor.
 
-import { gorselAl, gorselIzi } from './gorsel.js';
+import { gorselAl, gorselIzi, buyutmeOlcusu, kartOraniOku, tamDoluBoyut } from './gorsel.js';
 import { c } from './dil.js';
 
 let adaylar = [];
@@ -23,6 +23,7 @@ let zemin = null;
 let elle = false;           // KILIT (1.6.3): secili gorsel yenilemede/adres degisince degismez.
                             // Kendi gorseli (dosya/URL/logo) eklenince kendiliginden kilitlenir.
 let yerlesim = null;        // kart basina 'contain' | 'cover' (1.6.3); null = genel ayar
+let boyut = null;           // GORSEL BOYUTU (1.6.6): <0 bosluk, 0 sigdir, >0 buyutme; null = genel
 let kaynaklar = {};         // elle eklenen gorsellerin adresleri { iz: url } (1.6.4)
 
 const el = id => document.getElementById(id);
@@ -32,6 +33,16 @@ export function karuseliKur() {
     el('kpSonraki')?.addEventListener('click', () => kaydir(1));
     el('kpAdaySil')?.addEventListener('click', e => { e.stopPropagation(); adaySil(); });
     el('kpKilit')?.addEventListener('click', e => { e.stopPropagation(); elle = !elle; ciz(); });
+    // Gorsel boyutu (1.6.6): kaydirinca yalnizca bu kart; "tam dolu" noktasina yapisir
+    el('kpBosluk')?.addEventListener('input', e => {
+        let v = +e.target.value;
+        const iz = izler.get(adaylar[secim]);
+        const tam = iz ? tamDoluBoyut(iz.oran, kartOraniOku()) : null;
+        if (tam !== null && tam > 0 && Math.abs(v - tam) <= 3) v = tam;
+        boyut = v;
+        ciz();
+    });
+    el('kpBoslukGenel')?.addEventListener('click', () => { boyut = null; ciz(); });
 
     // Ok tuslariyla da gezinilsin
     el('kpOnizleme')?.addEventListener('keydown', e => {
@@ -47,6 +58,7 @@ export async function karuseliYukle(anahtar) {
     zemin = null;
     elle = false;
     yerlesim = null;
+    boyut = null;
     kaynaklar = {};
 
     if (anahtar) {
@@ -54,6 +66,7 @@ export async function karuseliYukle(anahtar) {
         if (kayit) {
             zemin = kayit.zemin || null;
             yerlesim = kayit.yerlesim || null;
+            boyut = Number.isFinite(kayit.boyut) ? kayit.boyut : null;
             kaynaklar = { ...(kayit.kaynaklar || {}) };
             // Kendi resmi isareti kayitta duruyor; pencere acilinca kaybolup
             // adres degisince yakalama secili resmi eziyordu (1.5.6)
@@ -163,11 +176,17 @@ let sonra = null;
 /** Her cizimden sonra cagrilir (filtre onizlemesi secim degisince tazelensin) */
 export function cizinceCagir(fn) { sonra = fn; }
 
+/** Secili gorselin en/boy orani (gorsel boyutu icin kayda yazilir) */
+export async function seciliOran() {
+    const su = adaylar[secim];
+    return su ? ((await izAl(su))?.oran || null) : null;
+}
+
 export function secimDurumu() {
     // Yalnizca karuselde kalan adaylarin adresleri saklanir
     const izler = new Set(adaylar.map(gorselIzi));
     const k = Object.fromEntries(Object.entries(kaynaklar).filter(([iz]) => izler.has(iz)));
-    return { adaylar, secim, zemin, elle, yerlesim, kaynaklar: k, gorsel: adaylar[secim] || null };
+    return { adaylar, secim, zemin, elle, yerlesim, boyut, kaynaklar: k, gorsel: adaylar[secim] || null };
 }
 
 /** Secili adayin elle girilen adresi (varsa) - "Adresten" sorusu bununla dolar */
@@ -185,6 +204,7 @@ const genelYerlesim = () =>
 const etkinYerlesim = () => yerlesim || genelYerlesim();
 
 export function yerlesimDegistir() {
+    boyut = null;                          // Sigdir/Doldur dugmesi boyut kaydiricisini sifirlar
     const yeni = etkinYerlesim() === 'contain' ? 'cover' : 'contain';
     // Genel ayarla ayni olursa kart basina kayda gerek yok
     yerlesim = yeni === genelYerlesim() ? null : yeni;
@@ -240,10 +260,28 @@ function ciz() {
     onizleme.style.backgroundSize = y;
     onizleme.style.backgroundPosition = y === 'contain' ? '50% 50%' : '50% 0';
     // Kenar boslugu kartla ayni (1.6.4)
-    const bos = y === 'contain';
-    onizleme.style.boxSizing = bos ? 'border-box' : '';
-    onizleme.style.padding = bos ? 'var(--gorsel-bosluk, 0%)' : '';
-    onizleme.style.backgroundOrigin = bos ? 'content-box' : '';
+    onizleme.style.boxSizing = 'border-box';
+    onizleme.style.padding = 'var(--gorsel-bosluk, 0%)';
+    onizleme.style.backgroundOrigin = 'content-box';
+    // Gorsel boyutu: kart basina deger varsa taban SIGDIR + bosluk/buyutme
+    const su2 = adaylar[secim];
+    const iz = su2 ? izler.get(su2) : null;
+    if (su2 && iz === undefined) izAl(su2).then(() => { if (adaylar[secim] === su2) ciz(); });
+    const tam = iz ? tamDoluBoyut(iz.oran, kartOraniOku()) : null;
+    if (boyut !== null) {
+        onizleme.style.setProperty('--gorsel-bosluk', Math.max(0, -boyut) + '%');
+        onizleme.style.backgroundSize = (iz && buyutmeOlcusu(boyut, iz.oran, kartOraniOku())) || 'contain';
+        onizleme.style.backgroundPosition = '50% 50%';
+    } else onizleme.style.removeProperty('--gorsel-bosluk');
+    const genelB = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--gorsel-bosluk')) || 0;
+    const bk = el('kpBosluk'), bd = el('kpBoslukDeger'), bg = el('kpBoslukGenel');
+    // Genel ayardayken kaydirici etkin yerlesimi gostersin: Doldur ise tam dolu noktasi
+    const genelDoldur = boyut === null && etkinYerlesim() === 'cover';
+    const gv = boyut !== null ? boyut : genelDoldur ? (tam !== null ? tam : 0) : -genelB;
+    if (bk) bk.value = gv;
+    if (bd) bd.textContent = (genelDoldur || (tam !== null && tam > 0 && gv === tam)) ? c('yerlesimKirp')
+        : gv === 0 ? c('yerlesimSigdir') : (gv > 0 ? '+' : '−') + Math.abs(gv) + '%';
+    if (bg) bg.classList.toggle('secili', boyut === null);
     const yd = el('kpYerlesim');
     if (yd) {
         yd.classList.toggle('secili', !!yerlesim);

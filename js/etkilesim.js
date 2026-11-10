@@ -756,12 +756,15 @@ async function kartiKaydet() {
         // biraz sonra yaziliyor, yakalama bitince de EZILIYORDU ("2-3
         // denemede tutuyor"). Once gorsel, sonra yer imi.
         await bekleyenFiltreyiUygula();      // onizlemede kalan filtre de kaydedilsin
-        const { adaylar: kAdaylar, secim: kSecim, zemin: kZemin, elle: kElle, yerlesim: kYerlesim, kaynaklar: kKaynaklar } = secimDurumu();
+        const { adaylar: kAdaylar, secim: kSecim, zemin: kZemin, elle: kElle, yerlesim: kYerlesim, boyut: kBoyut, kaynaklar: kKaynaklar } = secimDurumu();
         if (kAdaylar.length) {
             await adaylariYaz(url, kAdaylar, kSecim, kElle);
-            const { yerlesimYaz, kaynaklarYaz } = await import('./gorsel.js');
+            const { yerlesimYaz, kaynaklarYaz, alanYaz } = await import('./gorsel.js');
             await yerlesimYaz(url, kYerlesim);
             await kaynaklarYaz(url, kKaynaklar);
+            await alanYaz(url, 'boyut', kBoyut);
+            // Buyutme icin gorsel orani
+            await alanYaz(url, 'oran', kBoyut !== null && kBoyut > 0 ? await (await import('./karusel.js')).seciliOran() : null);
             if (kZemin) {
                 const { zeminYaz } = await import('./gorsel.js');
                 await zeminYaz(url, kZemin);

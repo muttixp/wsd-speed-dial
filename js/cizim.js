@@ -16,7 +16,7 @@ import { gruplariAl, gorunurGruplariAl, kartSayilariAl, urlNormalle,
          kokKlasoruAl, klasorZinciri } from './yerimi.js';
 import { klasorKartiOlustur, klasorOzetleriniUygula, yolSeridiniCiz } from './klasor.js';
 import { c } from './dil.js';
-import { gorselAl, kucult, SISKIN_ESIK } from './gorsel.js';
+import { gorselAl, kucult, SISKIN_ESIK, buyutmeOlcusu, kartOraniOku } from './gorsel.js';
 import { renkleriAl } from './renk.js';
 import { ayarlariAl } from './ayar.js';
 import { notlariAl } from './not.js';
@@ -695,6 +695,12 @@ function yerlesimUygula(el, veri) {
     el.style.backgroundSize = y;
     el.style.backgroundPosition = y === 'contain' ? '50% 50%' : y === 'cover' ? '50% 0' : '';
     if (y) el.dataset.yerlesim = y; else delete el.dataset.yerlesim;     // kenar boslugu (CSS)
+    // GORSEL BOYUTU (1.6.6): kart basina; < 0 kenar boslugu, > 0 buyutme
+    if (veri && Number.isFinite(veri.boyut)) {
+        el.style.setProperty('--gorsel-bosluk', Math.max(0, -veri.boyut) + '%');
+        el.style.backgroundSize = buyutmeOlcusu(veri.boyut, veri.oran, kartOraniOku()) || 'contain';
+        el.style.backgroundPosition = '50% 50%';
+    } else el.style.removeProperty('--gorsel-bosluk');
 }
 
 /** Tek bir kartin gorselini yerinde tazeler (yakalama bitince cagriliyor). */
