@@ -68,6 +68,17 @@ export async function karuseliYukle(anahtar) {
             yerlesim = kayit.yerlesim || null;
             boyut = Number.isFinite(kayit.boyut) ? kayit.boyut : null;
             kaynaklar = { ...(kayit.kaynaklar || {}) };
+            // 1.6.6 ve oncesinde kuculen gorselin adresi eski izde kaliyordu.
+            // Tek sahipsiz adres varsa ve secili gorselin adresi yoksa ona ver.
+            {
+                const izler2 = new Set((kayit.adaylar || [kayit.gorsel]).filter(Boolean).map(gorselIzi));
+                const sahipsiz = Object.keys(kaynaklar).filter(iz => !izler2.has(iz));
+                const secili = (kayit.adaylar && kayit.adaylar[kayit.secim || 0]) || kayit.gorsel;
+                if (sahipsiz.length === 1 && secili && !kaynaklar[gorselIzi(secili)]) {
+                    kaynaklar[gorselIzi(secili)] = kaynaklar[sahipsiz[0]];
+                    delete kaynaklar[sahipsiz[0]];
+                }
+            }
             // Kendi resmi isareti kayitta duruyor; pencere acilinca kaybolup
             // adres degisince yakalama secili resmi eziyordu (1.5.6)
             elle = !!kayit.elle;

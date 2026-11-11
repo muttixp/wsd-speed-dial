@@ -22,7 +22,31 @@ const HAZIR = {
     yanPanelGizle: true,
     grupBoyut: 90,
     seritUstte: false,
+    klasorYeri: 'alt',          // 1.7.0: klasorler kartlarin altinda kendi satirinda
+    anaSayfaGoster: true,       // 1.7.0: Basit'te Ana Sayfa merkez - gizlenemez
 };
+
+/* HAZIR DUZENLER (1.7.0, Basit mod): tek tikla sayfanin butun yerlesimi.
+   Duvar kagidi, tema ve kartlar degismez; yalniz boyut/aralik/konum. */
+export const HAZIR_DUZENLER = {
+    // Ortada genis aralikli simgeler, klasorler altta kendi satirinda
+    klasik: { kartEn: 76, kartOrani: 'okare', gorselYerlesim: 'contain', kartBoslukYatay: 64, kartBoslukDikey: 34,
+              maxSutun: 6, kartDikey: 'orta', kartHizalama: 'orta', klasorYeri: 'alt' },
+    // Ustte sik simgeler, klasorler en ustte
+    sade:   { kartEn: 76, kartOrani: 'okare', gorselYerlesim: 'contain', kartBoslukYatay: 30, kartBoslukDikey: 22,
+              maxSutun: 8, kartDikey: 'ust', kartHizalama: 'orta', klasorYeri: 'ust' },
+    // Site goruntulu kartlar, klasorler kartlarla birlikte
+    galeri: { kartEn: 160, kartOrani: 'o1610', gorselYerlesim: 'cover', kartBoslukYatay: 20, kartBoslukDikey: 20,
+              maxSutun: 6, kartDikey: 'ust', kartHizalama: 'orta', klasorYeri: 'birlikte' },
+};
+
+/** Ayarlara uyan hazir duzen adi; uymuyorsa null */
+export function hazirDuzenAdi(ayar) {
+    for (const [ad, d] of Object.entries(HAZIR_DUZENLER)) {
+        if (Object.entries(d).every(([k, v]) => (ayar[k] ?? null) === v)) return ad;
+    }
+    return null;
+}
 
 /* HAZIR BOYUTLAR (Basit mod): Simge = kare kutuda logo; digerleri ekran
    goruntusu (16:10). Baslik hep altta. */
@@ -79,7 +103,8 @@ export async function grubaLogoKoy(grupId = null) {
         const { logoYakala } = await import('./yakalama.js');
         const { gorselAl, adaylariYaz } = await import('./gorsel.js');
         const kartlar = (await kartlariAl(grupId || aktifGrup())).filter(k => /^https?:/i.test(k.url));
-        const kare = (await ayarlariAl()).kartOrani === 'okare';   // Simge: kare logo
+        // Simge: kare logo. Gorunen oran (Ana Sayfa duzeni genel ayardan farkli olabilir)
+        const kare = (await import('./gorsel.js')).kartOraniOku() === 1;
         if (!kartlar.length) { bildir(c('logoKartYok')); return; }
         let bulunan = 0;
         for (const [i, k] of kartlar.entries()) {

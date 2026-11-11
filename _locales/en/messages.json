@@ -2437,5 +2437,104 @@
   },
   "gorselBoyutu": {
     "message": "Image Size"
+  },
+  "klasorAcilis": {
+    "message": "Open Folders in a Window"
+  },
+  "klasorAcilisIpucu": {
+    "message": "Clicking a folder shows its contents in a pop-up window as small logos; when off, the folder is opened in place."
+  },
+  "mPenceredeAc": {
+    "message": "Open in a window"
+  },
+  "bolumOlarakGoster": {
+    "message": "Show as section"
+  },
+  "klasorOlarakGoster": {
+    "message": "Show as folder"
+  },
+  "klasoreGir": {
+    "message": "Go into folder"
+  },
+  "geri": {
+    "message": "Back"
+  },
+  "mSiteEkle": {
+    "message": "Add site…"
+  },
+  "klasorEkleMenu": {
+    "message": "Add folder…"
+  },
+  "klasorEkle": {
+    "message": "Add folder"
+  },
+  "klasorIpucu": {
+    "message": "Group your sites in folders: Work, Shopping, News… Click a folder to open it in a window."
+  },
+  "hazirDuzen": {
+    "message": "Layout"
+  },
+  "hazirDuzenIpucu": {
+    "message": "Tile size, spacing and folder position in one click. Wallpaper and tiles stay the same."
+  },
+  "duzenKlasik": {
+    "message": "Classic"
+  },
+  "duzenSade": {
+    "message": "Simple"
+  },
+  "duzenGaleri": {
+    "message": "Gallery"
+  },
+  "klasorYeri": {
+    "message": "Folder Position"
+  },
+  "klasorYeriBirlikte": {
+    "message": "With the tiles"
+  },
+  "klasorYeriUst": {
+    "message": "Own row, at the top"
+  },
+  "klasorYeriAlt": {
+    "message": "Own row, at the bottom"
+  },
+  "gorunumIzgara": {
+    "message": "Grid"
+  },
+  "gorunumListe": {
+    "message": "List"
+  },
+  "anaDuzenIpucu": {
+    "message": "Only the Home page uses this layout; groups keep their own settings. Folders on the Home page open in a window."
+  },
+  "anaBoyutOto": {
+    "message": "By layout"
+  },
+  "anaLogolar": {
+    "message": "Logos on Home"
+  },
+  "anaLogolarIpucu": {
+    "message": "Sets the site logo as the image of Home page tiles; the old image stays in Edit."
+  },
+  "anaLogoKoy": {
+    "message": "Find logos for Home page tiles"
+  },
+  "anaSayfaDuzeni": {
+    "message": "Home Page Layout"
+  },
+  "anaSayfaBoyutu": {
+    "message": "Home Page Tile Size"
+  },
+  "duzenNormal": {
+    "message": "Normal"
+  },
+  "kfpEkle": {
+    "message": "Add"
+  },
+  "hazirGruplarAnaAciklama": {
+    "message": "The pack is added to the Home page as a folder and its logos are fetched automatically; your existing tiles are not touched."
+  },
+  "paketAnaSayfaya": {
+    "message": "\"$1\" added to the Home page as a folder · $2 tiles"
   }
 }

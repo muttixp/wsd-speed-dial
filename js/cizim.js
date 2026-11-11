@@ -12,16 +12,17 @@
 // WSD Speed Dial - cizim katmani
 // DOM kurulumu burada; veri erisimi yerimi.js'te.
 
-import { gruplariAl, gorunurGruplariAl, kartSayilariAl, urlNormalle,
+import { gruplariAl, seritGruplariAl, anaKlasorIdleri, kartSayilariAl, urlNormalle,
          kokKlasoruAl, klasorZinciri } from './yerimi.js';
 import { klasorKartiOlustur, klasorOzetleriniUygula, yolSeridiniCiz } from './klasor.js';
 import { c } from './dil.js';
-import { gorselAl, kucult, SISKIN_ESIK, buyutmeOlcusu, kartOraniOku } from './gorsel.js';
+import { gorselAl, kucult, SISKIN_ESIK, buyutmeOlcusu, kartOraniOku, gorselIzi } from './gorsel.js';
 import { renkleriAl } from './renk.js';
 import { ayarlariAl } from './ayar.js';
 import { notlariAl } from './not.js';
 import { ikonlariAl, gorunumleriAl } from './grupikon.js';
 import { ikonHTML } from './ikon.js';
+import { anaSayfadaYaz, etkinAyar } from './anaduzen.js';
 
 // aktifGrupId: EKRANDAKI klasor - grubun kendisi ya da icindeki bir alt
 // klasor. Kart ekleme, siralama, tasima hep bunu kullaniyor.
@@ -75,7 +76,7 @@ function gecmisiDinle() {
 
 export async function arayuzuKur() {
     gecmisiDinle();
-    let gruplar = await gorunurGruplariAl();
+    let gruplar = await seritGruplariAl();
 
     // Ana Sayfa gizlenip tum gruplar silinmisse liste bos kalabiliyor.
     // Bos listede `gruplar[0].id` cokuyordu - koke geri donuyoruz.
@@ -289,7 +290,7 @@ export async function grubuAc(grupId, { gecmistenGeldi = false } = {}) {
     // Klasor silinmis/tasinmis olabilir: WSD agacinda yoksa ilk gruba don
     let zincir = grupId ? await klasorZinciri(grupId).catch(() => null) : null;
     if (!zincir) {
-        const gs = await gorunurGruplariAl();
+        const gs = await seritGruplariAl();
         const yedek = gs.find(g => g.id === aktifSekmeId) || gs[0];
         if (!yedek) return;
         grupId = yedek.id;
@@ -328,6 +329,10 @@ export async function grubuAc(grupId, { gecmistenGeldi = false } = {}) {
     // Kartlar ve ALT KLASORLER tek okumada. Kokun (Ana Sayfa) klasorleri
     // zaten seritteki gruplar - orada klasor kutusu cizilmiyor.
     const kok = await kokKlasoruAl();
+    // ANA SAYFA GORUNUMU (1.7.0): Ana Sayfa'ya girip cikinca kart olculeri degisebilir
+    if (anaSayfadaYaz(grupId === kok)) {
+        try { await (await import('./ayarpanel.js')).gorunumuTazele(); } catch (e) { /* */ }
+    }
     let cocuklar = [];
     try { cocuklar = await chrome.bookmarks.getChildren(grupId); } catch (e) { /* silinmis */ }
     const kartlar = cocuklar.filter(x => x.url)
@@ -342,7 +347,9 @@ export async function grubuAc(grupId, { gecmistenGeldi = false } = {}) {
     const ilk = seritIdleri.find(id => id !== kok);
     document.body.classList.toggle('grupGiris', grupId === kok);
     document.body.classList.toggle('grupIlk', grupId === ilk);
-    const klasorler = grupId === kok ? [] : cocuklar.filter(x => !x.url)
+    // Ana Sayfa'da yalniz Ana Sayfa klasorleri (digerleri seritteki gruplar)
+    const anaKlasorler = grupId === kok ? await anaKlasorIdleri() : null;
+    const klasorler = cocuklar.filter(x => !x.url && (!anaKlasorler || anaKlasorler.has(x.id)))
         .map(x => ({ id: x.id, baslik: x.title }));
     // Klasorlerin ikon/renk/aciklamasi gruplarla ayni depoda
     const klasorIkonlari = klasorler.length ? await ikonlariAl() : {};
@@ -353,7 +360,7 @@ export async function grubuAc(grupId, { gecmistenGeldi = false } = {}) {
     // Karsilama: HIC kart yoksa ve tek grup varsa (yani daha hicbir sey
     // eklenmemis). Kullanici gruba girip bosaltmissa gostermiyoruz -
     // orada "+" karti yeterli, karsilama metni yer kaplar.
-    const gruplar = await gorunurGruplariAl();
+    const gruplar = await seritGruplariAl();
     let bosDurum = kartlar.length === 0 && klasorler.length === 0 && gruplar.length <= 1;
     // "Bos kadranla basla" denmisse karsilama bir daha cikmiyor (1.5.3)
     if (bosDurum) {
@@ -364,28 +371,173 @@ export async function grubuAc(grupId, { gecmistenGeldi = false } = {}) {
     const kars = document.getElementById('karsilama');
     if (kars) kars.hidden = !bosDurum;
 
-    kartlariCiz(kartlar, klasorler, klasorIkonlari, klasorGorunumleri);
-    gorselleriUygula(kartlar);
-    renkleriUygula(kartlar);
-    notlariUygula(kartlar);
+    // BOLUMLER (1.7.0): "Bolum olarak goster" denmis alt klasorler kutu
+    // olarak degil, kartlarin altinda cerceveli alan olarak aciliyor
+    const bolumKlasorleri = klasorler.filter(k => klasorGorunumleri[k.id]?.bolum);
+    const kutuKlasorleri = klasorler.filter(k => !klasorGorunumleri[k.id]?.bolum);
+    const bolumler = [];
+    for (const b of bolumKlasorleri) {
+        let ic = [];
+        try { ic = await chrome.bookmarks.getChildren(b.id); } catch (e) { /* */ }
+        bolumler.push({
+            ...b,
+            kartlar: ic.filter(x => x.url).map(x => ({ id: x.id, baslik: x.title, url: x.url, sira: x.index })),
+            klasorler: ic.filter(x => !x.url).map(x => ({ id: x.id, baslik: x.title }))
+        });
+    }
+    const tumKartlar = kartlar.concat(...bolumler.map(b => b.kartlar));
+
+    let duzen = {};
+    try { duzen = etkinAyar(await ayarlariAl()); } catch (e) { /* varsayilan */ }
+    cizilenDuzen = duzenAnahtari(duzen);
+    kartlariCiz(kartlar, kutuKlasorleri, klasorIkonlari, klasorGorunumleri, duzen.klasorYeri);
+    if (grupId === kok && !klasorler.length && kartlar.length) klasorIpucunuGoster();
+    bolumleriCiz(bolumler, klasorIkonlari, klasorGorunumleri);
+    gorselleriUygula(tumKartlar);
+    renkleriUygula(tumKartlar);
+    notlariUygula(tumKartlar);
     if (klasorler.length) {
         klasorOzetleriniUygula([...kartKabi().querySelectorAll('.klasorKart')]).catch(() => {});
     }
 }
 
-function kartlariCiz(kartlar, klasorler = [], ikonlar = {}, gorunumler = {}) {
+/**
+ * KLASOR IPUCU (1.7.0, Basit mod): Ana Sayfa'da klasor yoksa bir kez
+ * "siteleri klasorlerde toplayin" notu. Kapatinca ya da ilk klasor
+ * eklenince bir daha cikmaz.
+ */
+async function klasorIpucunuGoster() {
+    try {
+        const a = await ayarlariAl();
+        if (a.basitMod !== true && !document.body.classList.contains('anaDuzenli')) return;
+        if ((await chrome.storage.local.get('klasorIpucuGecildi')).klasorIpucuGecildi) return;
+    } catch (e) { return; }
+    const kap = kartKabi();
+    if (!kap || kap.querySelector('.klasorIpucu')) return;
+    const kutu = document.createElement('div');
+    kutu.className = 'klasorIpucu';
+    const metin = document.createElement('span');
+    metin.textContent = c('klasorIpucu');
+    const ekle = document.createElement('button');
+    ekle.type = 'button';
+    ekle.className = 'klasorIpucuEkle';
+    ekle.dataset.eylem = 'yeniKlasor';
+    ekle.textContent = c('klasorEkle');
+    const kapat = document.createElement('button');
+    kapat.type = 'button';
+    kapat.className = 'klasorIpucuKapat';
+    kapat.title = c('kapat');
+    kapat.textContent = '×';
+    kapat.addEventListener('click', () => {
+        kutu.remove();
+        chrome.storage.local.set({ klasorIpucuGecildi: true }).catch(() => {});
+    });
+    const ic = document.createElement('div');
+    ic.className = 'klasorIpucuIc';
+    ic.append(metin, ekle, kapat);
+    kutu.append(ic);
+    kap.prepend(kutu);
+}
+
+/* KLASORLERIN YERI (1.7.0): klasor kutulari kartlarla ayni akista ya da
+   kendi satirinda (ustte/altta). Duzen degisince izgara yeniden cizilir. */
+let cizilenDuzen = '';
+function duzenAnahtari(a) { return [a.klasorYeri || 'birlikte', a.basitMod === true, a.kartEn, a.kartOrani].join('|'); }
+export async function duzeniTazele() {
+    let a = {};
+    try { a = etkinAyar(await ayarlariAl()); } catch (e) { return; }
+    if (duzenAnahtari(a) !== cizilenDuzen && aktifGrupId) await grubuAc(aktifGrupId);
+}
+
+function kartlariCiz(kartlar, klasorler = [], ikonlar = {}, gorunumler = {}, klasorYeri = 'birlikte') {
     const kap = kartKabi();
     kap.textContent = '';
 
     // Klasorler ONCE: yer imindeki siralari ne olursa olsun kartlarla
     // karismiyorlar. Kart siralamasi yalnizca kartlar arasinda.
-    for (const k of klasorler) {
-        kap.appendChild(klasorKartiOlustur(k, ikonlar[k.id], gorunumler[k.id] || {}));
+    const klasorKutulari = klasorler.map(k => klasorKartiOlustur(k, ikonlar[k.id], gorunumler[k.id] || {}));
+    const kartKutulari = kartlar.map(k => kartOlustur(k));
+    kartKutulari.push(ekleKartiOlustur());
+    const ayri = klasorKutulari.length && (klasorYeri === 'ust' || klasorYeri === 'alt');
+    const ayrac = () => { const d = document.createElement('div'); d.className = 'klasorAyrac'; return d; };
+    if (ayri && klasorYeri === 'alt') kap.append(...kartKutulari, ayrac(), ...klasorKutulari);
+    else if (ayri) kap.append(...klasorKutulari, ayrac(), ...kartKutulari);
+    else kap.append(...klasorKutulari, ...kartKutulari);
+    kap.classList.toggle('klasorlerAyri', !!ayri);
+}
+
+/** Bolum kutusu ana izgaranin sutunlarina otursun: kullanilan sutunlarin
+ *  toplam genisligi olculup degiskene yaziliyor (Basit'te sutun siniri var) */
+function bolumGenisliginiOlc() {
+    const kap = kartKabi();
+    if (!kap || !kap.querySelector('.izgaraBolum')) return;
+    // Ortali kipte izgara flex; sutunlari kartlarin gercek konumundan olc
+    const kartlar = [...kap.children].filter(e => e.matches('.kart, .klasorKart'));
+    if (!kartlar.length) { kap.style.removeProperty('--bolum-en'); return; }
+    let sol = Infinity, sag = -Infinity;
+    for (const k of kartlar) { const r = k.getBoundingClientRect(); sol = Math.min(sol, r.left); sag = Math.max(sag, r.right); }
+    // Tek satirdaki birkac kart dar kalmasin: en az bolumun kendi icerigi kadar
+    const enCok = kap.getBoundingClientRect().width;
+    const en = Math.min(enCok, Math.max(sag - sol, ...[...kap.querySelectorAll('.izgaraBolumKartlar')].map(i => {
+        const ks = [...i.children]; if (!ks.length) return 0;
+        const kartEn = ks[0].getBoundingClientRect().width;
+        const gap = parseFloat(getComputedStyle(i).columnGap) || 0;
+        const sigan = Math.max(1, Math.floor((enCok + gap) / (kartEn + gap)));
+        const n = Math.min(ks.length, sigan);
+        return n * kartEn + (n - 1) * gap;
+    })));
+    kap.style.setProperty('--bolum-en', Math.round(en) + 'px');
+}
+let bolumGozcu = null;
+
+/** Bolum: baslik serit + kendi izgarasi. Kart birakilinca o klasore tasinir. */
+function bolumleriCiz(bolumler, ikonlar = {}, gorunumler = {}) {
+    const kap = kartKabi();
+    for (const b of bolumler) {
+        const g = gorunumler[b.id] || {};
+        const s = document.createElement('section');
+        s.className = 'izgaraBolum';
+        s.dataset.bolumId = b.id;
+        s.dataset.birakKlasor = b.id;
+        if (g.zemin) s.style.setProperty('--bolum-zemin', g.zemin);
+
+        const ust = document.createElement('div');
+        ust.className = 'izgaraBolumUst';
+        ust.dataset.klasorId = b.id;
+        ust.tabIndex = 0;
+        const ik = document.createElement('span');
+        ik.className = 'izgaraBolumIkon';
+        ik.innerHTML = ikonHTML(ikonlar[b.id] && ikonlar[b.id] !== 'folder' ? ikonlar[b.id] : 'folder');
+        if (g.renk) ik.style.color = g.renk;
+        const ad = document.createElement('span');
+        ad.className = 'izgaraBolumAd';
+        ad.textContent = b.baslik || '—';
+        const sayi = document.createElement('span');
+        sayi.className = 'izgaraBolumSayi';
+        sayi.textContent = String(b.kartlar.length);
+        const ac = document.createElement('button');
+        ac.type = 'button';
+        ac.className = 'izgaraBolumAc';
+        ac.dataset.klasorId = b.id;
+        ac.title = c('klasoreGir');
+        ac.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>';
+        ust.append(ik, ad, sayi, ac);
+
+        const iz = document.createElement('div');
+        iz.className = 'kartIzgara izgaraBolumKartlar';
+        for (const k of b.klasorler) iz.appendChild(klasorKartiOlustur(k, ikonlar[k.id], gorunumler[k.id] || {}));
+        for (const k of b.kartlar) {
+            const a = kartOlustur(k);
+            a.draggable = false;             // bolumde siralama yok; birakma bolume tasir
+            iz.appendChild(a);
+        }
+        s.append(ust, iz);
+        kap.appendChild(s);
     }
-    for (const k of kartlar) {
-        kap.appendChild(kartOlustur(k));
+    if (bolumler.length) {
+        bolumGenisliginiOlc();
+        if (!bolumGozcu) { bolumGozcu = new ResizeObserver(bolumGenisliginiOlc); bolumGozcu.observe(kap); }
     }
-    kap.appendChild(ekleKartiOlustur());
 }
 
 function kartOlustur(k) {
@@ -459,17 +611,17 @@ export function kartAraclariOlustur() {
 
 /** Notu olan kartlara kose isareti koyar. */
 /** Kart id -> element haritasi. Kart basina belge taramasi yapmamak icin. */
-function kartHaritasi() {
+function kartHaritasi(kok = kartKabi()) {
     const harita = new Map();
-    for (const a of kartKabi().querySelectorAll('.kart[data-kart-id]')) {
+    for (const a of kok.querySelectorAll('.kart[data-kart-id]')) {
         harita.set(a.dataset.kartId, a);
     }
     return harita;
 }
 
-export async function notlariUygula(kartlar) {
+export async function notlariUygula(kartlar, kok) {
     const notlar = await notlariAl();
-    const harita = kartHaritasi();
+    const harita = kartHaritasi(kok);
     for (const k of kartlar) {
         const a = harita.get(String(k.id));
         if (!a) continue;
@@ -480,9 +632,9 @@ export async function notlariUygula(kartlar) {
 }
 
 /** Kart renk etiketlerini basar. */
-export async function renkleriUygula(kartlar) {
+export async function renkleriUygula(kartlar, kok) {
     const renkler = await renkleriAl();
-    const harita = kartHaritasi();
+    const harita = kartHaritasi(kok);
     // Adli etiketler (1.5.1): gorsel kutusunun sol altinda renkli noktalar
     const { etiketTanimlariAl, kartEtiketleriAl, etiketNoktalari } = await import('./etiket.js');
     const tanimlar = await etiketTanimlariAl();
@@ -682,11 +834,40 @@ async function gorselleriUygula(kartlar) {
         }
     } catch (e) { /* onemli degil */ }
 
-    for (const kart of kartKabi().querySelectorAll('.kart[data-anahtar]')) {
+    // Klasor penceresinin kartlari da: gozculer sifirlaninca onlar da
+    // birakiliyordu, Duzenle > Kaydet sonrasi pencerede gorseller bos kaliyordu
+    const kaplar = [kartKabi(), document.getElementById('kfpKabi')].filter(Boolean);
+    for (const kap of kaplar) for (const kart of kap.querySelectorAll('.kart[data-anahtar]')) {
         kart.dataset.gorselYuklendi = '';
         yukleGozcu.observe(kart);
         birakGozcu.observe(kart);
     }
+}
+
+/**
+ * KLASOR PENCERESI (1.7.0): grubun disindaki bir kapta (pencere) kartlari
+ * ve alt klasorleri ana izgarayla AYNI bicimde cizer - gorsel, renk, not,
+ * arac seridi ortak. Ana izgaranin gozculerine dokunmadan ekler.
+ */
+export async function kabaCiz(kap, grupId) {
+    let cocuklar = [];
+    try { cocuklar = await chrome.bookmarks.getChildren(grupId); } catch (e) { /* silinmis */ }
+    const kartlar = cocuklar.filter(x => x.url).map(x => ({ id: x.id, baslik: x.title, url: x.url, sira: x.index }));
+    const klasorler = cocuklar.filter(x => !x.url).map(x => ({ id: x.id, baslik: x.title }));
+    const ikonlar = klasorler.length ? await ikonlariAl() : {};
+    const gorunumler = klasorler.length ? await gorunumleriAl() : {};
+    kap.textContent = '';
+    for (const k of klasorler) kap.appendChild(klasorKartiOlustur(k, ikonlar[k.id], gorunumler[k.id] || {}));
+    for (const k of kartlar) {
+        const a = kartOlustur(k);
+        a.draggable = false;                 // pencerede siralama yok
+        kap.appendChild(a);
+    }
+    gorselleriGozle(kap.querySelectorAll('.kart[data-anahtar]'), false);
+    renkleriUygula(kartlar, kap);
+    notlariUygula(kartlar, kap);
+    if (klasorler.length) klasorOzetleriniUygula([...kap.querySelectorAll('.klasorKart')]).catch(() => {});
+    return { kartlar, klasorler };
 }
 
 /** Kart basina gorsel yerlesimi (1.6.3): 'contain' | 'cover' | yok (genel ayar) */
@@ -719,10 +900,24 @@ export async function kartGorseliniTazele(anahtar) {
         }
         a.dataset.gorselYuklendi = '1';        // gozcu bir daha okumasin
     }
+    mozaikleriTazele();
     const siskin = veri.gorsel.length >= SISKIN_ESIK ||
         (Array.isArray(veri.adaylar) &&
          veri.adaylar.some(a => typeof a === 'string' && a.length >= SISKIN_ESIK));
     if (siskin) sikistirmayaEkle(anahtar, veri);
+}
+
+/* Klasor kutularinin mozaigi (1.7.0): klasorun icindeki bir kartin gorseli
+   yenilenince kutu da guncellensin - sayfayi yenilemeden. Toplu yenilemede
+   tek sefer: kisa bekleme. */
+let mozaikSayac = null;
+function mozaikleriTazele() {
+    if (mozaikSayac) return;
+    mozaikSayac = setTimeout(() => {
+        mozaikSayac = null;
+        const kutular = [...document.querySelectorAll('.klasorKart')];
+        if (kutular.length) klasorOzetleriniUygula(kutular).catch(() => {});
+    }, 500);
 }
 
 // --- Sikistirma kuyrugu ---
@@ -753,6 +948,15 @@ function sikistirmayiBaslat() {
 
                 const yeni = { ...mevcut };
                 let degisti = false;
+                // KAYNAK ADRESI (1.6.7): adres gorselin izine bagli; kuculen
+                // gorselin izi degisir, adres kayboluyordu ("bazi linkler
+                // kaydolmuyor"). Eski izdeki adres yeni ize tasinir.
+                const kaynaklar = mevcut.kaynaklar ? { ...mevcut.kaynaklar } : null;
+                const izTasi = (eski, yeniVeri) => {
+                    if (!kaynaklar) return;
+                    const e = gorselIzi(eski);
+                    if (kaynaklar[e]) { kaynaklar[gorselIzi(yeniVeri)] = kaynaklar[e]; delete kaynaklar[e]; }
+                };
 
                 if (Array.isArray(mevcut.adaylar) && mevcut.adaylar.length) {
                     const kucukAdaylar = [];
@@ -761,7 +965,7 @@ function sikistirmayiBaslat() {
                         if (a.length < SISKIN_ESIK) { kucukAdaylar.push(a); continue; }
                         const k = await kucult(a);
                         kucukAdaylar.push(k || a);
-                        if (k) degisti = true;
+                        if (k) { degisti = true; izTasi(a, k); }
                     }
                     if (degisti) {
                         yeni.adaylar = kucukAdaylar;
@@ -774,8 +978,9 @@ function sikistirmayiBaslat() {
                 // Adaylarda yoksa gosterilen gorseli tek basina kucult
                 if (!degisti && mevcut.gorsel.length >= SISKIN_ESIK) {
                     const k = await kucult(mevcut.gorsel);
-                    if (k) { yeni.gorsel = k; degisti = true; }
+                    if (k) { yeni.gorsel = k; degisti = true; izTasi(mevcut.gorsel, k); }
                 }
+                if (degisti && kaynaklar) yeni.kaynaklar = kaynaklar;
 
                 if (degisti) await chrome.storage.local.set({ [anahtar]: yeni });
             }

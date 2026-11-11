@@ -269,12 +269,12 @@ async function birak({ aktifGrup, yenile, bildir }, konum = null, kabaBirakildi 
 
         // 2) Ayni klasorde siralama
         const kap = document.getElementById('kartKabi');
-        const eskiIndex = [...kap.querySelectorAll('.kart:not(.ekleKart)')].indexOf(kart);
+        const eskiIndex = [...kap.querySelectorAll(':scope > .kart:not(.ekleKart)')].indexOf(kart);
 
         // DOM'a SIMDI yerlestiriyoruz (surukleme boyunca hicbir sey oynamadi)
         if (!hedefeYerlestir(kart, hedefKaydi)) return;   // hedef yok = vazgecildi
 
-        let yeniIndex = [...kap.querySelectorAll('.kart:not(.ekleKart)')].indexOf(kart);
+        let yeniIndex = [...kap.querySelectorAll(':scope > .kart:not(.ekleKart)')].indexOf(kart);
 
         // KOMSU KART TUZAGI: kart 2, hedef 3 ve imlec hedefin SOL yarisinda
         // ise "hedefin onune koy" karti yine 2'de birakiyor - hicbir sey
@@ -283,7 +283,7 @@ async function birak({ aktifGrup, yenile, bildir }, konum = null, kabaBirakildi 
         // sonuc ayniysa ters tarafa koyuyoruz.
         if (yeniIndex === eskiIndex && hedefKaydi) {
             hedefeYerlestir(kart, { kart: hedefKaydi.kart, sonrasina: !hedefKaydi.sonrasina });
-            yeniIndex = [...kap.querySelectorAll('.kart:not(.ekleKart)')].indexOf(kart);
+            yeniIndex = [...kap.querySelectorAll(':scope > .kart:not(.ekleKart)')].indexOf(kart);
         }
 
         if (yeniIndex < 0 || yeniIndex === eskiIndex) return;
@@ -379,7 +379,7 @@ function hedefiTazele(x, y) {
     // onune geciyor. Boylece "ustune biraktigin kartin yerine gecersin"
     // hissi olusuyor ve sonuc HER ZAMAN degisiyor.
     const kap = document.getElementById('kartKabi');
-    const sira = [...kap.querySelectorAll('.kart:not(.ekleKart)')];
+    const sira = [...kap.querySelectorAll(':scope > .kart:not(.ekleKart)')];
     const sonrasina = sira.indexOf(ustKart) > sira.indexOf(surukKart);
 
     surukHedefi = { kart: ustKart, sonrasina };
@@ -419,10 +419,10 @@ function konumdanHedef(x, y, kaynak) {
     const hedef = altindaki && altindaki.closest
         ? altindaki.closest('.kart:not(.ekleKart)')
         : null;
-    if (!hedef || hedef === kaynak) return null;
+    if (!hedef || hedef === kaynak || hedef.closest('.izgaraBolum')) return null;
 
     const kap = document.getElementById('kartKabi');
-    const sira = [...kap.querySelectorAll('.kart:not(.ekleKart)')];
+    const sira = [...kap.querySelectorAll(':scope > .kart:not(.ekleKart)')];
     return { kart: hedef, sonrasina: sira.indexOf(hedef) > sira.indexOf(kaynak) };
 }
 

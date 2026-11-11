@@ -2437,5 +2437,104 @@
   },
   "gorselBoyutu": {
     "message": "图片大小"
+  },
+  "klasorAcilis": {
+    "message": "在窗口中打开文件夹"
+  },
+  "klasorAcilisIpucu": {
+    "message": "点击文件夹时，其内容以小图标显示在弹出窗口中；关闭时直接进入文件夹。"
+  },
+  "mPenceredeAc": {
+    "message": "在窗口中打开"
+  },
+  "bolumOlarakGoster": {
+    "message": "显示为分区"
+  },
+  "klasorOlarakGoster": {
+    "message": "显示为文件夹"
+  },
+  "klasoreGir": {
+    "message": "进入文件夹"
+  },
+  "geri": {
+    "message": "返回"
+  },
+  "mSiteEkle": {
+    "message": "添加网站…"
+  },
+  "klasorEkleMenu": {
+    "message": "添加文件夹…"
+  },
+  "klasorEkle": {
+    "message": "添加文件夹"
+  },
+  "klasorIpucu": {
+    "message": "用文件夹整理网站：工作、购物、新闻……点击文件夹即可在窗口中打开。"
+  },
+  "hazirDuzen": {
+    "message": "预设布局"
+  },
+  "hazirDuzenIpucu": {
+    "message": "一键设置磁贴大小、间距和文件夹位置。壁纸和磁贴不变。"
+  },
+  "duzenKlasik": {
+    "message": "经典"
+  },
+  "duzenSade": {
+    "message": "简洁"
+  },
+  "duzenGaleri": {
+    "message": "画廊"
+  },
+  "klasorYeri": {
+    "message": "文件夹位置"
+  },
+  "klasorYeriBirlikte": {
+    "message": "与磁贴在一起"
+  },
+  "klasorYeriUst": {
+    "message": "单独一行，在上方"
+  },
+  "klasorYeriAlt": {
+    "message": "单独一行，在下方"
+  },
+  "gorunumIzgara": {
+    "message": "网格"
+  },
+  "gorunumListe": {
+    "message": "列表"
+  },
+  "anaDuzenIpucu": {
+    "message": "只有主页使用此布局；分组保留各自设置。主页上的文件夹在窗口中打开。"
+  },
+  "anaBoyutOto": {
+    "message": "按布局"
+  },
+  "anaLogolar": {
+    "message": "主页图标"
+  },
+  "anaLogolarIpucu": {
+    "message": "将网站图标设为主页磁贴图片；旧图片保留在“编辑”中。"
+  },
+  "anaLogoKoy": {
+    "message": "为主页磁贴查找图标"
+  },
+  "anaSayfaDuzeni": {
+    "message": "主页布局"
+  },
+  "anaSayfaBoyutu": {
+    "message": "主页磁贴大小"
+  },
+  "duzenNormal": {
+    "message": "普通"
+  },
+  "kfpEkle": {
+    "message": "添加"
+  },
+  "hazirGruplarAnaAciklama": {
+    "message": "该组合会作为文件夹添加到主页，并自动获取图标；不会改动你现有的磁贴。"
+  },
+  "paketAnaSayfaya": {
+    "message": "“$1”已作为文件夹添加到主页 · $2 个磁贴"
   }
 }

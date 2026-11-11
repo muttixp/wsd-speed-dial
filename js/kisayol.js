@@ -14,7 +14,7 @@
 // Tum dinleyiciler once "yaziyor muyuz" diye bakiyor: bir metin
 // alanindayken 1'e basmak grup degistirmemeli.
 
-import { gorunurGruplariAl } from './yerimi.js';
+import { seritGruplariAl } from './yerimi.js';
 
 /** Ayar panelini acar ya da kapatir. */
 function ayarlariAcKapat() {
@@ -64,7 +64,7 @@ export function kisayollariKur({ aktifGrup, aktifSekme, grubuAc, kartEkle, grupE
             return;
         }
 
-        const gruplar = await gorunurGruplariAl();
+        const gruplar = await seritGruplariAl();
         if (!gruplar.length) return;
 
         // Alt klasordeyken seritteki UST GRUP esas alinir

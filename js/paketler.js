@@ -25,6 +25,7 @@ const DEPO = 'https://github.com/muttixp/wsd-speed-dial/tree/main/paketler';
 const el = id => document.getElementById(id);
 
 let liste = [];            // index.json paketleri
+let anaKip = false;        // 1.7.0: Basit / Ana Sayfa duzeni - paket Ana Sayfa'ya klasor olur
 let kaynak = YEREL;        // listenin geldigi yer - paketler de oradan
 let tumDiller = false;
 const eklenenler = new Set();
@@ -103,13 +104,13 @@ function ciz() {
         btn.className = 'dugme' + (eklenenler.has(p.id) ? '' : ' birincil');
         btn.textContent = eklenenler.has(p.id) ? '✓ ' + c('eklendi') : c('ekle');
         btn.disabled = eklenenler.has(p.id);
-        btn.addEventListener('click', () => paketiEkle(p, btn));
+        btn.addEventListener('click', () => paketiEkle(p, btn, true));
         satir.append(yazi, btn);
         kap.appendChild(satir);
     }
 }
 
-async function paketiEkle(p, btn) {
+async function paketiEkle(p, btn, disServis = true) {
     btn.disabled = true;
     try {
         let veri;
@@ -117,6 +118,13 @@ async function paketiEkle(p, btn) {
         catch (e) { veri = await jsonAl(YEREL + p.dosya, 8000); }    // uzak paket yoksa yerel
         const temiz = suz(veri);
         if (!temiz.wsd.gruplar.length) throw new Error('bos paket');
+        if (anaKip) {
+            const n = await anaSayfayaKlasorEkle(temiz.wsd.gruplar, await disServis);
+            eklenenler.add(p.id);
+            bildir('✓ ' + c('paketAnaSayfaya', p.ad, n));
+            ciz();
+            return;
+        }
         const { yedegiYukle } = await import('./yedek.js');
         const s = await yedegiYukle(temiz, false);
         eklenenler.add(p.id);
@@ -138,12 +146,63 @@ async function paketiEkle(p, btn) {
     }
 }
 
+/**
+ * ANA SAYFA KLASORU (1.7.0): Basit modda ya da Ana Sayfa duzeni acikken
+ * paket grup degil Ana Sayfa'da klasor olur; logolari hemen konur.
+ * Ayni adli Ana Sayfa klasoru varsa eksik siteler ona eklenir. Ekran
+ * goruntusu yakalanmaz (logo konacak, pencere acilmasin).
+ */
+async function anaSayfayaKlasorEkle(gruplar, disServis) {
+    const { kokKlasoruAl, anaKlasorIdleri, urlNormalle } = await import('./yerimi.js');
+    const { gorunumYaz } = await import('./grupikon.js');
+    const { iceAktarimBaslat, iceAktarimBitir } = await import('./iceaktarim.js');
+    const kok = await kokKlasoruAl();
+    const ana = await anaKlasorIdleri();
+    const mevcut = (await chrome.bookmarks.getChildren(kok)).filter(x => !x.url && ana.has(x.id));
+    const klasorler = [];
+    let n = 0;
+    await iceAktarimBaslat();
+    try {
+        for (const g of gruplar) {
+            const ad = g.baslik.trim().toLocaleLowerCase();
+            let k = mevcut.find(x => (x.title || '').trim().toLocaleLowerCase() === ad);
+            if (!k) {
+                k = await chrome.bookmarks.create({ parentId: kok, title: g.baslik });
+                await gorunumYaz(k.id, { anaKlasor: true });
+            }
+            const var_ = new Set((await chrome.bookmarks.getChildren(k.id)).filter(x => x.url).map(x => urlNormalle(x.url)));
+            for (const kart of g.kartlar) {
+                if (var_.has(urlNormalle(kart.url))) continue;
+                await chrome.bookmarks.create({ parentId: k.id, title: kart.baslik, url: kart.url });
+                n++;
+            }
+            klasorler.push(k.id);
+        }
+    } finally {
+        await iceAktarimBitir([]);
+    }
+    chrome.storage.local.set({ klasorIpucuGecildi: true }).catch(() => {});
+    const { arayuzuKur, grubuAc } = await import('./cizim.js');
+    await arayuzuKur();
+    await grubuAc(kok);
+    // Logolar: Ana Sayfa acikken - kare/yatay olcu onun duzeninden
+    const { grubaLogoKoy } = await import('./basitmod.js');
+    for (const id of klasorler) await grubaLogoKoy(id, disServis);
+    return n;
+}
+
 export async function paketPenceresiniAc() {
     const pencere = el('paketPencere');
     if (!pencere) return;
     el('paketListe').textContent = c('yukleniyor');
     pencere.hidden = false;
     el('perde')?.classList.add('acik');
+    try {
+        const a = await (await import('./ayar.js')).ayarlariAl();
+        anaKip = a.basitMod === true || ['klasik', 'sade', 'galeri'].includes(a.anaDuzen);
+    } catch (e) { anaKip = false; }
+    if (el('paketAnaBilgi')) el('paketAnaBilgi').hidden = !anaKip;
+    if (el('paketGrupBilgi')) el('paketGrupBilgi').hidden = anaKip;
     await listeyiYukle();
     ciz();
 }

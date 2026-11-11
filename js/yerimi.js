@@ -153,6 +153,29 @@ export async function gorunurGruplariAl() {
     return gruplar.slice(1);
 }
 
+/**
+ * ANA SAYFA KLASORLERI (1.7.0): kokun altindaki klasor normalde grup.
+ * Basit modda Ana Sayfa'ya eklenen klasor ise grup seridinde degil, Ana
+ * Sayfa'da klasor kutusu olarak gorunur. Isaret yer iminde degil
+ * grupGorunumleri'nde (anaKlasor) - yedekte grubun gorunumuyle gider.
+ * Servis iscisinde de calismali: depo dogrudan okunuyor.
+ */
+export async function anaKlasorIdleri() {
+    try {
+        const g = (await chrome.storage.local.get('grupGorunumleri')).grupGorunumleri || {};
+        return new Set(Object.keys(g).filter(id => g[id] && g[id].anaKlasor));
+    } catch (e) { return new Set(); }
+}
+
+/** Grup seridinde gorunecekler: Ana Sayfa klasorleri haric (Ana Sayfa
+ *  gizliyse onlara baska yoldan ulasilamaz - o zaman serittte kalirlar) */
+export async function seritGruplariAl() {
+    const gruplar = await gorunurGruplariAl();
+    if (!gruplar.some(g => g.kokMu)) return gruplar;
+    const ana = await anaKlasorIdleri();
+    return ana.size ? gruplar.filter(g => !ana.has(g.id)) : gruplar;
+}
+
 /** Bir grubun kartlarini dondurur (sadece yer imleri, alt klasorler haric). */
 export async function kartlariAl(grupId) {
     const cocuklar = await chrome.bookmarks.getChildren(grupId);
@@ -242,7 +265,13 @@ export async function klasorZinciri(klasorId) {
         try { [d] = await chrome.bookmarks.get(id); } catch (e) { return null; }
         if (!d || d.url) return null;
         zincir.unshift({ id: d.id, baslik: d.title });
-        if (d.parentId === kok) return zincir;
+        if (d.parentId === kok) {
+            // Ana Sayfa klasoru: yol Ana Sayfa'dan baslar, seritte o vurgulanir
+            if ((await anaKlasorIdleri()).has(d.id)) {
+                zincir.unshift({ id: kok, baslik: chrome.i18n.getMessage('anaSayfa') || 'Ana Sayfa', kokMu: true });
+            }
+            return zincir;
+        }
         id = d.parentId;
     }
     return null;                         // WSD agacinda degil

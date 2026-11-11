@@ -27,6 +27,26 @@ import { ikonHTML } from './ikon.js';
 import { klasorSuruklemeKur } from './klasorsurukle.js';
 import { grupPenceresiniAc, ikonYaz, gorunumYaz } from './gruppencere.js';
 import { kartGuncelleBaslik } from './yerimi.js';
+import { ayarlariAl } from './ayar.js';
+import { gorunumleriAl } from './grupikon.js';
+
+/** KLASOR PENCERESI (1.7.0): yalniz Basit modda, ayardan kapatilabilir.
+    Gelismis'te klasore tiklayinca hep icine girilir. */
+async function penceredeMi() {
+    try {
+        const a = await ayarlariAl();
+        if (a.basitMod === true) return a.klasorPencere !== false;
+        // Gelismis: Ana Sayfa'ya ozel duzen acikken Ana Sayfa'da (1.7.0)
+        return document.body.classList.contains('anaDuzenli');
+    } catch (e) { return false; }
+}
+async function klasoruAcKipte(id) {
+    if (await penceredeMi()) {
+        const { klasorPenceresiAc } = await import('./klasorpencere.js');
+        return klasorPenceresiAc(id);
+    }
+    return bag.grubuAc(id);
+}
 
 const el = id => document.getElementById(id);
 
@@ -147,7 +167,9 @@ export async function klasorOzetleriniUygula(kutular) {
             if (klasorler.length) parca.push(c('nAltKlasor', klasorler.length));
             sayi.textContent = kartlar.length || klasorler.length ? parca.join(' · ') : c('bos');
         }
-        const ilk = kartlar.slice(0, 4).map(k => urlNormalle(k.url));
+        // Basit modda 3x3 kucuk logo, Gelismis'te 2x2 ekran goruntusu (1.7.0)
+        const basitGibi = document.body.classList.contains('basitMod') || document.body.classList.contains('anaDuzenli');
+        const ilk = kartlar.slice(0, basitGibi ? 9 : 4).map(k => urlNormalle(k.url));
         onizlemeler.set(kutu, ilk);
         ilk.forEach(a => tumAnahtarlar.add(a));
     }
@@ -159,6 +181,7 @@ export async function klasorOzetleriniUygula(kutular) {
     for (const [kutu, anahtarlar] of onizlemeler) {
         if (!kutu.isConnected) continue;
         const mozaik = kutu.querySelector('.klasorMozaik');
+        mozaik.textContent = '';             // tazelemede ust uste binmesin (1.7.0)
         let adet = 0;
         for (const a of anahtarlar) {
             const g = kayitlar[a]?.gorsel;
@@ -239,12 +262,21 @@ export function klasorleriKur(deps) {
             klasorEylemi(arac.dataset.klasorArac, k.dataset.klasorId);
             return;
         }
-        bag.grubuAc(k.dataset.klasorId);
+        klasoruAcKipte(k.dataset.klasorId);
     });
     kap?.addEventListener('keydown', e => {
         if (e.key !== 'Enter') return;
-        const k = e.target.closest('.klasorKart');
-        if (k) bag.grubuAc(k.dataset.klasorId);
+        const k = e.target.closest('.klasorKart, .izgaraBolumUst');
+        if (k) klasoruAcKipte(k.dataset.klasorId);
+    });
+
+    // BOLUM basligi (1.7.0): tiklama klasoru acilis kipinde acar,
+    // ok dugmesi her zaman icine girer
+    kap?.addEventListener('click', e => {
+        const ok = e.target.closest('.izgaraBolumAc');
+        if (ok) { e.preventDefault(); return bag.grubuAc(ok.dataset.klasorId); }
+        const b = e.target.closest('.izgaraBolumUst');
+        if (b) { e.preventDefault(); klasoruAcKipte(b.dataset.klasorId); }
     });
 
     // Orta tik / Ctrl+tik: klasoru acmak yerine icindeki kartlari
@@ -255,12 +287,19 @@ export function klasorleriKur(deps) {
         if (b) bag.grubuAc(b.dataset.klasorId);
     });
 
-    kap?.addEventListener('contextmenu', e => {
-        const k = e.target.closest('.klasorKart');
+    kap?.addEventListener('contextmenu', async e => {
+        const k = e.target.closest('.klasorKart, .izgaraBolumUst');
         if (!k) return;
         e.preventDefault();
         menuKlasorId = k.dataset.klasorId;
         k.classList.add('menuHedef');
+        // Bolum/klasor gecisi menude tek oge: duruma gore adi degisir
+        const bolumMu = !!(await gorunumleriAl())[menuKlasorId]?.bolum;
+        const bo = el('klasorMenu').querySelector('[data-eylem="klasorBolum"] span');
+        if (bo) bo.textContent = c(bolumMu ? 'klasorOlarakGoster' : 'bolumOlarakGoster');
+        // "Pencerede ac": yalniz Basit'te ve tiklama zaten pencere acmiyorsa
+        const pa = el('klasorMenu').querySelector('[data-eylem="klasorPencerede"]');
+        if (pa) { const a = await ayarlariAl(); pa.hidden = !(a.basitMod === true && a.klasorPencere === false); }
         bag.menuyuAc(el('klasorMenu'), e.clientX, e.clientY);
     });
 
@@ -275,8 +314,11 @@ export function klasorleriKur(deps) {
 
 /** Menu kapaninca isaretini kaldir (etkilesim.js cagiriyor). */
 export function klasorIsaretiniTemizle() {
-    document.querySelectorAll('.klasorKart.menuHedef').forEach(k => k.classList.remove('menuHedef'));
+    document.querySelectorAll('.klasorKart.menuHedef, .izgaraBolumUst.menuHedef').forEach(k => k.classList.remove('menuHedef'));
 }
+
+/** Klasor penceresinin "Hepsini ac" dugmesi icin (1.7.0) */
+export function klasorEylemiDisaridan(eylem, id) { return klasorEylemi(eylem, id); }
 
 async function klasorAdi(id) {
     try { return (await chrome.bookmarks.get(id))[0].title || ''; } catch (e) { return ''; }
@@ -287,6 +329,17 @@ async function klasorEylemi(eylem, id) {
     switch (eylem) {
         case 'klasorAc':
             return bag.grubuAc(id);
+
+        case 'klasorPencerede': {
+            const { klasorPenceresiAc } = await import('./klasorpencere.js');
+            return klasorPenceresiAc(id);
+        }
+
+        case 'klasorBolum': {
+            const bolumMu = !!(await gorunumleriAl())[id]?.bolum;
+            await gorunumYaz(id, { bolum: !bolumMu });
+            return bag.grubuAc(bag.aktifGrup());
+        }
 
         case 'klasorHepsiniAc': {
             const kartlar = await kartlariAl(id);
@@ -418,12 +471,21 @@ async function klasorNotu(id) {
     });
 }
 
-/** Bos alan menusu -> "Yeni Klasor". Kokte (Ana Sayfa) klasor = grup. */
+/**
+ * Bos alan menusu -> "Yeni Klasor". Kokte (Ana Sayfa) klasor normalde
+ * grup; Basit modda Ana Sayfa'ya eklenen klasor "Ana Sayfa klasoru"
+ * olarak isaretlenir: seritte degil Ana Sayfa'da kutu olarak durur (1.7.0).
+ */
 export async function yeniKlasor(ustId) {
     const sonuc = await grupPenceresiniAc(null, { klasor: { ustId } });
     if (!sonuc) return;
     bag.tazelemeyiBastir(2000);
+    const anaMi = ustId === await kokKlasoruAl();
     const yeni = await klasorEkle(ustId, sonuc.ad);
+    if (anaMi) {
+        await gorunumYaz(yeni.id, { anaKlasor: true });
+        chrome.storage.local.set({ klasorIpucuGecildi: true }).catch(() => {});
+    }
     await klasorGorunumunuYaz(yeni.id, sonuc);
     await bag.grubuAc(ustId);
 }

@@ -2437,5 +2437,104 @@
   },
   "gorselBoyutu": {
     "message": "Розмір зображення"
+  },
+  "klasorAcilis": {
+    "message": "Відкривати теки у вікні"
+  },
+  "klasorAcilisIpucu": {
+    "message": "Після клацання вміст теки показується у спливному вікні маленькими логотипами; якщо вимкнено, тека відкривається на сторінці."
+  },
+  "mPenceredeAc": {
+    "message": "Відкрити у вікні"
+  },
+  "bolumOlarakGoster": {
+    "message": "Показати як розділ"
+  },
+  "klasorOlarakGoster": {
+    "message": "Показати як папку"
+  },
+  "klasoreGir": {
+    "message": "Увійти в папку"
+  },
+  "geri": {
+    "message": "Назад"
+  },
+  "mSiteEkle": {
+    "message": "Додати сайт…"
+  },
+  "klasorEkleMenu": {
+    "message": "Додати теку…"
+  },
+  "klasorEkle": {
+    "message": "Додати теку"
+  },
+  "klasorIpucu": {
+    "message": "Зберіть сайти в теки: Робота, Покупки, Новини… Тека відкривається у вікні після клацання."
+  },
+  "hazirDuzen": {
+    "message": "Готовий макет"
+  },
+  "hazirDuzenIpucu": {
+    "message": "Розмір плиток, відступи й місце тек одним клацанням. Шпалери й плитки не змінюються."
+  },
+  "duzenKlasik": {
+    "message": "Класика"
+  },
+  "duzenSade": {
+    "message": "Просто"
+  },
+  "duzenGaleri": {
+    "message": "Галерея"
+  },
+  "klasorYeri": {
+    "message": "Розташування тек"
+  },
+  "klasorYeriBirlikte": {
+    "message": "Разом із плитками"
+  },
+  "klasorYeriUst": {
+    "message": "Окремим рядком угорі"
+  },
+  "klasorYeriAlt": {
+    "message": "Окремим рядком унизу"
+  },
+  "gorunumIzgara": {
+    "message": "Сітка"
+  },
+  "gorunumListe": {
+    "message": "Список"
+  },
+  "anaDuzenIpucu": {
+    "message": "Лише головна сторінка в цьому макеті; групи зберігають свої налаштування. Теки на головній відкриваються у вікні."
+  },
+  "anaBoyutOto": {
+    "message": "За макетом"
+  },
+  "anaLogolar": {
+    "message": "Логотипи на головній"
+  },
+  "anaLogolarIpucu": {
+    "message": "Робить логотип сайту зображенням плиток головної; старе лишається у вікні «Змінити»."
+  },
+  "anaLogoKoy": {
+    "message": "Знайти логотипи для плиток головної"
+  },
+  "anaSayfaDuzeni": {
+    "message": "Макет головної"
+  },
+  "anaSayfaBoyutu": {
+    "message": "Розмір плиток головної"
+  },
+  "duzenNormal": {
+    "message": "Звичайний"
+  },
+  "kfpEkle": {
+    "message": "Додати"
+  },
+  "hazirGruplarAnaAciklama": {
+    "message": "Набір додається на головну як тека, логотипи підтягуються самі; ваші плитки не змінюються."
+  },
+  "paketAnaSayfaya": {
+    "message": "«$1» додано на головну як теку · плиток: $2"
   }
 }

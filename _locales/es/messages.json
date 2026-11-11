@@ -2437,5 +2437,104 @@
   },
   "gorselBoyutu": {
     "message": "Tamaño de imagen"
+  },
+  "klasorAcilis": {
+    "message": "Abrir carpetas en ventana"
+  },
+  "klasorAcilisIpucu": {
+    "message": "Al hacer clic en una carpeta, su contenido aparece en una ventana con logos pequeños; si está desactivado, se entra en la carpeta."
+  },
+  "mPenceredeAc": {
+    "message": "Abrir en una ventana"
+  },
+  "bolumOlarakGoster": {
+    "message": "Mostrar como sección"
+  },
+  "klasorOlarakGoster": {
+    "message": "Mostrar como carpeta"
+  },
+  "klasoreGir": {
+    "message": "Entrar en la carpeta"
+  },
+  "geri": {
+    "message": "Atrás"
+  },
+  "mSiteEkle": {
+    "message": "Añadir sitio…"
+  },
+  "klasorEkleMenu": {
+    "message": "Añadir carpeta…"
+  },
+  "klasorEkle": {
+    "message": "Añadir carpeta"
+  },
+  "klasorIpucu": {
+    "message": "Agrupa tus sitios en carpetas: Trabajo, Compras, Noticias… Haz clic en una carpeta para abrirla en una ventana."
+  },
+  "hazirDuzen": {
+    "message": "Diseño"
+  },
+  "hazirDuzenIpucu": {
+    "message": "Tamaño de accesos, espaciado y posición de carpetas con un clic. El fondo y los accesos no cambian."
+  },
+  "duzenKlasik": {
+    "message": "Clásico"
+  },
+  "duzenSade": {
+    "message": "Sencillo"
+  },
+  "duzenGaleri": {
+    "message": "Galería"
+  },
+  "klasorYeri": {
+    "message": "Posición de carpetas"
+  },
+  "klasorYeriBirlikte": {
+    "message": "Junto a los accesos"
+  },
+  "klasorYeriUst": {
+    "message": "Fila propia, arriba"
+  },
+  "klasorYeriAlt": {
+    "message": "Fila propia, abajo"
+  },
+  "gorunumIzgara": {
+    "message": "Cuadrícula"
+  },
+  "gorunumListe": {
+    "message": "Lista"
+  },
+  "anaDuzenIpucu": {
+    "message": "Solo la página de inicio usa este diseño; los grupos mantienen sus ajustes. Las carpetas de Inicio se abren en una ventana."
+  },
+  "anaBoyutOto": {
+    "message": "Según el diseño"
+  },
+  "anaLogolar": {
+    "message": "Logos en Inicio"
+  },
+  "anaLogolarIpucu": {
+    "message": "Usa el logo del sitio como imagen de los accesos de Inicio; la anterior queda en Editar."
+  },
+  "anaLogoKoy": {
+    "message": "Buscar logos para Inicio"
+  },
+  "anaSayfaDuzeni": {
+    "message": "Diseño de Inicio"
+  },
+  "anaSayfaBoyutu": {
+    "message": "Tamaño de accesos de Inicio"
+  },
+  "duzenNormal": {
+    "message": "Normal"
+  },
+  "kfpEkle": {
+    "message": "Añadir"
+  },
+  "hazirGruplarAnaAciklama": {
+    "message": "El paquete se añade a Inicio como carpeta y los logos se obtienen solos; tus accesos no se tocan."
+  },
+  "paketAnaSayfaya": {
+    "message": "\"$1\" añadido a Inicio como carpeta · $2 accesos"
   }
 }

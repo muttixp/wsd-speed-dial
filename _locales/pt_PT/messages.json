@@ -2437,5 +2437,104 @@
   },
   "gorselBoyutu": {
     "message": "Tamanho da imagem"
+  },
+  "klasorAcilis": {
+    "message": "Abrir pastas numa janela"
+  },
+  "klasorAcilisIpucu": {
+    "message": "Ao clicar numa pasta, o conteúdo aparece numa janela com logótipos pequenos; desligado, a pasta abre na própria página."
+  },
+  "mPenceredeAc": {
+    "message": "Abrir numa janela"
+  },
+  "bolumOlarakGoster": {
+    "message": "Mostrar como secção"
+  },
+  "klasorOlarakGoster": {
+    "message": "Mostrar como pasta"
+  },
+  "klasoreGir": {
+    "message": "Entrar na pasta"
+  },
+  "geri": {
+    "message": "Voltar"
+  },
+  "mSiteEkle": {
+    "message": "Adicionar site…"
+  },
+  "klasorEkleMenu": {
+    "message": "Adicionar pasta…"
+  },
+  "klasorEkle": {
+    "message": "Adicionar pasta"
+  },
+  "klasorIpucu": {
+    "message": "Organize os seus sites em pastas: Trabalho, Compras, Notícias… Clique numa pasta para a abrir numa janela."
+  },
+  "hazirDuzen": {
+    "message": "Esquema pronto"
+  },
+  "hazirDuzenIpucu": {
+    "message": "Tamanho dos blocos, espaçamento e posição das pastas num clique. Fundo e blocos não mudam."
+  },
+  "duzenKlasik": {
+    "message": "Clássico"
+  },
+  "duzenSade": {
+    "message": "Simples"
+  },
+  "duzenGaleri": {
+    "message": "Galeria"
+  },
+  "klasorYeri": {
+    "message": "Posição das pastas"
+  },
+  "klasorYeriBirlikte": {
+    "message": "Junto com os blocos"
+  },
+  "klasorYeriUst": {
+    "message": "Linha própria, em cima"
+  },
+  "klasorYeriAlt": {
+    "message": "Linha própria, em baixo"
+  },
+  "gorunumIzgara": {
+    "message": "Grelha"
+  },
+  "gorunumListe": {
+    "message": "Lista"
+  },
+  "anaDuzenIpucu": {
+    "message": "Só a página inicial usa este esquema; os grupos mantêm as suas definições. As pastas na página inicial abrem numa janela."
+  },
+  "anaBoyutOto": {
+    "message": "Pelo esquema"
+  },
+  "anaLogolar": {
+    "message": "Logótipos na página inicial"
+  },
+  "anaLogolarIpucu": {
+    "message": "Usa o logótipo do site como imagem dos blocos da página inicial; a antiga fica em Editar."
+  },
+  "anaLogoKoy": {
+    "message": "Procurar logótipos para a página inicial"
+  },
+  "anaSayfaDuzeni": {
+    "message": "Esquema da página inicial"
+  },
+  "anaSayfaBoyutu": {
+    "message": "Tamanho dos blocos da página inicial"
+  },
+  "duzenNormal": {
+    "message": "Normal"
+  },
+  "kfpEkle": {
+    "message": "Adicionar"
+  },
+  "hazirGruplarAnaAciklama": {
+    "message": "O pacote é adicionado à página inicial como pasta e os logótipos vêm automaticamente; os seus blocos não são alterados."
+  },
+  "paketAnaSayfaya": {
+    "message": "\"$1\" adicionado à página inicial como pasta · $2 blocos"
   }
 }

@@ -69,6 +69,16 @@ popular sites and their logos in one click. Need more? Advanced mode
 opens groups, folders and every setting. Switch any time; nothing is
 lost.
 
+A HOME PAGE LIKE YOUR PHONE
+
+Gather sites into folders right on the home page — Work, Shopping,
+News. A folder shows a mini preview of nine logos and opens in a
+window as a grid or a list, so the page stays put. Pick a ready
+layout in one click: Classic, Simple or Gallery. In Advanced mode the
+layout can apply to the Home page only, while your other groups keep
+their own look. Inside a group, show a folder as a framed section
+below the main tiles.
+
 COMING FROM ANOTHER SPEED DIAL?
 
 Bring everything over in one click from FVD Speed Dial and other speed
@@ -218,6 +228,16 @@ kâğıdı üstünde küçük logolu kartlar ve kısa bir ayar listesi verir.
 Hızlı Başla tek tıkla bilinen siteleri logolarıyla ekler. Daha fazlası
 mı gerekiyor? Gelişmiş mod gruplar, klasörler ve tüm ayarları açar.
 İstediğiniz an geçin; hiçbir şey kaybolmaz.
+
+TELEFONUNUZDAKİ GİBİ BİR ANA SAYFA
+
+Siteleri ana sayfada klasörlerde toplayın: İş, Alışveriş, Haber.
+Klasör dokuz logoluk küçük bir önizleme gösterir, tıklayınca bir
+pencerede ızgara ya da liste olarak açılır; sayfa yerinde kalır. Tek
+tıkla hazır bir düzen seçin: Klasik, Sade ya da Galeri. Gelişmiş modda
+düzen yalnız Ana Sayfa'ya uygulanabilir, diğer gruplarınız kendi
+görünümünde kalır. Grup içinde bir klasörü ana kartların altında
+çerçeveli bir bölüm olarak gösterin.
 
 BAŞKA BİR SPEED DIAL'DAN MI GELİYORSUNUZ?
 
@@ -373,6 +393,16 @@ WSD Speed Dial превращает новую вкладку в панель с
 Нужно больше? Расширенный режим открывает группы, папки и все
 настройки. Переключайтесь в любой момент — ничего не теряется.
 
+ГЛАВНАЯ — КАК НА ТЕЛЕФОНЕ
+
+Собирайте сайты в папки прямо на главной: Работа, Покупки, Новости.
+Папка показывает мини-превью из девяти логотипов и открывается в окне
+сеткой или списком — страница остаётся на месте. Выберите готовый
+макет в один клик: Классика, Просто или Галерея. В расширенном режиме
+макет можно применить только к главной, а остальные группы сохранят
+свой вид. Внутри группы папку можно показать как раздел в рамке под
+основными плитками.
+
 ПЕРЕХОДИТЕ С ДРУГОГО SPEED DIAL?
 
 Перенесите всё в один клик из FVD Speed Dial и других расширений speed
@@ -527,6 +557,16 @@ logotipos sobre um papel de parede tranquilo e uma lista curta de
 configurações. O Início rápido adiciona sites populares com seus
 logotipos em um clique. Precisa de mais? O modo Avançado abre grupos,
 pastas e todas as configurações. Troque quando quiser; nada se perde.
+
+UMA PÁGINA INICIAL COMO A DO SEU CELULAR
+
+Junte sites em pastas na própria página inicial: Trabalho, Compras,
+Notícias. A pasta mostra uma prévia com nove logotipos e abre numa
+janela em grade ou lista, sem sair da página. Escolha um layout pronto
+em um clique: Clássico, Simples ou Galeria. No modo Avançado o layout
+pode valer só para a página inicial, e os outros grupos mantêm o seu
+visual. Dentro de um grupo, mostre uma pasta como uma seção com
+moldura abaixo dos blocos principais.
 
 VEIO DE OUTRO SPEED DIAL?
 
@@ -690,6 +730,16 @@ pequeños con logotipos sobre un fondo tranquilo y una lista corta de
 ajustes. Inicio rápido añade sitios populares con sus logotipos en un
 clic. ¿Necesitas más? El modo Avanzado abre grupos, carpetas y todos
 los ajustes. Cambia cuando quieras; no se pierde nada.
+
+UNA PÁGINA DE INICIO COMO LA DE TU MÓVIL
+
+Agrupa sitios en carpetas en la propia página de inicio: Trabajo,
+Compras, Noticias. La carpeta muestra una vista previa con nueve logos
+y se abre en una ventana como cuadrícula o lista, sin salir de la
+página. Elige un diseño listo con un clic: Clásico, Sencillo o
+Galería. En el modo Avanzado el diseño puede aplicarse solo a Inicio,
+y tus otros grupos conservan su aspecto. Dentro de un grupo, muestra
+una carpeta como una sección enmarcada bajo los accesos principales.
 
 ¿VIENES DE OTRO SPEED DIAL?
 
@@ -858,6 +908,16 @@ WSD Speed Dial перетворює сторінку нової вкладки �
 «Швидкий старт» в один клік додає популярні сайти з логотипами.
 Потрібно більше? Розширений режим відкриває групи, папки й усі
 налаштування. Перемикайтеся будь-коли — нічого не втрачається.
+
+ГОЛОВНА — ЯК НА ТЕЛЕФОНІ
+
+Збирайте сайти в теки просто на головній: Робота, Покупки, Новини.
+Тека показує мініпревʼю з девʼяти логотипів і відкривається у вікні
+сіткою або списком — сторінка лишається на місці. Оберіть готовий
+макет в один клік: Класика, Просто або Галерея. У розширеному режимі
+макет можна застосувати лише до головної, а інші групи збережуть свій
+вигляд. Усередині групи теку можна показати як розділ у рамці під
+основними плитками.
 
 ПЕРЕХОДИТЕ З ІНШОГО SPEED DIAL?
 
@@ -1088,6 +1148,12 @@ Ekran görüntüsü için öneri sırası:
 3. Kart düzenleme penceresi
 4. Arama sonuçları
 5. Yinelenen kartlar ya da çöp kutusu
+
+### 1.7.0 ile yapılacaklar (mağaza paneli)
+
+- Paket yüklenecek (Chrome, Edge, Firefox). Yeni izin yok; gizlilik sekmesi değişmedi.
+- Uzun açıklamaya "Telefonunuzdaki gibi bir ana sayfa" bölümü eklendi (6 dil): Chrome, Edge ve AMO panellerinde güncellenmeli.
+- Önerilen yeni görsel: Klasik düzende Ana Sayfa (simgeler + alt satırda klasörler) ve açık bir klasör penceresi.
 
 ### 1.6.6 ile yapılacaklar (mağaza paneli)
 

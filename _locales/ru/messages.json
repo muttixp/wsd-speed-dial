@@ -2437,5 +2437,104 @@
   },
   "gorselBoyutu": {
     "message": "Размер изображения"
+  },
+  "klasorAcilis": {
+    "message": "Открывать папки в окне"
+  },
+  "klasorAcilisIpucu": {
+    "message": "По щелчку содержимое папки показывается во всплывающем окне маленькими логотипами; если выключено, папка открывается на странице."
+  },
+  "mPenceredeAc": {
+    "message": "Открыть в окне"
+  },
+  "bolumOlarakGoster": {
+    "message": "Показать как раздел"
+  },
+  "klasorOlarakGoster": {
+    "message": "Показать как папку"
+  },
+  "klasoreGir": {
+    "message": "Войти в папку"
+  },
+  "geri": {
+    "message": "Назад"
+  },
+  "mSiteEkle": {
+    "message": "Добавить сайт…"
+  },
+  "klasorEkleMenu": {
+    "message": "Добавить папку…"
+  },
+  "klasorEkle": {
+    "message": "Добавить папку"
+  },
+  "klasorIpucu": {
+    "message": "Соберите сайты в папки: Работа, Покупки, Новости… Папка открывается в окне по щелчку."
+  },
+  "hazirDuzen": {
+    "message": "Готовый макет"
+  },
+  "hazirDuzenIpucu": {
+    "message": "Размер плиток, отступы и место папок одним щелчком. Обои и плитки не меняются."
+  },
+  "duzenKlasik": {
+    "message": "Классика"
+  },
+  "duzenSade": {
+    "message": "Просто"
+  },
+  "duzenGaleri": {
+    "message": "Галерея"
+  },
+  "klasorYeri": {
+    "message": "Расположение папок"
+  },
+  "klasorYeriBirlikte": {
+    "message": "Вместе с плитками"
+  },
+  "klasorYeriUst": {
+    "message": "Отдельной строкой сверху"
+  },
+  "klasorYeriAlt": {
+    "message": "Отдельной строкой снизу"
+  },
+  "gorunumIzgara": {
+    "message": "Сетка"
+  },
+  "gorunumListe": {
+    "message": "Список"
+  },
+  "anaDuzenIpucu": {
+    "message": "Только главная страница в этом макете; группы сохраняют свои настройки. Папки на главной открываются в окне."
+  },
+  "anaBoyutOto": {
+    "message": "По макету"
+  },
+  "anaLogolar": {
+    "message": "Логотипы на главной"
+  },
+  "anaLogolarIpucu": {
+    "message": "Делает логотип сайта изображением плиток главной; старое остаётся в окне «Изменить»."
+  },
+  "anaLogoKoy": {
+    "message": "Найти логотипы для плиток главной"
+  },
+  "anaSayfaDuzeni": {
+    "message": "Макет главной"
+  },
+  "anaSayfaBoyutu": {
+    "message": "Размер плиток главной"
+  },
+  "duzenNormal": {
+    "message": "Обычный"
+  },
+  "kfpEkle": {
+    "message": "Добавить"
+  },
+  "hazirGruplarAnaAciklama": {
+    "message": "Набор добавляется на главную как папка, логотипы подтягиваются сами; ваши плитки не затрагиваются."
+  },
+  "paketAnaSayfaya": {
+    "message": "«$1» добавлен на главную как папка · плиток: $2"
   }
 }

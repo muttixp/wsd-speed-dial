@@ -16,7 +16,7 @@
 // Degisiklikler KAYDET'e basilinca uygulaniyor.
 
 import { gruplariAl, kartSayilariAl, kartGuncelleBaslik, grupSil,
-         sirayiUygula, kokKlasoruAl } from './yerimi.js';
+         sirayiUygula, kokKlasoruAl, anaKlasorIdleri } from './yerimi.js';
 import { c } from './dil.js';
 import { ikonlariAl, gorunumleriAl } from './grupikon.js';
 import { ikonHTML } from './ikon.js';
@@ -112,7 +112,9 @@ export async function yonetPenceresiniAc(tamamlandi) {
     liste.textContent = '';
 
     const kok = await kokKlasoruAl();
-    const gruplar = (await gruplariAl()).filter(g => g.id !== kok);  // kok tasinamaz
+    // kok tasinamaz; Ana Sayfa klasorleri (1.7.0) grup degil, Ana Sayfa'da
+    const ana = await anaKlasorIdleri();
+    const gruplar = (await gruplariAl()).filter(g => g.id !== kok && !ana.has(g.id));
     const sayilar = await kartSayilariAl(gruplar.map(g => g.id));
     const ikonlar = await ikonlariAl();
     const gorunumler = await gorunumleriAl().catch(() => ({}));

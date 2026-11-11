@@ -19,7 +19,7 @@ const el = id => document.getElementById(id);
 
 // Perde tiklamasiyla kapanabilen pencereler
 const KAPANABILIR = ['kartPencere', 'notPencere', 'tasiPencere',
-                     'grupPencere', 'yonetPencere', 'siralaPencere'];
+                     'grupPencere', 'yonetPencere', 'siralaPencere', 'klasorPencere'];
 
 let bildirimZaman = null;
 

@@ -3,6 +3,95 @@
 Sürüm numaraları [Semantic Versioning](https://semver.org/lang/tr/)
 kurallarına uyar.
 
+## 1.7.0 — geliştiriliyor
+
+### Eklendi
+- **Klasör penceresi (Basit mod)**: klasöre tıklayınca sayfa klasörün
+  içine geçmek yerine klasör üstte bir pencerede, Android klasörü gibi küçük
+  kare logolarla açılır (ana sayfadaki kart boyutundan bağımsız); alt
+  klasörlerde ilerlenir, geri dönülür; başlıkta Hepsini aç / Klasöre gir /
+  Kapat. Ayar: Kartlar › Boyut ve Yerleşim › Klasörleri Pencerede Aç (yalnız
+  Basit'te görünür, varsayılan açık). Kapalıyken klasör menüsünde "Pencerede
+  aç". Gelişmiş mod değişmedi: klasöre tıklayınca içine girilir.
+  Pencerenin solunda Izgara / Liste düğmeleri: liste görünümünde satırda
+  küçük logo + ad; seçim ayarda (`kfpGorunum`) saklanır, pencere hatırlar.
+  Pencerede "+ Ekle": Kart Ekle o klasör seçili açılır; o sırada klasör
+  penceresi gizlenir, kayıt/iptal sonrası geri gelir.
+- **Ana Sayfa klasörleri (Basit mod)**: Ana Sayfa'da "+" kutusu "Site ekle /
+  Klasör ekle" sorar; boş alan menüsündeki "Yeni klasör" de Ana Sayfa'da
+  çalışır. Kökte açılan klasör normalde grup olurdu; bu klasör
+  `grupGorunumleri.anaKlasor` ile işaretlenir, grup şeridinde ve Grupları
+  Yönet'te görünmez, Ana Sayfa'da klasör kutusu olarak durur (içine girilince
+  yol: Ana Sayfa › Klasör). İşaret yedekte grubun görünümüyle gider. Ana Sayfa
+  gizliyse bu klasörler şeritte grup olarak kalır (erişilemez olmasınlar).
+  Gelişmiş modda var olan Ana Sayfa klasörleri yine kutu olarak görünür; yeni
+  klasör Ana Sayfa'da yalnız Basit'te açılır.
+- **Klasörlerin Yeri** (Kartlar › Boyut ve Yerleşim): Kartlarla birlikte |
+  Ayrı satır, üstte | Ayrı satır, altta. Ayrı satırda klasörlerle kartlar
+  arasında tam satırlık boşluk (`.klasorAyrac`). Basit'e geçişte "altta"
+  (Gelişmiş'e dönünce eski değer). Ayar değişince ızgara yeniden çizilir.
+- **Hazır Düzen (Basit mod)**: Ayarlar'ın başında üç kart — Klasik (ortada
+  geniş aralıklı simgeler, klasörler altta), Sade (üstte sık simgeler,
+  klasörler üstte), Galeri (site görüntülü küçük kartlar, klasörler
+  kartlarla). Yalnız boyut/oran/aralık/sütun/dikey konum/klasör yeri;
+  duvar kâğıdı, tema ve kartlar değişmez. Ayarlar düzene uyuyorsa kart seçili.
+- Basit modda klasör kutusunun mozaiği 3×3 küçük logo (Gelişmiş'te 2×2).
+- **Ana Sayfa Düzeni (Gelişmiş mod)**: Hazır Düzen kartları iki modda da
+  Ayarlar'ın başında. Basit'te bütün sayfaların ayarını yazar; Gelişmiş'te
+  başlık "Ana Sayfa Düzeni" olur, ek "Normal" kartı (Ana Sayfa diğer sayfalarla
+  aynı) ve altında Ana Sayfa Kart Boyutu (Düzene göre | Simge…Kocaman) ile
+  "Ana Sayfa'ya Logo" çıkar; düzen seçilince Ana Sayfa açılır. Yalnız Ana Sayfa'nın kendisi açıkken geçerli
+  (klasörün içine girilince ve gruplarda genel ayar): ayarlar yazılmıyor,
+  `gorunumuUygula` "etkin ayar" alıyor (js/anaduzen.js). Ana Sayfa'da klasör
+  penceresi, "+ Klasör ekle", klasör ipucu ve 3×3 mozaik çalışır
+  (`body.anaDuzenli`). "Ana Sayfa'ya Logo" düğmesi Ana Sayfa kartlarına logo
+  bulur (logo oranı görünen kart oranından).
+- **Hazır Gruplar → Ana Sayfa klasörü**: Basit modda ya da Ana Sayfa düzeni
+  açıkken paket grup değil Ana Sayfa klasörü olur (aynı adlı Ana Sayfa
+  klasörü varsa eksik siteler ona eklenir), ekran görüntüsü yakalanmaz,
+  logolar hemen konur. Gelişmiş/Normal'de eskisi gibi grup.
+- Gelişmiş modda Ana Sayfa Düzeni kartları Ayarlar › Ana Sayfa › Ana Sayfa
+  Düzeni altında (Basit'te Ayarlar'ın başında Hazır Düzen).
+- Basit modda Ana Sayfa gizlenemez: "Ana Sayfa Grubu" anahtarı yalnız
+  Gelişmiş'te; Basit'e geçişte Ana Sayfa açılır, Gelişmiş'e dönünce eski
+  değer. Açılış Grubu listesinde Ana Sayfa klasörleri yok.
+- **Klasör ipucu (Basit mod)**: Ana Sayfa'da hiç klasör yoksa bir kez "Siteleri
+  klasörlerde toplayın…" notu ve "Klasör ekle" düğmesi; kapatınca ya da ilk
+  klasör eklenince bir daha çıkmaz.
+- Basit modda içi görselli klasör kutusunda sayı yazısı gizli (küçük kutuda
+  logoların üstüne biniyordu).
+- **Bölümler**: alt klasör menüsünde "Bölüm olarak göster" — klasör kutu
+  yerine ana kartların altında başlıklı, çerçeveli bir alan olarak açılır ve
+  kartları içinde görünür. Başlığa tıklama klasörü açılış kipinde açar, ok
+  düğmesi içine girer. Bölüme bırakılan kart o klasöre taşınır. Kutu
+  genişliği ana kartların hizasına oturur. Yer imi yapısı aynı; senkron ve
+  yedek etkilenmez.
+
+
+- **Site adı**: Kart Ekle/Düzenle'de başlık boş bırakılınca (ya da başlık
+  adresin kendisiyse) ad adresten tahmin edilir ("sozcu.com.tr" → "Sozcu"),
+  sonra sitenin bildirdiği ad gelir (og:site_name, application-name,
+  <title>'ın ilk parçası → "Sözcü Gazetesi"). Kullanıcı yazarsa dokunulmaz;
+  kayıttan sonra ad gelirse kart arka planda güncellenir. Adı adres olan eski
+  kart Düzenle'de açılınca ad önerilir (js/siteadi.js; istek yalnız siteye).
+
+### Düzeltildi
+- Klasör penceresinden açılan Düzenle, Not, Taşı ve onay pencereleri klasör
+  penceresinin altında kalıyordu: başka pencere açılınca klasör penceresi
+  gizlenir, o kapanınca geri gelir.
+- Klasör penceresinde Düzenle › Kaydet sonrası görseller boş kalıyordu: ana
+  ızgara yeniden çizilirken görsel gözcüleri sıfırlanıyor, pencerenin
+  kuyruktaki kartları da düşüyordu. Sıfırlamada pencere kartları da yeniden
+  gözleniyor.
+- Klasördeki kartların görseli yenilenince (Görselleri yenile, yakalama,
+  logo) Ana Sayfa'daki klasör kutusunun mozaiği sayfa yenilenmeden
+  güncelleniyor.
+- **Bazı logo bağlantıları kaydolmuyordu**: bağlantı görselin izine (özüne)
+  bağlı; büyük görseller (>70 KB) çizimden sonra arka planda küçültülüyor,
+  iz değişince bağlantı sahipsiz kalıyordu. Küçültmede bağlantı yeni ize
+  taşınıyor. Önceki sürümlerde kaybolan: tek sahipsiz bağlantı varsa ve
+  seçili görselin bağlantısı yoksa Düzenle açılınca ona veriliyor.
+
 ## [1.6.6] — 2026-11-10
 
 ### Eklendi

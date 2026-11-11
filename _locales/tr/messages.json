@@ -2437,5 +2437,104 @@
   },
   "gorselBoyutu": {
     "message": "Görsel Boyutu"
+  },
+  "klasorAcilis": {
+    "message": "Klasörleri Pencerede Aç"
+  },
+  "klasorAcilisIpucu": {
+    "message": "Klasöre tıklayınca içindekiler açılır pencerede küçük logolarla görünür; kapalıysa klasörün içine girilir."
+  },
+  "mPenceredeAc": {
+    "message": "Pencerede aç"
+  },
+  "bolumOlarakGoster": {
+    "message": "Bölüm olarak göster"
+  },
+  "klasorOlarakGoster": {
+    "message": "Klasör olarak göster"
+  },
+  "klasoreGir": {
+    "message": "Klasöre gir"
+  },
+  "geri": {
+    "message": "Geri"
+  },
+  "mSiteEkle": {
+    "message": "Site ekle…"
+  },
+  "klasorEkleMenu": {
+    "message": "Klasör ekle…"
+  },
+  "klasorEkle": {
+    "message": "Klasör ekle"
+  },
+  "klasorIpucu": {
+    "message": "Siteleri klasörlerde toplayın: İş, Alışveriş, Haber… Klasöre tıklayınca pencerede açılır."
+  },
+  "hazirDuzen": {
+    "message": "Hazır Düzen"
+  },
+  "hazirDuzenIpucu": {
+    "message": "Kart boyutu, aralıklar ve klasörlerin yeri tek tıkla. Duvar kâğıdı ve kartlar değişmez."
+  },
+  "duzenKlasik": {
+    "message": "Klasik"
+  },
+  "duzenSade": {
+    "message": "Sade"
+  },
+  "duzenGaleri": {
+    "message": "Galeri"
+  },
+  "klasorYeri": {
+    "message": "Klasörlerin Yeri"
+  },
+  "klasorYeriBirlikte": {
+    "message": "Kartlarla birlikte"
+  },
+  "klasorYeriUst": {
+    "message": "Ayrı satır, üstte"
+  },
+  "klasorYeriAlt": {
+    "message": "Ayrı satır, altta"
+  },
+  "gorunumIzgara": {
+    "message": "Izgara"
+  },
+  "gorunumListe": {
+    "message": "Liste"
+  },
+  "anaDuzenIpucu": {
+    "message": "Yalnız Ana Sayfa bu düzende görünür; gruplar kendi ayarlarında kalır. Ana Sayfa'da klasörler pencerede açılır."
+  },
+  "anaBoyutOto": {
+    "message": "Düzene göre"
+  },
+  "anaLogolar": {
+    "message": "Ana Sayfa'ya Logo"
+  },
+  "anaLogolarIpucu": {
+    "message": "Ana Sayfa kartlarının görselini site logosu yapar; eskisi Düzenle'de kalır."
+  },
+  "anaLogoKoy": {
+    "message": "Ana Sayfa kartlarına logo bul"
+  },
+  "anaSayfaDuzeni": {
+    "message": "Ana Sayfa Düzeni"
+  },
+  "anaSayfaBoyutu": {
+    "message": "Ana Sayfa Kart Boyutu"
+  },
+  "duzenNormal": {
+    "message": "Normal"
+  },
+  "kfpEkle": {
+    "message": "Ekle"
+  },
+  "hazirGruplarAnaAciklama": {
+    "message": "Paket Ana Sayfa'ya klasör olarak eklenir, logoları kendiliğinden gelir; mevcut kartlarınıza dokunulmaz."
+  },
+  "paketAnaSayfaya": {
+    "message": "\"$1\" Ana Sayfa'ya klasör olarak eklendi · $2 kart"
   }
 }

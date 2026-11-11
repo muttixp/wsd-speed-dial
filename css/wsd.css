@@ -4155,3 +4155,198 @@ body.kartlarDikeyOrta #kartAlani > * { flex: 0 0 auto; }
     border-radius: 999px; padding: 2px 10px; font-size: 11px; cursor: pointer;
 }
 .kpBoslukGenel.secili { border-color: var(--vurgu); color: var(--metin); }
+
+/* ---------- KLASOR PENCERESI (1.7.0) ---------- */
+.klasorPencereIc {
+    width: min(620px, 94vw);
+    max-height: 86vh;
+    padding: var(--b4) var(--b5) var(--b5);
+}
+.kfpUst {
+    display: flex; align-items: center; gap: var(--b2);
+    margin-bottom: var(--b4);
+}
+.kfpUst h2 { flex: 1; margin: 0; text-align: center; font-size: 17px; }
+.kfpDugme {
+    width: 32px; height: 32px; border-radius: 8px; border: 0; padding: 6px;
+    background: transparent; color: var(--metin-sonuk); cursor: pointer;
+}
+.kfpDugme:hover { background: var(--yuzey-hover, rgba(127,127,127,.15)); color: var(--metin); }
+.kfpDugme svg { width: 100%; height: 100%; }
+.kfpIzgara {
+    max-width: none; justify-content: center;
+    /* Android klasoru gibi: kucuk kare logo, altinda ad - ana sayfadaki
+       kart boyutundan bagimsiz (1.7.0) */
+    --kart-en: 76px;
+    --kart-gorsel-boy: 76px;
+    --kart-oran: 1 / 1;
+    --gorsel-yerlesim: contain;
+    --gorsel-konum: 50% 50%;
+    --kart-bosluk-yatay: 26px;
+    --kart-bosluk-dikey: 20px;
+    padding: 4px 0 8px;
+}
+.kfpIzgara .kartArac[data-arac="sil"] { display: none; }
+/* Izgara / liste dugmeleri (1.7.0) */
+.kfpGorunum { display: flex; gap: 2px; }
+.kfpGorunum .kfpDugme.secili { background: rgba(var(--on), .12); color: var(--metin); }
+/* LISTE: satirda kucuk logo + ad */
+.kfpIzgara.kfpListe {
+    display: flex; flex-direction: column; align-items: stretch; gap: 2px;
+    --kart-gorsel-boy: 30px;
+}
+.kfpListe > .kart, .kfpListe > .klasorKart {
+    width: auto; height: auto; padding: 5px 8px; border-radius: 8px;
+    background: transparent; border: 0; box-shadow: none; transform: none;
+}
+.kfpListe > .kart:hover, .kfpListe > .klasorKart:hover, .kfpListe > :focus-visible { background: rgba(var(--on), .08); }
+body .kfpIzgara.kfpListe > :is(.kart, .klasorKart) { flex: none; width: auto; }
+.kfpListe .kartGovde, body .kfpListe .kart .kartGovde { flex-direction: row; align-items: center; gap: 0; }
+.kfpListe .klasorKart .kartBaslik::before { display: none; }
+.kfpListe .kartGorsel {
+    order: -1; flex: none; width: 30px; height: 30px; border-radius: 7px; margin-right: 12px;
+    outline: 1px solid rgba(var(--on), .12);
+}
+.kfpListe .kartBaslik, body.kucukKart.baslikAltta .kfpListe .kartBaslik {
+    order: 0; flex: 1; min-width: 0; width: auto; margin: 0; padding: 0; text-align: left; font-size: 14px;
+    color: var(--metin); text-shadow: none;
+}
+.kfpListe .kartArac, .kfpListe .kartRenk, .kfpListe .klasorMozaik, .kfpListe .klasorSayi { display: none !important; }
+.kfpListe .klasorKart .klasorIkon { display: inline-flex !important; width: 100%; height: 100%; align-items: center; justify-content: center; }
+.kfpListe .klasorKart .klasorIkon svg { width: 20px; height: 20px; }
+/* Basit: kucuk klasor kutusunda sayi yazisi logolarin ustune biniyordu */
+:is(body.basitMod, body.anaDuzenli) .klasorKart.onizlemeli .klasorSayi { display: none; }
+/* Pencerede her gorsel kare kutuya sigsin: kart basina buyutme/kirpma
+   ana sayfanin olcusune gore, burada uymuyor */
+.kfpIzgara .kartGorsel { background-size: contain !important; background-position: 50% 50% !important; }
+
+/* ---------- BOLUMLER (1.7.0): alt klasor sayfada cerceveli alan ---------- */
+.izgaraBolum {
+    grid-column: 1 / -1;
+    /* Genislik ana izgaranin sutunlarina oturur: kutu kartlarin hizasinda
+       baslar/biter (round() yoksa tam genislik - yalnizca gorunus) */
+    --bolum-ic: 16px;
+    box-sizing: border-box;
+    /* --bolum-en: ana izgaranin gercek kart genisligi (cizim.js olcer);
+       kutu iki yandan ic bosluk kadar tasar, kartlar ana kartlarla hizali */
+    width: min(calc(var(--bolum-en, 100%) + 2 * var(--bolum-ic) + 2px), 100%);
+    justify-self: center;
+    margin-top: var(--b3);
+    padding: var(--b3) var(--bolum-ic) var(--bolum-ic);
+    border-radius: var(--k3);
+    border: 1px solid var(--cerceve);
+    background: var(--bolum-zemin, color-mix(in srgb, var(--yuzey) 55%, transparent));
+}
+body.camGorunum .izgaraBolum { backdrop-filter: blur(14px) saturate(1.2); }
+.izgaraBolum.surukHedefi, .izgaraBolum.sekmeHedef { outline: 2px solid var(--vurgu); }
+.izgaraBolumUst {
+    display: flex; align-items: center; gap: var(--b2);
+    margin-bottom: var(--b3); cursor: pointer; user-select: none;
+    font-weight: 600; font-size: 14px; color: var(--metin);
+}
+.izgaraBolumUst:hover .izgaraBolumAd { text-decoration: underline; text-underline-offset: 3px; }
+.izgaraBolumUst.menuHedef { outline: 2px solid var(--vurgu); border-radius: 6px; }
+.izgaraBolumIkon { width: 18px; height: 18px; display: inline-flex; }
+.izgaraBolumIkon svg { width: 100%; height: 100%; }
+.izgaraBolumSayi {
+    font-size: 11px; font-weight: 500; color: var(--metin-sonuk);
+    padding: 1px 7px; border-radius: 999px; background: color-mix(in srgb, var(--metin) 10%, transparent);
+}
+.izgaraBolumAc {
+    margin-left: auto; width: 26px; height: 26px; border: 0; border-radius: 6px; padding: 4px;
+    background: transparent; color: var(--metin-sonuk); cursor: pointer;
+}
+.izgaraBolumAc:hover { color: var(--metin); background: color-mix(in srgb, var(--metin) 10%, transparent); }
+.izgaraBolumAc svg { width: 100%; height: 100%; }
+.izgaraBolumKartlar { max-width: none; margin: 0; }
+body.kartlarOrtada .izgaraBolumKartlar { justify-content: center; }
+body:not(.kartlarOrtada) .izgaraBolum {
+    justify-self: start;
+    /* Kutu kartlarin iki yanindan tasar; izgara genisligiyle sinirlanmaz */
+    width: calc(var(--bolum-en, 100%) + 2 * var(--bolum-ic) + 2px);
+    max-width: calc(100vw - 2 * var(--bolum-ic));
+    margin-left: calc(-1 * var(--bolum-ic) - 1px);
+}
+.izgaraBolumKartlar { justify-content: start; }
+body.kartlarOrtada .kartIzgara > .izgaraBolum {
+    flex: 0 0 min(calc(var(--bolum-en, 100%) + 2 * var(--bolum-ic) + 2px), 100%);
+    margin-inline: auto;
+}
+
+/* ---------- KLASOR IPUCU (1.7.0, Basit mod Ana Sayfa) ---------- */
+/* Dis kutu tam satir (izgarada da flex'te de), ic kutu ortada hap */
+.klasorIpucu { grid-column: 1 / -1; display: flex; justify-content: center; margin-bottom: 6px; }
+body:not(.kartlarOrtada) .klasorIpucu { justify-content: flex-start; }
+.klasorIpucuIc {
+    display: flex; align-items: center; gap: 10px;
+    max-width: 100%; box-sizing: border-box;
+    padding: 7px 7px 7px 14px;
+    border-radius: var(--k2, 10px);
+    background: rgba(var(--on), .07);
+    border: 1px solid rgba(var(--on), .12);
+    color: var(--metin);
+    font-size: 13px;
+    backdrop-filter: blur(6px);
+}
+.klasorIpucuEkle {
+    flex: none;
+    padding: 5px 12px; border-radius: 7px; border: 0; cursor: pointer;
+    background: var(--vurgu); color: #fff; font: inherit; font-weight: 600;
+}
+.klasorIpucuKapat {
+    flex: none; width: 26px; height: 26px; border: 0; border-radius: 6px; cursor: pointer;
+    background: transparent; color: var(--metin); opacity: .7; font-size: 18px; line-height: 1;
+}
+.klasorIpucuKapat:hover { background: rgba(var(--on), .1); opacity: 1; }
+
+/* ---------- KLASORLERIN YERI (1.7.0) ---------- */
+/* Klasor satiri ile kartlar arasinda bosluk: tam satir, ince */
+.klasorAyrac { grid-column: 1 / -1; height: 10px; }
+body.kartlarOrtada .kartIzgara > .klasorAyrac { flex: 0 0 100%; }
+
+/* Basit: klasor kutusunda 3x3 kucuk logo (Gelismis 2x2 ekran goruntusu) */
+:is(body.basitMod, body.anaDuzenli) .klasorKart.onizlemeli .klasorMozaik {
+    inset: 8px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    grid-auto-rows: 0;
+    gap: 3px;
+}
+:is(body.basitMod, body.anaDuzenli) .klasorKart.onizlemeli .klasorMozaik > span {
+    border-radius: 3px; background-position: 50% 50%; opacity: 1;
+}
+
+/* ---------- HAZIR DUZENLER (1.7.0, Basit) ---------- */
+.duzenSatir { gap: 8px; }
+.duzenKartlari { display: grid; grid-template-columns: repeat(auto-fit, minmax(60px, 1fr)); gap: 8px; width: 100%; }
+.duzenKart {
+    display: flex; flex-direction: column; gap: 5px; align-items: stretch;
+    padding: 5px; border-radius: 9px; cursor: pointer;
+    background: rgba(var(--on), .04); border: 1.5px solid rgba(var(--on), .1);
+    color: var(--metin); font: inherit; font-size: 12px;
+}
+.duzenKart:hover { border-color: rgba(var(--on), .25); }
+.duzenKart.secili { border-color: var(--vurgu); background: rgba(var(--on), .08); }
+.duzenAd { text-align: center; }
+.dzOn {
+    display: flex; flex-direction: column; align-items: center; gap: 3px;
+    height: 58px; padding: 6px 4px; box-sizing: border-box; border-radius: 6px;
+    background: linear-gradient(140deg, #3d6a8f, #1f3247 60%, #2c2a44);
+}
+.dzOrta { justify-content: center; }
+.dzUst { justify-content: flex-start; }
+.dzSatir { display: flex; gap: 6px; }
+.dzSik .dzSatir { gap: 3px; }
+.dzBosluk { height: 3px; }
+.dzOn i { display: block; width: 6px; height: 6px; border-radius: 2px; background: rgba(255, 255, 255, .8); }
+.dzOn i.dzK { width: 8px; height: 8px; background: rgba(255, 255, 255, .35); outline: 1px solid rgba(255, 255, 255, .55); }
+.dzOn i.dzG { width: 16px; height: 10px; background: rgba(255, 255, 255, .7); }
+.dzOn i.dzKG { width: 16px; height: 10px; }
+.dzOn i.dzB { width: 20px; height: 13px; }
+.anaDuzenSatiri[hidden] { display: none !important; }
+
+/* Klasor penceresinde "+" hep gorunur (ana izgaradaki ayardan bagimsiz) */
+body.ekleKartiKapali .kfpIzgara .ekleKart { display: block; }
+.kfpListe .ekleKart .ekleKutu { order: -1; flex: none; width: 30px; height: 30px; margin-right: 12px; font-size: 18px; }
+/* Ana Sayfa bolumunde alt baslik zaten "Ana Sayfa Duzeni" - satirdaki tekrar gizli */
+#anaDuzenYeri .duzenSatir [data-c="anaSayfaDuzeni"] { display: none; }

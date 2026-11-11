@@ -64,6 +64,11 @@ export const VARSAYILAN = {
     kartOrani: 'o1610',         // 'o43' | 'o1610' | 'o169'
     gorselYerlesim: 'cover',    // 'cover' (kırp) | 'contain' (sığdır)
     maxSutun: 0,                // 0 = sinir yok, ekrana sigan kadar
+    klasorYeri: 'birlikte',     // klasor kutulari: 'birlikte' (kartlarla) | 'ust' | 'alt' (ayri satirda) (1.7.0)
+    klasorPencere: true,        // Basit modda klasor acilir pencerede, kucuk logolarla (1.7.0); Gelismis'te hep icine
+    kfpGorunum: 'izgara',       // klasor penceresinde 'izgara' (logolar) | 'liste' (1.7.0)
+    anaDuzen: 'yok',            // Gelismis: Ana Sayfa'ya ozel duzen 'yok' | 'klasik' | 'sade' | 'galeri' (1.7.0)
+    anaBoyut: 'oto',            // Ana Sayfa duzeninde kart boyutu: 'oto' (duzene gore) | HAZIR_BOYUTLAR adi
     kartDikey: 'ust',           // kartlar sayfada 'ust' | 'orta' (dikeyde ortali) (1.6.6)
     kartHizalama: 'orta',       // 'orta' | 'sol' - satirlar (son satir dahil) ortalanir (1.5.6)
     kartZeminRengi: '#22262e',

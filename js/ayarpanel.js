@@ -14,6 +14,7 @@
 import { moduSinifla, etkinMod } from './tema.js';
 import { tazelemeBastirildiMi, bildir, mesgulDugme } from './arayuz.js';
 import { ayarlariAl, ayarYaz, ayarlariSifirla } from './ayar.js';
+import { etkinAyar, anaDuzenGecerli } from './anaduzen.js';
 import { c } from './dil.js';
 import { filtreZinciri, ikiRenkKatmanlari } from './filtre.js';
 import { yedegiIndir, yedegiYukle, yedekTuru, yapiOzeti, oksuzleriTemizle, herSeyiSil,
@@ -102,6 +103,9 @@ const ALANLAR = [
     ['maxSutun',         'ayMaxSutun',         el => +el.value],
     ['kartHizalama',     'ayKartHizalama',     el => el.value],
     ['kartDikey',        'ayKartDikey',        el => el.value],
+    ['klasorPencere',    'ayKlasorPencere',    el => el.checked],
+    ['klasorYeri',       'ayKlasorYeri',       el => el.value],
+    ['anaBoyut',         'ayAnaBoyut',         el => el.value],
     ['kartZeminRengi',   'ayKartZemin',        el => el.value],
     ['kartEn',           'ayKartEn',           el => +el.value],
     ['kartBoslukYatay',  'ayBoslukYatay',      el => +el.value],
@@ -195,6 +199,9 @@ export async function ayarPaneliniKur() {
         girdileriDoldur(a);
         gorunumuUygula(a);
         acilisGrubuListesi();
+        hazirDuzeniGoster(a);
+        anaDuzenSatirlari(a);
+        import('./cizim.js').then(m => m.duzeniTazele()).catch(() => {});
     });
 
     // Degisiklikler aninda kaydediliyor - ayri "Kaydet" dugmesi yok
@@ -208,6 +215,9 @@ export async function ayarPaneliniKur() {
             ciktiTazele(id);
             const yeni = await ayarYaz({ [anahtar]: oku(el) });
             gorunumuUygula(yeni);
+            if (['klasorYeri', 'anaDuzen', 'anaBoyut'].includes(anahtar)) import('./cizim.js').then(m => m.duzeniTazele()).catch(() => {});
+            if (anahtar === 'anaDuzen') anaDuzenSatirlari(yeni);
+            hazirDuzeniGoster(yeni);
 
             // Ana Sayfa gorunurlugu seridin yapisini degistiriyor -
             // CSS yetmez, yeniden cizilmeli
@@ -353,8 +363,15 @@ async function zeminZitliginiUygula(ayar, duvarKapali) {
     document.body.classList.toggle('zeminAcik', p != null && !acik && p > 0.62);
 }
 
+/** Genel ayar degismeden gorunumu tazeler (Ana Sayfa'ya girip cikinca, 1.7.0) */
+export async function gorunumuTazele() { gorunumuUygula(await ayarlariAl()); }
+
 function gorunumuUygula(ayar) {
     if (!ayar) return;              // yazma sirasinda null gelebiliyordu
+    // ANA SAYFA GORUNUMU (1.7.0): Ana Sayfa acikken onun duzeni gecerli
+    document.body.classList.toggle('anaDuzenli', anaDuzenGecerli(ayar));
+    duzenYeriniAyarla(ayar);
+    ayar = etkinAyar(ayar);
     const kapali = ayar.kartAraclariGoster === false;
     document.body.classList.toggle('araclarKapali', kapali);
     document.body.classList.toggle('renkliSimgeler', ayar.renkliSimgeler !== false);
@@ -1305,6 +1322,33 @@ function grupGosterimSegmenti() {
             document.dispatchEvent(new CustomEvent('wsd-ayar-tazele'));
         });
     }
+    // HAZIR DUZENLER (1.7.0): Basit'te butun sayfalarin ayari yazilir;
+    // Gelismis'te yalniz Ana Sayfa'nin duzeni (anaDuzen) - gruplar degismez
+    for (const b of document.querySelectorAll('#ayHazirDuzen .duzenKart')) {
+        b.addEventListener('click', async () => {
+            const { HAZIR_DUZENLER } = await import('./basitmod.js');
+            const ad = b.dataset.duzen;
+            if ((await ayarlariAl()).basitMod === true) {
+                const d = HAZIR_DUZENLER[ad];
+                if (!d) return;
+                gorunumuUygula(await ayarYaz(d));
+            } else {
+                gorunumuUygula(await ayarYaz({ anaDuzen: HAZIR_DUZENLER[ad] ? ad : 'yok' }));
+                // Sonucu gorsun: baska bir gruptaysa Ana Sayfa'ya gec
+                const { kokKlasoruAl } = await import('./yerimi.js');
+                const { grubuAc, aktifGrup } = await import('./cizim.js');
+                const kok = await kokKlasoruAl();
+                if (ad !== 'normal' && aktifGrup() !== kok) await grubuAc(kok);
+            }
+            document.dispatchEvent(new CustomEvent('wsd-ayar-tazele'));
+        });
+    }
+    ayarlariAl().then(a => { hazirDuzeniGoster(a); anaDuzenSatirlari(a); }).catch(() => {});
+    document.getElementById('ayAnaLogoKoy')?.addEventListener('click', async () => {
+        const { kokKlasoruAl } = await import('./yerimi.js');
+        const { grubaLogoKoy } = await import('./basitmod.js');
+        grubaLogoKoy(await kokKlasoruAl());
+    });
     document.getElementById('ayHazirBoyut')?.addEventListener('change', async e => {
         const { HAZIR_BOYUTLAR } = await import('./basitmod.js');
         const d = HAZIR_BOYUTLAR[e.target.value];
@@ -1322,6 +1366,28 @@ function grupGosterimSegmenti() {
             gorunumuUygula(await ayarYaz({ seritUstte: b.dataset.deger === 'kose' }));
         });
     }
+}
+
+/** Ana Sayfa duzeni secilmemisse boyut/logo satirlari gizli */
+function anaDuzenSatirlari(a) {
+    const acik = !!a && !!a.anaDuzen && a.anaDuzen !== 'yok';
+    for (const s of document.querySelectorAll('.anaDuzenSatiri')) s.hidden = !acik;
+}
+
+/** Duzen blogu: Basit'te ayarlarin basinda, Gelismis'te Ana Sayfa bolumunde */
+function duzenYeriniAyarla(a) {
+    const blok = document.getElementById('duzenBlogu');
+    const yer = document.getElementById(a && a.basitMod === true ? 'ustDuzenYeri' : 'anaDuzenYeri');
+    if (blok && yer && blok.parentElement !== yer) yer.appendChild(blok);
+}
+
+async function hazirDuzeniGoster(a) {
+    if (!a) return;
+    duzenYeriniAyarla(a);
+    const { hazirDuzenAdi, HAZIR_DUZENLER } = await import('./basitmod.js');
+    // Basit: ayarlar hangi duzene uyuyor; Gelismis: Ana Sayfa'nin duzeni
+    const ad = a.basitMod === true ? hazirDuzenAdi(a) : (HAZIR_DUZENLER[a.anaDuzen] ? a.anaDuzen : 'normal');
+    for (const b of document.querySelectorAll('#ayHazirDuzen .duzenKart')) b.classList.toggle('secili', b.dataset.duzen === ad);
 }
 
 function yontemSegmentiniKur() {
@@ -1428,10 +1494,11 @@ function ciktiTazele(id) {
 async function acilisGrubuListesi() {
     const kutu = document.getElementById('ayAcilisGrubu');
     if (!kutu) return;
-    const { gorunurGruplariAl } = await import('./yerimi.js');
+    // Ana Sayfa klasorleri (1.7.0) grup degil: listede yok
+    const { seritGruplariAl } = await import('./yerimi.js');
     const ayar = await ayarlariAl();
     const secili = ayar.acilisGrubu || (ayar.grubuHatirla === false ? 'ilk' : 'son');
-    const gruplar = await gorunurGruplariAl().catch(() => []);
+    const gruplar = await seritGruplariAl().catch(() => []);
     for (const o of [...kutu.querySelectorAll('option[data-grup]')]) o.remove();
     for (const g of gruplar) {
         const o = document.createElement('option');

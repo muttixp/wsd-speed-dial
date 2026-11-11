@@ -15,8 +15,9 @@
 import { grupEkle, grupSil, kartEkle, kartGuncelle, kartSil, kartGuncelleBaslik,
          urlNormalle } from './yerimi.js';
 import { c } from './dil.js';
+import { ayarlariAl } from './ayar.js';
 import { aktifGrup, aktifSekme, arayuzuKur, grubuAc, kartGorseliniTazele } from './cizim.js';
-import { klasorleriKur, klasorIsaretiniTemizle, yeniKlasor, klasoruTasi, klasoruDuzenle } from './klasor.js';
+import { klasorleriKur, klasorIsaretiniTemizle, yeniKlasor, klasoruTasi, klasoruDuzenle, klasorEylemiDisaridan } from './klasor.js';
 import { gruplariAl, gorunurGruplariAl, kokKlasoruAl, tumKlasorleriAl } from './yerimi.js';
 import { RENKLER, renkleriAl, renkYaz } from './renk.js';
 import { karuseliKur, karuseliYukle, adayEkle, zeminAyarla, secimDurumu, yerlesimDegistir, kendiResmeGoreYerlesim, seciliKaynak } from './karusel.js';
@@ -64,6 +65,9 @@ export function etkilesimiKur() {
         copeAt, tazelemeyiBastir,
         seritTazele: async () => { await arayuzuKur(); menuTazele(); }
     });
+    import('./klasorpencere.js')
+        .then(m => m.klasorPenceresiKur({ grubuAc, klasorEylemi: klasorEylemiDisaridan }))
+        .catch(e => console.log('[WSD] klasor penceresi:', e));
 
 
     // "+" karti ve arac seridi - kap uzerinden dinliyoruz cunku kartlar
@@ -202,67 +206,86 @@ export function etkilesimiKur() {
         await grubuAc(aktifGrup());
     });
 
-    el('kartKabi')?.addEventListener('auxclick', e => {
-        if (e.button !== 1) return;
-        const kart = e.target.closest('.kart:not(.ekleKart)');
-        if (!kart || e.target.closest('.kartArac')) return;
-        if (!OZEL_SEMA.test(kart.href)) return;
-        e.preventDefault();
-        sayacArtir(kart.dataset.anahtar).catch(() => {});
-        ozelSemaAc(kart.href, 'arkaplan');
-    });
+    // Ana izgara ve KLASOR PENCERESI (1.7.0) ayni kart davranisi
+    for (const kap of [el('kartKabi'), el('kfpKabi')]) {
+        kap?.addEventListener('auxclick', e => {
+            if (e.button !== 1) return;
+            const kart = e.target.closest('.kart:not(.ekleKart)');
+            if (!kart || e.target.closest('.kartArac')) return;
+            if (!OZEL_SEMA.test(kart.href)) return;
+            e.preventDefault();
+            sayacArtir(kart.dataset.anahtar).catch(() => {});
+            ozelSemaAc(kart.href, 'arkaplan');
+        });
 
-    // Orta tikin otomatik kaydirma imlecini ve varsayilan gezinmeyi engelle
-    el('kartKabi')?.addEventListener('mousedown', e => {
-        if (e.button !== 1) return;
-        const kart = e.target.closest('.kart:not(.ekleKart)');
-        if (kart && OZEL_SEMA.test(kart.href)) e.preventDefault();
-    });
+        // Orta tikin otomatik kaydirma imlecini ve varsayilan gezinmeyi engelle
+        kap?.addEventListener('mousedown', e => {
+            if (e.button !== 1) return;
+            const kart = e.target.closest('.kart:not(.ekleKart)');
+            if (kart && OZEL_SEMA.test(kart.href)) e.preventDefault();
+        });
 
-    el('kartKabi')?.addEventListener('click', async e => {
-        if (e.target.closest('.ekleKart')) return kartPenceresiniAc(null);
-
-        // Ziyaret sayaci - arac dugmesine basildiysa saymiyoruz
-        const acilanKart = e.target.closest('.kart:not(.ekleKart)');
-        if (acilanKart && !e.target.closest('.kartArac')) {
-            sayacArtir(acilanKart.dataset.anahtar).catch(() => {});
-
-            // Ctrl/Cmd/orta tik zaten tarayicinin kendi davranisi -
-            // ona KARISMIYORUZ, yoksa iki sekme aciliyor.
-            const ozelTik = e.ctrlKey || e.metaKey || e.shiftKey || e.button === 1;
-            const kip = document.body.dataset.kartAcilis || 'ayni';
-
-            // chrome:// vb. adresler bagalanti olarak acilamiyor
-            if (OZEL_SEMA.test(acilanKart.href)) {
-                e.preventDefault();
-                ozelSemaAc(acilanKart.href, ozelTik ? 'yeni' : kip);
-                return;
-            }
-
-            if (!ozelTik && kip !== 'ayni') {
-                e.preventDefault();
-                if (kip === 'arkaplan') {
-                    // Arka planda acmak icin tarayici API'si gerekiyor:
-                    // window.open odagi hedefe veriyor.
-                    chrome.tabs.create({ url: acilanKart.href, active: false })
-                        .catch(() => window.open(acilanKart.href, '_blank'));
-                } else {
-                    window.open(acilanKart.href, '_blank');
+        kap?.addEventListener('click', async e => {
+            // Basit modda Ana Sayfa'da "+" : site mi klasor mu (1.7.0)
+            if (e.target.closest('.klasorIpucuEkle')) return yeniKlasor(await kokKlasoruAl());
+            const ekleK = e.target.closest('.ekleKart');
+            if (ekleK) {
+                // Klasor penceresindeki "+": o klasore ekle (1.7.0)
+                if (kap === el('kfpKabi')) {
+                    const kp = await import('./klasorpencere.js');
+                    const hedef = kp.acikKlasor();
+                    kp.eklemeIcinGizle();
+                    return kartPenceresiniAc(null, hedef);
                 }
-                return;
+                if (kap === el('kartKabi') && await basitAnaSayfadaMi()) {
+                    const r = ekleK.getBoundingClientRect();
+                    return menuyuAc(el('ekleMenu'), e.clientX || r.left + r.width / 2, e.clientY || r.top + r.height / 2);
+                }
+                return kartPenceresiniAc(null);
             }
-        }
 
-        const aracBtn = e.target.closest('.kartArac');
-        if (!aracBtn) return;
+            // Ziyaret sayaci - arac dugmesine basildiysa saymiyoruz
+            const acilanKart = e.target.closest('.kart:not(.ekleKart)');
+            if (acilanKart && !e.target.closest('.kartArac')) {
+                sayacArtir(acilanKart.dataset.anahtar).catch(() => {});
 
-        // Kart bir <a>: aracin tiklamasi sayfayi acmasin
-        e.preventDefault();
-        e.stopPropagation();
+                // Ctrl/Cmd/orta tik zaten tarayicinin kendi davranisi -
+                // ona KARISMIYORUZ, yoksa iki sekme aciliyor.
+                const ozelTik = e.ctrlKey || e.metaKey || e.shiftKey || e.button === 1;
+                const kip = document.body.dataset.kartAcilis || 'ayni';
 
-        const kart = aracBtn.closest('.kart');
-        await kartAraciCalistir(aracBtn.dataset.arac, kart);
-    });
+                // chrome:// vb. adresler bagalanti olarak acilamiyor
+                if (OZEL_SEMA.test(acilanKart.href)) {
+                    e.preventDefault();
+                    ozelSemaAc(acilanKart.href, ozelTik ? 'yeni' : kip);
+                    return;
+                }
+
+                if (!ozelTik && kip !== 'ayni') {
+                    e.preventDefault();
+                    if (kip === 'arkaplan') {
+                        // Arka planda acmak icin tarayici API'si gerekiyor:
+                        // window.open odagi hedefe veriyor.
+                        chrome.tabs.create({ url: acilanKart.href, active: false })
+                            .catch(() => window.open(acilanKart.href, '_blank'));
+                    } else {
+                        window.open(acilanKart.href, '_blank');
+                    }
+                    return;
+                }
+            }
+
+            const aracBtn = e.target.closest('.kartArac');
+            if (!aracBtn) return;
+
+            // Kart bir <a>: aracin tiklamasi sayfayi acmasin
+            e.preventDefault();
+            e.stopPropagation();
+
+            const kart = aracBtn.closest('.kart');
+            await kartAraciCalistir(aracBtn.dataset.arac, kart);
+        });
+    }
 }
 
 /* ---------- Yan arac seridi ---------- */
@@ -615,6 +638,9 @@ function kartPenceresiniKur() {
     tasiPenceresiniKur();
     el('kpIptal')?.addEventListener('click', kartPenceresiniKapat);
     el('kpKaydet')?.addEventListener('click', kartiKaydet);
+    // SITE ADI (1.7.0): baslik bos/adres ise adresten ve siteden doldur
+    el('kpBaslik')?.addEventListener('input', () => { delete el('kpBaslik').dataset.oto; });
+    el('kpUrl')?.addEventListener('change', () => baslikDoldur());
 
     el('kartPencere')?.addEventListener('click', e => {
         if (e.target.id === 'kartPencere') kartPenceresiniKapat();
@@ -677,13 +703,17 @@ function ozelSemaAc(url, kip) {
     }
 }
 
-async function kartPenceresiniAc(kart) {
+/** @param hedef  yeni kart icin secili klasor (bos: aktif grup) */
+async function kartPenceresiniAc(kart, hedef = null) {
     duzenlenenKartId = kart ? kart.id : null;
     duzenlenenUrl    = kart ? kart.url : null;
 
     el('kartPencereBaslik').textContent = kart ? c('kartiDuzenle') : 'Kart Ekle';
     el('kpBaslik').value = kart ? kart.baslik : '';
     el('kpUrl').value    = kart ? kart.url : '';
+    delete el('kpBaslik').dataset.oto;
+    // Adi adres olan eski kart: duzenlerken adi oner (1.7.0)
+    if (kart && (!kart.baslik || kart.baslik === kart.url)) baslikDoldur();
 
     // Ziyaret bilgisi - yalnizca duzenlemede anlamli
     const sayacEl = el('kpSayac');
@@ -709,7 +739,7 @@ async function kartPenceresiniAc(kart) {
         sayacEl.hidden = true;
     }
 
-    await grupListesiniDoldur(kart ? kart.grupId : aktifGrup());
+    await grupListesiniDoldur(kart ? kart.grupId : (hedef || aktifGrup()));
 
     const renkler = await renkleriAl();
     secilenRenk = kart ? (renkler[kart.url] || null) : null;
@@ -738,15 +768,41 @@ function kartPenceresiniKapat() {
     duzenlenenKartId = null;
 }
 
+/**
+ * SITE ADI (1.7.0): baslik bossa, adresin kendisiyse ya da daha once
+ * kendimiz doldurduysak -> once adresten tahmin, sonra sitenin bildirdigi
+ * ad. Kullanici yazmaya baslarsa dokunulmaz.
+ */
+async function baslikDoldur() {
+    const b = el('kpBaslik');
+    const ham = el('kpUrl').value.trim();
+    if (!b || !ham) return;
+    const url = /^[a-z][a-z0-9+.-]*:/i.test(ham) ? ham : 'https://' + ham;
+    const simdi = b.value.trim();
+    if (simdi && simdi !== ham && simdi !== url && !b.dataset.oto) return;
+    const { otoAd, siteAdiBul } = await import('./siteadi.js');
+    if (b.value.trim() !== simdi) return;       // bu arada kullanici yazdi
+    const ilk = otoAd(url);
+    b.value = ilk;
+    b.dataset.oto = '1';
+    const ad = await siteAdiBul(url);
+    if (ad && b.dataset.oto && b.value === ilk && el('kpUrl').value.trim() === ham) b.value = ad;
+}
+
 async function kartiKaydet() {
     tazelemeyiBastir();
-    const baslik = el('kpBaslik').value.trim();
+    let baslik = el('kpBaslik').value.trim();
     let url = el('kpUrl').value.trim();
     if (!url) return;
 
     // Sema yoksa https varsay - kullanici "site.com" yazabiliyor
     if (!/^[a-z][a-z0-9+.-]*:/i.test(url)) url = 'https://' + url;
     url = urlNormalle(url);
+
+    // Baslik bos / adresin kendisi / bizim tahminimiz: kayittan sonra
+    // sitenin adi arka planda gelir (pencere beklemesin)
+    const otoBaslik = !baslik || baslik === url || baslik === el('kpUrl').value.trim() || !!el('kpBaslik').dataset.oto;
+    if (otoBaslik) baslik = (await import('./siteadi.js')).otoAd(url);
 
     const hedefGrup = el('kpGrup')?.value || aktifGrup();
 
@@ -773,6 +829,7 @@ async function kartiKaydet() {
 
         if (duzenlenenKartId) {
             await kartGuncelle(duzenlenenKartId, { title: baslik || url, url });
+            if (otoBaslik) siteAdiniSonra(url, baslik, duzenlenenKartId);
             // Grup degistiyse tasi
             const a = document.querySelector(`[data-kart-id="${duzenlenenKartId}"]`);
             if (a && hedefGrup !== kpIlkGrup) {
@@ -789,7 +846,8 @@ async function kartiKaydet() {
                 } catch (e) { /* onemli degil */ }
             }
         } else {
-            await kartEkle(hedefGrup, baslik || url, url);
+            const yeni = await kartEkle(hedefGrup, baslik || url, url);
+            if (otoBaslik) siteAdiniSonra(url, baslik, yeni?.id);
         }
 
         await renkYaz(url, secilenRenk);
@@ -1558,9 +1616,7 @@ async function kartAraciCalistir(arac, kart) {
 /* ---------- Menuler ---------- */
 
 function menuleriKur() {
-    const kap = el('kartKabi');
-
-    kap?.addEventListener('contextmenu', async e => {
+    for (const kap of [el('kartKabi'), el('kfpKabi')]) kap?.addEventListener('contextmenu', async e => {
         const kart = e.target.closest('.kart:not(.ekleKart)');
         if (!kart) return;
 
@@ -1625,7 +1681,7 @@ function menuleriKur() {
         // "+" karti .kart sinifini tasiyor ama BOS ALAN sayilmali:
         // uzerinde tarayici menusu cikiyordu.
         if (e.target.closest('.kart:not(.ekleKart)')) return;
-        if (e.target.closest('.grupSekme, .klasorKart, .menu, .pencere, #ayarPanel')) return;
+        if (e.target.closest('.grupSekme, .klasorKart, .izgaraBolumUst, .menu, .pencere, #ayarPanel')) return;
 
         // Metin secimi / form alani varsa tarayici menusu isine yarar
         if (e.target.closest('input, textarea, select')) return;
@@ -1640,10 +1696,11 @@ function menuleriKur() {
         if (['copAcik', 'kopyaAcik', 'kirikAcik', 'aramaAcik', 'alanAcik']
             .some(s => document.body.classList.contains(s))) return;
 
-        // Ana Sayfa'da (kok) klasor = grup: "Yeni Klasor" soluk
-        kokKlasoruAl().then(kok => {
+        // Ana Sayfa'da (kok) klasor = grup: "Yeni Klasor" soluk.
+        // Basit modda Ana Sayfa'ya klasor eklenebilir (1.7.0)
+        Promise.all([kokKlasoruAl(), basitAnaSayfadaMi()]).then(([kok, basitAna]) => {
             el('bosMenu').querySelector('[data-eylem="yeniKlasor"]')
-                ?.classList.toggle('pasif', aktifGrup() === kok);
+                ?.classList.toggle('pasif', aktifGrup() === kok && !basitAna);
             // "Duzenle" satiri bulunulan yere gore adlaniyor; Ana Sayfa'da yok
             const duzenle = el('bosMenu').querySelector('[data-eylem="buYeriDuzenle"]');
             if (duzenle) {
@@ -1659,6 +1716,7 @@ function menuleriKur() {
     el('kartMenu')?.addEventListener('click', e => kartMenuEylemi(e));
     el('grupMenu')?.addEventListener('click', e => grupMenuEylemi(e));
     el('bosMenu')?.addEventListener('click',  e => bosMenuEylemi(e));
+    el('ekleMenu')?.addEventListener('click', e => bosMenuEylemi(e));
     // klasorMenu kendi dinleyicisini klasor.js'te kuruyor
 
     // Perdeye tiklama: ACIK PENCERE varsa onu, yoksa menuleri kapatir.
@@ -1698,7 +1756,7 @@ function menuleriKur() {
     // uygulaniyor ve sayfa kaydirilmissa tarayici bir scroll olayi
     // uretiyor - o da perdeyi kaldiriyordu.
     window.addEventListener('scroll', () => {
-        const menuAcik = ['kartMenu', 'grupMenu', 'bosMenu', 'klasorMenu']
+        const menuAcik = ['kartMenu', 'grupMenu', 'bosMenu', 'klasorMenu', 'ekleMenu']
             .some(id => el(id) && !el(id).hidden);
         if (menuAcik) menuleriKapat();
     }, { capture: true, passive: true });
@@ -1741,6 +1799,7 @@ function menuleriKapat(perdeyiDeKapat = true) {
     el('grupMenu').hidden = true;
     el('bosMenu').hidden = true;
     if (el('klasorMenu')) el('klasorMenu').hidden = true;
+    if (el('ekleMenu')) el('ekleMenu').hidden = true;
     klasorIsaretiniTemizle();
 
     // ACIK PENCERE VARSA perde kalir.
@@ -1980,6 +2039,25 @@ async function grubuDuzenleAc(id, baslik = null) {
 /** Gruplari Yonet'teki kalem (1.5.8): pencere sonucu da uygulansin */
 export { grubuDuzenleAc as grubuDuzenle };
 
+/** Basit mod ve Ana Sayfa acik mi (Ana Sayfa'ya klasor eklenebilir) */
+async function basitAnaSayfadaMi() {
+    try {
+        if (aktifGrup() !== await kokKlasoruAl()) return false;
+        if (document.body.classList.contains('klasorIcinde')) return false;
+        return (await ayarlariAl()).basitMod === true || document.body.classList.contains('anaDuzenli');
+    } catch (e) { return false; }
+}
+
+/** Kayittan sonra sitenin adi gelince: kart adi hala tahminse degistir */
+async function siteAdiniSonra(url, tahmin, id) {
+    try {
+        const ad = await (await import('./siteadi.js')).siteAdiBul(url);
+        if (!ad || ad === tahmin) return;
+        const hedefler = id ? await chrome.bookmarks.get(id) : await chrome.bookmarks.search({ url });
+        for (const b of hedefler) if (b.url && b.title === tahmin) await chrome.bookmarks.update(b.id, { title: ad });
+    } catch (e) { /* ad tahminde kalir */ }
+}
+
 async function bosMenuEylemi(e) {
     const oge = e.target.closest('li');
     const eylem = oge && oge.dataset.eylem;
@@ -2012,7 +2090,8 @@ async function bosMenuEylemi(e) {
 
         case 'yeniKlasor': {
             const kok = await kokKlasoruAl();
-            if (aktifGrup() === kok) return;          // kokte klasor = grup
+            // kokte klasor = grup; Basit modda Ana Sayfa klasoru olur
+            if (aktifGrup() === kok && !await basitAnaSayfadaMi()) return;
             await yeniKlasor(aktifGrup());
             break;
         }
