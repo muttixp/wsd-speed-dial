@@ -3,7 +3,48 @@
 Sürüm numaraları [Semantic Versioning](https://semver.org/lang/tr/)
 kurallarına uyar.
 
-## 1.7.0 — geliştiriliyor
+## [1.7.1] — 2026-11-12
+
+### Eklendi
+- **Saydam kart zemini**: Arka Plan seçicisinde saydamlık kaydırıcısı;
+  zemin `rgba(...)` olarak kaydedilir (yedekte de). Logo/simge kartları
+  duvar kâğıdıyla uyumlu, yarı saydam zeminle kullanılabilir.
+  Ayarlar › Kartlar › Renk ve Çerçeve › Zemin Rengi de saydamlık destekli
+  (gizli metin kutusu + dama zeminli renk düğmesi; tema şablonları hex
+  yazmaya devam eder).
+
+### Değişti
+- Gizli yakalama: güncel Chrome (156) da Edge/Vivaldi gibi "hata ayıklama"
+  çubuğu göstermiyor. İlk yakalamadaki çubuk bildirimi kaldırıldı; Ayarlar
+  › Yakalama Modu açıklaması "bazı sürümlerde görünebilir" oldu.
+- Hazır Gruplar (Basit / Ana Sayfa düzeni): Ana Sayfa'da hiç kart yokken
+  paket eklenince üst kısım boş kalmasın diye 4 bilinen site de eklenir.
+- Türkçe "Günlük" paketinde Meteoroloji yerine Hava Durumu (Google).
+- **Hızlı Başla** artık 6 sitenin yanında Ana Sayfa'ya 3 klasör de ekler
+  (dile göre Sosyal/Haber/Alışveriş; Türkçede Sosyal/Eğlence/Teknoloji/Alışveriş, Rusçada Медиа/Новости/Покупки), her
+  birinde 6 site, logolarıyla. Klasörler Ana Sayfa klasörü olarak işaretli;
+  aynı adlı klasör varsa yeniden eklenmez.
+- Saydamlık artık renk kutusunun içinde: Grup Menüsü'ndeki ayrı "Zemin
+  Saydamlığı" ve "Aktif Grup Saydamlığı" kaydırıcıları kalktı, Zemin Rengi
+  ve Aktif Grup Rengi kutuları saydamlık destekli. Ayarda yine iki alan
+  (renk hex + %) - tema şablonları, yedekler ve vurgu rengi hesabı
+  etkilenmez. Kart Çerçeve Rengi ve Üzerine Gelince de saydam olabilir.
+- Ayarlar panelinde ana bölüm / alt bölüm ayrımı: açık ana bölüm kendi
+  simge renginin hafif tonunda yuvarlak bir kutu, alt bölümler içeride, alt
+  başlıklar küçük harf. Önceden "Ana Sayfa", "Görünüm"ün içindeymiş gibi görünüyordu.
+
+### Düzeltildi
+- Hazır Gruplar'dan arka arkaya paket eklenince yalnız ilk klasöre logo
+  geliyordu (logo işi sürerken ikinci çağrı atlanıyordu). Artık sıraya
+  giriyor, hepsine logo konuyor.
+- Kart Düzenle › Arka Plan'ın renk penceresi ekranın sol üst köşesinde,
+  yarısı görünmeden açılıyordu (gizli `<input type=color>`). Artık WSD'nin
+  kendi renk seçicisi düğmenin yanında açılıyor; Kart Düzenle ve Grup
+  penceresindeki diğer renk kutuları da aynı seçiciyi kullanıyor.
+- Yenilikler: 1.7.0'daki Ana Sayfa Düzeni'nin yeri "Ayarlar › Ana Sayfa" olarak düzeltildi.
+  Pencerede yalnız son sürümler (1.6.6 ve sonrası) kalıyor; tam liste GitHub'da.
+
+## [1.7.0] — 2026-11-11
 
 ### Eklendi
 - **Klasör penceresi (Basit mod)**: klasöre tıklayınca sayfa klasörün

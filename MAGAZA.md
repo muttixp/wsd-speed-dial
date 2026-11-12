@@ -79,6 +79,13 @@ layout can apply to the Home page only, while your other groups keep
 their own look. Inside a group, show a folder as a framed section
 below the main tiles.
 
+NOTHING FORCED ON YOU
+
+No sponsored tiles, no ads, no tiles you cannot delete. Every part of
+the page is yours to change: hide the search box or the "+" tile,
+remove any tile or folder. WSD never redirects your
+searches — they go to the engine you picked.
+
 COMING FROM ANOTHER SPEED DIAL?
 
 Bring everything over in one click from FVD Speed Dial and other speed
@@ -238,6 +245,13 @@ tıkla hazır bir düzen seçin: Klasik, Sade ya da Galeri. Gelişmiş modda
 düzen yalnız Ana Sayfa'ya uygulanabilir, diğer gruplarınız kendi
 görünümünde kalır. Grup içinde bir klasörü ana kartların altında
 çerçeveli bir bölüm olarak gösterin.
+
+SİZE HİÇBİR ŞEY DAYATILMAZ
+
+Sponsorlu kart yok, reklam yok, silinemeyen kart yok. Sayfanın her
+parçası sizin: arama kutusunu ya da "+" kartını gizleyin, istediğiniz
+kartı ya da klasörü silin. WSD aramalarınızı hiçbir
+yere yönlendirmez — seçtiğiniz arama motoruna gider.
 
 BAŞKA BİR SPEED DIAL'DAN MI GELİYORSUNUZ?
 
@@ -403,6 +417,14 @@ WSD Speed Dial превращает новую вкладку в панель с
 свой вид. Внутри группы папку можно показать как раздел в рамке под
 основными плитками.
 
+НИЧЕГО НАВЯЗАННОГО
+
+Никаких спонсорских плиток, рекламы и плиток, которые нельзя удалить.
+Всё на странице настраивается: скройте строку поиска или плитку «+»,
+удалите любую плитку или папку. WSD никогда не
+перенаправляет ваши поисковые запросы — они уходят в выбранный вами
+поисковик.
+
 ПЕРЕХОДИТЕ С ДРУГОГО SPEED DIAL?
 
 Перенесите всё в один клик из FVD Speed Dial и других расширений speed
@@ -567,6 +589,13 @@ em um clique: Clássico, Simples ou Galeria. No modo Avançado o layout
 pode valer só para a página inicial, e os outros grupos mantêm o seu
 visual. Dentro de um grupo, mostre uma pasta como uma seção com
 moldura abaixo dos blocos principais.
+
+NADA É IMPOSTO
+
+Sem blocos patrocinados, sem anúncios, sem blocos que não se podem
+apagar. Tudo na página é seu: oculte a caixa de pesquisa ou o bloco "+",
+apague qualquer bloco ou pasta. O WSD nunca
+redireciona suas pesquisas — elas vão para o buscador que você escolheu.
 
 VEIO DE OUTRO SPEED DIAL?
 
@@ -740,6 +769,13 @@ página. Elige un diseño listo con un clic: Clásico, Sencillo o
 Galería. En el modo Avanzado el diseño puede aplicarse solo a Inicio,
 y tus otros grupos conservan su aspecto. Dentro de un grupo, muestra
 una carpeta como una sección enmarcada bajo los accesos principales.
+
+NADA IMPUESTO
+
+Sin accesos patrocinados, sin anuncios, sin accesos que no puedas
+borrar. Todo en la página es tuyo: oculta el cuadro de búsqueda o el acceso
+"+", borra cualquier acceso o carpeta. WSD
+nunca redirige tus búsquedas: van al buscador que elegiste.
 
 ¿VIENES DE OTRO SPEED DIAL?
 
@@ -918,6 +954,14 @@ WSD Speed Dial перетворює сторінку нової вкладки �
 макет можна застосувати лише до головної, а інші групи збережуть свій
 вигляд. Усередині групи теку можна показати як розділ у рамці під
 основними плитками.
+
+НІЧОГО НАВ'ЯЗАНОГО
+
+Жодних спонсорських плиток, реклами та плиток, які не можна видалити.
+Усе на сторінці налаштовується: приховайте рядок пошуку або плитку «+»,
+видаліть будь-яку плитку чи теку. WSD ніколи не
+перенаправляє ваші пошукові запити — вони йдуть у вибраний вами
+пошуковик.
 
 ПЕРЕХОДИТЕ З ІНШОГО SPEED DIAL?
 
@@ -1148,6 +1192,10 @@ Ekran görüntüsü için öneri sırası:
 3. Kart düzenleme penceresi
 4. Arama sonuçları
 5. Yinelenen kartlar ya da çöp kutusu
+
+### 1.7.1 ile yapılacaklar (mağaza paneli)
+
+- Uzun açıklamaya "Size hiçbir şey dayatılmaz" bölümü eklendi (6 dil; sponsorlu/silinemeyen kart yok, her şey gizlenebilir, arama yönlendirilmez). Rakip adı geçmiyor. Mağaza panellerinde güncellenmeli — sürüm beklemeden de yapılabilir.
 
 ### 1.7.0 ile yapılacaklar (mağaza paneli)
 

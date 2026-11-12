@@ -809,9 +809,6 @@
   "nKartSilinmisGrup": {
     "message": "$1 个磁贴 · 已删除的分组"
   },
-  "goruntuUrlsi": {
-    "message": "图片地址"
-  },
   "oncekiSimdiKayip": {
     "message": "原有 $1 $2，现在 $3。"
   },
@@ -1953,7 +1950,7 @@
     "message": "角落小窗口"
   },
   "gizliKipBilgi": {
-    "message": "截图时 Chrome 会在顶部显示“调试”提示栏。这是强制提示；该权限仅用于截图，完成后提示栏会消失。"
+    "message": "部分 Chrome 版本截图时可能会在顶部短暂显示“调试”提示栏（新版本不再显示）。这是 Chrome 自身的提示；该权限仅用于截取磁贴图片。"
   },
   "hazirGruplar": {
     "message": "预制分组"
@@ -2365,9 +2362,6 @@
   },
   "kilidiAc": {
     "message": "已锁定 - 点击解锁"
-  },
-  "gizliCubukBilgi": {
-    "message": "图片在后台截取。Chrome 可能会在顶部短暂显示“调试”栏；这是 Chrome 的强制提示，只截取快捷方式图片。可在 设置 › 截图模式 中改为“窗口”。"
   },
   "yeniKartGorseli": {
     "message": "新快捷方式图片"

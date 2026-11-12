@@ -299,15 +299,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 // Arka plan bir gorsel yakaladiginda kart yerinde guncellensin
 chrome.runtime.onMessage.addListener((mesaj, _g, cevapla) => {
-    // Chrome'un "hata ayiklama" cubugu (1.6.3): ilk gizli yakalamada bir kez
-    if (mesaj && mesaj.hedef === 'sayfa' && mesaj.tur === 'gizliCubukBilgi') {
-        if (document.hidden) return;              // gorunen sayfa cevaplasin
-        import('./etkilesim.js')
-            .then(m => m.bildir(c('gizliCubukBilgi'), { sure: 25000, etiket: c('tamam'), calistir: () => {}, oncelikli: true }))
-            .catch(() => {});
-        cevapla(true);
-        return;
-    }
     if (mesaj && mesaj.hedef === 'sayfa' && mesaj.tur === 'kuyrukTemizlendi') {
         document.querySelectorAll('.kart.yenileniyor')
             .forEach(a => a.classList.remove('yenileniyor'));

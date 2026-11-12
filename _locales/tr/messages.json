@@ -809,9 +809,6 @@
   "nKartSilinmisGrup": {
     "message": "$1 kart · silinmiş grup"
   },
-  "goruntuUrlsi": {
-    "message": "Görsel Adresi"
-  },
   "oncekiSimdiKayip": {
     "message": "$1 $2 vardı, şimdi $3. "
   },
@@ -1953,7 +1950,7 @@
     "message": "Köşede Küçük Pencere"
   },
   "gizliKipBilgi": {
-    "message": "Yakalarken Chrome üstte \"hata ayıklama\" çubuğu gösterir. Bu zorunlu bir bildirimdir; izin yalnızca görüntü almak için kullanılır, çubuk iş bitince kaybolur."
+    "message": "Bazı Chrome sürümleri yakalarken üstte kısa süre \"hata ayıklama\" çubuğu gösterebilir (yeni sürümlerde görünmüyor). Bu Chrome'un bildirimidir; izin yalnızca kart görüntüsü almak için kullanılır."
   },
   "hazirGruplar": {
     "message": "Hazır Gruplar"
@@ -2365,9 +2362,6 @@
   },
   "kilidiAc": {
     "message": "Kilitli - kilidi açmak için tıklayın"
-  },
-  "gizliCubukBilgi": {
-    "message": "Görseller arka planda alınıyor. Chrome üstte kısa süre \"hata ayıklama\" çubuğu gösterebilir; bu Chrome'un zorunlu bildirimidir, yalnızca kart görüntüsü alınır. İsterseniz Ayarlar › Yakalama Modu'ndan Pencere'yi seçebilirsiniz."
   },
   "yeniKartGorseli": {
     "message": "Yeni Kart Görseli"

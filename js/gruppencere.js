@@ -84,7 +84,7 @@ export function grupPenceresiniKur() {
     el('gpKapakUrl')?.addEventListener('click', async () => {
         const { metinSor } = await import('./onay.js');
         const adres = await metinSor({
-            baslik: c('goruntuUrlsi'),
+            baslik: c('goruntuUrlSi'),
             metin: c('gorselAdresiniYapistirin'),
             evet: c('ekle')
         });

@@ -434,23 +434,21 @@
                 <span data-c="aktifIkonRengi">Aktif Simge Rengi</span>
                 <input type="color" id="ayGrupAktifIkonRengi" class="renkKutu">
             </label>
+            <!-- 1.7.1: renk + saydamlik tek kutuda (ayri kaydirici yok); ayarda
+                 yine iki alan: grupZeminRengi (hex) + grupZeminOpaklik (%) -->
             <label class="ayarSatir">
                 <span data-c="sekmeZeminRengi">Zemin Rengi</span>
-                <input type="color" id="ayGrupZeminRengi" class="renkKutu">
-            </label>
-            <label class="ayarSatir">
-                <span data-c="sekmeZeminSaydamligi">Zemin Saydamlığı</span>
-                <input type="range" id="ayGrupZeminOpaklik" min="0" max="100" step="1">
-                <output id="ayGrupZeminOpaklikDeger"></output>
+                <span class="renkAlfa">
+                    <button type="button" class="renkKutu renkDugme" aria-label="Zemin Rengi"><i></i></button>
+                    <input type="text" id="ayGrupZeminBirlesik" data-alfa="1" data-renk="grupZeminRengi" data-opak="grupZeminOpaklik" hidden>
+                </span>
             </label>
             <label class="ayarSatir">
                 <span data-c="aktifGrupRengi">Aktif Grup Rengi</span>
-                <input type="color" id="ayGrupAktifRengi" class="renkKutu">
-            </label>
-            <label class="ayarSatir">
-                <span data-c="aktifGrupSaydamligi">Aktif Grup Saydamlığı</span>
-                <input type="range" id="ayGrupAktifOpaklik" min="0" max="100" step="1">
-                <output id="ayGrupAktifOpaklikDeger"></output>
+                <span class="renkAlfa">
+                    <button type="button" class="renkKutu renkDugme" aria-label="Aktif Grup Rengi"><i></i></button>
+                    <input type="text" id="ayGrupAktifBirlesik" data-alfa="1" data-renk="grupAktifRengi" data-opak="grupAktifOpaklik" hidden>
+                </span>
             </label>
             <label class="ayarSatir">
                 <span data-c="menuYaziRengi">Yazı Rengi</span>
@@ -773,15 +771,24 @@
                 </label>
                 <label class="ayarSatir">
                     <span data-c="kartZeminRengi">Zemin Rengi</span>
-                    <input type="color" id="ayKartZemin" class="renkKutu">
+                    <span class="renkAlfa">
+                        <button type="button" class="renkKutu renkDugme" id="ayKartZeminDugme" aria-label="Zemin Rengi" data-c-aria-label="kartZeminRengi"><i></i></button>
+                        <input type="text" id="ayKartZemin" data-alfa="1" hidden>
+                    </span>
                 </label>
                 <label class="ayarSatir">
                     <span data-c="kartCerceveRengi">Çerçeve Rengi</span>
-                    <input type="color" id="ayKartCerceveRengi" class="renkKutu">
+                    <span class="renkAlfa">
+                        <button type="button" class="renkKutu renkDugme" aria-label="Çerçeve Rengi"><i></i></button>
+                        <input type="text" id="ayKartCerceveRengi" data-alfa="1" hidden>
+                    </span>
                 </label>
                 <label class="ayarSatir">
                     <span data-c="kartCerceveRengiUzerineGelince">Üzerine Gelince</span>
-                    <input type="color" id="ayKartCerceveHover" class="renkKutu">
+                    <span class="renkAlfa">
+                        <button type="button" class="renkKutu renkDugme" aria-label="Üzerine Gelince"><i></i></button>
+                        <input type="text" id="ayKartCerceveHover" data-alfa="1" hidden>
+                    </span>
                 </label>
                     </div></div>
                 </div>
@@ -814,7 +821,7 @@
                 <option value="gizli" data-c="gizliHataAyiklamaCubuguCikar">Gizli</option>
             </select>
         </label>
-        <p class="kucukBilgi" id="ayGizliBilgi" data-c="gizliKipBilgi" hidden>Yakalarken Chrome üstte "hata ayıklama" çubuğu gösterir. Bu zorunlu bir bildirimdir; izin yalnızca görüntü almak için kullanılır, çubuk iş bitince kaybolur.</p>
+        <p class="kucukBilgi" id="ayGizliBilgi" data-c="gizliKipBilgi" hidden>Bazı Chrome sürümleri yakalarken üstte kısa süre &quot;hata ayıklama&quot; çubuğu gösterebilir (yeni sürümlerde görünmüyor). Bu Chrome'un bildirimidir; izin yalnızca kart görüntüsü almak için kullanılır.</p>
         <label class="ayarSatir">
             <span><span data-c="aktarimdaYakala">Otomatik Yakala</span><small class="webMotorIpucu" data-c="otoYakalaIpucu">Kart eklenince ve içe aktarınca ekran görüntüsü alır. Kapalıyken görseli siz seçersiniz.</small></span>
             <input type="checkbox" id="ayAktarimdaYakala" class="anahtar">
@@ -1243,7 +1250,7 @@
             </div>
 
             <input type="file" id="kpDosyaSecici" accept="image/*" hidden>
-            <input type="color" id="kpZeminSecici" hidden>
+            <input type="text" id="kpZeminSecici" data-alfa="1" hidden>
 
             <div class="pencereAlt">
                 <button id="kpIptal" class="dugme" data-c="iptal">İptal</button>

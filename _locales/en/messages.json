@@ -809,9 +809,6 @@
   "nKartSilinmisGrup": {
     "message": "$1 tiles · deleted group"
   },
-  "goruntuUrlsi": {
-    "message": "Image Address"
-  },
   "oncekiSimdiKayip": {
     "message": "There were $1 $2, now $3. "
   },
@@ -1953,7 +1950,7 @@
     "message": "Small Corner Window"
   },
   "gizliKipBilgi": {
-    "message": "While capturing, Chrome shows a \"debugging\" bar at the top. It is a mandatory notice; the permission is used only for screenshots and the bar disappears when done."
+    "message": "Some Chrome versions may briefly show a \"debugging\" bar at the top while capturing (newer versions don't). It is Chrome's own notice; the permission is used only to capture tile images."
   },
   "hazirGruplar": {
     "message": "Ready-made Groups"
@@ -2365,9 +2362,6 @@
   },
   "kilidiAc": {
     "message": "Locked - click to unlock"
-  },
-  "gizliCubukBilgi": {
-    "message": "Images are captured in the background. Chrome may briefly show a \"debugging\" bar at the top; it is Chrome's mandatory notice and only the tile image is taken. You can switch to Window in Settings › Capture Mode."
   },
   "yeniKartGorseli": {
     "message": "New Tile Image"

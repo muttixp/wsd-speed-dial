@@ -15,6 +15,7 @@ import { moduSinifla, etkinMod } from './tema.js';
 import { tazelemeBastirildiMi, bildir, mesgulDugme } from './arayuz.js';
 import { ayarlariAl, ayarYaz, ayarlariSifirla } from './ayar.js';
 import { etkinAyar, anaDuzenGecerli } from './anaduzen.js';
+import { renkCozumle, renkDegeri } from './renksecici.js';
 import { c } from './dil.js';
 import { filtreZinciri, ikiRenkKatmanlari } from './filtre.js';
 import { yedegiIndir, yedegiYukle, yedekTuru, yapiOzeti, oksuzleriTemizle, herSeyiSil,
@@ -79,10 +80,7 @@ const ALANLAR = [
     ['isikRengi',        'ayIsikRengi',    el => el.value],
     ['siddet',           'aySiddet',       el => +el.value],
     ['grupIkonRengi',    'ayGrupIkonRengi',  el => el.value],
-    ['grupZeminRengi',   'ayGrupZeminRengi',   el => el.value],
-    ['grupZeminOpaklik', 'ayGrupZeminOpaklik', el => +el.value],
-    ['grupAktifRengi',   'ayGrupAktifRengi',   el => el.value],
-    ['grupAktifOpaklik', 'ayGrupAktifOpaklik', el => +el.value],
+    // grupZeminRengi/Opaklik, grupAktifRengi/Opaklik: tek saydam renk kutusu (1.7.1, asagida)
     ['grupYaziRengi',    'ayGrupYaziRengi',    el => el.value],
     ['grupAktifYaziRengi','ayGrupAktifYaziRengi', el => el.value],
     ['grupAktifIkonRengi', 'ayGrupAktifIkonRengi', el => el.value],
@@ -153,7 +151,9 @@ export async function ayarPaneliniKur() {
 
     const ayar = await ayarlariAl();
 
+    let sonAyar = null;
     const girdileriDoldur = a => {
+        sonAyar = a;
         for (const [anahtar, id] of ALANLAR) {
             const el = document.getElementById(id);
             if (!el) continue;
@@ -176,7 +176,40 @@ export async function ayarPaneliniKur() {
             if (kutu) kutu.value = a.grupAktifYaziRengi || (/^#[0-9a-f]{6}$/i.test(v) ? v : '#ffffff');
         }
         gizliBilgisi();
+        renkDugmeleriniTazele();
     };
+    // SAYDAM RENK (1.7.1): <input type=color> saydamlik tutamiyor; gizli
+    // metin kutusu + renkli dugme. Secici rgba(...) yazar.
+    function renkDugmeleriniTazele() {
+        // Iki ayarli kutular (renk + saydamlik): kutuya rgba olarak yaz
+        for (const g of document.querySelectorAll('#ayarPanel input[data-renk][data-opak]')) {
+            const ayr = sonAyar || {};
+            const hex = ayr[g.dataset.renk] || '#ffffff';      // ayarlariAl varsayilanlari zaten katiyor
+            const op = ayr[g.dataset.opak] ?? 100;
+            g.value = renkDegeri(hex, op / 100);
+        }
+        for (const d of document.querySelectorAll('#ayarPanel .renkDugme')) {
+            const g = d.parentElement.querySelector('input[data-alfa]');
+            if (g) d.style.setProperty('--secili', g.value || 'transparent');
+        }
+    }
+    for (const d of document.querySelectorAll('#ayarPanel .renkDugme')) {
+        const g = d.parentElement.querySelector('input[data-alfa]');
+        if (!g) continue;
+        d.addEventListener('click', e => {
+            e.preventDefault();
+            import('./renksecici.js').then(m => m.renkSeciciAc(g, d));
+        });
+        g.addEventListener('input', () => {
+            if (!g.dataset.renk) { renkDugmeleriniTazele(); return; }
+            // Iki ayarli: rengi hex, saydamligi % olarak ayri yaz
+            const { hex, a } = renkCozumle(g.value);
+            d.style.setProperty('--secili', g.value);
+            ayarYaz({ [g.dataset.renk]: hex, [g.dataset.opak]: Math.round(a * 100) })
+                .then(yeni => { sonAyar = yeni; gorunumuUygula(yeni); })
+                .catch(() => {});
+        });
+    }
     // Gizli kip secilince tarayicinin gosterecegi uyari cubugunu onceden
     // acikla: "hata ayiklama" sozu kullaniciyi tedirgin ediyordu
     function gizliBilgisi() {

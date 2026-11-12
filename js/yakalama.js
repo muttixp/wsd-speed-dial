@@ -2222,33 +2222,14 @@ function elleCubukEnjekte(mSahne, mCek, mAlan, mUzun, mVazgec) {
 }
 
 /**
- * CUBUK BILGISI (1.6.3): Chrome gizli yakalamada ustte "hata ayiklama"
- * cubugu gosteriyor. Ilk seferde acik WSD sayfasinda bir kez aciklanir;
- * hicbir sayfa cevap vermezse (sayfa kapali) sonraki yakalamada denenir.
- */
-let cubukBilgiDenendi = false;
-async function cubukBilgisiVer() {
-    if (cubukBilgiDenendi) return;
-    cubukBilgiDenendi = true;
-    try {
-        const d = await chrome.storage.local.get('gizliCubukBilgi');
-        if (d.gizliCubukBilgi) return;
-        // Servis iscisinde dinamik import yok - tarayici.js ustte
-        if (!(await chromeMu())) { await chrome.storage.local.set({ gizliCubukBilgi: true }); return; }
-        const cevap = await chrome.runtime.sendMessage({ hedef: 'sayfa', tur: 'gizliCubukBilgi' }).catch(() => null);
-        if (cevap) await chrome.storage.local.set({ gizliCubukBilgi: true });
-        else cubukBilgiDenendi = false;
-    } catch (e) { cubukBilgiDenendi = false; }
-}
-
-/**
  * GIZLI YAKALAMA - chrome.debugger ile.
  *
  * Sekme ARKA PLANDA aciliyor ve `Page.captureScreenshot` ile goruntu
  * aliniyor: pencere hic one gelmiyor, ekranda goz kirpma olmuyor.
  *
- * Bedeli: Chrome ustte "hata ayikliyor" cubugu gosteriyor (Edge/Vivaldi
- * sessiz). 1.6.3'ten beri varsayilan; cubuk ilk seferde aciklaniyor.
+ * Eski Chrome surumleri ustte "hata ayikliyor" cubugu gosteriyordu; Chrome
+ * 156, Edge ve Vivaldi sessiz (1.7.1'de ilk yakalama bildirimi kaldirildi).
+ * 1.6.3'ten beri varsayilan.
  */
 async function gizliYakala(url, ayar) {
     let sekme = null;
@@ -2274,7 +2255,6 @@ async function gizliYakala(url, ayar) {
         }
 
         const hedef = { tabId: sekme.id };
-        cubukBilgisiVer();
         await zamanAsimli(chrome.debugger.attach(hedef, '1.3'), 10000, 'debugger.attach');
         baglandi = true;
 

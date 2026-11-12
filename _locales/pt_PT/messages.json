@@ -809,9 +809,6 @@
   "nKartSilinmisGrup": {
     "message": "$1 blocos · grupo eliminado"
   },
-  "goruntuUrlsi": {
-    "message": "Endereço da imagem"
-  },
   "oncekiSimdiKayip": {
     "message": "Havia $1 $2, agora $3."
   },
@@ -1953,7 +1950,7 @@
     "message": "Janela pequena no canto"
   },
   "gizliKipBilgi": {
-    "message": "Durante a captura, o Chrome mostra no topo uma barra de \"depuração\". É um aviso obrigatório; a permissão é usada só para capturas e a barra desaparece no fim."
+    "message": "Algumas versões do Chrome podem mostrar por instantes uma barra de \"depuração\" no topo durante a captura (as versões recentes não). É um aviso do próprio Chrome; a permissão é usada só para capturar as imagens dos blocos."
   },
   "hazirGruplar": {
     "message": "Grupos prontos"
@@ -2365,9 +2362,6 @@
   },
   "kilidiAc": {
     "message": "Bloqueada - clique para desbloquear"
-  },
-  "gizliCubukBilgi": {
-    "message": "As imagens são capturadas em segundo plano. O Chrome pode mostrar por instantes uma barra de \"depuração\" no topo; é um aviso obrigatório do Chrome e só a imagem do atalho é capturada. Pode escolher Janela em Definições › Modo de captura."
   },
   "yeniKartGorseli": {
     "message": "Imagem do novo atalho"

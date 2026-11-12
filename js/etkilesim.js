@@ -1345,7 +1345,7 @@ function gorselAraclariniKur() {
     // 2) URL'den gorsel
     el('kpUrlGorsel')?.addEventListener('click', async () => {
         const adres = await metinSor({
-            baslik: c('goruntuUrlsi'),
+            baslik: c('goruntuUrlSi'),
             metin: c('gorselAdresiniYapistirin'),
             deger: seciliKaynak(),           // daha once bu adresten eklendiyse (1.6.4)
             evet: c('ekle')
@@ -1365,7 +1365,10 @@ function gorselAraclariniKur() {
     });
 
     // 3) Arka plan rengi - gorsel seffafsa/kucukse arkasi bu renk olur
-    el('kpZemin')?.addEventListener('click', () => el('kpZeminSecici').click());
+    // 1.7.0: kendi seciciyle - tarayicinin penceresi gizli kutu yuzunden
+    // ekranin kosesinde aciliyordu; saydamlik da secilebilir (rgba)
+    el('kpZemin')?.addEventListener('click', () =>
+        import('./renksecici.js').then(m => m.renkSeciciAc(el('kpZeminSecici'), el('kpZemin'))));
     // Kart basina Sigdir/Doldur (1.6.3)
     el('kpYerlesim')?.addEventListener('click', () => yerlesimDegistir());
     el('kpZeminSecici')?.addEventListener('input', e => zeminAyarla(e.target.value));

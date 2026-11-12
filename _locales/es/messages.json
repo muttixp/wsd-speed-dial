@@ -809,9 +809,6 @@
   "nKartSilinmisGrup": {
     "message": "$1 mosaicos · grupo eliminado"
   },
-  "goruntuUrlsi": {
-    "message": "Dirección de imagen"
-  },
   "oncekiSimdiKayip": {
     "message": "Había $1 $2, ahora $3. "
   },
@@ -1953,7 +1950,7 @@
     "message": "Ventana pequeña en la esquina"
   },
   "gizliKipBilgi": {
-    "message": "Al capturar, Chrome muestra arriba una barra de «depuración». Es un aviso obligatorio; el permiso solo se usa para capturas y la barra desaparece al terminar."
+    "message": "Algunas versiones de Chrome pueden mostrar brevemente arriba una barra de «depuración» al capturar (las versiones recientes no). Es un aviso de Chrome; el permiso solo se usa para capturar las imágenes de los mosaicos."
   },
   "hazirGruplar": {
     "message": "Grupos predefinidos"
@@ -2365,9 +2362,6 @@
   },
   "kilidiAc": {
     "message": "Bloqueada: haz clic para desbloquear"
-  },
-  "gizliCubukBilgi": {
-    "message": "Las imágenes se capturan en segundo plano. Chrome puede mostrar brevemente una barra de \"depuración\" arriba; es un aviso obligatorio de Chrome y solo se toma la imagen del acceso. Puedes elegir Ventana en Ajustes › Modo de captura."
   },
   "yeniKartGorseli": {
     "message": "Imagen de mosaico nuevo"

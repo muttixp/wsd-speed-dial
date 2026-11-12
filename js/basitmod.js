@@ -91,8 +91,16 @@ let calisiyor = false;
  * silinmiyor, karuselde aday olarak kaliyor (Duzenle'den geri secilebilir).
  * Elle konmus gorseller de dahil: kullanici acikca istedi, geri donulebilir.
  */
-export async function grubaLogoKoy(grupId = null) {
-    if (calisiyor) return;
+/* SIRA (1.7.1): ikinci cagri atlanmasin, beklesin. Paketleri arka arkaya
+   ekleyince yalniz ilk klasorun logolari geliyordu; digerleri bos kaliyordu. */
+let logoSirasi = Promise.resolve();
+export function grubaLogoKoy(...a) {
+    const is = logoSirasi.then(() => logoKoyIc(...a));
+    logoSirasi = is.catch(() => {});
+    return is;
+}
+
+async function logoKoyIc(grupId = null) {
     calisiyor = true;
     const dugme = document.getElementById('ayLogoKoy');
     dugme?.classList.add('calisiyor');
@@ -148,6 +156,64 @@ const HIZLI = {
          ['Wikipedia', 'https://en.wikipedia.org/'], ['WhatsApp', 'https://web.whatsapp.com/'], ['Instagram', 'https://www.instagram.com/']],
 };
 
+/** Dile gore bilinen siteler [baslik, url] (paketler bos Ana Sayfa'yi doldururken de) */
+export function hizliSiteler() {
+    let dil = 'en';
+    try { dil = (chrome.i18n.getUILanguage() || 'en').slice(0, 2).toLowerCase(); } catch (e) { /* en */ }
+    return HIZLI[dil] || HIZLI.en;
+}
+
+/* HIZLI BASLA KLASORLERI (1.7.1): 6 sitenin yaninda Ana Sayfa'ya 3 klasor
+   (Sosyal / Haber / Alisveris; Turkcede Sosyal / Eglence / Teknoloji / Alisveris). Yeni kullanici bos ya da yarim sayfa
+   gormesin; begenmedigini silsin. Klasorler Ana Sayfa klasoru olarak
+   isaretlenir (grup seridine gitmez). */
+const HIZLI_KLASOR = {
+    tr: [['Sosyal', [['Instagram', 'https://www.instagram.com/'], ['X', 'https://x.com/'], ['Facebook', 'https://www.facebook.com/'],
+                     ['TikTok', 'https://www.tiktok.com/'], ['LinkedIn', 'https://www.linkedin.com/'], ['Pinterest', 'https://www.pinterest.com/']]],
+         ['Eğlence', [['Netflix', 'https://www.netflix.com/'], ['Spotify', 'https://open.spotify.com/'], ['Disney+', 'https://www.disneyplus.com/'],
+                      ['Prime Video', 'https://www.primevideo.com/'], ['Twitch', 'https://www.twitch.tv/'], ['Steam', 'https://store.steampowered.com/']]],
+         ['Teknoloji', [['Webtekno', 'https://www.webtekno.com/'], ['ShiftDelete.Net', 'https://shiftdelete.net/'], ['DonanımHaber', 'https://www.donanimhaber.com/'],
+                        ['Technopat', 'https://www.technopat.net/'], ['Chip Online', 'https://www.chip.com.tr/'], ['LOG', 'https://www.log.com.tr/']]],
+         ['Alışveriş', [['Trendyol', 'https://www.trendyol.com/'], ['Hepsiburada', 'https://www.hepsiburada.com/'], ['n11', 'https://www.n11.com/'],
+                        ['Amazon Türkiye', 'https://www.amazon.com.tr/'], ['sahibinden.com', 'https://www.sahibinden.com/'], ['Çiçeksepeti', 'https://www.ciceksepeti.com/']]]],
+    ru: [['Медиа', [['Rutube', 'https://rutube.ru/'], ['Кинопоиск', 'https://www.kinopoisk.ru/'], ['Яндекс Музыка', 'https://music.yandex.ru/'],
+                    ['Дзен', 'https://dzen.ru/'], ['Одноклассники', 'https://ok.ru/'], ['Пикабу', 'https://pikabu.ru/']]],
+         ['Новости', [['РБК', 'https://www.rbc.ru/'], ['Коммерсантъ', 'https://www.kommersant.ru/'], ['Интерфакс', 'https://www.interfax.ru/'],
+                      ['Лента.ру', 'https://lenta.ru/'], ['ТАСС', 'https://tass.ru/'], ['Ведомости', 'https://www.vedomosti.ru/']]],
+         ['Покупки', [['Ozon', 'https://www.ozon.ru/'], ['Wildberries', 'https://www.wildberries.ru/'], ['Яндекс Маркет', 'https://market.yandex.ru/'],
+                      ['Авито', 'https://www.avito.ru/'], ['AliExpress', 'https://aliexpress.ru/'], ['Мегамаркет', 'https://megamarket.ru/']]]],
+    uk: [['Соцмережі', [['Instagram', 'https://www.instagram.com/'], ['Facebook', 'https://www.facebook.com/'], ['Telegram', 'https://web.telegram.org/'],
+                        ['TikTok', 'https://www.tiktok.com/'], ['X', 'https://x.com/'], ['LinkedIn', 'https://www.linkedin.com/']]],
+         ['Новини', [['Українська правда', 'https://www.pravda.com.ua/'], ['Суспільне', 'https://suspilne.media/'], ['УНІАН', 'https://www.unian.ua/'],
+                     ['Укрінформ', 'https://www.ukrinform.ua/'], ['НВ', 'https://nv.ua/'], ['BBC Україна', 'https://www.bbc.com/ukrainian']]],
+         ['Покупки', [['Rozetka', 'https://rozetka.com.ua/'], ['Prom.ua', 'https://prom.ua/'], ['OLX', 'https://www.olx.ua/'],
+                      ['Епіцентр', 'https://epicentrk.ua/'], ['Comfy', 'https://comfy.ua/'], ['Нова пошта', 'https://novaposhta.ua/']]]],
+    es: [['Social', [['Facebook', 'https://www.facebook.com/'], ['X', 'https://x.com/'], ['TikTok', 'https://www.tiktok.com/'],
+                     ['LinkedIn', 'https://www.linkedin.com/'], ['Pinterest', 'https://www.pinterest.com/'], ['Reddit', 'https://www.reddit.com/']]],
+         ['Noticias', [['El País', 'https://elpais.com/'], ['BBC Mundo', 'https://www.bbc.com/mundo'], ['El Mundo', 'https://www.elmundo.es/'],
+                       ['CNN en Español', 'https://cnnespanol.cnn.com/'], ['Infobae', 'https://www.infobae.com/'], ['20minutos', 'https://www.20minutos.es/']]],
+         ['Compras', [['Amazon', 'https://www.amazon.es/'], ['Mercado Libre', 'https://www.mercadolibre.com/'], ['AliExpress', 'https://es.aliexpress.com/'],
+                      ['eBay', 'https://www.ebay.es/'], ['El Corte Inglés', 'https://www.elcorteingles.es/'], ['Zara', 'https://www.zara.com/']]]],
+    pt: [['Social', [['Facebook', 'https://www.facebook.com/'], ['X', 'https://x.com/'], ['TikTok', 'https://www.tiktok.com/'],
+                     ['LinkedIn', 'https://www.linkedin.com/'], ['Pinterest', 'https://www.pinterest.com/'], ['Reddit', 'https://www.reddit.com/']]],
+         ['Notícias', [['g1', 'https://g1.globo.com/'], ['UOL', 'https://www.uol.com.br/'], ['Folha', 'https://www.folha.uol.com.br/'],
+                       ['Estadão', 'https://www.estadao.com.br/'], ['CNN Brasil', 'https://www.cnnbrasil.com.br/'], ['BBC Brasil', 'https://www.bbc.com/portuguese']]],
+         ['Compras', [['Mercado Livre', 'https://www.mercadolivre.com.br/'], ['Amazon', 'https://www.amazon.com.br/'], ['Shopee', 'https://shopee.com.br/'],
+                      ['Magalu', 'https://www.magazineluiza.com.br/'], ['AliExpress', 'https://pt.aliexpress.com/'], ['Americanas', 'https://www.americanas.com.br/']]]],
+    zh: [['社交', [['QQ', 'https://www.qq.com/'], ['抖音', 'https://www.douyin.com/'], ['小红书', 'https://www.xiaohongshu.com/'],
+                   ['豆瓣', 'https://www.douban.com/'], ['百度贴吧', 'https://tieba.baidu.com/'], ['微信网页版', 'https://wx.qq.com/']]],
+         ['新闻', [['新浪', 'https://www.sina.com.cn/'], ['网易', 'https://www.163.com/'], ['腾讯新闻', 'https://news.qq.com/'],
+                   ['凤凰网', 'https://www.ifeng.com/'], ['澎湃新闻', 'https://www.thepaper.cn/'], ['新华网', 'http://www.xinhuanet.com/']]],
+         ['购物', [['天猫', 'https://www.tmall.com/'], ['拼多多', 'https://www.pinduoduo.com/'], ['苏宁易购', 'https://www.suning.com/'],
+                   ['唯品会', 'https://www.vip.com/'], ['闲鱼', 'https://www.goofish.com/'], ['当当', 'https://www.dangdang.com/']]]],
+    en: [['Social', [['Facebook', 'https://www.facebook.com/'], ['X', 'https://x.com/'], ['Reddit', 'https://www.reddit.com/'],
+                     ['LinkedIn', 'https://www.linkedin.com/'], ['TikTok', 'https://www.tiktok.com/'], ['Pinterest', 'https://www.pinterest.com/']]],
+         ['News', [['BBC News', 'https://www.bbc.com/news'], ['Reuters', 'https://www.reuters.com/'], ['AP News', 'https://apnews.com/'],
+                   ['The Guardian', 'https://www.theguardian.com/'], ['CNN', 'https://www.cnn.com/'], ['NPR', 'https://www.npr.org/']]],
+         ['Shopping', [['Amazon', 'https://www.amazon.com/'], ['eBay', 'https://www.ebay.com/'], ['Walmart', 'https://www.walmart.com/'],
+                       ['AliExpress', 'https://www.aliexpress.com/'], ['Etsy', 'https://www.etsy.com/'], ['Best Buy', 'https://www.bestbuy.com/']]]],
+};
+
 export async function hizliBasla() {
     if (calisiyor) return;
     let dil = 'en';
@@ -158,10 +224,24 @@ export async function hizliBasla() {
     const { kokKlasoruAl } = await import('./yerimi.js');
     const { iceAktarimBaslat, iceAktarimBitir } = await import('./iceaktarim.js');
     const kok = await kokKlasoruAl();
+    const klasorler = [];
     // Yakalama beklesin: logo konacak, pencere acilmasin
     await iceAktarimBaslat();
     try {
         for (const [baslik, url] of liste) await chrome.bookmarks.create({ parentId: kok, title: baslik, url });
+        // Klasorler: ayni adli Ana Sayfa klasoru varsa (ikinci tiklama) eklenmez
+        const { anaKlasorIdleri } = await import('./yerimi.js');
+        const { gorunumYaz } = await import('./grupikon.js');
+        const ana = await anaKlasorIdleri();
+        const mevcut = new Set((await chrome.bookmarks.getChildren(kok)).filter(x => !x.url && ana.has(x.id)).map(x => x.title));
+        for (const [ad, siteler] of HIZLI_KLASOR[dil] || HIZLI_KLASOR.en) {
+            if (mevcut.has(ad)) continue;
+            const k = await chrome.bookmarks.create({ parentId: kok, title: ad });
+            await gorunumYaz(k.id, { anaKlasor: true });
+            for (const [baslik, url] of siteler) await chrome.bookmarks.create({ parentId: k.id, title: baslik, url });
+            klasorler.push(k.id);
+        }
+        chrome.storage.local.set({ klasorIpucuGecildi: true }).catch(() => {});
     } finally {
         await iceAktarimBitir([]);
         if (dugme) dugme.disabled = false;
@@ -170,4 +250,5 @@ export async function hizliBasla() {
     await arayuzuKur();
     await grubuAc(kok);
     await grubaLogoKoy(kok);
+    for (const id of klasorler) await grubaLogoKoy(id);
 }

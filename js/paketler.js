@@ -158,11 +158,21 @@ async function anaSayfayaKlasorEkle(gruplar, disServis) {
     const { iceAktarimBaslat, iceAktarimBitir } = await import('./iceaktarim.js');
     const kok = await kokKlasoruAl();
     const ana = await anaKlasorIdleri();
-    const mevcut = (await chrome.bookmarks.getChildren(kok)).filter(x => !x.url && ana.has(x.id));
+    const cocuklar = await chrome.bookmarks.getChildren(kok);
+    const mevcut = cocuklar.filter(x => !x.url && ana.has(x.id));
     const klasorler = [];
     let n = 0;
+    // Ana Sayfa'da hic kart yoksa ust kisim bos kalmasin: 4 bilinen site (1.7.1)
+    const ustBos = !cocuklar.some(x => x.url);
     await iceAktarimBaslat();
     try {
+        if (ustBos) {
+            const { hizliSiteler } = await import('./basitmod.js');
+            for (const [baslik, url] of hizliSiteler().slice(0, 4)) {
+                await chrome.bookmarks.create({ parentId: kok, title: baslik, url });
+                n++;
+            }
+        }
         for (const g of gruplar) {
             const ad = g.baslik.trim().toLocaleLowerCase();
             let k = mevcut.find(x => (x.title || '').trim().toLocaleLowerCase() === ad);
@@ -187,6 +197,7 @@ async function anaSayfayaKlasorEkle(gruplar, disServis) {
     await grubuAc(kok);
     // Logolar: Ana Sayfa acikken - kare/yatay olcu onun duzeninden
     const { grubaLogoKoy } = await import('./basitmod.js');
+    if (ustBos) await grubaLogoKoy(kok, disServis);
     for (const id of klasorler) await grubaLogoKoy(id, disServis);
     return n;
 }

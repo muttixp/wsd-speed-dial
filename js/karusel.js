@@ -304,7 +304,7 @@ function ciz() {
     // Renk secici mevcut zemini gostersin - onceki karttan kalan
     // deger yaniltmasin
     const secici = el('kpZeminSecici');
-    if (secici && zemin && /^#[0-9a-f]{6}$/i.test(zemin)) secici.value = zemin;
+    if (secici) secici.value = zemin || '';      // rgba da olabilir (1.7.0)
 
     // Oklar tek aday varken anlamsiz
     const tek = adaylar.length < 2;
