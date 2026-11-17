@@ -32,10 +32,24 @@ export async function klasorPenceresiAc(id, icerden = false) {
     if (el('klasorPencere').hidden) pencereAc('klasorPencere');
 }
 
+/** Genis pencere (1.7.2): secim ayarda (`kfpGenis`) */
+function genislikUygula(genis) {
+    el('klasorPencere')?.querySelector('.klasorPencereIc')?.classList.toggle('kfpGenis', !!genis);
+    const b = el('kfpGenis');
+    if (b) {
+        b.title = c(genis ? 'kfpDaralt' : 'kfpGenislet');
+        b.setAttribute('aria-pressed', String(!!genis));
+    }
+}
+
 /** Izgara / liste (1.7.0): secim ayarda, pencere her acilista hatirlar */
 async function gorunumuUygula(deger) {
     if (!deger) {
-        try { deger = (await (await import('./ayar.js')).ayarlariAl()).kfpGorunum; } catch (e) { /* */ }
+        try {
+            const a = await (await import('./ayar.js')).ayarlariAl();
+            deger = a.kfpGorunum;
+            genislikUygula(a.kfpGenis === true);
+        } catch (e) { /* */ }
     }
     const liste = deger === 'liste';
     el('kfpKabi').classList.toggle('kfpListe', liste);
@@ -114,6 +128,9 @@ export function klasorPenceresiKur(deps) {
         if (!k) return;
         e.preventDefault();
         e.stopPropagation();
+        // Arac seridi (Duzenle, Tasi, Sil...): iceri girmeden eylem (1.7.2)
+        const arac = e.target.closest('[data-klasor-arac]');
+        if (arac) return bag?.klasorEylemi(arac.dataset.klasorArac, k.dataset.klasorId);
         klasorPenceresiAc(k.dataset.klasorId, true);
     });
     kap?.addEventListener('keydown', e => {
@@ -136,6 +153,11 @@ export function klasorPenceresiKur(deps) {
         bag?.klasorEylemi('klasorHepsiniAc', yigin[yigin.length - 1]);
     });
     el('kfpKapat')?.addEventListener('click', () => pencereKapat('klasorPencere'));
+    el('kfpGenis')?.addEventListener('click', async () => {
+        const genis = !el('klasorPencere').querySelector('.klasorPencereIc').classList.contains('kfpGenis');
+        genislikUygula(genis);
+        try { await (await import('./ayar.js')).ayarYaz({ kfpGenis: genis }); } catch (e) { /* */ }
+    });
     for (const b of document.querySelectorAll('#klasorPencere .kfpGorunum .kfpDugme')) {
         b.addEventListener('click', async () => {
             const deger = b.dataset.gorunum;

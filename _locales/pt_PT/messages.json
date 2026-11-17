@@ -1020,7 +1020,7 @@
     "message": "\"$1\" e os $2 blocos dentro dele serão eliminados."
   },
   "grupAdiZatenVar": {
-    "message": "Já existe um grupo chamado \"$1\""
+    "message": "Já existe um grupo chamado \"$1\". Experimente outro nome."
   },
   "htmlAltBilgi": {
     "message": "Criado com WSD Speed Dial"
@@ -1263,7 +1263,7 @@
     "message": "Esta pasta tem <b>$1</b> blocos"
   },
   "klasorAdiZatenVar": {
-    "message": "Já existe aqui uma pasta chamada \"$1\""
+    "message": "Já existe uma pasta chamada \"$1\" aqui. Experimente outro nome."
   },
   "bekleyenYenilemeler": {
     "message": "Atualizações pendentes"
@@ -2530,5 +2530,23 @@
   },
   "paketAnaSayfaya": {
     "message": "\"$1\" adicionado à página inicial como pasta · $2 blocos"
+  },
+  "mAnaSayfayaTasi": {
+    "message": "Mover para o Início"
+  },
+  "anaSayfaKlasoruOlarak": {
+    "message": "⌂ No Início como pasta"
+  },
+  "klasorAnaSayfaya": {
+    "message": "Movido para o Início"
+  },
+  "kfpGenislet": {
+    "message": "Expandir"
+  },
+  "kfpDaralt": {
+    "message": "Reduzir"
+  },
+  "anaKlasorAdiZatenVar": {
+    "message": "O Início já tem uma pasta chamada \"$1\". Experimente outro nome."
   }
 }

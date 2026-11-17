@@ -9,6 +9,23 @@
 
 export const YENILIKLER = [
     {
+        surum: '1.7.2',
+        yeni: {
+            tr: ["Klasör penceresinde Genişlet düğmesi: kalabalık klasör aşağı uzamak yerine geniş açılır (liste görünümünde sütunlara dağılır); seçim hatırlanır", "Grup menüsünde \"Ana Sayfa'ya taşı\": bir grup tek tıkla Ana Sayfa klasörü olur", "Taşı penceresinde \"Ana Sayfa'ya klasör olarak\" seçeneği; Ana Sayfa klasörü yine \"Üst düzey grup olarak\" ile gruba döner"],
+            en: ["Expand button in the folder window: a crowded folder opens wide instead of growing downwards (list view flows into columns); the choice is remembered", "\"Move to Home page\" in the group menu: a group becomes a Home page folder in one click", "The Move window has a \"To the Home page as a folder\" option; a Home page folder turns back into a group with \"As a top-level group\""],
+            ru: ["Кнопка «Развернуть» в окне папки: большая папка открывается широко, а не тянется вниз (список раскладывается по столбцам); выбор запоминается", "«Переместить на главную» в меню группы: группа становится папкой на главной в один клик", "В окне «Переместить» есть вариант «На главную как папку»; папку с главной можно снова сделать группой"],
+            pt_BR: ["Botão Expandir na janela da pasta: uma pasta cheia abre larga em vez de crescer para baixo (a lista se divide em colunas); a escolha é lembrada", "\"Mover para o Início\" no menu do grupo: o grupo vira uma pasta do Início com um clique", "A janela Mover tem a opção \"No Início como pasta\"; a pasta volta a ser grupo com \"Como grupo de nível superior\""],
+            es: ["Botón Ampliar en la ventana de carpeta: una carpeta llena se abre ancha en lugar de crecer hacia abajo (la lista se reparte en columnas); se recuerda la elección", "\"Mover a Inicio\" en el menú del grupo: el grupo pasa a ser una carpeta de Inicio con un clic", "La ventana Mover tiene la opción \"A Inicio como carpeta\"; la carpeta vuelve a ser grupo con \"Como grupo de nivel superior\""],
+        },
+        duzeltme: {
+            tr: ["Klasör penceresindeki alt klasörler artık sağ tıkla ve araç şeridiyle düzenlenip taşınabiliyor", "Klasör penceresinde açık menüyü Esc ile kapatmak pencereyi de kapatıyordu", "Aynı ad uyarısı artık neyle çakıştığını söylüyor (grup ya da Ana Sayfa klasörü) ve başka ad önerir"],
+            en: ["Sub-folders in the folder window can now be edited and moved (right-click and tool strip)", "Closing a menu with Esc in the folder window no longer closes the window too", "The duplicate-name warning now says what it clashes with (a group or a Home page folder) and asks for another name"],
+            ru: ["Вложенные папки в окне папки теперь можно изменять и перемещать (правый клик и панель инструментов)", "Esc закрывает только меню, а не всё окно папки", "Предупреждение об одинаковом имени теперь говорит, с чем совпадение (группа или папка на главной), и предлагает другое имя"],
+            pt_BR: ["Subpastas na janela da pasta agora podem ser editadas e movidas (clique direito e barra de ferramentas)", "Fechar um menu com Esc na janela da pasta não fecha mais a janela", "O aviso de nome repetido agora diz com o que conflita (grupo ou pasta do Início) e pede outro nome"],
+            es: ["Las subcarpetas en la ventana de carpeta ahora se pueden editar y mover (clic derecho y barra de herramientas)", "Cerrar un menú con Esc en la ventana de carpeta ya no cierra la ventana", "El aviso de nombre repetido ahora dice con qué coincide (grupo o carpeta de Inicio) y pide otro nombre"],
+        },
+    },
+    {
         surum: '1.7.1',
         yeni: {
             tr: ["Kart arka planı saydam olabilir: Kart Düzenle › Arka Plan'da ve Ayarlar › Kartlar › Zemin Rengi'nde saydamlık kaydırıcısı", "Saydamlık renk kutusunun içinde: Grup Menüsü'nde ayrı saydamlık kaydırıcıları kalktı; kart çerçeve renkleri de saydam olabilir", "Hızlı Başla artık 6 sitenin yanında Sosyal, Eğlence, Teknoloji ve Alışveriş klasörlerini de logolarıyla ekliyor"],

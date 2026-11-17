@@ -21,7 +21,7 @@
 // calisiyor ve klasorleri kart sanmamalari gerekiyor.
 
 import { c } from './dil.js';
-import { klasorIcerigi, klasorEkle, kartlariAl, kokKlasoruAl, urlNormalle } from './yerimi.js';
+import { klasorIcerigi, klasorEkle, kartlariAl, kokKlasoruAl, urlNormalle, anaKlasorIdleri, gorunurGruplariAl } from './yerimi.js';
 import { gorselAl } from './gorsel.js';
 import { ikonHTML } from './ikon.js';
 import { klasorSuruklemeKur } from './klasorsurukle.js';
@@ -287,7 +287,9 @@ export function klasorleriKur(deps) {
         if (b) bag.grubuAc(b.dataset.klasorId);
     });
 
-    kap?.addEventListener('contextmenu', async e => {
+    // Sag tik: ana izgara ve klasor penceresi (1.7.2 - penceredeki alt
+    // klasorler duzenlenemiyor / tasinamiyordu)
+    for (const kk of [kap, el('kfpKabi')]) kk?.addEventListener('contextmenu', async e => {
         const k = e.target.closest('.klasorKart, .izgaraBolumUst');
         if (!k) return;
         e.preventDefault();
@@ -384,25 +386,59 @@ async function klasorEylemi(eylem, id) {
     }
 }
 
-/** Klasoru baska bir gruba/klasore tasir ya da ust duzey GRUP yapar. */
+/** Ana Sayfa gorunuyor mu (gizliyse Ana Sayfa klasorlerine ulasilamaz) */
+export async function anaSayfaGorunur() {
+    try { return (await gorunurGruplariAl()).some(g => g.kokMu); } catch (e) { return false; }
+}
+
+/** Tasima listesindeki "Ana Sayfa'ya klasor olarak" secenegi */
+export const anaHedefi = kok => 'ana:' + kok;
+
+/**
+ * Klasoru baska bir gruba/klasore tasir, ust duzey GRUP ya da (1.7.2)
+ * Ana Sayfa klasoru yapar. Ana Sayfa klasoru = kok altinda, isaretli.
+ */
 export async function klasoruTasi(id) {
     const [d] = await chrome.bookmarks.get(id);
     const { klasorler } = await klasorIcerigi(id);
-    // Kendisi, kendi alt klasorleri ve su anki ust klasoru hedef olamaz
-    const haric = new Set([id, d.parentId, ...klasorler.map(k => k.id)]);
+    const kok = await kokKlasoruAl();
+    const anaMi = d.parentId === kok && (await anaKlasorIdleri()).has(id);
+    // Kendisi, kendi alt klasorleri ve su anki yeri hedef olamaz
+    const haric = new Set([id, ...klasorler.map(k => k.id)]);
+    haric.add(anaMi ? anaHedefi(kok) : d.parentId);
 
-    const hedef = await bag.klasorHedefiSec(haric, c('klasoruTasi'), true);
+    const hedef = await bag.klasorHedefiSec(haric, c('klasoruTasi'), await anaSayfaGorunur());
     if (!hedef) return;
+    const anaya = hedef === anaHedefi(kok);
+    const ust = anaya ? kok : hedef;
     try {
         bag.tazelemeyiBastir(2000);
-        await chrome.bookmarks.move(id, { parentId: hedef });
-        const kok = await kokKlasoruAl();
+        if (ust !== d.parentId) await chrome.bookmarks.move(id, { parentId: ust });
+        // Isaret yalniz kok altinda anlamli; baska yere giderken kalkar
+        if (anaya || anaMi) await gorunumYaz(id, { anaKlasor: anaya });
         // Grup oldu ya da grup olmaktan cikti: serit degisti
         await bag.seritTazele();
-        await bag.grubuAc(bag.aktifGrup());
-        bag.bildir(hedef === kok ? c('klasorGrupOldu') : c('klasorTasindi'));
+        await bag.grubuAc(bag.aktifGrup() === id && anaya ? kok : bag.aktifGrup());
+        bag.bildir(anaya ? c('klasorAnaSayfaya') : hedef === kok ? c('klasorGrupOldu') : c('klasorTasindi'));
     } catch (e) {
         console.log('[WSD] klasor tasinamadi:', e);
+        bag.bildir(c('tasinamadi'));
+    }
+}
+
+/** Grup menusu "Ana Sayfa'ya tasi" (1.7.2): grubu Ana Sayfa klasoru yapar */
+export async function anaSayfayaTasi(id) {
+    const kok = await kokKlasoruAl();
+    try {
+        bag.tazelemeyiBastir(2000);
+        const [d] = await chrome.bookmarks.get(id);
+        if (d.parentId !== kok) await chrome.bookmarks.move(id, { parentId: kok });
+        await gorunumYaz(id, { anaKlasor: true });
+        await bag.seritTazele();
+        await bag.grubuAc(kok);
+        bag.bildir(c('klasorAnaSayfaya'));
+    } catch (e) {
+        console.log('[WSD] Ana Sayfaya tasinamadi:', e);
         bag.bildir(c('tasinamadi'));
     }
 }

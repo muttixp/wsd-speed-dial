@@ -17,7 +17,8 @@ import { grupEkle, grupSil, kartEkle, kartGuncelle, kartSil, kartGuncelleBaslik,
 import { c } from './dil.js';
 import { ayarlariAl } from './ayar.js';
 import { aktifGrup, aktifSekme, arayuzuKur, grubuAc, kartGorseliniTazele } from './cizim.js';
-import { klasorleriKur, klasorIsaretiniTemizle, yeniKlasor, klasoruTasi, klasoruDuzenle, klasorEylemiDisaridan } from './klasor.js';
+import { klasorleriKur, klasorIsaretiniTemizle, yeniKlasor, klasoruTasi, klasoruDuzenle, klasorEylemiDisaridan,
+    anaSayfayaTasi, anaSayfaGorunur } from './klasor.js';
 import { gruplariAl, gorunurGruplariAl, kokKlasoruAl, tumKlasorleriAl } from './yerimi.js';
 import { RENKLER, renkleriAl, renkYaz } from './renk.js';
 import { karuseliKur, karuseliYukle, adayEkle, zeminAyarla, secimDurumu, yerlesimDegistir, kendiResmeGoreYerlesim, seciliKaynak } from './karusel.js';
@@ -1067,9 +1068,10 @@ export async function grupSec(haric = null, baslik = 'Hedef Grup') {
  * olarak" etiketiyle gosteriliyor: klasor koke tasininca GRUP oluyor.
  * @param haric Set - hedef olamayacak klasorler (kendisi, alt klasorleri)
  */
-export async function klasorHedefiSec(haric, baslik) {
+export async function klasorHedefiSec(haric, baslik, anaSecenek = false) {
     const kok = await kokKlasoruAl();
-    if (!await tasiListesiniDoldur(haric, { kokEtiketi: c('ustDuzeyGrupOlarak'), kokHer: kok })) {
+    if (!await tasiListesiniDoldur(haric, { kokEtiketi: c('ustDuzeyGrupOlarak'), kokHer: kok,
+        anaEtiketi: anaSecenek ? c('anaSayfaKlasoruOlarak') : null })) {
         bildir(c('baskaGrupYok'));
         return null;
     }
@@ -1160,7 +1162,7 @@ let tasiAcik = new Set();
 try { tasiAcik = new Set(JSON.parse(localStorage.getItem(TASI_ACIK) || '[]')); } catch (e) { /* bozuk */ }
 const tasiAcikYaz = () => { try { localStorage.setItem(TASI_ACIK, JSON.stringify([...tasiAcik].slice(-300))); } catch (e) { /* */ } };
 
-async function tasiListesiniDoldur(haric, { kokEtiketi = null, kokHer = null } = {}) {
+async function tasiListesiniDoldur(haric, { kokEtiketi = null, kokHer = null, anaEtiketi = null } = {}) {
     const liste = el('tasiListe');
     liste.textContent = '';
     el('tasiSuz').value = '';
@@ -1200,6 +1202,25 @@ async function tasiListesiniDoldur(haric, { kokEtiketi = null, kokHer = null } =
         if (haricMi(k.id)) li.classList.add('pasif');
         else secilebilir++;
         liste.appendChild(li);
+    }
+    // "Ana Sayfa'ya klasor olarak" (1.7.2): koke tasir + Ana Sayfa isareti.
+    // Ust duzey grup seceneginin hemen altinda.
+    if (anaEtiketi && kokHer) {
+        const id = 'ana:' + kokHer;
+        const li = document.createElement('li');
+        li.dataset.id = id;
+        li.dataset.yol = anaEtiketi;
+        li.style.paddingLeft = 'var(--b2)';
+        const ok = document.createElement('span');
+        ok.className = 'tasiOk';
+        const ad = document.createElement('span');
+        ad.className = 'tasiAd';
+        ad.textContent = anaEtiketi;
+        li.append(ok, ad);
+        if (haricMi(id)) li.classList.add('pasif');
+        else secilebilir++;
+        const kokLi = liste.querySelector(`li[data-id="${kokHer}"]`);
+        if (kokLi) kokLi.after(li); else liste.prepend(li);
     }
     tasiGorunurlugu();
 
@@ -1663,10 +1684,12 @@ function menuleriKur() {
         // olmadigi tiklamadan belli olsun.
         const kok = await kokKlasoruAl();
         const kokMu = menuGrupId === kok;
+        // "Ana Sayfa'ya tasi" (1.7.2): Ana Sayfa gorunurken, kok disindaki gruplarda
+        const anaya = !kokMu && await anaSayfaGorunur();
 
         for (const li of el('grupMenu').children) {
             const eylem = li.dataset.eylem;
-            li.hidden = kokMu && eylem === 'grupTasi';
+            li.hidden = (kokMu && eylem === 'grupTasi') || (!anaya && eylem === 'grupAnaSayfaya');
             const kilitli = kokMu && eylem === 'grupSil';
             li.classList.toggle('kilitli', kilitli);
             if (kilitli) li.title = c('anaSayfaSilinemez');
@@ -1746,6 +1769,11 @@ function menuleriKur() {
     });
     document.addEventListener('keydown', e => {
         if (e.key !== 'Escape') return;
+        // Once acik menu (1.7.2): klasor penceresindeki menu Esc ile
+        // kapatilinca pencere de kapaniyordu
+        const menuAcik = ['kartMenu', 'grupMenu', 'bosMenu', 'klasorMenu', 'ekleMenu']
+            .some(id => el(id) && !el(id).hidden);
+        if (menuAcik) return menuleriKapat();
         if (acikPencereyiKapat()) return;
         menuleriKapat();
     });
@@ -1956,6 +1984,11 @@ async function grupMenuEylemi(e) {
     // Grubu baska bir grubun ICINE tasi (alt klasor olur)
     if (eylem === 'grupTasi') {
         await klasoruTasi(id);
+        return;
+    }
+
+    if (eylem === 'grupAnaSayfaya') {
+        await anaSayfayaTasi(id);
         return;
     }
 

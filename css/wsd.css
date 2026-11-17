@@ -4203,6 +4203,14 @@ body.kartlarDikeyOrta #kartAlani > * { flex: 0 0 auto; }
     padding: 4px 0 8px;
 }
 .kfpIzgara .kartArac[data-arac="sil"] { display: none; }
+
+/* Genislet (1.7.2): kalabalik klasorde pencere asagi uzamasin, yana acilsin */
+.klasorPencereIc { transition: width .18s ease; }
+.klasorPencereIc.kfpGenis { width: min(1180px, 96vw); max-height: 92vh; }
+#kfpGenis .kfpDaralt, .kfpGenis #kfpGenis .kfpGenislet { display: none; }
+.kfpGenis #kfpGenis .kfpDaralt { display: block; }
+/* Genis + liste: satirlar sutunlara dagilir */
+.kfpGenis .kfpIzgara.kfpListe { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); column-gap: 8px; }
 /* Izgara / liste dugmeleri (1.7.0) */
 .kfpGorunum { display: flex; gap: 2px; }
 .kfpGorunum .kfpDugme.secili { background: rgba(var(--on), .12); color: var(--metin); }

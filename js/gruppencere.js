@@ -26,15 +26,18 @@ let secilenEtiket = null;         // klasor renk etiketi (kartlardaki alt serit 
 let secilenKapak = null;          // klasor kapak resmi (data URI, kucultulmus) - 1.5.1
 let cozucu = null;                // Promise resolve
 
-/** Pencere icinde kisa uyari - alanin altinda beliriyor. */
+/**
+ * Pencere icinde uyari - alanin altinda beliriyor. `kalici` (ad uyarisi,
+ * 1.7.2): kendiliginden kaybolmaz, ada yeniden yazinca kalkar.
+ */
 let uyariZaman = null;
-function uyarGoster(metin) {
+function uyarGoster(metin, kalici = false) {
     const el2 = el('gpUyari');
     if (!el2) return;
     el2.textContent = metin;
     el2.hidden = false;
     clearTimeout(uyariZaman);
-    uyariZaman = setTimeout(() => { el2.hidden = true; }, 3500);
+    if (!kalici) uyariZaman = setTimeout(() => { el2.hidden = true; }, 3500);
 }
 
 export function grupPenceresiniKur() {
@@ -46,6 +49,10 @@ export function grupPenceresiniKur() {
 
 
 
+    el('gpAd')?.addEventListener('input', () => {
+        clearTimeout(uyariZaman);
+        if (el('gpUyari')) el('gpUyari').hidden = true;
+    });
     el('gpAd')?.addEventListener('keydown', e => {
         if (e.key === 'Enter') kaydet();
         if (e.key === 'Escape') kapat(null);
@@ -382,7 +389,15 @@ async function kaydet() {
     );
 
     if (cakisan) {
-        uyarGoster(klasorKipi ? c('klasorAdiZatenVar', cakisan.baslik) : c('grupAdiZatenVar', cakisan.baslik));
+        // Ana Sayfa klasorleri ve gruplar ayni yerde (kok altinda) durur; uyari
+        // cakisanin ne oldugunu soyler (1.7.2)
+        const { kokKlasoruAl, anaKlasorIdleri } = await import('./yerimi.js');
+        const kok = await kokKlasoruAl();
+        const kokta = !klasorKipi || klasorKipi.ustId === kok;
+        const anaMi = kokta && (await anaKlasorIdleri()).has(cakisan.id);
+        uyarGoster(anaMi ? c('anaKlasorAdiZatenVar', cakisan.baslik)
+            : kokta ? c('grupAdiZatenVar', cakisan.baslik)
+            : c('klasorAdiZatenVar', cakisan.baslik), true);
         el('gpAd').focus();
         el('gpAd').select();
         return;

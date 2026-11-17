@@ -3,6 +3,32 @@
 Sürüm numaraları [Semantic Versioning](https://semver.org/lang/tr/)
 kurallarına uyar.
 
+## [1.7.2] — 2026-11-17
+
+### Eklendi
+- Klasör penceresinde **Genişlet / Daralt** düğmesi: pencere 620 px yerine
+  1180 px'e kadar açılır, liste görünümü sütunlara dağılır. Seçim ayarda
+  (`kfpGenis`), yedeğe girer.
+- Grup menüsünde **Ana Sayfa'ya taşı**: grup, Ana Sayfa klasörü olur
+  (kök altında `anaKlasor` işareti); şeritten kalkar. Ana Sayfa
+  gizliyken öğe görünmez.
+- Taşı penceresinde **"⌂ Ana Sayfa'ya klasör olarak"** hedefi (üst düzey
+  grup seçeneğinin altında). Ana Sayfa klasörü "Üst düzey grup olarak"
+  seçilince işareti kalkar, gruba döner; başka klasöre taşınınca da işaret
+  kalkar.
+
+### Düzeltildi
+- Klasör penceresindeki alt klasörler düzenlenemiyor / taşınamıyordu: sağ
+  tık menüsü pencerede çalışmıyordu, araç şeridi düğmeleri klasöre giriyordu.
+- Esc, açık menü varken önce menüyü kapatıyor (klasör penceresi de
+  kapanıyordu).
+- Aynı ad uyarısı: Ana Sayfa klasörleri ve gruplar aynı yerde durduğu için
+  "TV" grubu varken "TV" Ana Sayfa klasörü açılamıyor; uyarı artık çakışanın
+  grup mu Ana Sayfa klasörü mü olduğunu söylüyor, "Başka bir ad deneyin" ekli.
+  Uyarı kendiliğinden kaybolmuyor; ada yeniden yazınca kalkıyor.
+- İspanyolca/Portekizce: yeni metinlerde Ana Sayfa "Inicio"/"Início" (sekme
+  adıyla aynı).
+
 ## [1.7.1] — 2026-11-12
 
 ### Eklendi
